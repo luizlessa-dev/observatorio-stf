@@ -11,6 +11,8 @@ const TribunalDashboard = lazy(() => import('@/pages/tribunal/TribunalDashboard'
 const TribunalProcessos = lazy(() => import('@/pages/tribunal/TribunalProcessos'))
 const ProcessoDetalhe = lazy(() => import('@/pages/tribunal/ProcessoDetalhe'))
 const TribunalMinistros = lazy(() => import('@/pages/tribunal/TribunalMinistros'))
+const TribunalTemas = lazy(() => import('@/pages/tribunal/TribunalTemas'))
+const ComparadorMinistros = lazy(() => import('@/pages/tribunal/ComparadorMinistros'))
 const MinistroPage = lazy(() => import('@/pages/tribunal/MinistroPage'))
 const BuscaPage = lazy(() => import('@/pages/busca/BuscaPage'))
 const SobrePage = lazy(() => import('@/pages/institucional/SobrePage'))
@@ -80,6 +82,22 @@ function AppInner() {
                   element={
                     <Suspense fallback={<PageLoader />}>
                       <TribunalMinistros />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="temas"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <TribunalTemas />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="comparar"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <ComparadorMinistros />
                     </Suspense>
                   }
                 />

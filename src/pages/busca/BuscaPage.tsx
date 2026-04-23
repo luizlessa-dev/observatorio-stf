@@ -9,6 +9,7 @@ import { TRIBUNAIS_SUPERIORES, TRIBUNAIS_FEDERAIS, TRIBUNAIS_ESTADUAIS } from '@
 import { exportProcessosToCSV, fetchProcessosForExport } from '@/lib/exportCSV'
 import { NewsletterForm } from '@/components/shared/NewsletterForm'
 import { AdSlot } from '@/components/shared/AdSlot'
+import { AlertaForm } from '@/components/shared/AlertaForm'
 
 interface Filters {
   q: string
@@ -352,6 +353,16 @@ export default function BuscaPage() {
 
           {/* Ad após a tabela — não interrompe fluxo, usuário já consumiu conteúdo */}
           <AdSlot slot="busca-results-bottom" format="horizontal" />
+
+          {/* Alerta — só quando há busca por texto */}
+          {applied.q && (
+            <AlertaForm
+              termoBusca={applied.q}
+              tribunal={applied.tribunal || undefined}
+              variant="inline"
+              className="rounded-xl border bg-amber-50/60 p-4"
+            />
+          )}
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">

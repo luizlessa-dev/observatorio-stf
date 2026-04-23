@@ -6,7 +6,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { SEO } from '@/components/shared/SEO'
 import { AdSlot } from '@/components/shared/AdSlot'
 import { useProcesso } from '@/hooks/useProcessos'
+import { useProcessoTimeline } from '@/hooks/useProcessoTimeline'
 import { useTribunalFromPath } from '@/hooks/useTribunal'
+import { AlertaForm } from '@/components/shared/AlertaForm'
 
 function fmtDate(d: string | null) {
   if (!d) return '—'
@@ -59,10 +61,11 @@ function ShareButton({ title, text, url }: { title: string; text: string; url: s
   )
 }
 
-export default function ProcessoDetalhe() {
-  const { id } = useParams<{ id: string }>()
+// Inner component — pode chamar hooks sem violar a regra dos hooks
+function ProcessoDetalheContent({ id }: { id: string }) {
   const { tribunalId, tribunal } = useTribunalFromPath()
-  const { data: p, isLoading, error } = useProcesso(id!)
+  const { data: p, isLoading, error } = useProcesso(id)
+  const { data: timeline } = useProcessoTimeline(p?.numero_processo, id)
 
   if (isLoading) return <div className="py-12 text-center text-muted-foreground">Carregando…</div>
   if (error || !p) return <div className="py-12 text-center text-muted-foreground">Processo não encontrado.</div>
@@ -97,6 +100,8 @@ export default function ProcessoDetalhe() {
           "url": `https://judiciario.transparenciafederal.org/${tribunalId.toLowerCase()}/processo/${id}`,
         })}</script>
       </Helmet>
+
+      {/* Cabeçalho */}
       <div>
         <div className="flex items-center justify-between">
           <Link
@@ -119,6 +124,7 @@ export default function ProcessoDetalhe() {
         </h1>
       </div>
 
+      {/* Metadados */}
       <Card>
         <CardContent className="grid gap-4 p-5 sm:grid-cols-2">
           {fields.map(
@@ -136,9 +142,10 @@ export default function ProcessoDetalhe() {
         </CardContent>
       </Card>
 
-      {/* Ad entre metadados e ementa — alta visibilidade, dwell time alto */}
+      {/* Ad */}
       <AdSlot slot="processo-detalhe-mid" format="horizontal" className="rounded-lg overflow-hidden" />
 
+      {/* Ementa */}
       {p.ementa && (
         <Card>
           <CardContent className="p-5">
@@ -150,6 +157,7 @@ export default function ProcessoDetalhe() {
         </Card>
       )}
 
+      {/* Tema */}
       {p.tema && (
         <Card>
           <CardContent className="p-5">
@@ -161,6 +169,60 @@ export default function ProcessoDetalhe() {
         </Card>
       )}
 
+      {/* ── Linha do tempo ─────────────────────────────────────────────────────── */}
+      {timeline && timeline.length > 0 && (
+        <div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Outras decisões neste processo ({timeline.length})
+          </p>
+          <ol className="relative border-l border-border pl-6 space-y-4">
+            {/* Decisão atual marcada no topo */}
+            <li className="relative">
+              <span
+                className="absolute -left-[1.45rem] top-1 h-3 w-3 rounded-full border-2 border-white ring-2"
+                style={{ backgroundColor: tribunal?.cor ?? '#1e3a5f' }}
+              />
+              <p className="text-xs font-semibold" style={{ color: tribunal?.cor }}>
+                {fmtDate(p.data_decisao)} — Decisão atual
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {p.tipo_decisao || p.orgao_julgador || '—'}
+              </p>
+            </li>
+            {timeline
+              .slice()
+              .sort((a, b) => (a.data_decisao ?? '').localeCompare(b.data_decisao ?? ''))
+              .map((entry) => (
+                <li key={entry.id} className="relative">
+                  <span className="absolute -left-[1.45rem] top-1 h-3 w-3 rounded-full border-2 border-white bg-muted-foreground/40 ring-1 ring-border" />
+                  <Link
+                    to={`/${tribunalId.toLowerCase()}/processo/${entry.id}`}
+                    className="text-xs font-medium hover:underline"
+                  >
+                    {fmtDate(entry.data_decisao)}
+                    {entry.tipo_decisao ? ` — ${entry.tipo_decisao}` : ''}
+                  </Link>
+                  {entry.orgao_julgador && (
+                    <p className="text-xs text-muted-foreground">{entry.orgao_julgador}</p>
+                  )}
+                  {entry.relator && (
+                    <p className="text-xs text-muted-foreground">Rel. {entry.relator}</p>
+                  )}
+                </li>
+              ))}
+          </ol>
+        </div>
+      )}
+
+      {/* Alerta de novas decisões */}
+      {p.numero_processo && (
+        <AlertaForm
+          numeroProcesso={p.numero_processo}
+          tribunal={p.tribunal}
+        />
+      )}
+
+      {/* Link oficial */}
       {p.link_oficial && (
         <a
           href={p.link_oficial}
@@ -174,4 +236,10 @@ export default function ProcessoDetalhe() {
       )}
     </div>
   )
+}
+
+export default function ProcessoDetalhe() {
+  const { id } = useParams<{ id: string }>()
+  if (!id) return <div className="py-12 text-center text-muted-foreground">ID inválido.</div>
+  return <ProcessoDetalheContent id={id} />
 }

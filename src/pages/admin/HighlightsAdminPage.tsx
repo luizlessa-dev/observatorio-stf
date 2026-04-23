@@ -317,6 +317,121 @@ function HighlightForm({
 // Página principal
 // ---------------------------------------------------------------------------
 
+// ── Painel de classificação IA ────────────────────────────────────────────────
+const TRIBUNAIS_OPTS = ['', 'TST', 'TRF2', 'TRF3', 'TRF4', 'TRF5', 'TJMS', 'TJTO', 'TJPE', 'TJRO']
+const AI_FN = `${SUPABASE_URL}/functions/v1/ai-classify-temas`
+
+function IaClassificacaoPanel({ senha }: { senha: string }) {
+  const [tribunal, setTribunal] = useState('')
+  const [batch, setBatch] = useState(10)
+  const [dryRun, setDryRun] = useState(true)
+  const [result, setResult] = useState<Record<string, unknown> | null>(null)
+  const [running, setRunning] = useState(false)
+  const [error, setError] = useState('')
+
+  async function run() {
+    setRunning(true)
+    setError('')
+    setResult(null)
+    try {
+      const params = new URLSearchParams({ batch: String(batch) })
+      if (tribunal) params.set('tribunal', tribunal)
+      if (dryRun) params.set('dryRun', '1')
+      const res = await fetch(`${AI_FN}?${params}`, {
+        headers: authHeaders(senha),
+      })
+      const data = await res.json()
+      if (!res.ok) setError(data.error || 'Erro desconhecido')
+      else setResult(data)
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  return (
+    <div className="rounded-xl border bg-white p-5 shadow-sm space-y-4">
+      <div className="flex items-center gap-2">
+        <span className="text-xl">🤖</span>
+        <div>
+          <h2 className="font-semibold">Classificação IA de Temas</h2>
+          <p className="text-xs text-slate-500">
+            Usa Claude Haiku para classificar ementas sem tema em categorias jurídicas padronizadas
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-end gap-3">
+        <div>
+          <label className="block text-xs font-medium text-slate-500 mb-1">Tribunal</label>
+          <select
+            value={tribunal}
+            onChange={(e) => setTribunal(e.target.value)}
+            className="rounded border px-2 py-1.5 text-sm"
+          >
+            {TRIBUNAIS_OPTS.map((t) => (
+              <option key={t} value={t}>{t || 'Todos'}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-slate-500 mb-1">Lote (máx 20)</label>
+          <input
+            type="number"
+            min={1} max={20}
+            value={batch}
+            onChange={(e) => setBatch(Math.min(20, Math.max(1, Number(e.target.value))))}
+            className="w-20 rounded border px-2 py-1.5 text-sm"
+          />
+        </div>
+        <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <input
+            type="checkbox"
+            checked={dryRun}
+            onChange={(e) => setDryRun(e.target.checked)}
+          />
+          Dry run (não salva)
+        </label>
+        <button
+          onClick={run}
+          disabled={running}
+          className="rounded bg-violet-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
+        >
+          {running ? 'Classificando…' : '▶ Executar'}
+        </button>
+      </div>
+
+      {error && (
+        <div className="rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      {result && (
+        <div className="rounded bg-slate-50 border px-3 py-3 text-xs font-mono space-y-1">
+          <p>✓ Processados: <strong>{String(result.processados ?? 0)}</strong></p>
+          <p>✓ Classificados: <strong>{String(result.classificados ?? 0)}</strong></p>
+          {result.dry_run && <p className="text-amber-600">⚠ Dry run — nenhuma alteração salva</p>}
+          {result.amostra && (
+            <div className="mt-2">
+              <p className="text-slate-500 mb-1">Amostra:</p>
+              {Object.entries(result.amostra as Record<string, string>).map(([id, cat]) => (
+                <p key={id}><span className="text-slate-400">{id}…</span> → {cat}</p>
+              ))}
+            </div>
+          )}
+          {Array.isArray(result.erros) && result.erros.length > 0 && (
+            <div className="mt-2 text-red-600">
+              {(result.erros as string[]).map((e, i) => <p key={i}>{e}</p>)}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function HighlightsAdminPage() {
   const [senha, setSenha] = useState<string>(() => sessionStorage.getItem('admin_key') ?? '')
   const [authed, setAuthed] = useState(false)
@@ -504,6 +619,9 @@ export default function HighlightsAdminPage() {
             </button>
           </div>
         )}
+
+        {/* ── Painel IA: Classificação de Temas ─────────────────────────────── */}
+        {mode === 'list' && <IaClassificacaoPanel senha={senha} />}
 
         {/* Formulário de criação/edição */}
         {(mode === 'new' || mode === 'edit') && (
