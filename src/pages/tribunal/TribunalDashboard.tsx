@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { StatCardsRow } from '@/components/shared/StatCards'
 import { ProcessoTable } from '@/components/shared/ProcessoTable'
 import { SEO } from '@/components/shared/SEO'
+import { NewsletterForm } from '@/components/shared/NewsletterForm'
 import { useStats, useStatsPorClasse, useStatsPorAno } from '@/hooks/useStats'
 import { useProcessos } from '@/hooks/useProcessos'
 import { useTribunalFromPath } from '@/hooks/useTribunal'
@@ -103,6 +104,9 @@ export default function TribunalDashboard() {
           Ver relatores / ministros →
         </Link>
       </div>
+
+      {/* Newsletter */}
+      <NewsletterForm className="mt-4" />
     </div>
   )
 }

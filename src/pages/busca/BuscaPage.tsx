@@ -7,6 +7,7 @@ import { useProcessos } from '@/hooks/useProcessos'
 import { useClassesFiltro } from '@/hooks/useFiltros'
 import { TRIBUNAIS_SUPERIORES, TRIBUNAIS_FEDERAIS, TRIBUNAIS_ESTADUAIS } from '@/lib/tribunais'
 import { exportProcessosToCSV, fetchProcessosForExport } from '@/lib/exportCSV'
+import { NewsletterForm } from '@/components/shared/NewsletterForm'
 
 interface Filters {
   q: string
@@ -401,6 +402,8 @@ export default function BuscaPage() {
               <ProcessoTable processos={recentes?.data ?? []} showTribunal />
             )}
           </div>
+
+          <NewsletterForm />
         </div>
       )}
     </div>
