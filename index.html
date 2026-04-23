@@ -1,10 +1,71 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1e3a5f" />
+    <meta name="apple-mobile-web-app-title" content="Observatório" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>observatorio-judiciario</title>
+
+    <!-- SEO defaults (overridden by React Helmet per page) -->
+    <title>Observatório Judiciário do Brasil — 180.000+ decisões de 36 tribunais</title>
+    <meta name="description" content="Plataforma pública e independente com 180.000+ decisões judiciais do STF, STJ, TST, TRFs e TJs. Pesquise processos, relatores e estatísticas do Judiciário brasileiro." />
+    <meta name="keywords" content="judiciário brasileiro, STF, STJ, TST, TCU, TRF, tribunal de justiça, processos judiciais, jurisprudência, decisões judiciais, dados abertos, observatório" />
+    <meta name="author" content="Observatório Judiciário do Brasil" />
+    <meta name="robots" content="index, follow" />
+    <meta name="google-site-verification" content="lbQprkAOxLtUuMvGBb954h7-29iT-8vWKYeaor58vKg" />
+    <link rel="canonical" href="https://judiciario.transparenciafederal.org/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Observatório Judiciário do Brasil" />
+    <meta property="og:title" content="Observatório Judiciário do Brasil" />
+    <meta property="og:description" content="180.000+ decisões de 36 tribunais brasileiros. Pesquise processos, relatores e estatísticas." />
+    <meta property="og:url" content="https://judiciario.transparenciafederal.org/" />
+    <meta property="og:image" content="https://judiciario.transparenciafederal.org/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Observatório Judiciário do Brasil — O maior acervo aberto de decisões judiciais do Brasil" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Observatório Judiciário do Brasil" />
+    <meta name="twitter:description" content="180.000+ decisões de 36 tribunais brasileiros. Pesquise processos, relatores e estatísticas." />
+    <meta name="twitter:image" content="https://judiciario.transparenciafederal.org/og-image.png" />
+    <meta name="twitter:image:alt" content="Observatório Judiciário do Brasil" />
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Observatório Judiciário do Brasil",
+      "alternateName": "Observatório Judiciário",
+      "url": "https://judiciario.transparenciafederal.org",
+      "logo": "https://judiciario.transparenciafederal.org/favicon.svg",
+      "description": "Plataforma pública e independente de dados do Judiciário brasileiro com mais de 186 mil decisões judiciais de 36 tribunais."
+    }
+    </script>
+
+    <!-- Structured Data: WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Observatório Judiciário do Brasil",
+      "url": "https://judiciario.transparenciafederal.org",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://judiciario.transparenciafederal.org/busca?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

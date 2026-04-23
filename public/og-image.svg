@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f1e30"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Logo balança -->
+  <g transform="translate(80, 80)" stroke="#d4af37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="40" y1="20" x2="40" y2="100"/>
+    <line x1="10" y1="40" x2="70" y2="40"/>
+    <circle cx="40" cy="20" r="4" fill="#d4af37"/>
+    <path d="M10 40 L0 62 L20 62 Z" fill="#d4af37"/>
+    <path d="M70 40 L60 62 L80 62 Z" fill="#d4af37"/>
+  </g>
+
+  <!-- Eyebrow -->
+  <text x="80" y="260" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#d4af37" letter-spacing="3">
+    OBSERVATÓRIO JUDICIÁRIO DO BRASIL
+  </text>
+
+  <!-- H1 -->
+  <text x="80" y="350" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="800" fill="#fff">
+    O maior acervo aberto de
+  </text>
+  <text x="80" y="420" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="800" fill="#fff">
+    decisões judiciais do Brasil
+  </text>
+
+  <!-- Stats -->
+  <text x="80" y="510" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#cbd5e1">
+    186 mil+ decisões · 36 tribunais · atualizado diariamente
+  </text>
+
+  <!-- URL -->
+  <text x="80" y="580" font-family="'Geist', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" fill="#d4af37">
+    judiciario.transparenciafederal.org
+  </text>
+</svg>

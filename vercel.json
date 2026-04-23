@@ -1,0 +1,25 @@
+{
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "observatoriodostf.org" }],
+      "destination": "https://judiciario.transparenciafederal.org/stf",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "www.observatoriodostf.org" }],
+      "destination": "https://judiciario.transparenciafederal.org/stf",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "judiciario.transparenciafederal.com" }],
+      "destination": "https://judiciario.transparenciafederal.org/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

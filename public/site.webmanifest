@@ -1,0 +1,17 @@
+{
+  "name": "Observatório Judiciário do Brasil",
+  "short_name": "Observatório",
+  "description": "Plataforma pública com dados abertos de 36 tribunais brasileiros",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#1e3a5f",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "lang": "pt-BR"
+}
