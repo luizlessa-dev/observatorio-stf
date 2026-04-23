@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { SEO } from '@/components/shared/SEO'
+import { AdSlot } from '@/components/shared/AdSlot'
 import { useProcesso } from '@/hooks/useProcessos'
 import { useTribunalFromPath } from '@/hooks/useTribunal'
 
@@ -134,6 +135,9 @@ export default function ProcessoDetalhe() {
           )}
         </CardContent>
       </Card>
+
+      {/* Ad entre metadados e ementa — alta visibilidade, dwell time alto */}
+      <AdSlot slot="processo-detalhe-mid" format="horizontal" className="rounded-lg overflow-hidden" />
 
       {p.ementa && (
         <Card>

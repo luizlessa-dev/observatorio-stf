@@ -8,6 +8,7 @@ import { useClassesFiltro } from '@/hooks/useFiltros'
 import { TRIBUNAIS_SUPERIORES, TRIBUNAIS_FEDERAIS, TRIBUNAIS_ESTADUAIS } from '@/lib/tribunais'
 import { exportProcessosToCSV, fetchProcessosForExport } from '@/lib/exportCSV'
 import { NewsletterForm } from '@/components/shared/NewsletterForm'
+import { AdSlot } from '@/components/shared/AdSlot'
 
 interface Filters {
   q: string
@@ -348,6 +349,9 @@ export default function BuscaPage() {
           </div>
 
           <ProcessoTable processos={data?.data ?? []} showTribunal />
+
+          {/* Ad após a tabela — não interrompe fluxo, usuário já consumiu conteúdo */}
+          <AdSlot slot="busca-results-bottom" format="horizontal" />
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
