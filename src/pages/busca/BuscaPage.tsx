@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
 import { ProcessoTable } from '@/components/shared/ProcessoTable'
@@ -25,32 +25,60 @@ const EMPTY_FILTERS: Filters = {
   dataFim: '',
 }
 
+/** Sugestões de busca para o empty state */
+const QUICK_SEARCHES = [
+  { label: 'Habeas corpus STF', q: 'habeas corpus', tribunal: 'STF' },
+  { label: 'Licitação TCU', q: 'licitação contrato', tribunal: 'TCU' },
+  { label: 'FGTS TST', q: 'FGTS', tribunal: 'TST' },
+  { label: 'Recurso especial STJ', q: 'recurso especial', tribunal: 'STJ' },
+]
+
 export default function BuscaPage() {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const initialQ = searchParams.get('q') || ''
-  const initialFilters: Filters = { ...EMPTY_FILTERS, q: initialQ }
+  const initialTribunal = searchParams.get('tribunal') || ''
 
-  const [draft, setDraft] = useState<Filters>(initialFilters)
-  const [applied, setApplied] = useState<Filters>(initialFilters)
+  const [draft, setDraft] = useState<Filters>({
+    ...EMPTY_FILTERS,
+    q: initialQ,
+    tribunal: initialTribunal,
+  })
+  const [applied, setApplied] = useState<Filters>({
+    ...EMPTY_FILTERS,
+    q: initialQ,
+    tribunal: initialTribunal,
+  })
   const [page, setPage] = useState(0)
-  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(
+    !!(initialTribunal || searchParams.get('classe') || searchParams.get('relator')),
+  )
 
-  // Se a URL mudar (usuário navegando), refletir no form
+  // Sincroniza URL → state (navegação para trás/frente)
   useEffect(() => {
-    if (initialQ && initialQ !== applied.q) {
-      const f = { ...EMPTY_FILTERS, q: initialQ }
+    const q = searchParams.get('q') || ''
+    const tribunal = searchParams.get('tribunal') || ''
+    if (q !== applied.q || tribunal !== applied.tribunal) {
+      const f = { ...EMPTY_FILTERS, q, tribunal }
       setDraft(f)
       setApplied(f)
       setPage(0)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialQ])
+  }, [searchParams])
 
-  const { data: classesOptions } = useClassesFiltro(applied.tribunal || undefined)
+  const { data: classesOptions } = useClassesFiltro(
+    (applied.tribunal as Parameters<typeof useClassesFiltro>[0]) || undefined,
+  )
+
+  // Últimas decisões para empty state (sem filtros)
+  const { data: recentes, isLoading: loadingRecentes } = useProcessos({
+    page: 0,
+    pageSize: 10,
+  })
 
   const { data, isLoading } = useProcessos({
     search: applied.q || undefined,
-    tribunal: applied.tribunal || undefined,
+    tribunal: applied.tribunal as Parameters<typeof useProcessos>[0]['tribunal'] || undefined,
     classe: applied.classe || undefined,
     relator: applied.relator || undefined,
     dataInicio: applied.dataInicio || undefined,
@@ -66,49 +94,85 @@ export default function BuscaPage() {
     [applied],
   )
 
-  const activeFilterCount = useMemo(
-    () => Object.values(draft).filter((v) => v.length > 0).length,
-    [draft],
-  )
+  function updateField<K extends keyof Filters>(key: K, value: Filters[K]) {
+    setDraft((prev) => ({ ...prev, [key]: value }))
+    // Resetar classe ao trocar tribunal
+    if (key === 'tribunal') setDraft((prev) => ({ ...prev, tribunal: value as string, classe: '' }))
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setApplied(draft)
     setPage(0)
+    // Atualiza URL (compartilhável)
+    const params: Record<string, string> = {}
+    if (draft.q) params.q = draft.q
+    if (draft.tribunal) params.tribunal = draft.tribunal
+    if (draft.classe) params.classe = draft.classe
+    if (draft.relator) params.relator = draft.relator
+    if (draft.dataInicio) params.dataInicio = draft.dataInicio
+    if (draft.dataFim) params.dataFim = draft.dataFim
+    setSearchParams(params, { replace: true })
+  }
+
+  function removeFilter(key: keyof Filters) {
+    const next = { ...applied, [key]: '' }
+    setApplied(next)
+    setDraft(next)
+    setPage(0)
+    const params: Record<string, string> = {}
+    Object.entries(next).forEach(([k, v]) => { if (v) params[k] = v })
+    setSearchParams(params, { replace: true })
   }
 
   function handleClear() {
     setDraft(EMPTY_FILTERS)
     setApplied(EMPTY_FILTERS)
     setPage(0)
+    setSearchParams({}, { replace: true })
   }
 
-  function updateField<K extends keyof Filters>(key: K, value: Filters[K]) {
-    setDraft((prev) => ({ ...prev, [key]: value }))
-  }
+  const applyQuick = useCallback(({ q, tribunal }: { q: string; tribunal: string }) => {
+    const f = { ...EMPTY_FILTERS, q, tribunal }
+    setDraft(f)
+    setApplied(f)
+    setPage(0)
+    setSearchParams({ q, tribunal }, { replace: true })
+  }, [setSearchParams])
+
+  const activePills: { key: keyof Filters; label: string }[] = [
+    applied.q ? { key: 'q', label: `"${applied.q}"` } : null,
+    applied.tribunal ? { key: 'tribunal', label: `tribunal: ${applied.tribunal}` } : null,
+    applied.classe ? { key: 'classe', label: `classe: ${applied.classe}` } : null,
+    applied.relator ? { key: 'relator', label: `relator: ${applied.relator}` } : null,
+    applied.dataInicio ? { key: 'dataInicio', label: `de: ${applied.dataInicio}` } : null,
+    applied.dataFim ? { key: 'dataFim', label: `até: ${applied.dataFim}` } : null,
+  ].filter(Boolean) as { key: keyof Filters; label: string }[]
 
   return (
     <div className="space-y-6">
       <SEO
         title="Busca de Processos"
-        description="Pesquise processos judiciais em todos os tribunais brasileiros. Filtros por tribunal, classe, relator e período."
+        description="Pesquise processos judiciais em todos os tribunais brasileiros por ementa, tema, relator, classe e período."
         path="/busca"
       />
 
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Busca</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Pesquise em mais de 100 mil processos de 36 tribunais
+          Pesquise em mais de 190 mil decisões de 37 tribunais
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-card p-4">
+      {/* Formulário */}
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border bg-card p-4 shadow-sm">
         <div className="flex gap-2">
           <Input
-            placeholder="Buscar por ementa, tema ou número do processo…"
+            placeholder="Buscar por ementa, tema, número do processo…"
             value={draft.q}
-            onChange={(e) => updateField('q', e.target.value)}
+            onChange={(e) => setDraft((p) => ({ ...p, q: e.target.value }))}
             className="flex-1"
+            autoFocus
           />
           <button
             type="submit"
@@ -125,25 +189,21 @@ export default function BuscaPage() {
             className="text-xs font-medium text-muted-foreground hover:text-foreground"
           >
             {showAdvanced ? '− Ocultar filtros' : '+ Filtros avançados'}
-            {activeFilterCount > 0 && !showAdvanced && (
-              <span className="ml-1.5 rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
-                {activeFilterCount}
-              </span>
-            )}
           </button>
           {hasFilters && (
             <button
               type="button"
               onClick={handleClear}
-              className="text-xs font-medium text-muted-foreground hover:text-foreground"
+              className="text-xs font-medium text-destructive/70 hover:text-destructive"
             >
-              Limpar filtros
+              Limpar tudo
             </button>
           )}
         </div>
 
         {showAdvanced && (
           <div className="grid gap-4 border-t pt-4 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Tribunal */}
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">Tribunal</label>
               <select
@@ -152,7 +212,7 @@ export default function BuscaPage() {
                 className="w-full rounded-md border bg-background px-3 py-2 text-sm"
               >
                 <option value="">Todos os tribunais</option>
-                <optgroup label="Tribunais Superiores">
+                <optgroup label="Superiores">
                   {TRIBUNAIS_SUPERIORES.map((t) => (
                     <option key={t.id} value={t.id}>{t.nome} — {t.nomeCompleto}</option>
                   ))}
@@ -170,6 +230,7 @@ export default function BuscaPage() {
               </select>
             </div>
 
+            {/* Classe */}
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">Classe</label>
               <select
@@ -186,6 +247,7 @@ export default function BuscaPage() {
               </select>
             </div>
 
+            {/* Relator */}
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">Relator</label>
               <Input
@@ -195,8 +257,9 @@ export default function BuscaPage() {
               />
             </div>
 
+            {/* Data início */}
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">Data início</label>
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">Decisão a partir de</label>
               <Input
                 type="date"
                 value={draft.dataInicio}
@@ -204,8 +267,9 @@ export default function BuscaPage() {
               />
             </div>
 
+            {/* Data fim */}
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">Data fim</label>
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">Decisão até</label>
               <Input
                 type="date"
                 value={draft.dataFim}
@@ -216,64 +280,92 @@ export default function BuscaPage() {
         )}
       </form>
 
-      {hasFilters && (
+      {/* Pills de filtros ativos — clicáveis para remover */}
+      {activePills.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {applied.q && <FilterPill label={`texto: "${applied.q}"`} />}
-          {applied.tribunal && <FilterPill label={`tribunal: ${applied.tribunal}`} />}
-          {applied.classe && <FilterPill label={`classe: ${applied.classe}`} />}
-          {applied.relator && <FilterPill label={`relator: ${applied.relator}`} />}
-          {applied.dataInicio && <FilterPill label={`de: ${applied.dataInicio}`} />}
-          {applied.dataFim && <FilterPill label={`até: ${applied.dataFim}`} />}
+          {activePills.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => removeFilter(key)}
+              className="inline-flex items-center gap-1 rounded-full border bg-background px-2.5 py-0.5 text-xs font-medium hover:border-destructive/50 hover:text-destructive"
+              title="Remover filtro"
+            >
+              {label}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          ))}
         </div>
       )}
 
-      {hasFilters && (
+      {/* Resultados */}
+      {hasFilters ? (
         <>
-          <p className="text-sm text-muted-foreground">
-            {isLoading
-              ? 'Buscando…'
-              : `${data?.count.toLocaleString('pt-BR') ?? 0} resultado${(data?.count ?? 0) === 1 ? '' : 's'}`}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              {isLoading
+                ? 'Buscando…'
+                : `${(data?.count ?? 0).toLocaleString('pt-BR')} resultado${(data?.count ?? 0) !== 1 ? 's' : ''}`}
+            </p>
+          </div>
 
           <ProcessoTable processos={data?.data ?? []} showTribunal />
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               <button
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                onClick={() => { setPage((p) => Math.max(0, p - 1)); window.scrollTo(0, 0) }}
                 disabled={page === 0}
-                className="rounded border px-3 py-1.5 text-sm disabled:opacity-40"
+                className="rounded border px-3 py-1.5 text-sm disabled:opacity-40 hover:bg-muted"
               >
                 ← Anterior
               </button>
               <span className="text-sm text-muted-foreground">
-                Página {page + 1} de {totalPages.toLocaleString('pt-BR')}
+                {page + 1} / {totalPages.toLocaleString('pt-BR')}
               </span>
               <button
-                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                onClick={() => { setPage((p) => Math.min(totalPages - 1, p + 1)); window.scrollTo(0, 0) }}
                 disabled={page >= totalPages - 1}
-                className="rounded border px-3 py-1.5 text-sm disabled:opacity-40"
+                className="rounded border px-3 py-1.5 text-sm disabled:opacity-40 hover:bg-muted"
               >
                 Próxima →
               </button>
             </div>
           )}
         </>
-      )}
+      ) : (
+        /* Empty state — sugestões + últimas decisões */
+        <div className="space-y-8">
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Pesquisas rápidas
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {QUICK_SEARCHES.map((s) => (
+                <button
+                  key={s.label}
+                  type="button"
+                  onClick={() => applyQuick(s)}
+                  className="rounded-full border bg-background px-3 py-1.5 text-xs font-medium hover:bg-muted"
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {!hasFilters && (
-        <div className="rounded-lg border border-dashed bg-muted/40 p-8 text-center text-sm text-muted-foreground">
-          Digite um termo de busca ou aplique filtros para começar.
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Decisões recentes
+            </p>
+            {loadingRecentes ? (
+              <div className="h-40 animate-pulse rounded-lg bg-muted/40" />
+            ) : (
+              <ProcessoTable processos={recentes?.data ?? []} showTribunal />
+            )}
+          </div>
         </div>
       )}
     </div>
-  )
-}
-
-function FilterPill({ label }: { label: string }) {
-  return (
-    <span className="inline-flex items-center rounded-full border bg-background px-2.5 py-0.5 text-xs font-medium">
-      {label}
-    </span>
   )
 }

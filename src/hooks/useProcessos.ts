@@ -47,6 +47,25 @@ export function useProcessos({
     queryFn: async () => {
       if (!supabase) throw new Error('Supabase não configurado')
 
+      // Busca textual → RPC com FTS real (GIN index + ts_rank)
+      if (search) {
+        const { data, error } = await supabase.rpc('buscar_processos', {
+          q: search,
+          p_tribunal: tribunal ?? null,
+          p_classe: classe ?? null,
+          p_relator: relator ?? null,
+          p_data_inicio: dataInicio ?? null,
+          p_data_fim: dataFim ?? null,
+          p_page: page,
+          p_page_size: pageSize,
+        })
+        if (error) throw error
+        const rows = (data ?? []) as (Processo & { total_count: number })[]
+        const total = rows[0]?.total_count ?? 0
+        return { data: rows as Processo[], count: total }
+      }
+
+      // Sem busca textual → query direta com índices B-tree (rápido)
       let query = supabase
         .from('processos_publico')
         .select('*', { count: 'exact' })
@@ -54,7 +73,6 @@ export function useProcessos({
       if (tribunal) query = query.eq('tribunal', tribunal)
       if (classe) query = query.eq('classe', classe)
       if (relator) query = query.ilike('relator', `%${relator}%`)
-      if (search) query = query.or(`ementa.ilike.%${search}%,tema.ilike.%${search}%,numero_processo.ilike.%${search}%`)
       if (dataInicio) query = query.gte('data_decisao', dataInicio)
       if (dataFim) query = query.lte('data_decisao', dataFim)
 
