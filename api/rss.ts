@@ -4,8 +4,11 @@
  */
 export const config = { runtime: 'edge' }
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL!
-const SUPABASE_ANON = process.env.VITE_SUPABASE_ANON_KEY!
+// process.env is available in Vercel Edge Runtime (polyfilled)
+declare const process: { env: Record<string, string | undefined> }
+
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL ?? ''
+const SUPABASE_ANON = process.env.VITE_SUPABASE_ANON_KEY ?? ''
 const BASE_URL = 'https://judiciario.transparenciafederal.org'
 
 interface Highlight {
