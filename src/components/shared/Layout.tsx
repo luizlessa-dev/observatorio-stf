@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { TRIBUNAIS_SUPERIORES, TRIBUNAIS_FEDERAIS, TRIBUNAIS_ESTADUAIS } from '@/lib/tribunais'
 
@@ -19,6 +20,14 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <Helmet>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Observatório Judiciário — Destaques"
+          href="https://judiciario.transparenciafederal.org/rss.xml"
+        />
+      </Helmet>
       {/* Header */}
       <header className="sticky top-0 z-50 bg-navy-800 shadow-sm">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
@@ -129,6 +138,14 @@ export default function Layout() {
                 <NavLink to="/metodologia" className="text-xs text-slate-500 no-underline hover:text-gold-400">Metodologia</NavLink>
                 <NavLink to="/dados-abertos" className="text-xs text-slate-500 no-underline hover:text-gold-400">Dados abertos</NavLink>
                 <NavLink to="/api" className="text-xs text-slate-500 no-underline hover:text-gold-400">API pública</NavLink>
+                <a
+                  href="/rss.xml"
+                  className="inline-flex items-center gap-1 text-xs text-slate-500 no-underline hover:text-gold-400"
+                  title="Feed RSS de destaques"
+                >
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+                  RSS
+                </a>
               </div>
             </div>
           </div>

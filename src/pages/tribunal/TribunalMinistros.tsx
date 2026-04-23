@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { SEO } from '@/components/shared/SEO'
@@ -6,12 +7,17 @@ import { useTribunalFromPath } from '@/hooks/useTribunal'
 
 function fmtDate(d: string | null) {
   if (!d) return '—'
-  const s = String(d)
-  if (s.length >= 10) {
-    const [y, m, day] = s.slice(0, 10).split('-')
-    return `${day}/${m}/${y}`
-  }
-  return s
+  const [y, m, day] = String(d).slice(0, 10).split('-')
+  return `${day}/${m}/${y}`
+}
+
+export function slugify(name: string) {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 export default function TribunalMinistros() {
@@ -35,32 +41,37 @@ export default function TribunalMinistros() {
       </div>
 
       {isLoading ? (
-        <div className="py-12 text-center text-muted-foreground">Carregando…</div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <div key={i} className="h-24 animate-pulse rounded-lg bg-muted/40" />
+          ))}
+        </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {ministros?.map((m) => {
-            const topClasses = Object.entries(m.classes)
-              .sort((a, b) => b[1] - a[1])
-              .slice(0, 3)
-
-            return (
-              <Card key={m.nome} className="transition-shadow hover:shadow-md">
+          {ministros?.map((m) => (
+            <Link
+              key={m.nome}
+              to={`/${tribunalId.toLowerCase()}/ministro/${slugify(m.nome)}`}
+              state={{ ministro: m }}
+              className="no-underline"
+            >
+              <Card className="h-full transition-shadow hover:shadow-md">
                 <CardContent className="p-5">
-                  <div className="text-sm font-semibold">{m.nome}</div>
+                  <div className="text-sm font-semibold leading-snug">{m.nome}</div>
                   <div className="mt-1 text-xs text-muted-foreground">
                     {m.processos.toLocaleString('pt-BR')} processos · última decisão {fmtDate(m.ultimaDecisao)}
                   </div>
                   <div className="mt-2 flex flex-wrap gap-1">
-                    {topClasses.map(([cls, count]) => (
-                      <Badge key={cls} variant="secondary" className="text-[10px]">
-                        {cls} ({count})
+                    {m.classePrincipal && (
+                      <Badge variant="secondary" className="text-[10px]">
+                        {m.classePrincipal}
                       </Badge>
-                    ))}
+                    )}
                   </div>
                 </CardContent>
               </Card>
-            )
-          })}
+            </Link>
+          ))}
         </div>
       )}
     </div>

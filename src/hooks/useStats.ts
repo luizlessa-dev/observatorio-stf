@@ -13,6 +13,7 @@ export interface TribunalStats {
 export function useStats(tribunal?: TribunalId) {
   return useQuery({
     queryKey: ['stats', tribunal],
+    staleTime: 10 * 60 * 1000,
     queryFn: async () => {
       if (!supabase) throw new Error('Supabase não configurado')
 
@@ -26,61 +27,50 @@ export function useStats(tribunal?: TribunalId) {
   })
 }
 
+/** Usa view SQL stats_por_classe_tribunal — sem full scan client-side */
 export function useStatsPorClasse(tribunal?: TribunalId) {
   return useQuery({
     queryKey: ['stats-classe', tribunal],
+    staleTime: 10 * 60 * 1000,
     queryFn: async () => {
       if (!supabase) throw new Error('Supabase não configurado')
 
       let query = supabase
-        .from('processos_publico')
-        .select('classe')
+        .from('stats_por_classe_tribunal')
+        .select('classe, total')
+        .order('total', { ascending: false })
+        .limit(15)
 
       if (tribunal) query = query.eq('tribunal', tribunal)
 
       const { data, error } = await query
       if (error) throw error
 
-      const counts: Record<string, number> = {}
-      for (const row of data ?? []) {
-        const c = row.classe || 'Outro'
-        counts[c] = (counts[c] || 0) + 1
-      }
-
-      return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 15)
-        .map(([name, value]) => ({ name, value }))
+      return (data ?? []).map((r) => ({ name: r.classe as string, value: r.total as number }))
     },
   })
 }
 
+/** Usa view SQL stats_por_ano_tribunal — sem full scan client-side */
 export function useStatsPorAno(tribunal?: TribunalId) {
   return useQuery({
     queryKey: ['stats-ano', tribunal],
+    staleTime: 10 * 60 * 1000,
     queryFn: async () => {
       if (!supabase) throw new Error('Supabase não configurado')
 
       let query = supabase
-        .from('processos_publico')
-        .select('data_decisao')
-        .not('data_decisao', 'is', null)
+        .from('stats_por_ano_tribunal')
+        .select('ano, total')
+        .order('ano', { ascending: false })
+        .limit(12)
 
       if (tribunal) query = query.eq('tribunal', tribunal)
 
       const { data, error } = await query
       if (error) throw error
 
-      const counts: Record<string, number> = {}
-      for (const row of data ?? []) {
-        const year = String(row.data_decisao).slice(0, 4)
-        counts[year] = (counts[year] || 0) + 1
-      }
-
-      return Object.entries(counts)
-        .sort((a, b) => b[0].localeCompare(a[0]))
-        .slice(0, 12)
-        .map(([name, value]) => ({ name, value }))
+      return (data ?? []).map((r) => ({ name: r.ano as string, value: r.total as number }))
     },
   })
 }
