@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { Card, CardContent } from '@/components/ui/card'
 import { ProcessoTable } from '@/components/shared/ProcessoTable'
 import { SEO } from '@/components/shared/SEO'
@@ -12,6 +13,53 @@ import { useStats } from '@/hooks/useStats'
 import { useProcessos } from '@/hooks/useProcessos'
 import { useLastSync, formatRelativeTime } from '@/hooks/useLastSync'
 import { TRIBUNAIS_SUPERIORES, TRIBUNAIS_FEDERAIS, TRIBUNAIS_ESTADUAIS, type TribunalConfig } from '@/lib/tribunais'
+
+const FAQ_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'O que é o Observatório Judiciário do Brasil?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Plataforma pública e gratuita com mais de 200.000 decisões judiciais de 37 tribunais brasileiros, incluindo STF, STJ, TST, TCU e todos os TRFs e Tribunais de Justiça estaduais. Os dados são atualizados diariamente via DataJud/CNJ e APIs públicas dos tribunais.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Como pesquisar jurisprudência nos tribunais brasileiros?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Acesse a busca em judiciario.transparenciafederal.org/busca e filtre por ementa, relator, classe processual, tribunal e período. O acesso é gratuito e não exige cadastro. É possível exportar resultados em CSV.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Quais tribunais estão cobertos pelo Observatório?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'STF, STJ, TST, TCU, TRF1, TRF2, TRF3, TRF4, TRF5, TRF6 e 27 Tribunais de Justiça estaduais — 37 tribunais brasileiros no total, com cobertura de decisões de 2015 até hoje.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'As decisões judiciais do Observatório são confiáveis?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sim. Os dados são coletados diretamente das APIs oficiais dos tribunais (DataJud/CNJ para a maioria) e do portal oficial do STF, sem intermediários editoriais. Cada decisão inclui link para o portal oficial do tribunal.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'É possível acompanhar um processo judicial específico?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Sim. Pesquise o número do processo na busca e crie um alerta por email — você receberá notificação quando uma nova decisão for publicada para aquele processo. O serviço é gratuito.',
+      },
+    },
+  ],
+}
 
 // TJs mais populares por volume/conhecimento — exibidos expandidos
 const TJS_POPULARES = ['TJSP', 'TJRJ', 'TJMG', 'TJRS', 'TJPR', 'TJSC', 'TJBA', 'TJDFT']
@@ -119,9 +167,12 @@ export default function HomePage() {
     <div className="space-y-10">
       <SEO
         title="Pesquise decisões do Judiciário brasileiro"
-        description="Plataforma pública e independente com 186 mil+ decisões judiciais de 36 tribunais. Pesquise por ementa, relator ou número do processo."
+        description="Plataforma pública e independente com 200.000+ decisões judiciais do STF, STJ, TST, TRFs e TJs. Pesquise processos, relatores e estatísticas do Judiciário brasileiro."
         path="/"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(FAQ_JSON_LD)}</script>
+      </Helmet>
 
       <HeroSearch
         lastSync={formatRelativeTime(lastSyncDate)}

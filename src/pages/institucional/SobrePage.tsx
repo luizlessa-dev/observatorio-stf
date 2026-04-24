@@ -35,7 +35,7 @@ const BASE = 'https://corklqwtrblervixxtan.supabase.co/rest/v1'
 
 function PageSobre() {
   const stats = [
-    { label: 'Decisões indexadas', value: '190.000+' },
+    { label: 'Decisões indexadas', value: '200.000+' },
     { label: 'Tribunais cobertos', value: '37' },
     { label: 'Atualização', value: 'Diária' },
     { label: 'Acesso', value: 'Gratuito' },
@@ -47,7 +47,7 @@ function PageSobre() {
     { tribunal: 'TST', descricao: 'DataJud CNJ — endpoint dedicado TST' },
     { tribunal: 'TCU', descricao: 'API de Pesquisa Integrada (pesquisa.apps.tcu.gov.br)' },
     { tribunal: 'TRFs 1–6', descricao: 'DataJud CNJ — batches por tribunal' },
-    { tribunal: '26 TJs', descricao: 'DataJud CNJ — justiça estadual' },
+    { tribunal: '27 TJs', descricao: 'DataJud CNJ — justiça estadual' },
   ]
 
   return (
@@ -85,6 +85,35 @@ function PageSobre() {
         </InfoCard>
       </Section>
 
+      {/* ── Criador — sinal E-E-A-T ──────────────────────────────────────────── */}
+      <Section title="Quem faz o Observatório">
+        <div className="rounded-lg border bg-card p-5 flex flex-col sm:flex-row gap-4">
+          <div className="flex-1 space-y-1.5">
+            <p className="font-semibold text-sm">Luiz Lessa</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Engenheiro de software e fundador da{' '}
+              <strong className="text-foreground">Lessa Labs Tecnologia Ltda.</strong>{' '}
+              (CNPJ 65.659.055/0001-53). Desenvolve ferramentas de infraestrutura de dados
+              públicos com foco em transparência institucional e acesso à informação.
+            </p>
+            <p className="text-xs text-muted-foreground pt-1">
+              Observatório em operação desde 2024 · Dados de 37 tribunais atualizados diariamente
+            </p>
+          </div>
+          <div className="flex shrink-0 items-start gap-2">
+            <a
+              href="https://github.com/luizlessa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-muted"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </Section>
+
       <Section title="Fontes de dados">
         <div className="overflow-hidden rounded-lg border">
           <table className="w-full text-sm">
@@ -112,6 +141,9 @@ function PageSobre() {
           <a href="mailto:contato@transparenciafederal.org" className="font-medium underline underline-offset-2">
             contato@transparenciafederal.org
           </a>
+          <span className="ml-4 text-xs text-muted-foreground">
+            Lessa Labs Tecnologia Ltda. · CNPJ 65.659.055/0001-53
+          </span>
         </InfoCard>
       </Section>
     </div>

@@ -87,6 +87,11 @@ function ProcessoDetalheContent({ id }: { id: string }) {
         title={`${p.classe} ${p.numero_processo} — ${p.tribunal}`}
         description={p.ementa?.slice(0, 160) || `Processo ${p.numero_processo} do ${tribunal?.nomeCompleto || p.tribunal}. Relator: ${p.relator || 'N/A'}.`}
         path={`/${tribunalId.toLowerCase()}/processo/${id}`}
+        breadcrumbs={[
+          { name: tribunal?.nomeCompleto || p.tribunal, path: `/${tribunalId.toLowerCase()}` },
+          { name: 'Processos', path: `/${tribunalId.toLowerCase()}/processos` },
+          { name: `${p.classe} ${p.numero_processo}`, path: `/${tribunalId.toLowerCase()}/processo/${id}` },
+        ]}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify({

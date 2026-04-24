@@ -23,6 +23,9 @@ export default function TribunalDashboard() {
         title={tribunal?.nomeCompleto || tribunalId}
         description={`Dashboard do ${tribunal?.nomeCompleto || tribunalId} com estatísticas, processos recentes, decisões por classe e por ano.`}
         path={tribunal?.path || `/${tribunalId.toLowerCase()}`}
+        breadcrumbs={[
+          { name: tribunal?.nomeCompleto || tribunalId, path: `/${tribunalId.toLowerCase()}` },
+        ]}
       />
       <div>
         <h1 className="text-2xl font-bold tracking-tight" style={{ color: tribunal?.cor }}>

@@ -74,6 +74,7 @@ export default async function handler() {
     urls.push(url(`${BASE_URL}/${t}`, '0.9', 'daily'))
     urls.push(url(`${BASE_URL}/${t}/processos`, '0.8', 'daily'))
     urls.push(url(`${BASE_URL}/${t}/ministros`, '0.7', 'weekly'))
+    urls.push(url(`${BASE_URL}/${t}/temas`, '0.6', 'weekly'))
   }
 
   // ── Processos recentes (top 60 por tribunal superior) ────────────────────────

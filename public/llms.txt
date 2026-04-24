@@ -1,0 +1,33 @@
+# Observatório Judiciário do Brasil
+> Plataforma pública, independente e gratuita com 200.000+ decisões judiciais de 37 tribunais brasileiros.
+
+## O que é este site
+
+O Observatório Judiciário do Brasil reúne, normaliza e disponibiliza decisões judiciais de 37 tribunais num único lugar — de forma auditável, sem opinião política e com acesso gratuito. Os dados são atualizados diariamente via DataJud/CNJ e APIs públicas dos tribunais.
+
+## Cobertura
+
+- **Superiores:** STF, STJ, TST, TCU
+- **Justiça Federal:** TRF1, TRF2, TRF3, TRF4, TRF5, TRF6
+- **Justiça Estadual:** 27 Tribunais de Justiça (TJSP, TJRJ, TJMG, TJRS e demais)
+- **Total:** 37 tribunais, 200.000+ decisões, atualizadas diariamente
+
+## Fontes de dados
+
+- STF: Portal oficial + scraping HTML das classes processuais
+- STJ, TST, TRFs, TJs: DataJud CNJ — API pública Elasticsearch
+- TCU: API de Pesquisa Integrada (pesquisa.apps.tcu.gov.br)
+
+## URLs principais
+
+- Busca geral: https://judiciario.transparenciafederal.org/busca
+- Dashboard STF: https://judiciario.transparenciafederal.org/stf
+- Dashboard STJ: https://judiciario.transparenciafederal.org/stj
+- Dashboard TST: https://judiciario.transparenciafederal.org/tst
+- Dashboard TCU: https://judiciario.transparenciafederal.org/tcu
+- Sobre os dados e metodologia: https://judiciario.transparenciafederal.org/sobre
+- Sitemap completo: https://judiciario.transparenciafederal.org/sitemap.xml
+
+## Contato
+
+contato@transparenciafederal.org

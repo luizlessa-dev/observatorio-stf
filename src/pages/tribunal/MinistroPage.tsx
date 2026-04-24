@@ -112,6 +112,11 @@ export default function MinistroPage() {
         title={`${relatorNome} — ${tribunal?.nome}`}
         description={`Perfil decisório de ${relatorNome} no ${tribunal?.nomeCompleto}. ${totalProcessos} processos relatados.`}
         path={`/${tribunalId.toLowerCase()}/ministro/${slug}`}
+        breadcrumbs={[
+          { name: tribunal?.nomeCompleto || tribunalId, path: `/${tribunalId.toLowerCase()}` },
+          { name: 'Relatores', path: `/${tribunalId.toLowerCase()}/ministros` },
+          { name: relatorNome, path: `/${tribunalId.toLowerCase()}/ministro/${slug}` },
+        ]}
       />
 
       {/* Header */}

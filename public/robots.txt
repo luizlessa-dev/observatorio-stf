@@ -1,5 +1,25 @@
 User-agent: *
 Allow: /
 Disallow: /api
+Disallow: /admin
+
+# Bots de IA — acesso explicitamente permitido ao conteúdo público
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://judiciario.transparenciafederal.org/sitemap.xml

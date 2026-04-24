@@ -12,7 +12,8 @@ const SUPABASE_URL = process.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY
 
 // Default fallback values (used when env vars are missing, e.g. local dev)
-const FALLBACK = { total: 186000, tribunais: 36 }
+// Atualizar quando houver saltos grandes no acervo
+const FALLBACK = { total: 210000, tribunais: 37 }
 
 async function fetchStats() {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {

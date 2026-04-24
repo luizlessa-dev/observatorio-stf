@@ -44,6 +44,10 @@ export default function TribunalProcessos() {
         title={`Processos — ${tribunal?.nome || tribunalId}`}
         description={`Lista completa de processos do ${tribunal?.nomeCompleto || tribunalId}. Pesquise por ementa, tema ou número.`}
         path={`/${tribunalId.toLowerCase()}/processos`}
+        breadcrumbs={[
+          { name: tribunal?.nomeCompleto || tribunalId, path: `/${tribunalId.toLowerCase()}` },
+          { name: 'Processos', path: `/${tribunalId.toLowerCase()}/processos` },
+        ]}
       />
       <div className="flex items-start justify-between gap-4">
         <div>

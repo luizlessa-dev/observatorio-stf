@@ -30,6 +30,10 @@ export default function TribunalMinistros() {
         title={`Relatores — ${tribunal?.nome || tribunalId}`}
         description={`Ministros e relatores do ${tribunal?.nomeCompleto || tribunalId} com quantidade de processos e classes mais frequentes.`}
         path={`/${tribunalId.toLowerCase()}/ministros`}
+        breadcrumbs={[
+          { name: tribunal?.nomeCompleto || tribunalId, path: `/${tribunalId.toLowerCase()}` },
+          { name: 'Relatores', path: `/${tribunalId.toLowerCase()}/ministros` },
+        ]}
       />
       <div>
         <h1 className="text-2xl font-bold tracking-tight" style={{ color: tribunal?.cor }}>
