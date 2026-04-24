@@ -178,15 +178,16 @@ export default function BuscaPage() {
   return (
     <div className="space-y-6">
       <SEO
-        title="Busca de Processos"
-        description="Pesquise processos judiciais em todos os tribunais brasileiros por ementa, tema, relator, classe e período."
+        title="Pesquisa de Jurisprudência — 37 Tribunais"
+        description="Pesquise jurisprudência em STF, STJ, TST, TCU, TRFs e todos os TJs estaduais. Busca full-text em 210 mil decisões. Gratuito, sem cadastro."
         path="/busca"
+        breadcrumbs={[{ name: 'Pesquisa de Jurisprudência', path: '/busca' }]}
       />
 
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Busca</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Pesquisa de Jurisprudência — 37 Tribunais</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Pesquise em mais de 190 mil decisões de 37 tribunais
+          Pesquise em mais de 210 mil decisões de 37 tribunais brasileiros
         </p>
       </div>
 
