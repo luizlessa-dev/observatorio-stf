@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas:  #141414;
+    --card:    #1c1c1c;
+    --surface: #222222;
+    --border:  #2e2e2e;
+    --border2: #3a3a3a;
+    --ink:     #f2f0e9;
+    --muted:   #a8a49c;
+    --subtle:  #6b6762;
+    --conserv: #2563c4;
+    --prog:    #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-size: 13px;
+  }
+  h1, h2, h3 { @apply font-display; }
+}

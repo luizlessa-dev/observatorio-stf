@@ -1,0 +1,42 @@
+name: Ingestão Diária — STF
+
+on:
+  schedule:
+    - cron: "0 8 * * *"   # todo dia às 08h UTC (05h BRT)
+  workflow_dispatch:
+
+jobs:
+  votacoes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install supabase requests
+      - name: Fetch votações CSV (STF Estatística)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python ingestao/stf/fetch_votacoes_csv.py
+
+      - name: Calcular scores termômetro
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python ingestao/stf/calc_scores_termometro.py
+
+  doadores:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'   # manual — dados estáticos
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install supabase
+      - name: Fetch doadores indicantes (TSE)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python ingestao/tse/fetch_doadores_indicante.py
