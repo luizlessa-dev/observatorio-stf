@@ -18,10 +18,6 @@ function fmtData(iso: string): string {
   return `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
 }
 
-const DOADORES_PENDENTE = [
-  { nome: "Dados em ingestão", detalhe: "Receitas presidenciais TSE 2018/2022", valor: "—" },
-];
-
 export default function MinistroDetalhe({ ministro: m }: Props) {
   const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
 
@@ -100,72 +96,39 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
         </div>
       </div>
 
-      {/* Bottom grid */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Votos reais */}
-        <div className="border border-border rounded-sm overflow-hidden">
-          <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
-            <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
-              Últimas decisões monocráticas
-            </span>
-            {loadingVotos && (
-              <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
-            )}
-          </div>
-
-          {!loadingVotos && votacoes.length === 0 && (
-            <div className="px-4 py-5 text-[11px] text-subtle text-center">
-              Sem dados de votação disponíveis
-            </div>
+      {/* Decisões — ocupa largura total */}
+      <div className="border border-border rounded-sm overflow-hidden">
+        <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
+          <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
+            Últimas decisões monocráticas
+          </span>
+          {loadingVotos && (
+            <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
           )}
-
-          {votacoes.map((v) => (
-            <div
-              key={v.id}
-              className="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2"
-              style={{ gridTemplateColumns: "44px 1fr 56px" }}
-            >
-              <div className="font-mono text-[9px] text-subtle pt-[1px]">{fmtData(v.data)}</div>
-              <div>
-                <div className="text-[11px] text-muted leading-[1.35] line-clamp-2">
-                  {v.ementa.replace(/ \|\| /g, " — ")}
-                </div>
-                <div className="font-mono text-[8.5px] text-subtle mt-[2px]">{v.processo}</div>
-              </div>
-              <VotoChip voto={v.voto} />
-            </div>
-          ))}
         </div>
 
-        {/* Doadores */}
-        <div className="flex flex-col gap-[10px]">
-          <div className="border border-border rounded-sm overflow-hidden">
-            <div className="px-4 py-[9px] bg-card border-b border-border text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
-              Quem o indicou — situação atual
-            </div>
-            <div className="flex justify-between items-center px-4 py-[9px]">
-              <div>
-                <div className="text-[12px] font-medium text-ink">{m.indicado_por}</div>
-                <div className="text-[10px] text-subtle mt-[1px]">{m.partido_indicante} · Presidente</div>
-              </div>
-            </div>
+        {!loadingVotos && votacoes.length === 0 && (
+          <div className="px-4 py-5 text-[11px] text-subtle text-center">
+            Sem dados de votação disponíveis
           </div>
+        )}
 
-          <div className="border border-border rounded-sm overflow-hidden">
-            <div className="px-4 py-[9px] bg-card border-b border-border text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
-              Maiores doadores de {m.indicado_por.split(" ")[0]} — TSE
-            </div>
-            {DOADORES_PENDENTE.map((d, i) => (
-              <div key={i} className="flex justify-between items-center px-4 py-[9px] border-b border-border last:border-0">
-                <div>
-                  <div className="text-[12px] font-medium text-ink">{d.nome}</div>
-                  <div className="text-[10px] text-subtle mt-[1px]">{d.detalhe}</div>
-                </div>
-                <div className="font-mono text-[11px] text-muted">{d.valor}</div>
+        {votacoes.map((v) => (
+          <div
+            key={v.id}
+            className="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2"
+            style={{ gridTemplateColumns: "44px 1fr 70px" }}
+          >
+            <div className="font-mono text-[9px] text-subtle pt-[1px]">{fmtData(v.data)}</div>
+            <div>
+              <div className="text-[11px] text-muted leading-[1.35] line-clamp-2">
+                {v.ementa.replace(/ \|\| /g, " — ")}
               </div>
-            ))}
+              <div className="font-mono text-[8.5px] text-subtle mt-[2px]">{v.processo}</div>
+            </div>
+            <VotoChip voto={v.voto} />
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
