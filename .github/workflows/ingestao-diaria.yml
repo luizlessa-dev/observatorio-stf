@@ -4,21 +4,44 @@ on:
   schedule:
     - cron: "0 8 * * *"   # todo dia às 08h UTC (05h BRT)
   workflow_dispatch:
+    inputs:
+      ano:
+        description: "Ano a ingerir (default: ano atual)"
+        required: false
+        default: ""
 
 jobs:
   votacoes:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # necessário para Workload Identity Federation (GCP)
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install supabase requests
-      - name: Fetch votações CSV (STF Estatística)
+
+      - name: Instalar dependências
+        run: pip install supabase google-cloud-bigquery
+
+      - name: Autenticar no Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Fetch votações (BigQuery — Corte Aberta)
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: python ingestao/stf/fetch_votacoes_csv.py
+          GCP_PROJECT: brinsider-dou
+        run: |
+          ANO="${{ github.event.inputs.ano }}"
+          if [ -z "$ANO" ]; then
+            ANO=$(date +%Y)
+          fi
+          python ingestao/stf/fetch_votacoes_bigquery.py --ano "$ANO"
 
       - name: Calcular scores termômetro
         env:
@@ -28,7 +51,7 @@ jobs:
 
   doadores:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'   # manual — dados estáticos
+    if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
