@@ -1,5 +1,6 @@
 import type { Ministro } from "../../lib/seed";
 import Termometro from "../termometro/Termometro";
+import { useVotacoes } from "../../hooks/useVotacoes";
 
 interface Props { ministro: Ministro; }
 
@@ -11,22 +12,19 @@ const DIMS = [
   { key: "score_democracia",label: "Democracia" },
 ] as const;
 
-const VOTOS_MOCK = [
-  { data: "12 jun 2026", desc: "Descriminalização do porte de maconha para uso pessoal",   proc: "RE 635.659",    voto: "favor" },
-  { data: "03 jun 2026", desc: "Constitucionalidade da taxa de lixo municipal",              proc: "RE 576.321",    voto: "favor" },
-  { data: "21 mai 2026", desc: "Validade da prisão em segunda instância",                    proc: "HC 198.402",    voto: "contra" },
-  { data: "14 mai 2026", desc: "Marco temporal para demarcação de terras indígenas",          proc: "RE 1.017.365",  voto: "favor" },
-  { data: "28 abr 2026", desc: "Prisão de parlamentar sem autorização da Casa",              proc: "AP 1.044",      voto: "abstencao" },
-];
+const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+function fmtData(iso: string): string {
+  const [, mes, dia] = iso.split("-");
+  return `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
+}
 
-const DOADORES_MOCK = [
-  { nome: "Grupo JBS",      detalhe: "Joesley Batista · delação 2017", valor: "R$ 8,2M" },
-  { nome: "Odebrecht",      detalhe: "Marcelo Odebrecht · Lava Jato",  valor: "R$ 5,1M" },
-  { nome: "BTG Pactual",    detalhe: "André Esteves",                   valor: "R$ 2,8M" },
-  { nome: "Queiroz Galvão", detalhe: "Construtora · investigada TCU",   valor: "R$ 1,4M" },
+const DOADORES_PENDENTE = [
+  { nome: "Dados em ingestão", detalhe: "Receitas presidenciais TSE 2018/2022", valor: "—" },
 ];
 
 export default function MinistroDetalhe({ ministro: m }: Props) {
+  const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
+
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
       {/* Breadcrumb */}
@@ -53,10 +51,7 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
               Indicado por {m.indicado_por}
             </span>
             <span className="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-border2 text-muted">
-              281 inquéritos como relator
-            </span>
-            <span className="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-border2 text-muted">
-              94% presença no plenário
+              {m.partido_indicante}
             </span>
           </div>
         </div>
@@ -65,14 +60,14 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
       {/* Bloco indicação */}
       <div className="grid grid-cols-4 border border-border rounded-sm overflow-hidden mb-6">
         {[
-          { label: "Indicado por",          val: m.indicado_por,      sub: `${m.partido_indicante}` },
-          { label: "Cargo anterior",         val: m.cargo_anterior,    sub: `Governo ${m.indicado_por.split(" ")[0]}` },
-          { label: "Formação",               val: "USP · Sorbonne",    sub: "Doutor em Direito do Estado" },
-          { label: "Indicante hoje",         val: "Réu no STF",        sub: "AP 1.044 · crimes financeiros" },
+          { label: "Indicado por",  val: m.indicado_por,      sub: m.partido_indicante },
+          { label: "Cargo anterior", val: m.cargo_anterior,   sub: `Governo ${m.indicado_por.split(" ")[0]}` },
+          { label: "Posse",         val: m.data_posse,        sub: "Data de posse no STF" },
+          { label: "Aposentadoria", val: m.aposentadoria || "—", sub: "Compulsória aos 75 anos" },
         ].map((c, i) => (
           <div key={i} className={`px-4 py-[13px] ${i < 3 ? "border-r border-border" : ""}`}>
             <div className="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">{c.label}</div>
-            <div className="text-[13px] font-semibold text-ink">{c.val}</div>
+            <div className="text-[13px] font-semibold text-ink leading-snug">{c.val}</div>
             <div className="text-[10px] text-subtle mt-[2px]">{c.sub}</div>
           </div>
         ))}
@@ -107,17 +102,35 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
 
       {/* Bottom grid */}
       <div className="grid grid-cols-2 gap-4">
-        {/* Votos */}
+        {/* Votos reais */}
         <div className="border border-border rounded-sm overflow-hidden">
-          <div className="px-4 py-[9px] bg-card border-b border-border text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
-            Últimos votos relevantes
+          <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
+            <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
+              Últimas decisões monocráticas
+            </span>
+            {loadingVotos && (
+              <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
+            )}
           </div>
-          {VOTOS_MOCK.map((v, i) => (
-            <div key={i} className="grid border-b border-border last:border-0 px-4 py-[9px] items-center gap-2" style={{ gridTemplateColumns: "62px 1fr 50px" }}>
-              <div className="font-mono text-[9px] text-subtle">{v.data}</div>
+
+          {!loadingVotos && votacoes.length === 0 && (
+            <div className="px-4 py-5 text-[11px] text-subtle text-center">
+              Sem dados de votação disponíveis
+            </div>
+          )}
+
+          {votacoes.map((v) => (
+            <div
+              key={v.id}
+              className="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2"
+              style={{ gridTemplateColumns: "44px 1fr 56px" }}
+            >
+              <div className="font-mono text-[9px] text-subtle pt-[1px]">{fmtData(v.data)}</div>
               <div>
-                <div className="text-[11px] text-muted leading-[1.35]">{v.desc}</div>
-                <div className="font-mono text-[8.5px] text-subtle mt-[2px]">{v.proc}</div>
+                <div className="text-[11px] text-muted leading-[1.35] line-clamp-2">
+                  {v.ementa.replace(/ \|\| /g, " — ")}
+                </div>
+                <div className="font-mono text-[8.5px] text-subtle mt-[2px]">{v.processo}</div>
               </div>
               <VotoChip voto={v.voto} />
             </div>
@@ -135,10 +148,6 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
                 <div className="text-[12px] font-medium text-ink">{m.indicado_por}</div>
                 <div className="text-[10px] text-subtle mt-[1px]">{m.partido_indicante} · Presidente</div>
               </div>
-              <div className="text-right">
-                <div className="font-mono text-[11px] text-[#b88a8a]">Réu no STF</div>
-                <div className="text-[9px] text-subtle">AP 1.044</div>
-              </div>
             </div>
           </div>
 
@@ -146,7 +155,7 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
             <div className="px-4 py-[9px] bg-card border-b border-border text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
               Maiores doadores de {m.indicado_por.split(" ")[0]} — TSE
             </div>
-            {DOADORES_MOCK.map((d, i) => (
+            {DOADORES_PENDENTE.map((d, i) => (
               <div key={i} className="flex justify-between items-center px-4 py-[9px] border-b border-border last:border-0">
                 <div>
                   <div className="text-[12px] font-medium text-ink">{d.nome}</div>
@@ -164,13 +173,14 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
 
 function VotoChip({ voto }: { voto: string }) {
   const map: Record<string, { label: string; cls: string }> = {
-    favor:     { label: "A favor",   cls: "border-[#3a5a3a] text-[#8ab88a]" },
-    contra:    { label: "Contra",    cls: "border-[#5a3a3a] text-[#b88a8a]" },
-    abstencao: { label: "Abstenção", cls: "border-border2 text-subtle" },
+    favor:     { label: "Deferido",   cls: "border-[#3a5a3a] text-[#8ab88a]" },
+    contra:    { label: "Indeferido", cls: "border-[#5a3a3a] text-[#b88a8a]" },
+    abstencao: { label: "Prejudicado",cls: "border-border2 text-subtle" },
+    ausente:   { label: "Ausente",    cls: "border-border2 text-subtle" },
   };
   const { label, cls } = map[voto] ?? { label: voto, cls: "border-border2 text-subtle" };
   return (
-    <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border text-center ${cls}`}>
+    <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border text-center whitespace-nowrap ${cls}`}>
       {label}
     </span>
   );
