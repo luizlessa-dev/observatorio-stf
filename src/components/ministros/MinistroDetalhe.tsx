@@ -1,6 +1,7 @@
 import type { Ministro } from "../../lib/seed";
 import Termometro from "../termometro/Termometro";
 import { useVotacoes } from "../../hooks/useVotacoes";
+import { useGastos } from "../../hooks/useGastos";
 
 interface Props { ministro: Ministro; }
 
@@ -18,8 +19,17 @@ function fmtData(iso: string): string {
   return `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
 }
 
+const MESES_NOME = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+function fmtMes(mes: number, ano: number) {
+  return `${MESES_NOME[mes - 1]}/${ano}`;
+}
+function fmtBRL(v: number) {
+  return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+}
+
 export default function MinistroDetalhe({ ministro: m }: Props) {
   const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
+  const { gastos, loading: loadingGastos } = useGastos(m.id);
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
@@ -95,6 +105,49 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
           })}
         </div>
       </div>
+
+      {/* Gastos */}
+      {(loadingGastos || gastos.length > 0) && (
+        <div className="border border-border rounded-sm overflow-hidden mb-6">
+          <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
+            <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
+              Custo ao erário
+            </span>
+            {loadingGastos && (
+              <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
+            )}
+          </div>
+          {gastos.length > 0 && (() => {
+            const subsidio = gastos.find(g => g.categoria === "subsidio_ministro");
+            const gabinete = gastos.find(g => g.categoria === "custo_gabinete");
+            const mesRef = subsidio ?? gabinete;
+            const totalMes = (subsidio?.valor ?? 0) + (gabinete?.valor ?? 0);
+            return (
+              <div className="grid grid-cols-3 divide-x divide-border">
+                <div className="px-4 py-[13px]">
+                  <div className="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Subsídio</div>
+                  <div className="text-[15px] font-bold text-ink">{fmtBRL(subsidio?.valor ?? 0)}</div>
+                  <div className="text-[9px] text-subtle mt-[2px]">por mês</div>
+                </div>
+                <div className="px-4 py-[13px]">
+                  <div className="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Custo do gabinete</div>
+                  <div className="text-[15px] font-bold text-ink">{fmtBRL(gabinete?.valor ?? 0)}</div>
+                  <div className="text-[9px] text-subtle mt-[2px]">
+                    {gabinete ? `${parseInt(gabinete.descricao.match(/\d+/)?.[0] ?? "0")} servidores` : "—"}
+                  </div>
+                </div>
+                <div className="px-4 py-[13px]">
+                  <div className="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Total mensal</div>
+                  <div className="text-[15px] font-bold text-white">{fmtBRL(totalMes)}</div>
+                  <div className="text-[9px] text-subtle mt-[2px]">
+                    ref. {mesRef ? fmtMes(mesRef.mes, mesRef.ano) : "—"}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      )}
 
       {/* Decisões — ocupa largura total */}
       <div className="border border-border rounded-sm overflow-hidden">
