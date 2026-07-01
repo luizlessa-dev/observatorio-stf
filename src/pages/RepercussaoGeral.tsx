@@ -82,12 +82,13 @@ export default function PaginaRepercussao() {
       {/* Tabela */}
       <div className="border border-border rounded-sm overflow-hidden">
         <div className="grid text-[9px] font-bold uppercase tracking-[1px] text-subtle bg-card border-b border-border px-4 py-[8px]"
-          style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px" }}>
+          style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px 70px" }}>
           <span>Tema</span>
           <span>Título</span>
           <span>Leading Case</span>
           <span>Reconh.</span>
           <span>Status</span>
+          <span>Processos</span>
         </div>
 
         {temas.length === 0 && !loading && (
@@ -102,7 +103,7 @@ export default function PaginaRepercussao() {
             className={`grid border-b border-border last:border-0 px-4 py-[10px] items-start gap-2 hover:bg-white/[0.02] transition-colors ${
               t.destaque ? "border-l-2 border-l-white/20" : ""
             }`}
-            style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px" }}
+            style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px 70px" }}
           >
             <div className="font-mono text-[11px] text-subtle">
               {String(t.tema).padStart(4, "0")}
@@ -128,6 +129,11 @@ export default function PaginaRepercussao() {
               }`}>
                 {STATUS_LABEL[t.status] ?? t.status}
               </span>
+            </div>
+            <div className="text-[10px] text-subtle text-right">
+              {t.processos_imp != null
+                ? t.processos_imp.toLocaleString("pt-BR")
+                : <span className="opacity-30">—</span>}
             </div>
           </div>
         ))}
