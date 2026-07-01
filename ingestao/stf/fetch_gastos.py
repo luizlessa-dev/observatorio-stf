@@ -63,15 +63,32 @@ def parse_valor(raw: str) -> float:
         return 0.0
 
 
+GABINETE_PRESIDENCIA_INICIAIS = "EF"  # Fachin é presidente desde fev/2025
+
 def identificar_ministro(unidade: str, iniciais_to_id: dict):
-    """'GABINETE MINISTRO GILMAR MENDES' → UUID"""
-    u = unidade.upper()
-    if "GABINETE MINISTRO" not in u:
-        return None, None
-    nome_raw = u.replace("GABINETE MINISTRO", "").strip().lower()
-    for chave, iniciais in NOME_MINISTRO.items():
-        if chave in nome_raw or nome_raw in chave:
-            return iniciais, iniciais_to_id.get(iniciais)
+    """'GABINETE MINISTRO GILMAR MENDES' / 'GABINETE MINISTRA CÁRMEN LÚCIA' → UUID"""
+    u = unidade.upper().strip()
+
+    # Presidência → Fachin (presidente atual)
+    if u == "GABINETE DA PRESIDÊNCIA" or u == "GABINETE DA PRESIDENCIA":
+        iniciais = GABINETE_PRESIDENCIA_INICIAIS
+        return iniciais, iniciais_to_id.get(iniciais)
+
+    # Remove prefixo masculino ou feminino
+    for prefixo in ("GABINETE MINISTRA ", "GABINETE MINISTRO "):
+        if u.startswith(prefixo):
+            nome_raw = u[len(prefixo):].strip().lower()
+            # normaliza acentos para comparação
+            import unicodedata
+            nome_norm = unicodedata.normalize("NFD", nome_raw)
+            nome_norm = "".join(c for c in nome_norm if unicodedata.category(c) != "Mn")
+            for chave, iniciais in NOME_MINISTRO.items():
+                chave_norm = unicodedata.normalize("NFD", chave)
+                chave_norm = "".join(c for c in chave_norm if unicodedata.category(c) != "Mn")
+                if chave_norm in nome_norm or nome_norm in chave_norm:
+                    return iniciais, iniciais_to_id.get(iniciais)
+            break
+
     return None, None
 
 
