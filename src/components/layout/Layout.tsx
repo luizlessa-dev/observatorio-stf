@@ -1,5 +1,6 @@
-import { Outlet, NavLink } from "react-router-dom";
-import { Scale } from "lucide-react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { signOut } from "../../lib/auth";
 
 const NAV = [
   { to: "/ministros",         label: "Ministros" },
@@ -9,6 +10,18 @@ const NAV = [
 ];
 
 export default function Layout() {
+  const { user, assinante, loading } = useAuth();
+  const nav = useNavigate();
+
+  async function handleAuth() {
+    if (user) {
+      await signOut();
+      nav("/");
+    } else {
+      nav("/entrar");
+    }
+  }
+
   return (
     <div className="min-h-screen bg-canvas text-ink">
       {/* Banner */}
@@ -19,7 +32,6 @@ export default function Layout() {
 
       {/* Topbar */}
       <header className="bg-canvas border-b border-border px-8 flex items-center justify-between h-[62px]">
-        {/* Logo */}
         <NavLink to="/" className="flex items-center gap-3 no-underline">
           <BalancaSVG />
           <div>
@@ -32,7 +44,6 @@ export default function Layout() {
           </div>
         </NavLink>
 
-        {/* Nav */}
         <nav className="flex">
           {NAV.map(({ to, label }) => (
             <NavLink
@@ -51,9 +62,27 @@ export default function Layout() {
           ))}
         </nav>
 
-        <button className="text-[12px] font-semibold text-ink border border-border2 rounded-sm px-[18px] py-2">
-          Entrar
-        </button>
+        <div className="flex items-center gap-2">
+          {!loading && !assinante && (
+            <NavLink
+              to="/assinar"
+              className="text-[11px] font-semibold text-canvas bg-white px-[14px] py-[6px] rounded-sm hover:bg-white/90 transition-colors"
+            >
+              Assinar
+            </NavLink>
+          )}
+          {assinante && (
+            <span className="text-[10px] font-semibold text-white/40 border border-white/10 rounded-sm px-[8px] py-[4px]">
+              Assinante
+            </span>
+          )}
+          <button
+            onClick={handleAuth}
+            className="text-[12px] font-semibold text-ink border border-border2 rounded-sm px-[14px] py-[6px] hover:border-white/20 transition-colors"
+          >
+            {loading ? "…" : user ? "Sair" : "Entrar"}
+          </button>
+        </div>
       </header>
 
       <main>
