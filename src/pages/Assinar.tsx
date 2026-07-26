@@ -19,13 +19,17 @@ const PLANOS = [
   },
 ];
 
+// Fase C1 (2026-07-26): a lista anterior prometia funcionalidades suspensas ou
+// ainda não implementadas (painel de scores, alertas, exportação CSV, relatório
+// PDF). A assinatura passa a ser comunicada de forma neutra, como apoio ao
+// projeto, até que exista uma oferta premium real — a revisão estratégica da
+// proposta comercial está documentada em docs/plano-aplicacao-c1-supabase.md.
+// Não adicione benefício aqui sem que a funcionalidade exista e esteja no ar.
 const BENEFICIOS = [
-  "Exportar votações de qualquer ministro em CSV",
-  "Histórico completo de votações por processo",
-  "Alertas de novos julgamentos por tema",
-  "Painel de scores G5 com detalhamento por dimensão",
-  "Relatório mensal em PDF",
-  "Acesso antecipado a novos módulos",
+  "Acesso ao acervo de votações e decisões conforme publicado no site",
+  "Consulta organizada dos ministros, com dados institucionais verificáveis",
+  "Acompanhamento dos temas de repercussão geral já catalogados",
+  "Apoio direto à manutenção e à apuração independente do Observatório",
 ];
 
 export default function PaginaAssinar() {
@@ -75,7 +79,9 @@ export default function PaginaAssinar() {
         Acesso completo ao Observatório
       </h1>
       <p className="text-[13px] text-subtle mb-8 max-w-md">
-        Dados do STF organizados e atualizados diariamente. Assinatura cancela a qualquer momento.
+        A assinatura sustenta a coleta e a organização de dados públicos do STF.
+        Você paga pelo que já existe — sem promessas de recursos futuros. Cancele
+        a qualquer momento.
       </p>
 
       {/* Benefícios */}

@@ -59,20 +59,10 @@ export default function MinistroSidebar({ ministros, selecionado, onSelect, load
               </div>
             </div>
 
-            <Termometro score={m.score_geral} mini />
-
-            {m.tags.length > 0 && (
-              <div className="flex gap-1 mt-[5px] flex-wrap">
-                {m.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[8.5px] font-medium px-[5px] py-[1px] rounded-sm bg-surface border border-border2 text-subtle"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            )}
+            <Termometro mini />
+            {/* Tags pessoais/ideológicas suspensas na Fase C0 — ver
+                docs/auditoria-integridade-dados.md. Campo `tags` permanece
+                em src/lib/seed.ts, apenas a renderização foi retirada. */}
           </button>
         ))}
       </div>

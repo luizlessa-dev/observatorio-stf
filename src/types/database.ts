@@ -3,6 +3,12 @@ export type Json = string | number | boolean | null | { [key: string]: Json } | 
 export interface Database {
   public: {
     Tables: {
+      // Fase C1 (2026-07-26): as 6 colunas de score ideológico (score_geral,
+      // score_direitos_civis, score_lib_imprensa, score_seg_publica,
+      // score_economico, score_democracia) existem no banco mas foram
+      // deliberadamente REMOVIDAS desta tipagem de cliente: são dados internos
+      // suspensos, sem grant público após a migration 0003_contencao_scores.sql.
+      // Não as reintroduza aqui — este tipo alimenta o client anon do bundle.
       stf_ministros: {
         Row: {
           id:                   string;
@@ -16,12 +22,6 @@ export interface Database {
           formacao:             string | null;
           aposentadoria_comp:   string | null;
           ativo:                boolean;
-          score_geral:          number | null;
-          score_direitos_civis: number | null;
-          score_lib_imprensa:   number | null;
-          score_seg_publica:    number | null;
-          score_economico:      number | null;
-          score_democracia:     number | null;
           created_at:           string;
           updated_at:           string;
         };
@@ -93,6 +93,12 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["stf_gastos"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_gastos"]["Insert"]>;
       };
+      // Fase C1 (2026-07-26): esta tabela NÃO existe no banco de produção
+      // (confirmado por inspeção read-only). O script de ingestão
+      // correspondente já foi deletado do working tree. A tipagem permanece
+      // apenas enquanto a decisão formal sobre o eixo doadores/indicantes
+      // está pendente — ver docs/decisao-doadores-indicantes.md. Não construa
+      // nada novo sobre este tipo.
       stf_doadores_indicante: {
         Row: {
           id:               string;
@@ -111,17 +117,24 @@ export interface Database {
       };
     };
     Views: {
-      stf_v_ministros_scores: {
+      // Fase C1 (2026-07-26): a tipagem da view stf_v_ministros_scores foi
+      // removida do cliente. A view continua existindo no banco (dados
+      // preservados), mas expõe scores ideológicos suspensos — a migration
+      // 0003_contencao_scores.sql revoga o acesso de anon/authenticated a ela.
+      // A view pública substituta é stf_ministros_publicos (sem scores).
+      stf_ministros_publicos: {
         Row: {
-          id:           string;
-          nome:         string;
-          iniciais:     string;
-          indicado_por: string;
-          ativo:        boolean;
-          score_geral:  number;
-          total_votos:  number;
-          votos_favor:  number;
-          votos_contra: number;
+          id:                 string;
+          nome:               string;
+          iniciais:           string;
+          data_posse:         string;
+          data_saida:         string | null;
+          indicado_por:       string;
+          partido_indicante:  string;
+          cargo_anterior:     string | null;
+          formacao:           string | null;
+          aposentadoria_comp: string | null;
+          ativo:              boolean;
         };
       };
     };

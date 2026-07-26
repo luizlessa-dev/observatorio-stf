@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { type Ministro, MINISTROS_SEED } from "../lib/seed";
 
+// Fase C1 (2026-07-26): a consulta usa lista EXPLÍCITA de colunas públicas —
+// nunca select('*'). Os campos de score ideológico (score_geral + 5 dimensões)
+// não são selecionados, não são tipados aqui e não podem voltar por acidente
+// quando novas colunas forem criadas no banco. A migration
+// supabase/migrations/0003_contencao_scores.sql retira o grant dessas colunas
+// para anon/authenticated; esta lista precisa se manter dentro do conjunto
+// de colunas com grant público, senão a consulta passa a retornar erro.
+const COLUNAS_PUBLICAS =
+  "id, nome, iniciais, data_posse, indicado_por, partido_indicante, cargo_anterior, aposentadoria_comp, ativo";
+
 const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 
 function formatarDataPosse(iso: string): string {
@@ -25,12 +35,6 @@ function rowToMinistro(row: Record<string, unknown>, seed?: Ministro): Ministro 
     cargo_anterior:    String(row.cargo_anterior ?? seedMatch?.cargo_anterior ?? ""),
     aposentadoria:     String(row.aposentadoria_comp ?? seedMatch?.aposentadoria ?? ""),
     ativo:             Boolean(row.ativo),
-    score_geral:       Number(row.score_geral ?? 5),
-    score_direitos:    Number(row.score_direitos_civis ?? seedMatch?.score_direitos ?? 5),
-    score_imprensa:    Number(row.score_lib_imprensa ?? seedMatch?.score_imprensa ?? 5),
-    score_seguranca:   Number(row.score_seg_publica ?? seedMatch?.score_seguranca ?? 5),
-    score_economico:   Number(row.score_economico ?? seedMatch?.score_economico ?? 5),
-    score_democracia:  Number(row.score_democracia ?? seedMatch?.score_democracia ?? 5),
     tags:              seedMatch?.tags ?? [],
   };
 }
@@ -43,7 +47,7 @@ export function useMinistros() {
   useEffect(() => {
     supabase
       .from("stf_ministros")
-      .select("*")
+      .select(COLUNAS_PUBLICAS)
       .eq("ativo", true)
       .order("data_posse", { ascending: true })
       .then(({ data, error: err }) => {

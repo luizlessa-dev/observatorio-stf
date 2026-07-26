@@ -43,7 +43,17 @@ jobs:
           fi
           python ingestao/stf/fetch_votacoes_bigquery.py --ano "$ANO"
 
-      - name: Calcular scores termômetro
+      # Fase C1 (2026-07-26): etapa de cálculo de scores DESABILITADA.
+      # A heurística de scores ideológicos está suspensa por falta de
+      # sustentação metodológica (ver docs/auditoria-integridade-dados.md).
+      # A etapa fica atrás de uma flag explicitamente desativada para que uma
+      # falha ou reativação acidental não contamine a ingestão oficial de
+      # votações acima. Só reative mudando ENABLE_SCORES para "true" em uma
+      # decisão editorial consciente, com metodologia publicada.
+      # Recomendação registrada: mover o cálculo experimental de scores para
+      # um workflow separado da ingestão oficial.
+      - name: Calcular scores termômetro (suspenso — Fase C1)
+        if: ${{ false }}  # ENABLE_SCORES: etapa suspensa; não reativar sem metodologia publicada
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

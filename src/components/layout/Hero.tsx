@@ -23,9 +23,8 @@ export default function Hero() {
       </div>
 
       <p className="text-[14px] text-muted max-w-[520px] leading-[1.65] mb-[30px]">
-        Votações, gastos, redes de indicação e tendências de voto dos ministros
-        do STF — dados públicos organizados para jornalistas, advogados e
-        cidadãos.
+        Votações, gastos e histórico institucional dos ministros do STF —
+        dados públicos organizados para jornalistas, advogados e cidadãos.
       </p>
 
       <div className="flex gap-[10px]">

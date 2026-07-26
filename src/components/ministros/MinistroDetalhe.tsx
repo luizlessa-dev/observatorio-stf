@@ -5,14 +5,6 @@ import { useGastos } from "../../hooks/useGastos";
 
 interface Props { ministro: Ministro; }
 
-const DIMS = [
-  { key: "score_direitos",  label: "Direitos Civis" },
-  { key: "score_imprensa",  label: "Lib. Imprensa" },
-  { key: "score_seguranca", label: "Seg. Pública" },
-  { key: "score_economico", label: "Econômico" },
-  { key: "score_democracia",label: "Democracia" },
-] as const;
-
 const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 function fmtData(iso: string): string {
   const [, mes, dia] = iso.split("-");
@@ -79,31 +71,17 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
         ))}
       </div>
 
-      {/* Termômetro */}
+      {/* Análise de padrões decisórios — suspensa na Fase C0; rótulo do
+          produto ("Termômetro") retirado na Fase C1 para não anunciar
+          funcionalidade indisponível. Ver docs/auditoria-integridade-dados.md. */}
       <div className="mb-6">
         <div className="flex items-center gap-[10px] mb-[14px]">
           <div className="w-5 h-px bg-subtle" />
           <span className="text-[9px] font-semibold uppercase tracking-[1.5px] text-subtle">
-            Termômetro de tendência de voto
+            Análise de padrões decisórios
           </span>
         </div>
-        <div className="mb-[30px]">
-          <Termometro score={m.score_geral} />
-        </div>
-        <div className="grid grid-cols-5 gap-2">
-          {DIMS.map((d) => {
-            const score = m[d.key] as number;
-            return (
-              <div key={d.key} className="bg-card border border-border rounded-sm p-[10px] text-center">
-                <div className="text-[9px] uppercase tracking-[0.5px] text-subtle mb-[6px]">{d.label}</div>
-                <div className="font-display text-[22px] font-bold text-white leading-none">{score.toFixed(1)}</div>
-                <div className="h-[2px] bg-border mt-[6px] rounded-full overflow-hidden">
-                  <div className="h-full bg-white" style={{ width: `${score * 10}%` }} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <Termometro />
       </div>
 
       {/* Gastos */}

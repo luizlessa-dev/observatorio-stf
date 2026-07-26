@@ -8,3 +8,6 @@ __pycache__/
 *.pyc
 .venv/
 .vercel
+
+# Claude Code — configuração local de sessão (não versionar)
+.claude/

@@ -1,3 +1,15 @@
+// Fase C0 (contenção de integridade, 2026-07-26): os valores de `tags` foram
+// esvaziados porque são classificações pessoais/ideológicas sem metodologia
+// documentada. O código deste arquivo é bundlado no cliente (SPA), então
+// apenas suspender a renderização na UI não bastava — os valores continuavam
+// extraíveis do JS público. Ver docs/auditoria-integridade-dados.md.
+//
+// Fase C1 (contenção residual, 2026-07-26): os 6 campos de score ideológico
+// (score_geral + 5 dimensões) foram removidos do tipo `Ministro` e dos dados
+// de seed pelo mesmo motivo — eram valores fabricados embutidos no bundle
+// público. Este tipo agora representa apenas o modelo PÚBLICO do ministro
+// (dados biográficos/institucionais verificáveis). Scores permanecem
+// armazenados no banco, acessíveis apenas a papéis internos.
 export interface Ministro {
   id:               string;
   nome:             string;
@@ -8,12 +20,6 @@ export interface Ministro {
   cargo_anterior:   string;
   aposentadoria:    string;
   ativo:            boolean;
-  score_geral:      number;
-  score_direitos:   number;
-  score_imprensa:   number;
-  score_seguranca:  number;
-  score_economico:  number;
-  score_democracia: number;
   tags:             string[];
 }
 
@@ -23,26 +29,20 @@ export const MINISTROS_SEED: Ministro[] = [
     data_posse: "22 mar 2017", indicado_por: "Michel Temer",
     partido_indicante: "PMDB", cargo_anterior: "Ministro da Justiça",
     aposentadoria: "2043", ativo: true,
-    score_geral: 6.6, score_direitos: 7.2, score_imprensa: 5.1,
-    score_seguranca: 3.8, score_economico: 5.5, score_democracia: 8.4,
-    tags: ["Democracia digital", "Seg. pública"],
+    tags: [],
   },
   {
     id: "ef", nome: "Edson Fachin", iniciais: "EF",
     data_posse: "02 abr 2015", indicado_por: "Dilma Rousseff",
     partido_indicante: "PT", cargo_anterior: "Professor USP",
     aposentadoria: "2039", ativo: true,
-    score_geral: 8.2, score_direitos: 9.1, score_imprensa: 8.0,
-    score_seguranca: 8.5, score_economico: 6.0, score_democracia: 9.2,
-    tags: ["Garantismo", "Dir. humanos"],
+    tags: [],
   },
   {
     id: "cl", nome: "Cármen Lúcia", iniciais: "CL",
     data_posse: "21 jun 2006", indicado_por: "Lula (1º mandato)",
     partido_indicante: "PT", cargo_anterior: "Procuradora MG",
     aposentadoria: "2030", ativo: true,
-    score_geral: 6.0, score_direitos: 7.0, score_imprensa: 6.5,
-    score_seguranca: 5.0, score_economico: 5.5, score_democracia: 6.2,
     tags: [],
   },
   {
@@ -50,17 +50,13 @@ export const MINISTROS_SEED: Ministro[] = [
     data_posse: "23 out 2009", indicado_por: "Lula (1º mandato)",
     partido_indicante: "PT", cargo_anterior: "Advogado-Geral da União",
     aposentadoria: "2038", ativo: true,
-    score_geral: 3.0, score_direitos: 4.0, score_imprensa: 3.5,
-    score_seguranca: 2.8, score_economico: 3.2, score_democracia: 2.5,
-    tags: ["Conservador atual"],
+    tags: [],
   },
   {
     id: "lf", nome: "Luiz Fux", iniciais: "LF",
     data_posse: "03 mar 2011", indicado_por: "Dilma Rousseff",
     partido_indicante: "PT", cargo_anterior: "Ministro STJ",
     aposentadoria: "2038", ativo: true,
-    score_geral: 4.4, score_direitos: 5.0, score_imprensa: 4.5,
-    score_seguranca: 3.5, score_economico: 4.8, score_democracia: 4.2,
     tags: [],
   },
   {
@@ -68,17 +64,13 @@ export const MINISTROS_SEED: Ministro[] = [
     data_posse: "20 jun 2002", indicado_por: "Fernando H. Cardoso",
     partido_indicante: "PSDB", cargo_anterior: "PGR / TCU",
     aposentadoria: "2030", ativo: true,
-    score_geral: 3.6, score_direitos: 4.5, score_imprensa: 4.0,
-    score_seguranca: 3.0, score_economico: 5.5, score_democracia: 2.8,
-    tags: ["Mercado", "Garantismo"],
+    tags: [],
   },
   {
     id: "cz", nome: "Cristiano Zanin", iniciais: "CZ",
     data_posse: "03 ago 2023", indicado_por: "Lula (3º mandato)",
     partido_indicante: "PT", cargo_anterior: "Advogado de defesa",
     aposentadoria: "2056", ativo: true,
-    score_geral: 6.5, score_direitos: 7.0, score_imprensa: 6.5,
-    score_seguranca: 5.5, score_economico: 6.0, score_democracia: 7.5,
     tags: [],
   },
   {
@@ -86,8 +78,6 @@ export const MINISTROS_SEED: Ministro[] = [
     data_posse: "22 dez 2023", indicado_por: "Lula (3º mandato)",
     partido_indicante: "PT", cargo_anterior: "Ministro da Justiça",
     aposentadoria: "2049", ativo: true,
-    score_geral: 7.0, score_direitos: 8.0, score_imprensa: 7.0,
-    score_seguranca: 6.0, score_economico: 6.5, score_democracia: 7.5,
     tags: [],
   },
   {
@@ -95,17 +85,13 @@ export const MINISTROS_SEED: Ministro[] = [
     data_posse: "05 nov 2020", indicado_por: "Jair Bolsonaro",
     partido_indicante: "PL", cargo_anterior: "Procurador Federal",
     aposentadoria: "2047", ativo: true,
-    score_geral: 2.0, score_direitos: 1.5, score_imprensa: 2.5,
-    score_seguranca: 2.0, score_economico: 3.0, score_democracia: 1.5,
-    tags: ["Religioso", "Anti-aborto"],
+    tags: [],
   },
   {
     id: "am2", nome: "André Mendonça", iniciais: "AM",
     data_posse: "16 dez 2021", indicado_por: "Jair Bolsonaro",
     partido_indicante: "PL", cargo_anterior: "Ministro da Justiça / AGU",
     aposentadoria: "2054", ativo: true,
-    score_geral: 2.5, score_direitos: 2.0, score_imprensa: 3.0,
-    score_seguranca: 2.5, score_economico: 3.5, score_democracia: 1.8,
-    tags: ["Evangélico"],
+    tags: [],
   },
 ];
