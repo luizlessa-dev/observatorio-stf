@@ -23,6 +23,35 @@ SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 GCP_PROJECT   = os.environ.get("GCP_PROJECT", "brinsider-dou")
 
+# Trava de destino (Fase D1): esta ingestão só pode escrever em public.stf_votacoes.
+# Não vem de argumento nem de env var — propositalmente fixo no código para que
+# nenhuma execução (manual ou agendada) resolva um destino diferente sem que
+# alguém edite esta constante conscientemente.
+DESTINATION_SCHEMA = "public"
+DESTINATION_TABLE = "stf_votacoes"
+
+
+def resolver_destino() -> str:
+    """Resolve e valida a tabela de destino desta ingestão.
+
+    Falha explicitamente se o destino não for public.stf_votacoes: nome vazio,
+    schema diferente de public, tabela sem prefixo stf_ ou qualquer valor
+    diferente de stf_votacoes.
+    """
+    tabela = DESTINATION_TABLE
+    if (
+        not tabela
+        or DESTINATION_SCHEMA != "public"
+        or not tabela.startswith("stf_")
+        or tabela != "stf_votacoes"
+    ):
+        raise RuntimeError(
+            f"Destino de escrita não autorizado: "
+            f"'{DESTINATION_SCHEMA}.{tabela or '(vazio)'}' — "
+            f"esperado 'public.stf_votacoes'"
+        )
+    return tabela
+
 # Andamento → voto individual do relator
 MAPA_VOTO = {
     "deferido":            "favor",
@@ -96,6 +125,9 @@ def normalizar_resultado(andamento: str):
     return None
 
 def run(ano: int, dry_run: bool = False):
+    tabela_destino = resolver_destino()
+    print(f"Tabela de destino autorizada: {DESTINATION_SCHEMA}.{tabela_destino}")
+
     sb   = create_client(SUPABASE_URL, SUPABASE_KEY)
     bqc  = bigquery.Client(project=GCP_PROJECT)
 
@@ -166,7 +198,7 @@ def run(ano: int, dry_run: bool = False):
         if len(lote) >= 500:
             lote_unico = list({(r["ministro_id"], r["processo"], r["data"]): r for r in lote}.values())
             if not dry_run:
-                sb.table("stf_votacoes").upsert(
+                sb.table(tabela_destino).upsert(
                     lote_unico,
                     on_conflict="ministro_id,processo,data"
                 ).execute()
@@ -177,7 +209,7 @@ def run(ano: int, dry_run: bool = False):
     if lote:
         lote_unico = list({(r["ministro_id"], r["processo"], r["data"]): r for r in lote}.values())
         if not dry_run:
-            sb.table("stf_votacoes").upsert(
+            sb.table(tabela_destino).upsert(
                 lote_unico,
                 on_conflict="ministro_id,processo,data"
             ).execute()

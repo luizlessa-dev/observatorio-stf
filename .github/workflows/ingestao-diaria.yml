@@ -1,18 +1,36 @@
 name: Ingestão Diária — STF
 
 on:
-  schedule:
-    - cron: "0 8 * * *"   # todo dia às 08h UTC (05h BRT)
+  # Fase D1 (2026-07-27): schedule temporariamente suspenso até:
+  #   1) dry-run manual (workflow_dispatch com dry_run=true) validar o
+  #      caminho completo GitHub OIDC → WIF → BigQuery;
+  #   2) primeira ingestão real controlada ser validada;
+  #   3) teste de idempotência (segunda execução) confirmar zero duplicatas.
+  # Reative descomentando as duas linhas abaixo apenas após essas três
+  # condições estarem cumpridas e documentadas em
+  # docs/ingestao-votacoes-stf.md.
+  # schedule:
+  #   - cron: "0 8 * * *"   # todo dia às 08h UTC (05h BRT)
   workflow_dispatch:
     inputs:
+      dry_run:
+        description: "Executar em dry-run (não grava no Supabase)"
+        required: true
+        default: true
+        type: boolean
       ano:
         description: "Ano a ingerir (default: ano atual)"
         required: false
         default: ""
 
+concurrency:
+  group: ingestao-stf-votacoes
+  cancel-in-progress: false
+
 jobs:
   votacoes:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: read
       id-token: write   # necessário para Workload Identity Federation (GCP)
@@ -29,7 +47,8 @@ jobs:
       - name: Autenticar no Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: projects/916232285460/locations/global/workloadIdentityPools/github-actions-pool/providers/github-observatorio-stf
+          service_account: stf-votacoes-ingest@brinsider-dou.iam.gserviceaccount.com
 
       - name: Fetch votações (BigQuery — Corte Aberta)
         env:
@@ -37,11 +56,20 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           GCP_PROJECT: brinsider-dou
         run: |
+          set +x
           ANO="${{ github.event.inputs.ano }}"
           if [ -z "$ANO" ]; then
             ANO=$(date +%Y)
           fi
-          python ingestao/stf/fetch_votacoes_bigquery.py --ano "$ANO"
+          # Fail-closed: qualquer valor de dry_run diferente da string "false"
+          # (inclusive ausente, caso o schedule seja reativado sem input)
+          # resulta em dry-run. Só desarma com dry_run=false explícito.
+          DRY_RUN_INPUT="${{ github.event.inputs.dry_run }}"
+          DRY_RUN_FLAG="--dry-run"
+          if [ "$DRY_RUN_INPUT" = "false" ]; then
+            DRY_RUN_FLAG=""
+          fi
+          python ingestao/stf/fetch_votacoes_bigquery.py --ano "$ANO" $DRY_RUN_FLAG
 
       # Fase C1 (2026-07-26): etapa de cálculo de scores DESABILITADA.
       # A heurística de scores ideológicos está suspensa por falta de
