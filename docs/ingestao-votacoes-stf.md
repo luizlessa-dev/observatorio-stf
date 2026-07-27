@@ -5,6 +5,15 @@ do Observatório do STF (`.github/workflows/ingestao-diaria.yml` →
 `ingestao/stf/fetch_votacoes_bigquery.py` → `public.stf_votacoes`), feita na
 Fase D1 (2026-07-27). Não contém nenhum valor de secret.
 
+> **Atualização — Fase D2 (2026-07-27):** a fonte BigQuery
+> (`basedosdados.br_stf_corte_aberta.decisoes`) está estática desde
+> março/2025 e não tem nenhum dado além de 19/01/2025 — por isso `ano=2026`
+> retorna zero (não é um bug de query). O bug de normalização descrito na
+> seção 13 abaixo **foi corrigido localmente** nesta fase, mas a correção
+> ainda não foi commitada nem reingerida. Auditoria completa, com números e
+> plano de correção do histórico, em
+> [`docs/auditoria-fonte-e-normalizacao-votacoes.md`](./auditoria-fonte-e-normalizacao-votacoes.md).
+
 ## 1. Causa-raiz da falha original
 
 O workflow autenticava no Google Cloud com uma chave JSON de service account
@@ -190,23 +199,37 @@ metodologia publicada — não é uma mudança técnica.
 
 ## 13. Limitações conhecidas da fonte / riscos em aberto
 
-- **Bug pré-existente em `normalizar_voto`/`normalizar_resultado`
-  (achado na Fase D1, não corrigido nesta etapa):** as duas funções fazem
-  correspondência por substring (`if k in a`) sobre `MAPA_VOTO`/
-  `MAPA_RESULTADO`, cuja ordem de inserção testa `"deferido"`, `"provido"` e
-  `"procedente"` antes de `"indeferido"`, `"não provido"` e `"improcedente"`
-  — que os contêm como substring. Resultado: andamentos que deveriam cair em
-  `"contra"`/`"improcedente"` (indeferido, não provido, improcedente) são
-  classificados como `"favor"`/`"procedente"`. Só `"denegada a ordem"` escapa
-  do bug. Documentado e coberto por testes em
-  `ingestao/stf/tests/test_fetch_votacoes_bigquery.py`
-  (`test_BUG_normalizar_voto_*`), que hoje afirmam o comportamento **atual**
-  (incorreto), não o correto — propositalmente, para que a correção seja
-  feita conscientemente, avaliando o impacto nos ~758 mil registros já
-  existentes em `stf_votacoes`. **Este bug bloqueia a confiabilidade de
-  qualquer ingestão real futura até ser corrigido e avaliado.**
+- **Bug em `normalizar_voto`/`normalizar_resultado` (achado na Fase D1,
+  corrigido localmente na Fase D2 — ainda não commitado nem reingerido):**
+  as duas funções faziam correspondência por substring (`if k in a`) sobre
+  `MAPA_VOTO`/`MAPA_RESULTADO`, cuja ordem de inserção testava
+  `"deferido"`, `"provido"` e `"procedente"` antes de `"indeferido"`,
+  `"não provido"` e `"improcedente"` — que os contêm como substring.
+  Resultado: andamentos que deveriam cair em `"contra"`/`"improcedente"`
+  (indeferido, não provido, improcedente, "X em parte") eram classificados
+  como `"favor"`/`"procedente"`. A correção (Fase D2) ordena as chaves por
+  comprimento decrescente antes de comparar, o que corrige a família inteira
+  do bug por construção, e normaliza caixa/acentuação antes da comparação.
+  Testes atualizados em `ingestao/stf/tests/test_fetch_votacoes_bigquery.py`
+  (`TestNormalizacaoVoto`, `TestNormalizacaoResultado`) agora exigem o
+  comportamento correto. Estimativa de impacto histórico (~133.681
+  registros, ~17,6% de `stf_votacoes`) e plano de correção do histórico já
+  ingerido em
+  [`docs/auditoria-fonte-e-normalizacao-votacoes.md`](./auditoria-fonte-e-normalizacao-votacoes.md#10-impacto-histórico).
+  **A reingestão retroativa não foi executada — depende de decisão editorial
+  separada.**
 - `tipo_julgamento = 'Monocrática'` só cobre decisões monocráticas — decisões
-  colegiadas (voto coletivo) não são desagregadas por este script.
+  colegiadas (voto coletivo, 355.996 registros na fonte) não são
+  desagregadas por este script. A própria adequação do nome `stf_votacoes`
+  para decisões monocráticas (majoritariamente processuais, não julgamentos
+  de mérito) é questionada na auditoria da Fase D2, seção 12.
 - `MAPA_MINISTRO` é uma lista fechada; relatores fora dela (grafias novas,
   ministros não mapeados) são contados em `sem_ministro` e descartados, sem
   falhar a execução.
+- A fonte BigQuery (`basedosdados.br_stf_corte_aberta.decisoes`) está estática
+  desde março/2025, sem nenhum dado além de 19/01/2025 — é por isso que
+  `ano=2026` (e mesmo boa parte de 2025) retorna zero, não por bug de query.
+  O CSV oficial (`fetch_votacoes_csv.py`) está com a URL morta (404) e a
+  implementação incompleta (sem resolução de `ministro_id`, sem upsert). Hoje
+  não há caminho funcional para dados mais recentes que 19/01/2025. Ver
+  auditoria da Fase D2, seções 2–4 e 7.

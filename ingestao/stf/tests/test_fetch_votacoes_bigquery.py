@@ -73,40 +73,140 @@ class TestTravaDeDestino(unittest.TestCase):
             mod.DESTINATION_TABLE = original
 
 
-class TestTransformacaoBasica(unittest.TestCase):
-    def test_normalizar_voto_mapeia_deferido_para_favor(self):
+class TestNormalizacaoVoto(unittest.TestCase):
+    """Fase D2: corrige o bug de correspondência por substring em ordem
+    incorreta (achado e documentado — não corrigido — na Fase D1). Termos
+    específicos/negativos ("indeferido", "não provido", "improcedente",
+    "provido em parte") são substring de termos genéricos/positivos
+    ("deferido", "provido", "procedente") e por isso precisam ser checados
+    antes deles. Ver docs/auditoria-fonte-e-normalizacao-votacoes.md."""
+
+    def test_deferido_e_favor(self):
         self.assertEqual(mod.normalizar_voto("Deferido"), "favor")
 
-    def test_normalizar_voto_desconhecido_e_ausente(self):
+    def test_indeferido_e_contra(self):
+        self.assertEqual(mod.normalizar_voto("Indeferido"), "contra")
+
+    def test_provido_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Provido"), "favor")
+
+    def test_nao_provido_e_contra(self):
+        self.assertEqual(mod.normalizar_voto("Não Provido"), "contra")
+
+    def test_parcialmente_provido_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Parcialmente Provido"), "favor")
+
+    def test_provido_em_parte_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Provido Em Parte"), "favor")
+
+    def test_procedente_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Procedente"), "favor")
+
+    def test_improcedente_e_contra(self):
+        self.assertEqual(mod.normalizar_voto("Improcedente"), "contra")
+
+    def test_parcialmente_procedente_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Parcialmente Procedente"), "favor")
+
+    def test_denegada_a_ordem_e_contra(self):
+        self.assertEqual(mod.normalizar_voto("Denegada a ordem"), "contra")
+
+    def test_concedida_a_ordem_e_favor(self):
+        self.assertEqual(mod.normalizar_voto("Concedida a ordem"), "favor")
+
+    def test_caixa_diferente_nao_afeta_classificacao(self):
+        self.assertEqual(mod.normalizar_voto("INDEFERIDO"), "contra")
+        self.assertEqual(mod.normalizar_voto("indeferido"), "contra")
+
+    def test_acentuacao_diferente_nao_afeta_classificacao(self):
+        # variante sem o "ã" (ex.: fonte com encoding degradado) deve
+        # classificar igual à forma acentuada
+        self.assertEqual(mod.normalizar_voto("Nao Provido"), "contra")
+        self.assertEqual(mod.normalizar_voto("Não Provido"), "contra")
+
+    def test_string_vazia_e_ausente(self):
+        self.assertEqual(mod.normalizar_voto(""), "ausente")
+
+    def test_none_e_ausente(self):
+        self.assertEqual(mod.normalizar_voto(None), "ausente")
+
+    def test_valor_desconhecido_e_ausente(self):
         self.assertEqual(mod.normalizar_voto("andamento nunca visto"), "ausente")
 
-    def test_normalizar_resultado_mapeia_provido_para_procedente(self):
+    def test_negado_seguimento_e_ausente(self):
+        # maior categoria de andamento monocrático (~622 mil registros na
+        # fonte) não é um "voto" no sentido deferido/indeferido — permanece
+        # fora do MAPA_VOTO propositalmente. Ver seção "Compatibilidade de
+        # dados" da auditoria.
+        self.assertEqual(mod.normalizar_voto("Negado Seguimento"), "ausente")
+
+    def test_frase_completa_com_indeferido_nao_e_classificada_como_deferido(self):
+        self.assertEqual(mod.normalizar_voto("Pedido conhecido e indeferido"), "contra")
+
+    def test_frase_completa_com_nao_provido(self):
+        self.assertEqual(
+            mod.normalizar_voto("Agravo regimental conhecido e não provido"), "contra"
+        )
+
+
+class TestNormalizacaoResultado(unittest.TestCase):
+    def test_deferido_e_procedente(self):
+        self.assertEqual(mod.normalizar_resultado("Deferido"), "procedente")
+
+    def test_indeferido_e_improcedente(self):
+        self.assertEqual(mod.normalizar_resultado("Indeferido"), "improcedente")
+
+    def test_provido_e_procedente(self):
         self.assertEqual(mod.normalizar_resultado("Provido"), "procedente")
 
-    def test_normalizar_resultado_mapeia_denegada_a_ordem_para_improcedente(self):
+    def test_nao_provido_e_improcedente(self):
+        self.assertEqual(mod.normalizar_resultado("Não Provido"), "improcedente")
+
+    def test_procedente_e_procedente(self):
+        self.assertEqual(mod.normalizar_resultado("Procedente"), "procedente")
+
+    def test_improcedente_e_improcedente(self):
+        self.assertEqual(mod.normalizar_resultado("Improcedente"), "improcedente")
+
+    def test_parcialmente_provido_e_parcial(self):
+        self.assertEqual(mod.normalizar_resultado("Parcialmente Provido"), "parcial")
+
+    def test_provido_em_parte_e_parcial(self):
+        self.assertEqual(mod.normalizar_resultado("Provido Em Parte"), "parcial")
+
+    def test_parcialmente_procedente_e_parcial(self):
+        self.assertEqual(mod.normalizar_resultado("Parcialmente Procedente"), "parcial")
+
+    def test_denegada_a_ordem_e_improcedente(self):
         self.assertEqual(mod.normalizar_resultado("Denegada a ordem"), "improcedente")
 
-    # BUG PRÉ-EXISTENTE (achado ao escrever este teste na Fase D1, não
-    # introduzido nem corrigido nesta etapa — fora do escopo autorizado de
-    # WIF/dry-run). normalizar_voto/normalizar_resultado fazem correspondência
-    # por substring (`if k in a`) sobre um dict cuja ordem de inserção coloca
-    # "deferido", "provido" e "procedente" antes de "indeferido", "não
-    # provido" e "improcedente" — que os contêm como substring. Resultado:
-    # "Indeferido", "Não Provido" e "Improcedente" (categoria "contra"/
-    # "improcedente") são classificados como "favor"/"procedente". Só
-    # "Denegada a ordem" (sem colisão de substring) escapa do bug, coberto
-    # pelo teste acima. Estes três testes documentam o comportamento ATUAL —
-    # não o correto — para que a correção seja feita conscientemente em uma
-    # etapa própria, com avaliação do impacto nos ~758 mil registros já
-    # existentes em stf_votacoes. Ver riscos críticos no relatório da Fase D1.
-    def test_BUG_normalizar_voto_indeferido_e_classificado_como_favor(self):
-        self.assertEqual(mod.normalizar_voto("Indeferido"), "favor")
+    def test_concedida_a_ordem_e_procedente(self):
+        self.assertEqual(mod.normalizar_resultado("Concedida a ordem"), "procedente")
 
-    def test_BUG_normalizar_voto_nao_provido_e_classificado_como_favor(self):
-        self.assertEqual(mod.normalizar_voto("Não Provido"), "favor")
+    def test_string_vazia_e_none(self):
+        self.assertIsNone(mod.normalizar_resultado(""))
 
-    def test_BUG_normalizar_voto_improcedente_e_classificado_como_favor(self):
-        self.assertEqual(mod.normalizar_voto("Improcedente"), "favor")
+    def test_none_e_none(self):
+        self.assertIsNone(mod.normalizar_resultado(None))
+
+    def test_valor_desconhecido_e_none(self):
+        self.assertIsNone(mod.normalizar_resultado("andamento nunca visto"))
+
+    def test_valores_de_saida_respeitam_check_constraint_do_schema(self):
+        # public.stf_votacoes_voto_check / stf_votacoes_resultado_check
+        # (conferidos ao vivo no Supabase na Fase D2, somente leitura)
+        votos_validos = {"favor", "contra", "abstencao", "ausente"}
+        resultados_validos = {"procedente", "improcedente", "parcial"}
+        amostras = [
+            "Deferido", "Indeferido", "Provido", "Não Provido", "Procedente",
+            "Improcedente", "Parcialmente Provido", "Provido Em Parte",
+            "Denegada a ordem", "Concedida a ordem", "Prejudicado",
+            "Sobrestado", "Negado Seguimento", "", None,
+        ]
+        for andamento in amostras:
+            self.assertIn(mod.normalizar_voto(andamento), votos_validos)
+            resultado = mod.normalizar_resultado(andamento)
+            self.assertTrue(resultado is None or resultado in resultados_validos)
 
 
 class TestGuardaDeEscritaNoCodigoFonte(unittest.TestCase):

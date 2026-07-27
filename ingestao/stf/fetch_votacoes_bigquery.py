@@ -12,7 +12,7 @@ Execução:
   python3 ingestao/stf/fetch_votacoes_bigquery.py [--ano 2024] [--dry-run]
 """
 
-import os, sys, re, argparse
+import os, sys, re, argparse, unicodedata
 from datetime import date
 from supabase import create_client
 from google.cloud import bigquery
@@ -52,37 +52,58 @@ def resolver_destino() -> str:
         )
     return tabela
 
-# Andamento → voto individual do relator
+def _normalizar_texto(s: str) -> str:
+    """Minúsculas, sem acentos, espaços colapsados — base comum para chave e andamento."""
+    s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"\s+", " ", s.lower().strip())
+
+
+# Andamento → voto individual do relator.
+# Chaves em texto sem acento (ver _normalizar_texto) — o andamento consultado
+# passa pela mesma normalização antes da comparação.
 MAPA_VOTO = {
-    "deferido":            "favor",
-    "deferido em parte":   "favor",
-    "provido":             "favor",
-    "parcialmente provido":"favor",
-    "concedida a ordem":   "favor",
-    "procedente":          "favor",
-    "procedente em parte": "favor",
-    "indeferido":          "contra",
-    "não provido":         "contra",
-    "denegada a ordem":    "contra",
-    "improcedente":        "contra",
-    "prejudicado":         "abstencao",
-    "sobrestado":          "abstencao",
+    "indeferido":           "contra",
+    "nao provido":          "contra",
+    "improcedente":         "contra",
+    "denegada a ordem":     "contra",
+    "deferido em parte":      "favor",
+    "provido em parte":       "favor",
+    "parcialmente provido":   "favor",
+    "procedente em parte":    "favor",
+    "parcialmente procedente":"favor",
+    "deferido":             "favor",
+    "provido":              "favor",
+    "concedida a ordem":    "favor",
+    "procedente":           "favor",
+    "prejudicado":          "abstencao",
+    "sobrestado":           "abstencao",
 }
 
 # Andamento → resultado (do colegiado)
 MAPA_RESULTADO = {
-    "deferido":            "procedente",
-    "deferido em parte":   "parcial",
-    "provido":             "procedente",
-    "parcialmente provido":"parcial",
-    "concedida a ordem":   "procedente",
-    "procedente":          "procedente",
-    "procedente em parte": "parcial",
-    "indeferido":          "improcedente",
-    "não provido":         "improcedente",
-    "denegada a ordem":    "improcedente",
-    "improcedente":        "improcedente",
+    "indeferido":           "improcedente",
+    "nao provido":          "improcedente",
+    "improcedente":         "improcedente",
+    "denegada a ordem":     "improcedente",
+    "deferido em parte":      "parcial",
+    "provido em parte":       "parcial",
+    "parcialmente provido":   "parcial",
+    "procedente em parte":    "parcial",
+    "parcialmente procedente":"parcial",
+    "deferido":             "procedente",
+    "provido":              "procedente",
+    "concedida a ordem":    "procedente",
+    "procedente":           "procedente",
 }
+
+# Termos específicos (negativos e "em parte") são checados antes dos termos
+# genéricos porque os genéricos são substring dos específicos — ex.: "deferido"
+# está contido em "indeferido", "provido" está contido em "provido em parte".
+# Ordenar por comprimento decrescente garante isso automaticamente, sem
+# depender da ordem de inserção do dict (bug original: dict na ordem em que
+# foi escrito, com os termos genéricos vindo antes por acidente de redação).
+_VOTO_CHAVES_ORDENADAS = sorted(MAPA_VOTO, key=len, reverse=True)
+_RESULTADO_CHAVES_ORDENADAS = sorted(MAPA_RESULTADO, key=len, reverse=True)
 
 # Nome no BigQuery → iniciais do banco
 MAPA_MINISTRO = {
@@ -111,17 +132,21 @@ MAPA_MINISTRO = {
 }
 
 def normalizar_voto(andamento: str) -> str:
-    a = andamento.lower().strip()
-    for k, v in MAPA_VOTO.items():
+    if not andamento:
+        return "ausente"
+    a = _normalizar_texto(andamento)
+    for k in _VOTO_CHAVES_ORDENADAS:
         if k in a:
-            return v
+            return MAPA_VOTO[k]
     return "ausente"
 
 def normalizar_resultado(andamento: str):
-    a = andamento.lower().strip()
-    for k, v in MAPA_RESULTADO.items():
+    if not andamento:
+        return None
+    a = _normalizar_texto(andamento)
+    for k in _RESULTADO_CHAVES_ORDENADAS:
         if k in a:
-            return v
+            return MAPA_RESULTADO[k]
     return None
 
 def run(ano: int, dry_run: bool = False):
