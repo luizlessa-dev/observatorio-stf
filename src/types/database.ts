@@ -99,6 +99,24 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["stf_gastos"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_gastos"]["Insert"]>;
       };
+      // Achado A6 (2026-08-17): períodos de presidência/vice do STF. Existe
+      // para contextualizar o custo de gabinete do presidente, que não é
+      // comparável ao dos demais. Períodos com início e fim, não flag — a
+      // pergunta é "quem presidia no mês do gasto".
+      stf_presidencias: {
+        Row: {
+          id:          string;
+          ministro_id: string;
+          cargo:       "presidente" | "vice_presidente";
+          inicio:      string;
+          fim:         string | null;   // null = em exercício
+          fonte:       string | null;
+          created_at:  string;
+          updated_at:  string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_presidencias"]["Row"], "id" | "created_at" | "updated_at">;
+        Update: Partial<Database["public"]["Tables"]["stf_presidencias"]["Insert"]>;
+      };
       // Fase C1 (2026-07-26): esta tabela NÃO existe no banco de produção
       // (confirmado por inspeção read-only). O script de ingestão
       // correspondente já foi deletado do working tree. A tipagem permanece

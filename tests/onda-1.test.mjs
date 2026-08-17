@@ -209,3 +209,49 @@ test("o webhook não lê current_period_end direto da Subscription", () => {
   );
   assert.ok(src.includes("function fimDoPeriodo"), "o acessor tolerante a versão de API sumiu");
 });
+
+// ── A6: contexto da presidência do STF ──────────────────────────────
+
+// O gabinete do ministro presidente aparece com uma fração dos servidores dos
+// demais (Fachin: 9, contra 31–38) porque a estrutura de apoio da Presidência
+// não corre pelo gabinete dele. Sem nota, o número lê-se como "custa menos".
+
+test("a presidência é modelada como período, não como flag booleana", () => {
+  const src = read("src/hooks/usePresidencias.ts");
+  assert.ok(
+    /inicio/.test(src) && /fim/.test(src),
+    "com flag booleana, todo gasto histórico seria anotado com a presidência atual — a pergunta é quem presidia no mês do gasto",
+  );
+  assert.ok(
+    src.includes("export function presidiaNoMes"),
+    "o helper que responde pelo mês de competência do gasto sumiu",
+  );
+});
+
+test("o bloco de gastos avisa quando o custo não é comparável", () => {
+  const src = read("src/components/ministros/MinistroDetalhe.tsx");
+  assert.ok(
+    src.includes("presidiaNoMesDoGasto"),
+    "a nota precisa ser condicionada ao mês de referência, não à presidência atual",
+  );
+  assert.ok(
+    /Não comparável ao dos demais gabinetes/.test(src),
+    "a ressalva visível no bloco de custo ao erário sumiu",
+  );
+});
+
+test("a ficha exibe o cargo de presidente ou vice quando houver", () => {
+  const src = read("src/components/ministros/MinistroDetalhe.tsx");
+  assert.ok(
+    src.includes("ROTULO_CARGO[cargo]"),
+    "o site não informava em lugar nenhum quem preside a Corte",
+  );
+});
+
+test("a nota da presidência não trata o ministro pelo primeiro nome", () => {
+  const src = semComentarios(read("src/components/ministros/MinistroDetalhe.tsx"));
+  assert.ok(
+    !/m\.nome\s*\.\s*split\(/.test(src),
+    "mesmo problema de B2: fatiar o nome produz tratamento informal de autoridade",
+  );
+});

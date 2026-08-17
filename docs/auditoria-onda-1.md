@@ -194,6 +194,36 @@ Achados vizinhos que esta onda **não** tocou, de propósito:
 - **D2** — `anon` ainda tem grant de `INSERT`/`UPDATE` em
   `stf_ministros_publicos` (bloqueado por RLS e por falta de grant na
   tabela-base, mas indevido).
-- **A6** — o gabinete de Fachin (9 servidores) segue sem a nota de que ele
-  preside o STF desde 29/09/2025.
 - **C3** — sem termos, política de privacidade, contato ou metodologia.
+
+---
+
+## A6 — Presidência do STF (feito, 2026-08-17)
+
+O bloco "Custo ao erário" mostrava o gabinete de Fachin com **9 servidores e
+R$ 176.814**, contra 31 a 38 servidores e R$ 757 mil a R$ 932 mil dos demais.
+O número é real e a fonte é oficial — mas fora de contexto lê-se como "o
+gabinete de Fachin custa um quinto dos outros". A razão é institucional:
+Fachin preside o STF desde 29/09/2025, e a estrutura de apoio da Presidência
+não integra o gabinete do ministro.
+
+**Migration 0006** cria `stf_presidencias` com períodos (`inicio`, `fim`), não
+uma flag booleana em `stf_ministros`. O motivo é a pergunta que a interface
+faz: não é *"quem preside hoje"*, é *"quem presidia no mês de referência deste
+gasto"*. Com flag, todo gasto histórico passaria a ser anotado com a
+presidência atual — trocaria um erro de leitura por outro. Um índice parcial
+(`stf_presidencias_um_atual`) impede dois ocupantes simultâneos do mesmo cargo.
+
+Seed conferido: Barroso presidente de 28/09/2023 a 29/09/2025 (Fachin vice),
+Fachin presidente desde 29/09/2025 (Moraes vice). Presidências anteriores a
+28/09/2023 ficaram de fora de propósito — a data de início da gestão de Rosa
+Weber não foi conferida, e estimar é o erro que esta onda inteira corrigiu.
+
+Na interface: selo do cargo na ficha (o site não informava em lugar nenhum
+quem preside a Corte) e, no bloco de gastos, a ressalva condicionada ao mês de
+competência — *"Não comparável ao dos demais gabinetes"*. Verificado em
+produção: Fachin recebe selo e nota, Moraes recebe só o selo de vice, Gilmar
+não recebe nenhum dos dois.
+
+Isso é pré-requisito da tabela comparativa dos dez gabinetes prevista para a
+onda 3 — sem a nota, ela seria uma manchete errada esperando para acontecer.

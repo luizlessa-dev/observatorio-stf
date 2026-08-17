@@ -2,6 +2,12 @@ import type { Ministro } from "../../lib/seed";
 import Termometro from "../termometro/Termometro";
 import { useVotacoes } from "../../hooks/useVotacoes";
 import { useGastos } from "../../hooks/useGastos";
+import {
+  usePresidencias,
+  cargoAtual,
+  presidiaNoMes,
+  ROTULO_CARGO,
+} from "../../hooks/usePresidencias";
 
 interface Props { ministro: Ministro; }
 
@@ -42,9 +48,18 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
   const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
   const { gastos, loading: loadingGastos } = useGastos(m.id);
 
+  const { presidencias } = usePresidencias();
+
   const subsidio = gastos.find((g) => g.categoria === "subsidio_ministro");
   const gabinete = gastos.find((g) => g.categoria === "custo_gabinete");
   const gastoRef = subsidio ?? gabinete;
+
+  const cargo = cargoAtual(presidencias, m.id);
+  // Achado A6: o gabinete do presidente aparece com uma fração dos servidores
+  // dos demais porque a estrutura de apoio da Presidência não corre por ele.
+  // Sem esta nota, o número convida à leitura de que o gabinete "custa menos".
+  const presidiaNoMesDoGasto =
+    !!gastoRef && presidiaNoMes(presidencias, m.id, gastoRef.ano, gastoRef.mes);
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
@@ -68,6 +83,11 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
             Ministro desde {m.data_posse} · Aposentadoria compulsória {m.aposentadoria}
           </div>
           <div className="flex gap-[5px] flex-wrap">
+            {cargo && (
+              <span className="text-[10px] font-semibold px-[9px] py-[3px] rounded-sm border border-white bg-white text-canvas">
+                {ROTULO_CARGO[cargo]}
+              </span>
+            )}
             <span className="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-white/40 text-white">
               Indicado por {m.indicado_por}
             </span>
@@ -144,6 +164,20 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
               </div>
             );
           })()}
+
+          {presidiaNoMesDoGasto && (
+            <div className="px-4 py-[10px] border-t border-border bg-card/50">
+              <p className="text-[10px] text-muted leading-[1.55]">
+                <strong className="font-semibold text-ink">
+                  Não comparável ao dos demais gabinetes.
+                </strong>{" "}
+                {m.nome} presidia o STF na competência acima, e a
+                estrutura de apoio da Presidência não integra o gabinete do
+                ministro — parte da equipe que apareceria aqui está lotada na
+                Presidência.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
