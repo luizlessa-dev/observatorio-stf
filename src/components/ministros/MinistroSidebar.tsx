@@ -46,14 +46,14 @@ export default function MinistroSidebar({ ministros, selecionado, onSelect, load
                     : "border-border2 text-muted"
                 }`}
               >
-                {m.iniciais}
+                {m.iniciais_exibicao}
               </div>
               <div>
                 <div className="text-[12.5px] font-semibold text-ink leading-tight">
                   {m.nome}
                 </div>
                 <div className="text-[10px] text-subtle mt-[1px]">
-                  Ind. {m.indicado_por.split(" ")[0]} · desde{" "}
+                  Ind. {m.indicado_por_curto} · desde{" "}
                   {m.data_posse.split(" ").slice(1).join(" ")}
                 </div>
               </div>

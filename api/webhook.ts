@@ -19,6 +19,39 @@ async function buffer(req: VercelRequest): Promise<Buffer> {
   });
 }
 
+// Onda 1 (2026-08-17), C2: o webhook gravava a assinatura sem `user_id`, e a
+// única policy de stf_assinaturas era `auth.uid() = user_id`. Com user_id nulo
+// a comparação nunca é true e a linha ficava invisível para o próprio dono —
+// a pessoa pagava e o site continuava mostrando o botão de apoio para sempre.
+// A migration 0005 acrescenta a policy por e-mail verificado e a função
+// stf_resolver_user_id(); aqui o webhook passa a preencher user_id quando a
+// conta já existe. Ver docs/auditoria-onda-1.md.
+async function resolverUserId(email: string): Promise<string | null> {
+  if (!email) return null;
+  const { data, error } = await sb.rpc("stf_resolver_user_id", { p_email: email });
+  if (error) {
+    console.error("stf_resolver_user_id falhou", error.message);
+    return null;
+  }
+  return (data as string | null) ?? null;
+}
+
+// `current_period_end` saiu do objeto Subscription e passou para os itens da
+// assinatura nas versões recentes da API do Stripe (a declarada aqui é
+// 2025-05-28.basil). Ler só do objeto raiz devolvia undefined, e
+// `new Date(undefined * 1000).toISOString()` lança — o webhook respondia 500
+// ao Stripe e a assinatura nunca era registrada. Lê dos dois lugares.
+function fimDoPeriodo(sub: Stripe.Subscription): string | null {
+  const raiz = (sub as unknown as { current_period_end?: number }).current_period_end;
+  const doItem = sub.items?.data?.[0] as unknown as { current_period_end?: number } | undefined;
+  const ts = raiz ?? doItem?.current_period_end;
+  if (typeof ts !== "number" || !Number.isFinite(ts)) {
+    console.error("current_period_end ausente na assinatura", sub.id);
+    return null;
+  }
+  return new Date(ts * 1000).toISOString();
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
 
@@ -41,15 +74,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const plano     = (session.metadata?.plano ?? "mensal") as "mensal" | "anual";
 
     const sub = await stripe.subscriptions.retrieve(subId);
-    const vigentaAte = new Date((sub.current_period_end) * 1000).toISOString();
 
     await sb.from("stf_assinaturas").upsert({
       email,
+      user_id:            await resolverUserId(email),
       stripe_customer_id: custId,
       stripe_sub_id:      subId,
       plano,
       status:             "ativa",
-      vigente_ate:        vigentaAte,
+      vigente_ate:        fimDoPeriodo(sub),
     }, { onConflict: "stripe_sub_id" });
   }
 
@@ -61,11 +94,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (event.type === "customer.subscription.updated") {
-    const sub        = event.data.object as Stripe.Subscription;
-    const vigentaAte = new Date(sub.current_period_end * 1000).toISOString();
-    const status     = sub.status === "active" ? "ativa" : sub.status === "paused" ? "pausada" : "cancelada";
-    await sb.from("stf_assinaturas").update({ status, vigente_ate: vigentaAte, updated_at: new Date().toISOString() })
-      .eq("stripe_sub_id", sub.id);
+    const sub    = event.data.object as Stripe.Subscription;
+    const status = sub.status === "active" ? "ativa" : sub.status === "paused" ? "pausada" : "cancelada";
+    await sb.from("stf_assinaturas").update({
+      status,
+      vigente_ate: fimDoPeriodo(sub),
+      updated_at:  new Date().toISOString(),
+    }).eq("stripe_sub_id", sub.id);
   }
 
   res.json({ ok: true });

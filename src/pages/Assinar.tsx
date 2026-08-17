@@ -22,14 +22,30 @@ const PLANOS = [
 // Fase C1 (2026-07-26): a lista anterior prometia funcionalidades suspensas ou
 // ainda não implementadas (painel de scores, alertas, exportação CSV, relatório
 // PDF). A assinatura passa a ser comunicada de forma neutra, como apoio ao
-// projeto, até que exista uma oferta premium real — a revisão estratégica da
-// proposta comercial está documentada em docs/plano-aplicacao-c1-supabase.md.
-// Não adicione benefício aqui sem que a funcionalidade exista e esteja no ar.
-const BENEFICIOS = [
-  "Acesso ao acervo de votações e decisões conforme publicado no site",
-  "Consulta organizada dos ministros, com dados institucionais verificáveis",
-  "Acompanhamento dos temas de repercussão geral já catalogados",
-  "Apoio direto à manutenção e à apuração independente do Observatório",
+// projeto, até que exista uma oferta premium real.
+//
+// Onda 1 (2026-08-17): a C1 limpou a lista mas deixou de pé o enquadramento —
+// título "Acesso completo ao Observatório", botão "Assinar plano", e a página
+// /sucesso dizendo "acesso a todos os recursos". Não existe recurso restrito:
+// as policies RLS de stf_ministros, stf_gastos, stf_votacoes e
+// stf_repercussao_geral são todas `using (true)` para anon. Vender "acesso" ao
+// que já é aberto é publicidade enganosa (art. 37 do CDC) — e o produto é um
+// veículo de fiscalização de integridade.
+//
+// A página passa a ser APOIO, não acesso.
+//
+// REGRA (temporal, não permanente): não prometa acesso, exclusividade ou área
+// de assinante enquanto a funcionalidade restrita não existir E não estiver no
+// ar. Uma camada paga ESTÁ no roteiro do projeto — quando ela existir, esta
+// tela volta a poder falar de acesso, e os textos bloqueados em
+// tests/onda-1.test.mjs devem ser liberados na mesma mudança que publica a
+// funcionalidade. O que o teste impede é a promessa chegar antes da entrega,
+// não a existência de uma oferta paga.
+const O_QUE_O_APOIO_SUSTENTA = [
+  "Coleta e checagem contínua de dados públicos do STF",
+  "Custo de infraestrutura, banco de dados e ingestão automatizada",
+  "Tempo de apuração e correção de erros nos dados publicados",
+  "Independência editorial — sem publicidade e sem patrocínio institucional",
 ];
 
 export default function PaginaAssinar() {
@@ -63,9 +79,12 @@ export default function PaginaAssinar() {
     return (
       <div className="flex-1 px-8 py-16 max-w-lg mx-auto text-center">
         <div className="text-[32px] mb-3">✓</div>
-        <h1 className="font-display text-[24px] font-bold text-white mb-2">Você já é assinante</h1>
+        <h1 className="font-display text-[24px] font-bold text-white mb-2">
+          Sua contribuição está ativa
+        </h1>
         <p className="text-[13px] text-subtle">
-          Seu acesso completo ao Observatório do STF está ativo.
+          Obrigado por sustentar o Observatório do STF. Sua contribuição é o que
+          mantém a apuração de pé.
         </p>
       </div>
     );
@@ -73,20 +92,30 @@ export default function PaginaAssinar() {
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-10 max-w-2xl mx-auto w-full">
-      <div className="text-[11px] text-subtle mb-6">Assinatura</div>
+      <div className="text-[11px] text-subtle mb-6">Apoio</div>
 
       <h1 className="font-display text-[32px] font-bold text-white leading-[1.2] mb-2">
-        Acesso completo ao Observatório
+        Apoie o Observatório
       </h1>
-      <p className="text-[13px] text-subtle mb-8 max-w-md">
-        A assinatura sustenta a coleta e a organização de dados públicos do STF.
-        Você paga pelo que já existe — sem promessas de recursos futuros. Cancele
-        a qualquer momento.
+      <p className="text-[13px] text-subtle mb-4 max-w-md">
+        Sua contribuição sustenta a coleta, a checagem e a publicação de dados
+        públicos do STF. Cancele a qualquer momento.
       </p>
 
-      {/* Benefícios */}
+      <div className="border border-border2 rounded-sm bg-card px-4 py-3 mb-8 max-w-md">
+        <p className="text-[12px] text-ink leading-[1.55]">
+          <strong className="font-semibold text-white">Hoje não há área restrita.</strong>{" "}
+          Tudo o que está publicado é aberto, e contribuir não desbloqueia nada.
+          Você está financiando a apuração, não comprando acesso.
+        </p>
+      </div>
+
+      {/* O que a contribuição sustenta */}
       <div className="mb-8">
-        {BENEFICIOS.map((b) => (
+        <div className="text-[9px] font-semibold uppercase tracking-[1.5px] text-subtle mb-2">
+          O que sua contribuição sustenta
+        </div>
+        {O_QUE_O_APOIO_SUSTENTA.map((b) => (
           <div key={b} className="flex items-start gap-[10px] py-[7px] border-b border-border last:border-0">
             <span className="text-[10px] text-white/40 mt-[2px] flex-shrink-0">✓</span>
             <span className="text-[12px] text-muted">{b}</span>
@@ -137,7 +166,7 @@ export default function PaginaAssinar() {
         disabled={loading}
         className="w-full bg-white text-canvas font-semibold text-[13px] py-[11px] rounded-sm hover:bg-white/90 transition-colors disabled:opacity-50"
       >
-        {loading ? "Aguarde…" : `Assinar plano ${plano} — ${plano === "mensal" ? "R$ 29,90/mês" : "R$ 299,00/ano"}`}
+        {loading ? "Aguarde…" : `Contribuir ${plano === "mensal" ? "R$ 29,90/mês" : "R$ 299,00/ano"}`}
       </button>
 
       <p className="text-[10px] text-subtle text-center mt-3">

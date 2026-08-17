@@ -6,22 +6,45 @@ import { useGastos } from "../../hooks/useGastos";
 interface Props { ministro: Ministro; }
 
 const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+
 function fmtData(iso: string): string {
-  const [, mes, dia] = iso.split("-");
+  const [, mes, dia] = iso.slice(0, 10).split("-");
   return `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
 }
 
-const MESES_NOME = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-function fmtMes(mes: number, ano: number) {
-  return `${MESES_NOME[mes - 1]}/${ano}`;
+function fmtDataCompleta(iso: string): string {
+  const [ano, mes, dia] = iso.slice(0, 10).split("-");
+  return `${dia} ${MESES[parseInt(mes, 10) - 1]} ${ano}`;
 }
+
+function fmtMes(mes: number, ano: number) {
+  return `${MESES[mes - 1]}/${ano}`;
+}
+
 function fmtBRL(v: number) {
   return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+}
+
+// Onda 1 (2026-08-17): toda tela que serve dado datado precisa dizer até
+// quando o dado vai. O bloco de decisões se chamava "Últimas decisões
+// monocráticas" e mostrava janeiro de 2025 sem ano na data — o leitor
+// concluía que era deste ano. Ver docs/auditoria-onda-1.md.
+function Carimbo({ ate }: { ate: string | null }) {
+  if (!ate) return null;
+  return (
+    <span className="text-[8.5px] text-subtle whitespace-nowrap normal-case tracking-normal font-normal">
+      dados até {ate}
+    </span>
+  );
 }
 
 export default function MinistroDetalhe({ ministro: m }: Props) {
   const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
   const { gastos, loading: loadingGastos } = useGastos(m.id);
+
+  const subsidio = gastos.find((g) => g.categoria === "subsidio_ministro");
+  const gabinete = gastos.find((g) => g.categoria === "custo_gabinete");
+  const gastoRef = subsidio ?? gabinete;
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
@@ -35,7 +58,7 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
       {/* Cabeçalho */}
       <div className="flex items-start gap-5 pb-6 border-b border-border mb-[22px]">
         <div className="w-[68px] h-[68px] rounded-full bg-surface border border-border2 flex items-center justify-center font-display text-[22px] font-bold text-muted flex-shrink-0">
-          {m.iniciais}
+          {m.iniciais_exibicao}
         </div>
         <div>
           <div className="font-display text-[26px] font-bold text-white leading-[1.2] mb-1">
@@ -59,7 +82,7 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
       <div className="grid grid-cols-4 border border-border rounded-sm overflow-hidden mb-6">
         {[
           { label: "Indicado por",  val: m.indicado_por,      sub: m.partido_indicante },
-          { label: "Cargo anterior", val: m.cargo_anterior,   sub: `Governo ${m.indicado_por.split(" ")[0]}` },
+          { label: "Cargo anterior", val: m.cargo_anterior,   sub: `Governo ${m.indicado_por_curto}` },
           { label: "Posse",         val: m.data_posse,        sub: "Data de posse no STF" },
           { label: "Aposentadoria", val: m.aposentadoria || "—", sub: "Compulsória aos 75 anos" },
         ].map((c, i) => (
@@ -87,18 +110,15 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
       {/* Gastos */}
       {(loadingGastos || gastos.length > 0) && (
         <div className="border border-border rounded-sm overflow-hidden mb-6">
-          <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
+          <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
             <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
               Custo ao erário
             </span>
-            {loadingGastos && (
-              <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
-            )}
+            {loadingGastos
+              ? <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
+              : <Carimbo ate={gastoRef ? fmtMes(gastoRef.mes, gastoRef.ano) : null} />}
           </div>
           {gastos.length > 0 && (() => {
-            const subsidio = gastos.find(g => g.categoria === "subsidio_ministro");
-            const gabinete = gastos.find(g => g.categoria === "custo_gabinete");
-            const mesRef = subsidio ?? gabinete;
             const totalMes = (subsidio?.valor ?? 0) + (gabinete?.valor ?? 0);
             return (
               <div className="grid grid-cols-3 divide-x divide-border">
@@ -118,7 +138,7 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
                   <div className="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Total mensal</div>
                   <div className="text-[15px] font-bold text-white">{fmtBRL(totalMes)}</div>
                   <div className="text-[9px] text-subtle mt-[2px]">
-                    ref. {mesRef ? fmtMes(mesRef.mes, mesRef.ano) : "—"}
+                    ref. {gastoRef ? fmtMes(gastoRef.mes, gastoRef.ano) : "—"}
                   </div>
                 </div>
               </div>
@@ -129,13 +149,13 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
 
       {/* Decisões — ocupa largura total */}
       <div className="border border-border rounded-sm overflow-hidden">
-        <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between">
+        <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
           <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
             Últimas decisões monocráticas
           </span>
-          {loadingVotos && (
-            <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
-          )}
+          {loadingVotos
+            ? <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
+            : <Carimbo ate={votacoes[0] ? fmtDataCompleta(votacoes[0].data) : null} />}
         </div>
 
         {!loadingVotos && votacoes.length === 0 && (
@@ -165,14 +185,35 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
   );
 }
 
+// Onda 1 (2026-08-17): `ausente` NÃO é um resultado, é a lixeira da
+// normalização — 487.778 das 758.714 linhas de stf_votacoes (64%) caem nele.
+// Numa decisão monocrática quem decide é o próprio ministro, então o rótulo
+// "Ausente" afirmava algo logicamente impossível e factualmente falso ("o
+// ministro esteve ausente na maioria das decisões"). Enquanto a normalização
+// não for reprocessada, o não classificado é exibido como "—".
+// Ver docs/auditoria-onda-1.md. Não reintroduza um rótulo aqui sem que a
+// ingestão saiba distinguir sentido do voto de tipo de decisão.
+const VOTO_NAO_CLASSIFICADO = "ausente";
+
 function VotoChip({ voto }: { voto: string }) {
   const map: Record<string, { label: string; cls: string }> = {
     favor:     { label: "Deferido",   cls: "border-[#3a5a3a] text-[#8ab88a]" },
     contra:    { label: "Indeferido", cls: "border-[#5a3a3a] text-[#b88a8a]" },
     abstencao: { label: "Prejudicado",cls: "border-border2 text-subtle" },
-    ausente:   { label: "Ausente",    cls: "border-border2 text-subtle" },
   };
-  const { label, cls } = map[voto] ?? { label: voto, cls: "border-border2 text-subtle" };
+
+  if (voto === VOTO_NAO_CLASSIFICADO || !map[voto]) {
+    return (
+      <span
+        title="Resultado ainda não classificado pela normalização da ingestão"
+        className="text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border border-border2 text-subtle text-center whitespace-nowrap opacity-60"
+      >
+        —
+      </span>
+    );
+  }
+
+  const { label, cls } = map[voto];
   return (
     <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border text-center whitespace-nowrap ${cls}`}>
       {label}

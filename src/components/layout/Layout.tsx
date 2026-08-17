@@ -68,12 +68,12 @@ export default function Layout() {
               to="/assinar"
               className="text-[11px] font-semibold text-canvas bg-white px-[14px] py-[6px] rounded-sm hover:bg-white/90 transition-colors"
             >
-              Assinar
+              Apoiar
             </NavLink>
           )}
           {assinante && (
             <span className="text-[10px] font-semibold text-white/40 border border-white/10 rounded-sm px-[8px] py-[4px]">
-              Assinante
+              Apoiador
             </span>
           )}
           <button

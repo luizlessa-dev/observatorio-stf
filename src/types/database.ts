@@ -9,6 +9,10 @@ export interface Database {
       // deliberadamente REMOVIDAS desta tipagem de cliente: são dados internos
       // suspensos, sem grant público após a migration 0003_contencao_scores.sql.
       // Não as reintroduza aqui — este tipo alimenta o client anon do bundle.
+      //
+      // Onda 1 (2026-08-17): `data_nascimento` (migration 0004) também fica de
+      // fora por decisão explícita — é insumo interno do cálculo de
+      // aposentadoria_comp e não recebeu grant público.
       stf_ministros: {
         Row: {
           id:                   string;
@@ -20,8 +24,10 @@ export interface Database {
           partido_indicante:    string;
           cargo_anterior:       string | null;
           formacao:             string | null;
-          aposentadoria_comp:   string | null;
+          aposentadoria_comp:   string | null;  // derivada de data_nascimento (trigger, migration 0004)
           ativo:                boolean;
+          indicado_por_curto:   string | null;  // rótulo compacto — não fatiar indicado_por
+          iniciais_exibicao:    string | null;  // `iniciais` é UNIQUE e pode ter sufixo (AM2)
           created_at:           string;
           updated_at:           string;
         };
