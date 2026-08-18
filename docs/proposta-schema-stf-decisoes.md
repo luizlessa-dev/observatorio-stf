@@ -298,6 +298,42 @@ Os 27.985 resolvidos por presidência são decisões que ficariam órfãs sem a
 `stf_presidencias` criada para o achado A6. Os 98 desconhecidos **entraram na
 tabela** com `ministro_id` nulo — nenhuma decisão foi perdida.
 
+### ⚠️ Armadilha para quem migrar o front: não conte decisão por `ministro_id`
+
+O primeiro corte dos dados de 2026 mostra isto:
+
+| Ministro | Decisões com `ministro_id` |
+|---|---:|
+| Edson Fachin | **28.150** |
+| Alexandre de Moraes | 6.832 |
+| Flávio Dino | 5.190 |
+| Gilmar Mendes | 4.209 |
+
+Fachin parece decidir **sete vezes mais** que Gilmar. Não decide. Separando por
+`ministro_resolucao`:
+
+| | |
+|---|---:|
+| Fachin, como relator nomeado (`nome`) | **35** |
+| Fachin, assinando como presidente (`presidencia`) | **28.115** |
+| Gilmar, como relator nomeado (`nome`) | 4.209 |
+
+As 28.115 são decisões da **Presidência** — despachos de plantão, competência
+presidencial, expediente do cargo — atribuídas a ele porque a fonte diz
+`MINISTRO PRESIDENTE` e nós resolvemos pela data. São dele no sentido
+institucional, não no sentido de atividade de relatoria. Contá-las junto com as
+35 produz um comparativo falso, da mesma família do custo de gabinete do achado
+A6: número real, leitura errada.
+
+**Regra para a interface:** ao comparar ministros, filtre
+`ministro_resolucao = 'nome'`. Ao mostrar o total de um ministro, separe as duas
+linhas e rotule. Nunca some as duas num número só.
+
+Isto só é visível porque a coluna `ministro_resolucao` registra COMO a
+atribuição foi feita. Se o conector tivesse apenas gravado `ministro_id`, como
+fazia o pipeline antigo, a distorção seria invisível e viraria estatística
+publicada.
+
 ### Ainda pendente
 
 - **Backfill 2000–2025** (~2,9M linhas). O conector aceita `--ano`; é rodar ano
