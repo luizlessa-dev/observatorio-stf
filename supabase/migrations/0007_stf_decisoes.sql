@@ -102,6 +102,11 @@ comment on column public.stf_decisoes.sentido is
   'Com andamento_bruto guardado, preencher depois é UPDATE, não reingestão. '
   'Ver docs/proposta-schema-stf-decisoes.md, seção 5.';
 
+comment on column public.stf_decisoes.ingerido_em is
+  'PRIMEIRA ingestão da linha, não a última. O upsert não inclui esta coluna no '
+  'payload, então o on_conflict a preserva. Para saber quando a ingestão rodou '
+  'pela última vez, use stf_ingestao_log — não esta coluna.';
+
 -- ── Índices ──
 create index if not exists stf_decisoes_ministro_data_idx
   on public.stf_decisoes (ministro_id, data_decisao desc);
