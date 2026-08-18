@@ -1,11 +1,17 @@
 # Proposta de schema — `stf_decisoes`
 
-**Data:** 2026-08-17 · **Status:** proposta, nada aplicado · **Achado:** D1
+**Data:** 2026-08-17 · **Status:** ✅ aprovada e implementada · **Achado:** D1
+
+> **Implementação** (commit `c48de9e`): migration `0007_stf_decisoes.sql` aplicada
+> em produção, conector em `ingestao/stf/fetch_decisoes_qlik.py`, testes em
+> `ingestao/stf/tests/test_fetch_decisoes_qlik.py`, cron diário em
+> `.github/workflows/ingestao-decisoes.yml`. O que mudou em relação a esta
+> proposta durante a implementação está na seção 7.
 
 Substituição da fonte morta (Base dos Dados, parada em 19/01/2025) pela fonte
 primária do STF, e do modelo `stf_votacoes` por um modelo que guarda o valor
-bruto. Nenhuma migration foi escrita nem aplicada — este documento existe para
-ser aprovado antes de qualquer código.
+bruto. Escrito para ser aprovado antes de qualquer código; a seção 7 registra o
+que a implementação acrescentou depois da aprovação.
 
 ---
 
@@ -253,3 +259,51 @@ onde conseguir, e `'desconhecido'` no resto, sem descartar linha nenhuma.
 > linhas que não reconhecia, sem falhar. Aqui a linha entra com
 > `ministro_id = null` e `ministro_resolucao = 'desconhecido'`, e a contagem
 > desses casos vai para o log da execução.
+
+---
+
+## 7. O que a implementação acrescentou
+
+Três coisas que só apareceram ao rodar de verdade:
+
+**O Qlik limita a 10.000 células por requisição, não a 10.000 linhas.** Com 21
+colunas, o teto é 476 linhas por página (erro `6001 Result too large`). A altura
+da página é derivada da largura real devolvida pela fonte, para não quebrar de
+novo se uma coluna for acrescentada lá. Esse erro é determinístico e não entra
+no retry — repetir só mascararia uma mudança de schema na origem.
+
+**`MIN. MARCO AURÉLIO` na fonte é `Marco Aurélio Mello` no banco.** Resolvido
+por alias explícito (`ALIAS_RELATOR`), não por casamento aproximado: um
+"parecido o bastante" atribuiria decisão ao ministro errado, o que é pior do que
+não atribuir.
+
+**Um caminho de `desconhecido` não entrava na contagem.** A primeira versão
+devolvia `desconhecido` para `VICE-PRESIDENTE` sem registrar no relatório — 97
+linhas de 2026 sumiam do log. Agora todo caminho até `desconhecido` passa por
+`_nao_resolvido()`, porque subnotificar é a forma silenciosa do mesmo erro que
+esta ingestão veio corrigir. Há teste de regressão para isso.
+
+### Resultado da primeira execução (ano 2026)
+
+| | |
+|---|---|
+| Linhas na fonte | 71.499 |
+| Mapeadas | 71.499 (nenhuma descartada) |
+| `ministro_resolucao = nome` | 43.413 |
+| `ministro_resolucao = presidencia` | 27.985 |
+| `ministro_resolucao = desconhecido` | 98 (97 `VICE-PRESIDENTE`, 1 Sepúlveda Pertence) |
+| `ministro_resolucao = nao_aplicavel` | 3 |
+
+Os 27.985 resolvidos por presidência são decisões que ficariam órfãs sem a
+`stf_presidencias` criada para o achado A6. Os 98 desconhecidos **entraram na
+tabela** com `ministro_id` nulo — nenhuma decisão foi perdida.
+
+### Ainda pendente
+
+- **Backfill 2000–2025** (~2,9M linhas). O conector aceita `--ano`; é rodar ano
+  a ano. Cada ano leva alguns minutos.
+- **Histórico de presidências anterior a 28/09/2023.** Sem ele, os
+  `MINISTRO PRESIDENTE` dos anos antigos entram como `desconhecido`. Preencher
+  recupera ~19,4% do acervo histórico. É apuração, não código.
+- **Vice-presidências**, pelo mesmo motivo — 97 linhas só em 2026.
+- **Front migrar para `stf_decisoes`**, e só então descartar `stf_votacoes`.
