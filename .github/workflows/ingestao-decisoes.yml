@@ -1,0 +1,72 @@
+name: Ingestão Diária — Decisões do STF
+
+# Achado D1 da auditoria de 2026-08-17.
+#
+# Este workflow SUBSTITUI o papel de ingestao-diaria.yml (BigQuery), cuja fonte
+# — basedosdados.br_stf_corte_aberta.decisoes — está estática desde março/2025
+# e não tem nada além de 19/01/2025. Aquele workflow permanece no repositório
+# com o schedule desligado; não reative os dois ao mesmo tempo.
+#
+# A fonte aqui é o Qlik Sense do próprio STF (transparencia.stf.jus.br), que
+# recarrega diariamente por volta das 09h15 UTC. O cron roda às 12h UTC para
+# pegar o reload do dia com folga.
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 12h UTC (09h BRT), ~3h após o reload do Qlik
+  workflow_dispatch:
+    inputs:
+      ano:
+        description: "Ano a ingerir (vazio = ano atual)"
+        required: false
+        default: ""
+      escrever:
+        description: "Gravar no Supabase (desmarcado = dry-run)"
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: ingestao-stf-decisoes
+  cancel-in-progress: false
+
+jobs:
+  decisoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install supabase websockets certifi
+
+      - name: Testes do conector
+        # Estáticos e sem rede. Falham se a lista de colunas, a trava de
+        # destino ou a guarda de dry-run forem mexidas sem intenção.
+        run: python3 -m unittest discover -s ingestao/stf/tests
+
+      - name: Ingerir decisões
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          set +x
+          ANO="${{ github.event.inputs.ano }}"
+          if [ -z "$ANO" ]; then ANO=$(date +%Y); fi
+
+          # O schedule sempre grava — é o objetivo dele. O disparo manual só
+          # grava com a caixa marcada; qualquer outro valor cai em dry-run.
+          FLAG="--dry-run"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            FLAG="--escrever"
+          elif [ "${{ github.event.inputs.escrever }}" = "true" ]; then
+            FLAG="--escrever"
+          fi
+
+          python3 ingestao/stf/fetch_decisoes_qlik.py --ano "$ANO" $FLAG
