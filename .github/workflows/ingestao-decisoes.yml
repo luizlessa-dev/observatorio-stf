@@ -53,13 +53,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar dependências
-        run: python3 -m pip install --user --quiet --upgrade supabase websockets certifi
+      # O Python do Homebrew é "externally managed" (PEP 668) e recusa
+      # pip install fora de ambiente virtual — inclusive com --user. Nos
+      # runners hospedados do GitHub isso não acontece, então só apareceu ao
+      # migrar para o self-hosted. O venv fica fora do checkout, no diretório
+      # do runner, e é reaproveitado entre execuções.
+      - name: Preparar ambiente Python
+        run: |
+          VENV="$RUNNER_TOOL_CACHE/venv-observatorio-stf"
+          if [ ! -x "$VENV/bin/python" ]; then
+            python3 -m venv "$VENV"
+          fi
+          "$VENV/bin/python" -m pip install --quiet --upgrade pip
+          "$VENV/bin/python" -m pip install --quiet --upgrade supabase websockets certifi
+          echo "$VENV/bin" >> "$GITHUB_PATH"
+          echo "venv: $("$VENV/bin/python" --version)"
 
       - name: Testes do conector
         # Estáticos e sem rede. Falham se a lista de colunas, a trava de
         # destino ou a guarda de dry-run forem mexidas sem intenção.
-        run: python3 -m unittest discover -s ingestao/stf/tests
+        run: python -m unittest discover -s ingestao/stf/tests
 
       - name: Ingerir decisões
         env:
@@ -79,4 +92,4 @@ jobs:
             FLAG="--escrever"
           fi
 
-          python3 ingestao/stf/fetch_decisoes_qlik.py --ano "$ANO" $FLAG
+          python ingestao/stf/fetch_decisoes_qlik.py --ano "$ANO" $FLAG
