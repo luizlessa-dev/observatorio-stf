@@ -1,6 +1,6 @@
 import type { Ministro } from "../../lib/seed";
 import Termometro from "../termometro/Termometro";
-import { useVotacoes } from "../../hooks/useVotacoes";
+import { useDecisoes } from "../../hooks/useDecisoes";
 import { useGastos } from "../../hooks/useGastos";
 import {
   usePresidencias,
@@ -45,7 +45,8 @@ function Carimbo({ ate }: { ate: string | null }) {
 }
 
 export default function MinistroDetalhe({ ministro: m }: Props) {
-  const { votacoes, loading: loadingVotos } = useVotacoes(m.id);
+  const { decisoes, total: totalDecisoes, comoPresidente, loading: loadingDecisoes } =
+    useDecisoes(m.id);
   const { gastos, loading: loadingGastos } = useGastos(m.id);
 
   const { presidencias } = usePresidencias();
@@ -185,72 +186,70 @@ export default function MinistroDetalhe({ ministro: m }: Props) {
       <div className="border border-border rounded-sm overflow-hidden">
         <div className="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
           <span className="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
-            Últimas decisões monocráticas
+            Decisões monocráticas como relator
+            {totalDecisoes > 0 && (
+              <span className="ml-2 font-normal normal-case tracking-normal text-subtle">
+                {totalDecisoes.toLocaleString("pt-BR")} no total
+              </span>
+            )}
           </span>
-          {loadingVotos
+          {loadingDecisoes
             ? <span className="text-[8px] text-subtle animate-pulse">carregando…</span>
-            : <Carimbo ate={votacoes[0] ? fmtDataCompleta(votacoes[0].data) : null} />}
+            : <Carimbo ate={decisoes[0] ? fmtDataCompleta(decisoes[0].data_decisao) : null} />}
         </div>
 
-        {!loadingVotos && votacoes.length === 0 && (
-          <div className="px-4 py-5 text-[11px] text-subtle text-center">
-            Sem dados de votação disponíveis
+        {/* Achado D1: decisões assinadas na condição de presidente do STF NÃO
+            entram na lista nem na contagem acima. Em 2026, Fachin tem 35 como
+            relator e 28.115 como presidente — somar faria a ficha dele exibir
+            quase 7x o volume de Moraes, quando ele é justamente quem tem menos
+            decisões próprias, porque presidir redistribui a pauta. */}
+        {comoPresidente > 0 && (
+          <div className="px-4 py-[10px] border-b border-border bg-card/50">
+            <p className="text-[10px] text-muted leading-[1.55]">
+              <strong className="font-semibold text-ink">
+                Fora desta lista:
+              </strong>{" "}
+              {comoPresidente.toLocaleString("pt-BR")} decisões assinadas na
+              condição de presidente do STF — plantão e competência da
+              Presidência, não a pauta do ministro como relator.
+            </p>
           </div>
         )}
 
-        {votacoes.map((v) => (
+        {!loadingDecisoes && decisoes.length === 0 && (
+          <div className="px-4 py-5 text-[11px] text-subtle text-center">
+            Sem decisões monocráticas registradas como relator
+          </div>
+        )}
+
+        {decisoes.map((d) => (
           <div
-            key={v.id}
+            key={d.id}
             className="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2"
-            style={{ gridTemplateColumns: "44px 1fr 70px" }}
+            style={{ gridTemplateColumns: "64px 1fr 150px" }}
           >
-            <div className="font-mono text-[9px] text-subtle pt-[1px]">{fmtData(v.data)}</div>
+            <div className="font-mono text-[9px] text-subtle pt-[1px]">
+              {fmtData(d.data_decisao)}
+            </div>
             <div>
               <div className="text-[11px] text-muted leading-[1.35] line-clamp-2">
-                {v.ementa.replace(/ \|\| /g, " — ")}
+                {d.assunto ?? "—"}
               </div>
-              <div className="font-mono text-[8.5px] text-subtle mt-[2px]">{v.processo}</div>
+              <div className="font-mono text-[8.5px] text-subtle mt-[2px]">
+                {d.processo}
+                {d.tipo_decisao && <span className="ml-2 opacity-60">{d.tipo_decisao}</span>}
+              </div>
             </div>
-            <VotoChip voto={v.voto} />
+            {/* O andamento sai COMO O STF ESCREVEU. Não há tradução para
+                favorável/contrário: "Negado seguimento" é recusa de
+                admissibilidade, não julgamento de mérito, e foi essa tradução
+                que produziu os 64% de "Ausente" na tabela antiga. */}
+            <div className="text-[9px] text-subtle leading-[1.3] text-right">
+              {d.andamento_bruto}
+            </div>
           </div>
         ))}
       </div>
     </div>
-  );
-}
-
-// Onda 1 (2026-08-17): `ausente` NÃO é um resultado, é a lixeira da
-// normalização — 487.778 das 758.714 linhas de stf_votacoes (64%) caem nele.
-// Numa decisão monocrática quem decide é o próprio ministro, então o rótulo
-// "Ausente" afirmava algo logicamente impossível e factualmente falso ("o
-// ministro esteve ausente na maioria das decisões"). Enquanto a normalização
-// não for reprocessada, o não classificado é exibido como "—".
-// Ver docs/auditoria-onda-1.md. Não reintroduza um rótulo aqui sem que a
-// ingestão saiba distinguir sentido do voto de tipo de decisão.
-const VOTO_NAO_CLASSIFICADO = "ausente";
-
-function VotoChip({ voto }: { voto: string }) {
-  const map: Record<string, { label: string; cls: string }> = {
-    favor:     { label: "Deferido",   cls: "border-[#3a5a3a] text-[#8ab88a]" },
-    contra:    { label: "Indeferido", cls: "border-[#5a3a3a] text-[#b88a8a]" },
-    abstencao: { label: "Prejudicado",cls: "border-border2 text-subtle" },
-  };
-
-  if (voto === VOTO_NAO_CLASSIFICADO || !map[voto]) {
-    return (
-      <span
-        title="Resultado ainda não classificado pela normalização da ingestão"
-        className="text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border border-border2 text-subtle text-center whitespace-nowrap opacity-60"
-      >
-        —
-      </span>
-    );
-  }
-
-  const { label, cls } = map[voto];
-  return (
-    <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border text-center whitespace-nowrap ${cls}`}>
-      {label}
-    </span>
   );
 }

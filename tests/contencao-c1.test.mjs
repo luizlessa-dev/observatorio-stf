@@ -193,7 +193,10 @@ test("lista de ministros continua alimentada (seed com 10 ministros ativos)", ()
 
 test("perfil do ministro preserva dados institucionais legítimos", () => {
   const src = read("src/components/ministros/MinistroDetalhe.tsx");
-  for (const trecho of ["indicado_por", "data_posse", "aposentadoria", "useVotacoes", "useGastos"]) {
+  // "useDecisoes" substituiu "useVotacoes" na migração do achado D1
+  // (2026-08-18). A intenção deste teste é a mesma: a contenção dos scores não
+  // pode ter levado junto os blocos de dado institucional legítimo.
+  for (const trecho of ["indicado_por", "data_posse", "aposentadoria", "useDecisoes", "useGastos"]) {
     assert.ok(src.includes(trecho), `MinistroDetalhe.tsx deveria continuar usando ${trecho}`);
   }
 });

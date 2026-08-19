@@ -99,6 +99,45 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["stf_gastos"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_gastos"]["Insert"]>;
       };
+      // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
+      // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
+      // `sentido` existe mas fica NULO até haver taxonomia publicada — não
+      // preencha a partir de andamento_bruto sem metodologia.
+      stf_decisoes: {
+        Row: {
+          id:                  string;
+          id_fato_decisao:     number;
+          processo:            string;
+          relator_bruto:       string;
+          relator_atual_bruto: string | null;
+          tipo_origem:         "MONOCRÁTICA" | "COLEGIADA";
+          tipo_decisao:        string | null;
+          andamento_bruto:     string;
+          observacao:          string | null;
+          data_decisao:        string;
+          ano_decisao:         number;
+          orgao_julgador:      string | null;
+          origem_decisao:      string | null;
+          ambiente_julgamento: string | null;
+          meio_processo:       string | null;
+          assunto:             string | null;
+          data_autuacao:       string | null;
+          data_baixa:          string | null;
+          em_tramitacao:       boolean | null;
+          orgao_origem:        string | null;
+          procedencia:         string | null;
+          ministro_id:         string | null;
+          // COMO a atribuição foi feita. Ver o comentário em useDecisoes.ts:
+          // somar 'nome' com 'presidencia' num número só distorce a ficha do
+          // ministro presidente (Fachin, 2026: 35 contra 28.115).
+          ministro_resolucao:  "nome" | "presidencia" | "nao_aplicavel" | "desconhecido" | null;
+          sentido:             string | null;
+          ingerido_em:         string;
+          fonte:               string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_decisoes"]["Row"], "id" | "ingerido_em" | "fonte">;
+        Update: Partial<Database["public"]["Tables"]["stf_decisoes"]["Insert"]>;
+      };
       // Achado A6 (2026-08-17): períodos de presidência/vice do STF. Existe
       // para contextualizar o custo de gabinete do presidente, que não é
       // comparável ao dos demais. Períodos com início e fim, não flag — a

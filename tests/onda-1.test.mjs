@@ -88,15 +88,20 @@ test("posse de Fachin é 16 jun 2015 e de Dino é 22 fev 2024", () => {
 
 // ── A3: rótulo de decisão não classificada ──────────────────────────
 
-test('VotoChip não rotula decisão não classificada como "Ausente"', () => {
+// A migração do achado D1 (2026-08-18) tornou esta garantia mais forte: em vez
+// de tratar melhor o valor não classificado, o front deixou de traduzir. Mostra
+// o andamento como o STF escreveu. Não há mais rótulo a errar.
+test("a ficha não inventa rótulo de voto para decisão do STF", () => {
   const src = semComentarios(read("src/components/ministros/MinistroDetalhe.tsx"));
+  for (const rotulo of ['"Ausente"', '"Deferido"', '"Indeferido"', '"Prejudicado"']) {
+    assert.ok(
+      !src.includes(rotulo),
+      `${rotulo} é tradução nossa do andamento do STF. Numa decisão monocrática quem decide é o próprio ministro — "Ausente" afirmava algo impossível, e 64% das linhas de stf_votacoes caíam nele.`,
+    );
+  }
   assert.ok(
-    !/label:\s*"Ausente"/.test(src),
-    'numa decisão monocrática quem decide é o próprio ministro — "Ausente" afirma algo impossível. 64% das linhas de stf_votacoes caem nesse valor por falha de normalização.',
-  );
-  assert.ok(
-    src.includes("VOTO_NAO_CLASSIFICADO"),
-    "o tratamento explícito do valor não classificado sumiu de MinistroDetalhe",
+    src.includes("andamento_bruto"),
+    "no lugar da tradução, a tela precisa mostrar o texto original do STF",
   );
 });
 
@@ -253,5 +258,49 @@ test("a nota da presidência não trata o ministro pelo primeiro nome", () => {
   assert.ok(
     !/m\.nome\s*\.\s*split\(/.test(src),
     "mesmo problema de B2: fatiar o nome produz tratamento informal de autoridade",
+  );
+});
+
+// ── D1: front migrado para stf_decisoes ─────────────────────────────
+
+test("a ficha do ministro lê stf_decisoes, não a tabela congelada", () => {
+  const src = read("src/components/ministros/MinistroDetalhe.tsx");
+  assert.ok(src.includes("useDecisoes"), "o componente precisa consumir stf_decisoes");
+  assert.ok(
+    !/useVotacoes/.test(semComentarios(src)),
+    "stf_votacoes normalizava o andamento na escrita e perdeu o original — não voltar a lê-la",
+  );
+});
+
+test("a lista de decisões separa a pauta do ministro dos atos como presidente", () => {
+  // Em 2026 Fachin tem 35 decisões como relator e 28.115 assinadas como
+  // presidente. Somar faria a ficha dele exibir ~6,7x o volume de Moraes,
+  // quando ele é justamente quem tem menos decisões próprias.
+  const hook = read("src/hooks/useDecisoes.ts");
+  assert.ok(
+    /\.eq\("ministro_resolucao",\s*"nome"\)/.test(hook),
+    "a lista precisa filtrar por ministro_resolucao='nome'",
+  );
+  assert.ok(
+    /\.eq\("ministro_resolucao",\s*"presidencia"\)/.test(hook),
+    "o volume como presidente precisa ser contado à parte, não somado",
+  );
+});
+
+test("o componente rotula as decisões assinadas como presidente", () => {
+  const src = read("src/components/ministros/MinistroDetalhe.tsx");
+  assert.ok(src.includes("comoPresidente"), "a contagem separada sumiu do componente");
+  assert.ok(
+    /condição de presidente do STF/.test(src),
+    "sem o rótulo, o leitor não sabe por que aquelas decisões estão fora da lista",
+  );
+});
+
+test("o andamento sai como o STF escreveu, sem tradução para voto", () => {
+  const src = semComentarios(read("src/components/ministros/MinistroDetalhe.tsx"));
+  assert.ok(src.includes("andamento_bruto"), "o texto bruto do STF precisa chegar à tela");
+  assert.ok(
+    !/VotoChip/.test(src),
+    'traduzir andamento para favor/contra foi o que produziu os 64% de "Ausente"',
   );
 });
