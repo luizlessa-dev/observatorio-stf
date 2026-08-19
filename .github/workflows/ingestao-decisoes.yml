@@ -12,22 +12,21 @@ name: Ingestão Diária — Decisões do STF
 # pegar o reload do dia com folga.
 
 on:
-  # ── SCHEDULE DESLIGADO em 2026-08-19 ──
-  # O WAF do STF devolve 403 para o runner hospedado do GitHub ao abrir a
-  # sessão anônima do Qlik. Confirmado em três execuções: primeiro com
-  # User-Agent + Accept-Language, depois com o conjunto completo de cabeçalhos
-  # de navegador (Accept, Referer, Sec-Fetch-*, Upgrade-Insecure-Requests).
-  # Os MESMOS cabeçalhos e o MESMO código funcionam de rede residencial.
-  # Fingerprint de cabeçalho está descartado; sobra a origem de rede.
+  # ── SCHEDULE RELIGADO em 2026-08-19, agora em runner self-hosted ──
+  # O WAF do STF devolve 403 para os runners hospedados do GitHub — confirmado
+  # em três execuções, a última com o conjunto completo de cabeçalhos de
+  # navegador. Os mesmos cabeçalhos e o mesmo código passam de rede
+  # residencial, então o bloqueio é por origem de rede.
   #
-  # Deixar o cron ligado faria este workflow falhar todo dia às 12h UTC — ruído
-  # que treina o dono do projeto a ignorar falha de ingestão, que é exatamente
-  # como a ingestão anterior morreu em junho sem ninguém notar.
+  # `runs-on: self-hosted` aponta para o Mac do Luiz (runner "mac-luiz"). Isso
+  # também é o teste decisivo do diagnóstico: se passar aqui, era mesmo IP de
+  # datacenter e não diferença de stack TLS.
   #
-  # Para reativar: rode num runner self-hosted em rede não bloqueada e
-  # descomente as duas linhas abaixo trocando `runs-on` no job.
-  # schedule:
-  #   - cron: "0 12 * * *"   # 12h UTC (09h BRT), ~3h após o reload do Qlik
+  # LIMITAÇÃO CONHECIDA: só roda com a máquina ligada e acordada. Uma execução
+  # perdida não é perda de dado — o upsert é idempotente e a execução seguinte
+  # recupera o atraso, porque a ingestão sempre varre o ano inteiro.
+  schedule:
+    - cron: "0 12 * * *"   # 12h UTC (09h BRT), ~3h após o reload do Qlik
   workflow_dispatch:
     inputs:
       ano:
@@ -46,19 +45,16 @@ concurrency:
 
 jobs:
   decisoes:
-    runs-on: ubuntu-latest
+    # Ver o comentário em `on:` — runner hospedado recebe 403 do STF.
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 60
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
       - name: Instalar dependências
-        run: pip install supabase websockets certifi
+        run: python3 -m pip install --user --quiet --upgrade supabase websockets certifi
 
       - name: Testes do conector
         # Estáticos e sem rede. Falham se a lista de colunas, a trava de
