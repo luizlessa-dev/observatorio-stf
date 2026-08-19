@@ -48,7 +48,7 @@ const O_QUE_O_APOIO_SUSTENTA = [
   "Independência editorial — sem publicidade e sem patrocínio institucional",
 ];
 
-export default function PaginaAssinar() {
+export default function FormApoio() {
   const { user, assinante } = useAuth();
   const [plano,    setPlano]    = useState<"mensal" | "anual">("anual");
   const [email,    setEmail]    = useState(user?.email ?? "");

@@ -1,0 +1,202 @@
+---
+/**
+ * Página por ministro — o achado E5 da auditoria.
+ *
+ * O SPA fazia toda a navegação de ministros em estado do React dentro de uma
+ * única rota. Não existia URL para citar num texto, para o STF responder, para
+ * outro veículo referenciar ou para o buscador indexar. Agora são 33 páginas,
+ * uma por ministro, geradas no build com os dados já dentro do HTML.
+ */
+import Base from "../../layouts/Base.astro";
+import { carregarMinistros, carregarDecisoes, carregarGastos } from "../../lib/dados";
+import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
+
+export async function getStaticPaths() {
+  const ministros = await carregarMinistros();
+  return Promise.all(
+    ministros.map(async (m) => {
+      const [{ decisoes, total, comoPresidente }, gastos] = await Promise.all([
+        carregarDecisoes(m.id),
+        carregarGastos(m.id),
+      ]);
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos } };
+    })
+  );
+}
+
+const { m, decisoes, total, comoPresidente, gastos } = Astro.props;
+
+const subsidio = gastos.find((g) => g.categoria === "subsidio_ministro");
+const gabinete = gastos.find((g) => g.categoria === "custo_gabinete");
+const gastoRef = subsidio ?? gabinete;
+const totalMes = (subsidio?.valor ?? 0) + (gabinete?.valor ?? 0);
+const servidores = gabinete?.descricao?.match(/\d+/)?.[0] ?? null;
+
+const ROTULO_CARGO = { presidente: "Presidente do STF", vice_presidente: "Vice-presidente do STF" };
+
+// Achado A6: a estrutura de apoio da Presidência não integra o gabinete do
+// ministro, então o custo do presidente não é comparável ao dos demais.
+const presidiaNoMesDoGasto = m.cargo === "presidente" && !!gastoRef;
+
+const periodo = m.ativo
+  ? `desde ${fmtData(m.data_posse)}`
+  : `${fmtData(m.data_posse)} a ${fmtData(m.data_saida)}`;
+
+const titulo = `${m.nome} — ministro do STF | Observatório do STF`;
+const descricao = m.ativo
+  ? `${m.nome} é ministro do STF desde ${fmtData(m.data_posse)}, indicado por ${m.indicado_por}. ` +
+    `${fmtNum(total)} decisões monocráticas como relator, custo de gabinete e aposentadoria compulsória.`
+  : `${m.nome} foi ministro do STF de ${fmtData(m.data_posse)} a ${fmtData(m.data_saida)}, ` +
+    `indicado por ${m.indicado_por}. ${fmtNum(total)} decisões monocráticas como relator.`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: m.nome,
+  jobTitle: m.ativo ? "Ministro do Supremo Tribunal Federal" : "Ex-ministro do Supremo Tribunal Federal",
+  affiliation: { "@type": "GovernmentOrganization", name: "Supremo Tribunal Federal" },
+  url: `https://observatoriodostf.org/ministros/${m.slug}`,
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho={`/ministros/${m.slug}`} jsonLd={jsonLd}>
+  <div class="px-8 py-7 max-w-5xl">
+    <nav class="text-[11px] text-subtle mb-[22px] flex items-center gap-[6px]">
+      <a href="/ministros" class="hover:text-ink transition-colors">Ministros</a>
+      <span class="text-border2">›</span>
+      <span class="text-ink font-medium">{m.nome}</span>
+    </nav>
+
+    <div class="flex items-start gap-5 pb-6 border-b border-border mb-[22px]">
+      <div class="w-[68px] h-[68px] rounded-full bg-surface border border-border2 flex items-center justify-center font-display text-[22px] font-bold text-muted flex-shrink-0">
+        {m.iniciais_exibicao}
+      </div>
+      <div>
+        <h1 class="font-display text-[26px] font-bold text-white leading-[1.2] mb-1">{m.nome}</h1>
+        <div class="text-[12px] text-subtle mb-[10px]">
+          Ministro {periodo}
+          {m.ativo && m.aposentadoria_comp && ` · Aposentadoria compulsória ${fmtData(m.aposentadoria_comp)}`}
+        </div>
+        <div class="flex gap-[5px] flex-wrap">
+          {m.cargo && (
+            <span class="text-[10px] font-semibold px-[9px] py-[3px] rounded-sm border border-white bg-white text-canvas">
+              {ROTULO_CARGO[m.cargo]}
+            </span>
+          )}
+          {!m.ativo && (
+            <span class="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-border2 text-subtle">
+              Não está mais em exercício
+            </span>
+          )}
+          <span class="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-white/40 text-white">
+            Indicado por {m.indicado_por}
+          </span>
+          <span class="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-border2 text-muted">
+            {m.partido_indicante}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 border border-border rounded-sm overflow-hidden mb-6">
+      {[
+        { rotulo: "Indicado por",   valor: m.indicado_por,                sub: m.partido_indicante },
+        { rotulo: "Cargo anterior", valor: m.cargo_anterior ?? "—",       sub: `Governo ${m.indicado_por_curto}` },
+        { rotulo: "Posse",          valor: fmtData(m.data_posse),         sub: "Data de posse no STF" },
+        m.ativo
+          ? { rotulo: "Aposentadoria", valor: fmtData(m.aposentadoria_comp), sub: "Compulsória aos 75 anos" }
+          : { rotulo: "Saída",         valor: fmtData(m.data_saida),         sub: "Fim do exercício" },
+      ].map((c, i) => (
+        <div class:list={["px-4 py-[13px]", i < 3 && "md:border-r border-border"]}>
+          <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">{c.rotulo}</div>
+          <div class="text-[13px] font-semibold text-ink leading-snug">{c.valor}</div>
+          <div class="text-[10px] text-subtle mt-[2px]">{c.sub}</div>
+        </div>
+      ))}
+    </div>
+
+    {gastos.length > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Custo ao erário</h2>
+          {gastoRef && <span class="text-[8.5px] text-subtle">dados até {fmtMes(gastoRef.mes, gastoRef.ano)}</span>}
+        </div>
+        <div class="grid grid-cols-3 divide-x divide-border">
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Subsídio</div>
+            <div class="text-[15px] font-bold text-ink">{fmtBRL(subsidio?.valor ?? 0)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">por mês</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Custo do gabinete</div>
+            <div class="text-[15px] font-bold text-ink">{fmtBRL(gabinete?.valor ?? 0)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">{servidores ? `${servidores} servidores` : "—"}</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Total mensal</div>
+            <div class="text-[15px] font-bold text-white">{fmtBRL(totalMes)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">ref. {gastoRef ? fmtMes(gastoRef.mes, gastoRef.ano) : "—"}</div>
+          </div>
+        </div>
+        {presidiaNoMesDoGasto && (
+          <div class="px-4 py-[10px] border-t border-border bg-card/50">
+            <p class="text-[10px] text-muted leading-[1.55]">
+              <strong class="font-semibold text-ink">Não comparável ao dos demais gabinetes.</strong>
+              {" "}{m.nome} presidia o STF na competência acima, e a estrutura de apoio da
+              Presidência não integra o gabinete do ministro — parte da equipe que apareceria
+              aqui está lotada na Presidência.
+            </p>
+          </div>
+        )}
+      </section>
+    )}
+
+    <section class="border border-border rounded-sm overflow-hidden">
+      <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+        <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
+          Decisões monocráticas como relator
+          {total > 0 && <span class="ml-2 font-normal normal-case tracking-normal text-subtle">{fmtNum(total)} no total</span>}
+        </h2>
+        {decisoes[0] && <span class="text-[8.5px] text-subtle">dados até {fmtData(decisoes[0].data_decisao)}</span>}
+      </div>
+
+      {comoPresidente > 0 && (
+        <div class="px-4 py-[10px] border-b border-border bg-card/50">
+          <p class="text-[10px] text-muted leading-[1.55]">
+            <strong class="font-semibold text-ink">Fora desta lista:</strong>
+            {" "}{fmtNum(comoPresidente)} decisões assinadas na condição de presidente do STF —
+            plantão e competência da Presidência, não a pauta do ministro como relator.
+          </p>
+        </div>
+      )}
+
+      {decisoes.length === 0 && (
+        <p class="px-4 py-5 text-[11px] text-subtle text-center">
+          Sem decisões monocráticas registradas como relator
+        </p>
+      )}
+
+      {decisoes.map((d) => (
+        <article class="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2"
+                 style="grid-template-columns: 74px 1fr 150px">
+          <time class="font-mono text-[9px] text-subtle pt-[1px]" datetime={d.data_decisao}>
+            {fmtDataCurta(d.data_decisao)}
+          </time>
+          <div>
+            <div class="text-[11px] text-muted leading-[1.35] line-clamp-2">{d.assunto ?? "—"}</div>
+            <div class="font-mono text-[8.5px] text-subtle mt-[2px]">
+              {d.processo}{d.tipo_decisao && <span class="ml-2 opacity-60">{d.tipo_decisao}</span>}
+            </div>
+          </div>
+          <div class="text-[9px] text-subtle leading-[1.3] text-right">{d.andamento_bruto}</div>
+        </article>
+      ))}
+    </section>
+
+    <p class="text-[10px] text-subtle mt-4 max-w-2xl leading-[1.6]">
+      O andamento aparece exatamente como o STF o registrou. "Negado seguimento" é
+      recusa de admissibilidade, não julgamento de mérito — o Observatório não
+      traduz isso para favorável ou contrário sem metodologia publicada.
+      <a href="/metodologia" class="underline hover:text-ink ml-1">Como lemos os dados</a>
+    </p>
+  </div>
+</Base>

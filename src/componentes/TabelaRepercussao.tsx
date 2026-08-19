@@ -24,7 +24,7 @@ const STATUS_CLS: Record<string, string> = {
   sobrestado:"border-border2 text-subtle",
 };
 
-export default function PaginaRepercussao() {
+export default function TabelaRepercussao() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(50);

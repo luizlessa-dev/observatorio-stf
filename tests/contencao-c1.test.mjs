@@ -32,23 +32,20 @@ const CAMPOS_SCORE = [
   "score_seguranca",
 ];
 
+// Migração para Astro (2026-08-19): os alvos mudaram de arquivo, a garantia
+// não. Onde havia hooks e componentes React, hoje há a camada de dados de
+// build e as páginas .astro — e é nelas que um score não pode reaparecer.
 const ARQUIVOS_PUBLICOS = [
-  "src/lib/seed.ts",
-  "src/hooks/useMinistros.ts",
-  "src/hooks/useVotacoes.ts",
-  "src/hooks/useGastos.ts",
+  "src/lib/dados.ts",
+  "src/lib/supabase.ts",
   "src/hooks/useRepercussaoGeral.ts",
-  "src/components/layout/StatsStrip.tsx",
-  "src/components/layout/Hero.tsx",
-  "src/components/layout/Layout.tsx",
-  "src/components/ministros/MinistroSidebar.tsx",
-  "src/components/ministros/MinistroDetalhe.tsx",
-  "src/components/termometro/Termometro.tsx",
-  "src/pages/Ministros.tsx",
-  "src/pages/ProcessosPoliticos.tsx",
-  "src/pages/Impunidade.tsx",
-  "src/pages/RepercussaoGeral.tsx",
-  "src/pages/Assinar.tsx",
+  "src/componentes/TabelaRepercussao.tsx",
+  "src/componentes/FormApoio.tsx",
+  "src/layouts/Base.astro",
+  "src/pages/index.astro",
+  "src/pages/ministros/[slug].astro",
+  "src/pages/repercussao-geral.astro",
+  "src/types/database.ts",
 ];
 
 test("nenhum arquivo público de UI/hook referencia campos de score", () => {
@@ -65,9 +62,9 @@ test("nenhum arquivo público de UI/hook referencia campos de score", () => {
 
 test("nenhum hook do frontend usa select('*') — seleção deve ser explícita", () => {
   const hooks = [
-    "src/hooks/useMinistros.ts",
-    "src/hooks/useVotacoes.ts",
-    "src/hooks/useGastos.ts",
+    "src/lib/dados.ts",
+    "src/lib/dados.ts",
+    "src/lib/dados.ts",
     "src/hooks/useRepercussaoGeral.ts",
     "src/lib/auth.ts",
   ];
@@ -80,8 +77,8 @@ test("nenhum hook do frontend usa select('*') — seleção deve ser explícita"
   }
 });
 
-test("tipo público Ministro (seed.ts) não contém scores", () => {
-  const src = read("src/lib/seed.ts");
+test("tipo público Ministro (lib/dados.ts) não contém scores", () => {
+  const src = read("src/lib/dados.ts");
   assert.ok(!/score/i.test(src.replace(/\/\/[^\n]*/g, "")),
     "seed.ts (fora de comentários) não deveria conter nenhum campo ou valor de score");
 });
@@ -101,7 +98,7 @@ test("tipagem do cliente Supabase não expõe scores nem a view legada de scores
 test("/assinar não promete scores, termômetro, G5 nem recursos inexistentes", () => {
   // comentários de código podem citar os termos ao explicar a suspensão;
   // o que não pode é o texto renderizado ao usuário
-  const src = read("src/pages/Assinar.tsx")
+  const src = read("src/componentes/FormApoio.tsx")
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/\/\/[^\n]*/g, "");
   const promessasProibidas = [
@@ -117,13 +114,13 @@ test("/assinar não promete scores, termômetro, G5 nem recursos inexistentes", 
 });
 
 test("Hero não anuncia tendências de voto nem redes de indicação", () => {
-  const src = read("src/components/layout/Hero.tsx");
+  const src = read("src/pages/index.astro");
   assert.ok(!/tend[êe]ncias? de voto/i.test(src), "Hero.tsx não deveria prometer 'tendências de voto'");
   assert.ok(!/redes de indica/i.test(src), "Hero.tsx não deveria prometer 'redes de indicação'");
 });
 
 test("MinistroDetalhe não usa o rótulo comercial 'Termômetro'", () => {
-  const src = read("src/components/ministros/MinistroDetalhe.tsx")
+  const src = read("src/pages/ministros/[slug].astro")
     .replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
   assert.ok(!/Term[ôo]metro de tend[êe]ncia/i.test(src),
     "MinistroDetalhe.tsx não deveria exibir o rótulo 'Termômetro de tendência de voto'");
@@ -182,21 +179,27 @@ test("workflow de ingestão mantém a etapa de scores desabilitada", () => {
     "a etapa de scores do workflow deveria estar atrás de `if: false`");
 });
 
-test("lista de ministros continua alimentada (seed com 10 ministros ativos)", () => {
-  const src = read("src/lib/seed.ts");
-  const nomes = ["Alexandre de Moraes", "Edson Fachin", "Cármen Lúcia", "Dias Toffoli",
-    "Luiz Fux", "Gilmar Mendes", "Cristiano Zanin", "Flávio Dino", "Nunes Marques", "André Mendonça"];
-  for (const nome of nomes) {
-    assert.ok(src.includes(nome), `seed.ts deveria continuar contendo ${nome}`);
-  }
+test("a lista de ministros vem do banco e falha alto se vier vazia", () => {
+  // Antes esta garantia era "seed.ts contém os 10 nomes". O seed foi removido
+  // na migração para Astro (as datas digitadas ali estavam erradas em 7 de 10).
+  // A garantia equivalente hoje: a home carrega do Supabase, e um build que
+  // receba lista vazia aborta em vez de publicar 33 páginas em branco.
+  const dados = read("src/lib/dados.ts");
+  assert.ok(dados.includes('from("stf_ministros")'), "a home deixou de ler stf_ministros");
+  assert.ok(
+    /throw new Error\([^)]*vazia/.test(dados) || /voltou vazia/.test(dados),
+    "o build precisa abortar quando stf_ministros vier vazia, não publicar páginas em branco",
+  );
+  const home = read("src/pages/index.astro");
+  assert.ok(home.includes("carregarMinistros"), "a home deixou de listar ministros");
 });
 
 test("perfil do ministro preserva dados institucionais legítimos", () => {
-  const src = read("src/components/ministros/MinistroDetalhe.tsx");
-  // "useDecisoes" substituiu "useVotacoes" na migração do achado D1
+  const src = read("src/pages/ministros/[slug].astro");
+  // "carregarDecisoes" substituiu "carregarDecisoes" na migração do achado D1
   // (2026-08-18). A intenção deste teste é a mesma: a contenção dos scores não
   // pode ter levado junto os blocos de dado institucional legítimo.
-  for (const trecho of ["indicado_por", "data_posse", "aposentadoria", "useDecisoes", "useGastos"]) {
+  for (const trecho of ["indicado_por", "data_posse", "aposentadoria", "carregarDecisoes", "carregarGastos"]) {
     assert.ok(src.includes(trecho), `MinistroDetalhe.tsx deveria continuar usando ${trecho}`);
   }
 });

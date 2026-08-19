@@ -1,0 +1,6 @@
+---
+// A raiz é que serve a lista. Esta rota existia no SPA antigo e continua
+// resolvendo para não quebrar link já publicado — redirecionando, não
+// duplicando: duas URLs com o mesmo conteúdo era parte do achado E2.
+return Astro.redirect("/", 308);
+---

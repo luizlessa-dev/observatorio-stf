@@ -1,0 +1,112 @@
+---
+import Base from "../layouts/Base.astro";
+import { carregarMinistros, carregarResumo } from "../lib/dados";
+import { fmtData, fmtNum } from "../lib/formato";
+
+const ministros = await carregarMinistros();
+const resumo = await carregarResumo();
+
+const emExercicio = ministros.filter((m) => m.ativo);
+const historicos   = ministros.filter((m) => !m.ativo);
+
+// Achado B6: a contagem deixou de ser texto fixo em três lugares.
+const CADEIRAS = 11;
+const POR_EXTENSO: Record<number, string> = { 7:"sete", 8:"oito", 9:"nove", 10:"dez", 11:"onze" };
+const vagas = Math.max(0, CADEIRAS - emExercicio.length);
+
+const titulo = "Ministros do STF — composição atual e histórico | Observatório do STF";
+const descricao =
+  `Os ${emExercicio.length} ministros em exercício no Supremo Tribunal Federal e ` +
+  `${historicos.length} que já passaram pela Corte. Quem indicou cada um, data de posse, ` +
+  `aposentadoria compulsória, custo de gabinete e decisões como relator.`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Ministros do Supremo Tribunal Federal",
+  numberOfItems: ministros.length,
+  itemListElement: ministros.map((m, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `https://observatoriodostf.org/ministros/${m.slug}`,
+    name: m.nome,
+  })),
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho="/" jsonLd={jsonLd}>
+  <section class="px-8 pt-[60px] pb-[52px] border-b border-border">
+    <div class="flex items-center gap-3 mb-[22px]">
+      <div class="w-7 h-[1.5px] bg-subtle"></div>
+      <span class="text-[10px] font-semibold uppercase tracking-[2px] text-subtle">
+        Observatório do Supremo Tribunal Federal
+      </span>
+    </div>
+
+    <h1 class="font-display text-[48px] font-black leading-[1.1] text-white max-w-[780px] mb-[22px]">
+      Os onze {vagas > 0 && <em class="not-italic text-subtle text-[40px]">(hoje {POR_EXTENSO[emExercicio.length] ?? emExercicio.length})</em>}<br />
+      que decidem os rumos<br />da República.
+    </h1>
+
+    {vagas > 0 && (
+      <div class="inline-flex items-center gap-2 text-[11px] text-subtle border border-border2 rounded-sm px-3 py-[5px] mb-7">
+        <span class="w-[6px] h-[6px] rounded-full border border-subtle bg-border2 flex-shrink-0"></span>
+        {vagas === 1 ? "1 vaga aberta" : `${vagas} vagas abertas`} · Barroso aposentou-se
+        voluntariamente em out/2025, e o Senado rejeitou a indicação de Jorge Messias em abr/2026
+      </div>
+    )}
+
+    <p class="text-[14px] text-muted max-w-[560px] leading-[1.65]">
+      {fmtNum(resumo.totalDecisoes)} decisões do STF desde 2000, custo de cada gabinete e
+      {" "}{fmtNum(resumo.totalTemasRG)} temas de repercussão geral — dados públicos
+      organizados para jornalistas, advogados e cidadãos.
+      {resumo.dadosAte && <span class="block mt-2 text-[11px] text-subtle">Dados até {fmtData(resumo.dadosAte)}.</span>}
+    </p>
+  </section>
+
+  <section class="px-8 py-10">
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-5">
+      {emExercicio.length} em exercício
+    </h2>
+    <ul class="grid gap-px bg-border border border-border sm:grid-cols-2 lg:grid-cols-3">
+      {emExercicio.map((m) => (
+        <li class="bg-canvas">
+          <a href={`/ministros/${m.slug}`} class="block px-5 py-4 hover:bg-card transition-colors h-full">
+            <div class="flex items-center gap-[10px] mb-2">
+              <span class="w-8 h-8 rounded-full bg-surface border border-border2 flex items-center justify-center text-[10px] font-bold text-muted flex-shrink-0">
+                {m.iniciais_exibicao}
+              </span>
+              <div>
+                <div class="text-[12.5px] font-semibold text-ink leading-tight">{m.nome}</div>
+                <div class="text-[10px] text-subtle mt-[1px]">
+                  Ind. {m.indicado_por_curto} · desde {fmtData(m.data_posse).split(" ").slice(1).join(" ")}
+                </div>
+              </div>
+            </div>
+            {m.cargo && (
+              <span class="text-[9px] font-semibold uppercase tracking-[0.8px] text-canvas bg-white px-[6px] py-[2px] rounded-sm">
+                {m.cargo === "presidente" ? "Presidente" : "Vice-presidente"}
+              </span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mt-12 mb-5">
+      {historicos.length} que já passaram pela Corte
+    </h2>
+    <ul class="grid gap-px bg-border border border-border sm:grid-cols-2 lg:grid-cols-3">
+      {historicos.map((m) => (
+        <li class="bg-canvas">
+          <a href={`/ministros/${m.slug}`} class="block px-5 py-[13px] hover:bg-card transition-colors h-full">
+            <div class="text-[12px] font-semibold text-muted leading-tight">{m.nome}</div>
+            <div class="text-[10px] text-subtle mt-[2px]">
+              {fmtData(m.data_posse).split(" ").slice(2).join(" ")}–{fmtData(m.data_saida).split(" ").slice(2).join(" ")}
+              {" · ind. "}{m.indicado_por_curto}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import TabelaRepercussao from "../componentes/TabelaRepercussao";
+import { supabase } from "../lib/supabase";
+import { fmtNum } from "../lib/formato";
+
+// Os números do cabeçalho entram no HTML — é o que o buscador e os crawlers de
+// IA leem. A tabela em si é ilha React porque tem filtro e busca ao vivo.
+const [{ count: total }, { count: julgados }, { count: pendentes }] = await Promise.all([
+  supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }),
+  supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }).eq("status", "julgado"),
+  supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }).eq("status", "pendente"),
+]);
+
+const titulo = "Repercussão geral no STF — temas reconhecidos | Observatório do STF";
+const descricao =
+  `${fmtNum(total ?? 0)} temas com repercussão geral reconhecida pelo STF: ` +
+  `${fmtNum(julgados ?? 0)} já julgados e ${fmtNum(pendentes ?? 0)} pendentes. ` +
+  `Processos sobrestados em todo o país aguardam o julgamento do leading case.`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "Temas de repercussão geral do STF",
+  description: descricao,
+  url: "https://observatoriodostf.org/repercussao-geral",
+  creator: { "@type": "Organization", name: "Observatório do STF" },
+  isAccessibleForFree: true,
+  license: "https://creativecommons.org/licenses/by/4.0/",
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho="/repercussao-geral" jsonLd={jsonLd}>
+  <div class="px-8 py-7">
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-1">Repercussão geral</h1>
+    <p class="text-[12px] text-subtle max-w-2xl leading-[1.6] mb-6">
+      {fmtNum(total ?? 0)} temas com repercussão geral reconhecida pelo STF —
+      {" "}{fmtNum(julgados ?? 0)} julgados e {fmtNum(pendentes ?? 0)} pendentes.
+      Quando o Supremo reconhece repercussão geral num tema, processos sobre o mesmo
+      assunto ficam sobrestados em todo o país até o julgamento do leading case.
+    </p>
+    <TabelaRepercussao client:load />
+  </div>
+</Base>

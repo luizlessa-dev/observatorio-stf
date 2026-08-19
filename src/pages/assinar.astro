@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import FormApoio from "../componentes/FormApoio";
+
+const titulo = "Apoie o Observatório do STF";
+const descricao =
+  "Contribuição mensal ou anual que sustenta a coleta e a checagem de dados públicos " +
+  "do STF. Todo o conteúdo do site é aberto — contribuir não desbloqueia nada.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/assinar">
+  <FormApoio client:load />
+</Base>

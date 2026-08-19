@@ -11,3 +11,6 @@ __pycache__/
 
 # Claude Code — configuração local de sessão (não versionar)
 .claude/
+
+# Tipos gerados pelo Astro
+.astro/

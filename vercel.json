@@ -13,12 +13,6 @@
       "permanent": true
     }
   ],
-  "rewrites": [
-    {
-      "source": "/(ministros|processos|repercussao-geral|impunidade|assinar|entrar|sucesso)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -59,5 +53,7 @@
         }
       ]
     }
-  ]
+  ],
+  "framework": "astro",
+  "outputDirectory": "dist"
 }

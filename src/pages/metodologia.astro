@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import { carregarResumo } from "../lib/dados";
+import { fmtData, fmtNum } from "../lib/formato";
+
+const resumo = await carregarResumo();
+
+const titulo = "Metodologia — como o Observatório do STF lê os dados";
+const descricao =
+  "De onde vêm os dados, com que frequência são atualizados, e as quatro leituras " +
+  "erradas que o Observatório evita: andamento não é voto, decisão como presidente " +
+  "não é pauta do relator, gabinete do presidente não é comparável, e parte do " +
+  "acervo histórico não tem ministro atribuído.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/metodologia">
+  <article class="px-8 py-10 max-w-2xl prose-invert">
+    <h1 class="font-display text-[32px] font-bold text-white leading-[1.2] mb-3">Metodologia</h1>
+    <p class="text-[13px] text-muted leading-[1.7] mb-8">
+      Este site publica dado público de terceiro. A parte difícil não é obter o dado —
+      é não afirmar mais do que ele sustenta. O que segue é o que fazemos e,
+      principalmente, o que deliberadamente não fazemos.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Fontes</h2>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-2">
+      <li><strong class="text-ink">Decisões</strong> — Corte Aberta do STF
+        (<code class="text-[11px]">transparencia.stf.jus.br</code>), que o tribunal recarrega
+        diariamente. {fmtNum(resumo.totalDecisoes)} decisões desde 2000
+        {resumo.dadosAte && <>, com dado até {fmtData(resumo.dadosAte)}</>}.</li>
+      <li><strong class="text-ink">Custo dos gabinetes</strong> —
+        <code class="text-[11px]">egesp-portal.stf.jus.br/transparencia</code>, por mês de competência.</li>
+      <li><strong class="text-ink">Dados biográficos</strong> — páginas "Dados e Datas" de cada
+        ministro no portal do STF, que citam o Termo de Posse e o decreto de aposentadoria
+        publicado no Diário Oficial.</li>
+      <li><strong class="text-ink">Repercussão geral</strong> — {fmtNum(resumo.totalTemasRG)} temas
+        reconhecidos, do painel do próprio STF.</li>
+    </ul>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">
+      Quatro leituras erradas que este site evita
+    </h2>
+
+    <div class="space-y-6 mb-8">
+      <section>
+        <h3 class="text-[14px] font-semibold text-ink mb-1">Andamento não é voto</h3>
+        <p class="text-[12.5px] text-muted leading-[1.7]">
+          O STF registra a disposição de cada decisão num vocabulário de 293 valores.
+          "Negado seguimento", o mais frequente, é <strong class="text-ink">recusa de
+          admissibilidade</strong> — o relator não conhece do recurso — e não julgamento
+          de mérito contrário. Publicamos o texto como o tribunal escreveu e não o
+          traduzimos para favorável ou contrário, porque não existe metodologia
+          publicada que sustente essa tradução.
+        </p>
+      </section>
+
+      <section>
+        <h3 class="text-[14px] font-semibold text-ink mb-1">
+          Decisão assinada como presidente não é a pauta do ministro
+        </h3>
+        <p class="text-[12.5px] text-muted leading-[1.7]">
+          Quem preside o STF assina decisões de plantão e de competência da Presidência,
+          que não vêm da sua relatoria. Contamos as duas coisas separadamente e dizemos
+          na tela quantas são de cada tipo. Somá-las inflaria a produção do presidente e
+          esconderia que presidir, na prática, redistribui a pauta.
+        </p>
+      </section>
+
+      <section>
+        <h3 class="text-[14px] font-semibold text-ink mb-1">
+          O gabinete do presidente não é comparável ao dos demais
+        </h3>
+        <p class="text-[12.5px] text-muted leading-[1.7]">
+          A estrutura de apoio da Presidência não integra o gabinete do ministro. Por
+          isso o gabinete de quem preside aparece com uma fração dos servidores dos
+          outros — e por isso a ficha traz essa ressalva junto do número, e não numa
+          nota de rodapé.
+        </p>
+      </section>
+
+      <section>
+        <h3 class="text-[14px] font-semibold text-ink mb-1">
+          Parte do acervo histórico não tem ministro atribuído
+        </h3>
+        <p class="text-[12.5px] text-muted leading-[1.7]">
+          Cerca de 15% das decisões estão registradas na fonte como "MINISTRO PRESIDENTE"
+          ou "VICE-PRESIDENTE", sem nomear quem decidiu. Resolver isso depende de
+          reconstruir o histórico de presidências desde 2000, apuração ainda em curso.
+          Nenhuma decisão foi descartada por isso: todas estão no acervo, com o texto
+          original do relator preservado.
+        </p>
+      </section>
+    </div>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Erros</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7]">
+      Se encontrar um dado errado, escreva para
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+      Correções são feitas na fonte e propagadas na atualização seguinte, e erros
+      relevantes ficam registrados publicamente no repositório do projeto.
+    </p>
+  </article>
+</Base>

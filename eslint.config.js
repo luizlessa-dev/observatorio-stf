@@ -3,7 +3,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["dist/**", "node_modules/**", "supabase/**", ".vercel/**", "api/**"],
+    ignores: [".astro/**", "dist/**", "node_modules/**", "supabase/**", ".vercel/**", "api/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

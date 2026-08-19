@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { signInWithEmail } from "../lib/auth";
 
-export default function PaginaLogin() {
+export default function FormLogin() {
   const [email,   setEmail]   = useState("");
   const [enviado, setEnviado] = useState(false);
   const [loading, setLoading] = useState(false);
