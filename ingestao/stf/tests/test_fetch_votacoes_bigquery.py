@@ -29,7 +29,22 @@ def _carregar_modulo():
     return modulo
 
 
-mod = _carregar_modulo()
+# fetch_votacoes_bigquery.py importa google.cloud.bigquery no topo. Esse pacote
+# só faz sentido para o pipeline antigo (BigQuery), cuja fonte está morta desde
+# março/2025 — o workflow novo (Qlik) não o instala, e não deveria mesmo.
+#
+# Sem esta guarda, `unittest discover` quebrava o workflow de ingestão de
+# decisões todo dia às 12h UTC com ModuleNotFoundError, em silêncio. É
+# literalmente o modo de falha que o achado D1 documentou: pipeline que morre
+# sem avisar. Descoberto em 2026-08-19 num dry-run manual, antes do primeiro
+# disparo agendado.
+try:
+    mod = _carregar_modulo()
+except ImportError as e:  # pragma: no cover
+    raise unittest.SkipTest(
+        f"pipeline BigQuery indisponível neste ambiente ({e}); "
+        "os testes do conector Qlik em test_fetch_decisoes_qlik.py continuam valendo"
+    ) from e
 
 
 class TestTravaDeDestino(unittest.TestCase):
