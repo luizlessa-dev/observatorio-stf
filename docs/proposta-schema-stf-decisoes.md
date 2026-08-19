@@ -343,3 +343,77 @@ publicada.
   recupera ~19,4% do acervo histórico. É apuração, não código.
 - **Vice-presidências**, pelo mesmo motivo — 97 linhas só em 2026.
 - **Front migrar para `stf_decisoes`**, e só então descartar `stf_votacoes`.
+
+
+---
+
+## 8. Backfill concluído (2026-08-19)
+
+`scripts/backfill_decisoes.sh 2000 2025`, ano a ano, 1h43 no total (176 a 378 s
+por ano). O ano de 2025 caiu com `httpx.ReadTimeout` na gravação — erro de rede,
+não de dados — e foi reexecutado sozinho; o script isolou a falha e apontou qual
+ano refazer, como previsto.
+
+### Conferência contra a fonte
+
+| | |
+|---|---:|
+| Anos conferidos | 26 de 26 |
+| Anos com contagem idêntica à fonte | **26** |
+| Diferença acumulada | **0** |
+| Total na tabela | 2.974.019 |
+| Chaves distintas | 2.974.019 (zero duplicatas) |
+| Cobertura | 03/01/2000 a 17/08/2026 |
+| `andamento_bruto` distintos | 293 |
+| `sentido` preenchido | 0 (proposital) |
+
+### Atribuição de ministro
+
+| `ministro_resolucao` | Fatia |
+|---|---:|
+| `nome` | 47,7% |
+| `nao_aplicavel` | 7,0% |
+| `presidencia` | 4,6% |
+| `desconhecido` | **40,7%** |
+
+**Os 40,7% não são perda de dado** — toda linha entrou, com `relator_bruto`
+preservado. É atribuição pendente, e a causa está quantificada: 19 relatores
+distintos, dos quais 16 são ministros que **não existem em `stf_ministros`**
+(a tabela tem 15 linhas; o acervo cobre 26 anos de Corte).
+
+| Relator | Linhas | Período |
+|---|---:|---|
+| Ayres Britto | 88.472 | 2001–2014 |
+| Joaquim Barbosa | 83.150 | 2002–2023 |
+| Cezar Peluso | 81.241 | 2001–2023 |
+| Sepúlveda Pertence | 77.527 | 2000–2026 |
+| Ellen Gracie | 74.096 | 2000–2024 |
+| Eros Grau | 73.164 | 2001–2023 |
+| Carlos Velloso | 47.324 | 2000–2018 |
+| Nelson Jobim | 45.309 | 2000–2009 |
+| Maurício Corrêa | 35.661 | 2000–2024 |
+| Teori Zavascki | 31.736 | 2012–2022 |
+| Ilmar Galvão | 31.328 | 2000–2020 |
+| Sydney Sanches | 29.464 | 2000–2008 |
+| Moreira Alves | 28.995 | 2000–2009 |
+| Néri da Silveira | 20.869 | 2000–2022 |
+| Menezes Direito | 13.348 | 2007–2009 |
+| Octavio Gallotti | 5.880 | 2000–2009 |
+| VICE-PRESIDENTE | 1.180 | 2003–2026 |
+| Francisco Rezek / Aldir Passarinho | 2 | — |
+
+> As datas finais passam da saída do ministro porque a fonte registra a decisão
+> na data em que ela entra no sistema, não só na data em que foi proferida.
+> Não confundir com erro de ingestão.
+
+**Como resolver, em ordem de retorno:**
+
+1. **Cadastrar os 16 ministros históricos em `stf_ministros`** — nome exato da
+   fonte sem o prefixo `MIN.`, mais posse e saída. Resolve ~96% do
+   `desconhecido`. Depois é só reexecutar os anos: o upsert é idempotente.
+2. **Completar `stf_presidencias` antes de 28/09/2023** — resolve os 4,6%
+   restantes de `MINISTRO PRESIDENTE`, hoje contabilizados como desconhecido nos
+   anos antigos.
+
+Nenhum dos dois é código: é apuração de datas, com a mesma exigência de fonte
+primária que a Onda 1 aplicou às datas de posse e aposentadoria.
