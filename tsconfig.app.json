@@ -12,5 +12,9 @@
     "skipLibCheck": true,
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src"]
+  // Achado D3: `api/` — onde vivem checkout.ts e webhook.ts, o código que
+  // move dinheiro — ficava fora do typecheck. Foi por isso que o problema de
+  // `current_period_end` (campo que saiu do objeto Subscription na versão de
+  // API declarada) não apareceu em nenhuma verificação local.
+  "include": ["src", "api"]
 }

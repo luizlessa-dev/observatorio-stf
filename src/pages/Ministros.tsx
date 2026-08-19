@@ -18,7 +18,7 @@ export default function PaginaMinistros() {
 
   return (
     <>
-      <Hero />
+      <Hero emExercicio={ministros.length} />
       <StatsStrip />
       <div className="flex" style={{ minHeight: "600px" }}>
         <MinistroSidebar

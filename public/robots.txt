@@ -1,0 +1,26 @@
+# Observatório do STF — observatoriodostf.org
+# Projeto independente de fiscalização do Judiciário. Dados de fontes
+# públicas oficiais (portal do STF, Corte Aberta, egesp-portal).
+
+User-agent: *
+Allow: /
+
+# Rotas de conta e pagamento não têm conteúdo indexável.
+Disallow: /entrar
+Disallow: /sucesso
+
+# Crawlers de busca generativa são bem-vindos: o conteúdo é público e a
+# atribuição de fonte é o objetivo do projeto.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://observatoriodostf.org/sitemap.xml

@@ -1,0 +1,44 @@
+# Observatório do STF
+
+> Observatório independente do Supremo Tribunal Federal. Reúne dados públicos
+> sobre os ministros, suas decisões, o custo de cada gabinete e os temas de
+> repercussão geral. Sem vínculo com o Governo Federal.
+
+Todo o conteúdo é aberto. Não há área restrita nem paywall.
+
+## O que o site cobre
+
+- **Ministros**: composição atual do STF, com data de posse, quem indicou,
+  cargo anterior e data de aposentadoria compulsória (derivada da data de
+  nascimento + 75 anos, conforme art. 40, §1º, II da Constituição).
+- **Decisões**: 2,9 milhões de decisões do STF de 2000 até hoje, monocráticas
+  e colegiadas, com o andamento exatamente como o tribunal o registrou.
+- **Custo ao erário**: subsídio do ministro e remuneração bruta dos servidores
+  de cada gabinete, por mês de competência.
+- **Repercussão geral**: temas reconhecidos, com leading case e status.
+
+## Fontes
+
+- Decisões: Corte Aberta do STF (transparencia.stf.jus.br), atualizado
+  diariamente pelo tribunal.
+- Gastos: egesp-portal.stf.jus.br/transparencia
+- Dados biográficos: portal do STF, páginas "Dados e Datas" de cada ministro.
+
+## Como ler os dados sem errar
+
+- **O andamento não é um voto.** O site publica o texto original do STF
+  ("Negado seguimento", "Deferido em parte"). "Negado seguimento" é recusa de
+  admissibilidade, não julgamento de mérito. O site deliberadamente NÃO traduz
+  isso para favorável/contrário — não há metodologia publicada para tanto.
+- **Decisões assinadas como presidente não são a pauta do ministro.** Quem
+  preside o STF assina decisões de plantão e de competência da Presidência.
+  O site conta essas separadamente das decisões como relator.
+- **O custo de gabinete do presidente não é comparável ao dos demais.** A
+  estrutura de apoio da Presidência não integra o gabinete do ministro.
+- **Parte do acervo histórico não tem ministro atribuído**, porque a base de
+  ministros ainda não cobre toda a Corte desde 2000. Nenhuma decisão foi
+  descartada por isso.
+
+## Contato
+
+luiz@thebrinsider.com

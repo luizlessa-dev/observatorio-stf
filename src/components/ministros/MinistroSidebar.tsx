@@ -15,7 +15,7 @@ export default function MinistroSidebar({ ministros, selecionado, onSelect, load
         <div className="flex items-center gap-2 mb-[10px]">
           <div className="w-4 h-px bg-subtle" />
           <span className="text-[9px] font-semibold uppercase tracking-[1.5px] text-subtle">
-            10 ministros em exercício
+            {ministros.length} {ministros.length === 1 ? "ministro" : "ministros"} em exercício
           </span>
         </div>
         <input

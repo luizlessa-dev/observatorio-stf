@@ -13,9 +13,13 @@ interface Props { ministro: Ministro; }
 
 const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 
+// Achado B4: a data saía sem ano ("17 jan"). Combinado com um acervo que
+// parava em janeiro de 2025, o leitor concluía que era do ano corrente. O ano
+// aparece sempre que a decisão não for deste ano.
 function fmtData(iso: string): string {
-  const [, mes, dia] = iso.slice(0, 10).split("-");
-  return `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
+  const [ano, mes, dia] = iso.slice(0, 10).split("-");
+  const curto = `${dia} ${MESES[parseInt(mes, 10) - 1]}`;
+  return ano === String(new Date().getFullYear()) ? curto : `${curto} ${ano}`;
 }
 
 function fmtDataCompleta(iso: string): string {
