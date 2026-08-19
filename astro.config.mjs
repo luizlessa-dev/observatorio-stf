@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
 // Achados E1/E5/F1 da auditoria de 2026-08-17.
@@ -18,9 +17,12 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://observatoriodostf.org",
   output: "static",
+  // Tailwind entra por postcss.config.js, que o Astro lê nativamente. A
+  // integração @astrojs/tailwind declara peer de astro ^3||^4||^5 e quebra o
+  // `npm install` limpo do Vercel com ERESOLVE — passou aqui só porque o
+  // install local foi incremental.
   integrations: [
     react(),
-    tailwind({ applyBaseStyles: false }),
     // Gera sitemap.xml das rotas reais no build — inclusive as 33 páginas de
     // ministro. Substitui scripts/gerar-sitemap.mjs, que era lista à mão.
     sitemap({
