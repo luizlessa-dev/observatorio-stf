@@ -417,3 +417,64 @@ distintos, dos quais 16 são ministros que **não existem em `stf_ministros`**
 
 Nenhum dos dois é código: é apuração de datas, com a mesma exigência de fonte
 primária que a Onda 1 aplicou às datas de posse e aposentadoria.
+
+
+---
+
+## 9. O STF bloqueia datacenter — a ingestão não roda no GitHub Actions (2026-08-19)
+
+Descoberto num dry-run manual disparado antes do primeiro agendamento. **O cron
+está desligado** até haver ambiente de execução viável.
+
+### O que aconteceu
+
+Três execuções no runner hospedado do GitHub:
+
+| # | Mudança | Resultado |
+|---|---|---|
+| 1 | código como estava | `ModuleNotFoundError: No module named 'google'` |
+| 2 | teste do pipeline antigo passa a se pular | `403 Forbidden` na sessão do Qlik |
+| 3 | conjunto completo de cabeçalhos de navegador | **`403 Forbidden` de novo** |
+
+A falha 1 era nossa: `unittest discover` carregava o módulo de teste do pipeline
+BigQuery, que importa `google.cloud`. Corrigida — e vale registrar que ela
+sozinha teria feito o cron falhar todo dia em silêncio, o modo de falha que este
+achado documentou.
+
+A falha 2 e 3 são do lado do tribunal. O mesmo código, com os mesmos cabeçalhos,
+funciona de rede residencial: o dry-run local roda e lê as 71.961 decisões de
+2026 normalmente.
+
+### Diagnóstico, com o grau de certeza que ele tem
+
+**Descartado:** fingerprint de cabeçalho. A execução 3 enviou `Accept`,
+`Accept-Language`, `Referer`, `Sec-Fetch-Dest/Mode/Site`,
+`Upgrade-Insecure-Requests` e `Connection` — e ainda assim 403.
+
+**Explicação principal:** o WAF do STF barra faixas de IP de datacenter.
+
+**Não totalmente excluído:** diferença de stack TLS. O runner é Linux com Python
+3.12; a máquina local é macOS com Python 3.14, e os dois apresentam
+fingerprints TLS distintos. Separar as duas hipóteses exige rodar o caminho
+Linux a partir de uma rede não-datacenter — que é precisamente o que um runner
+self-hosted faria. **A opção 1 abaixo é ao mesmo tempo a correção e o teste
+decisivo.**
+
+### Saídas
+
+1. **Runner self-hosted** em rede residencial. Mantém agendamento, histórico de
+   execução e alerta de falha no GitHub — que é o que faltou quando a ingestão
+   morreu em junho. Só roda com a máquina ligada. Também decide o diagnóstico.
+2. **Agendamento local** (`launchd`), sem GitHub no meio. Mais simples, mesma
+   limitação de disponibilidade, e perde o histórico de execuções.
+3. **Proxy de saída** com IP residencial. Resolve de fato e roda sem depender da
+   máquina, mas acrescenta um custo recorrente e uma dependência externa a um
+   projeto hoje zero-recorrente.
+
+Enquanto nenhuma estiver de pé, a ingestão é manual:
+
+```
+scripts/backfill_decisoes.sh <ano> <ano>
+```
+
+O acervo já ingerido (2.974.019 decisões, até 17/08/2026) não é afetado.
