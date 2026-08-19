@@ -295,8 +295,35 @@ def cookie_sessao(ctx: ssl.SSLContext) -> str:
         urllib.request.HTTPCookieProcessor(cj),
         urllib.request.HTTPSHandler(context=ctx),
     )
-    op.addheaders = [("User-Agent", UA), ("Accept-Language", "pt-BR,pt;q=0.9")]
-    op.open(f"https://{HOST}/single/?appid={APP_ID}", timeout=30).read(1024)
+    # Cabeçalhos completos de navegador. O WAF do STF devolveu 403 para o
+    # runner do GitHub Actions em 2026-08-19 com apenas UA + Accept-Language —
+    # os mesmos cabeçalhos que funcionam de uma rede residencial. Se com o
+    # conjunto completo ainda der 403, o bloqueio é por origem de rede, não por
+    # fingerprint de cabeçalho.
+    op.addheaders = [
+        ("User-Agent", UA),
+        ("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,"
+                   "image/webp,image/apng,*/*;q=0.8"),
+        ("Accept-Language", "pt-BR,pt;q=0.9,en;q=0.8"),
+        ("Referer", f"https://{HOST}/extensions/corte_aberta/corte_aberta.html"),
+        ("Sec-Fetch-Dest", "document"),
+        ("Sec-Fetch-Mode", "navigate"),
+        ("Sec-Fetch-Site", "same-origin"),
+        ("Upgrade-Insecure-Requests", "1"),
+        ("Connection", "keep-alive"),
+    ]
+    try:
+        op.open(f"https://{HOST}/single/?appid={APP_ID}", timeout=30).read(1024)
+    except urllib.error.HTTPError as e:
+        if e.code == 403:
+            raise RuntimeError(
+                f"O STF recusou a sessão do Qlik com 403 a partir desta rede.\n"
+                "Os mesmos cabeçalhos funcionam de rede residencial, então o bloqueio "
+                "é por origem: o WAF do tribunal barra faixas de datacenter.\n"
+                "Rode a ingestão de uma rede não bloqueada (runner self-hosted, "
+                "máquina local via cron) ou através de um proxy de saída."
+            ) from e
+        raise
     cookies = "; ".join(f"{c.name}={c.value}" for c in cj)
     if not cookies:
         raise RuntimeError("Não foi possível obter X-Qlik-Session — o WebSocket vai recusar com 403")
