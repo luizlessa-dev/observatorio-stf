@@ -138,6 +138,12 @@ ALIAS_RELATOR = {
     "marco aurelio": "marco aurelio mello",
 }
 
+# Os 18 ministros históricos entraram em stf_ministros pela migration 0009, com
+# o nome grafado exatamente como a fonte o escreve (sem o prefixo "MIN."), então
+# a resolução por nome funciona sem alias. Se um relator novo aparecer como
+# 'desconhecido' no log, a correção é cadastrá-lo lá — NÃO criar alias aqui, que
+# é só para divergência de grafia entre fonte e banco.
+
 VAZIO = {"", "-", "*NI*", "NÃO INFORMADO", "NAO INFORMADO"}
 
 
