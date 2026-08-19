@@ -304,3 +304,23 @@ test("o andamento sai como o STF escreveu, sem tradução para voto", () => {
     'traduzir andamento para favor/contra foi o que produziu os 64% de "Ausente"',
   );
 });
+
+// ── E3: rotas da aplicação e do rewrite não podem divergir ──────────
+
+test("as rotas do App e do rewrite da Vercel são as mesmas", () => {
+  // A Vercel não conhece o roteador do React. Com rewrite catch-all, toda URL
+  // inventada respondia 200 e o site não tinha 404 — espaço de rastreamento
+  // infinito. Com rotas enumeradas, esquecer de atualizar uma das listas faz
+  // uma rota real virar 404. Este teste é o que impede as duas coisas.
+  const app = read("src/App.tsx");
+  const vercel = JSON.parse(read("vercel.json"));
+
+  const noApp = [...app.matchAll(/path="([a-z-]+)"/g)].map((m) => m[1]).sort();
+  const fonte = vercel.rewrites.find((r) => r.destination === "/index.html")?.source ?? "";
+  const noRewrite = (fonte.match(/\(([^)]+)\)/)?.[1] ?? "").split("|").filter(Boolean).sort();
+
+  assert.deepEqual(
+    noRewrite, noApp,
+    `rotas divergentes.\n  App.tsx: ${noApp.join(", ")}\n  vercel.json: ${noRewrite.join(", ")}`,
+  );
+});
