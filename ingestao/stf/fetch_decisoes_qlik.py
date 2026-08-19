@@ -214,6 +214,7 @@ class ResolvedorMinistro:
             ]
         )
         self.desconhecidos: dict[str, int] = {}
+        self._sem_presidencia_datas: set[str] = set()
 
     def _nao_resolvido(self, rotulo: str) -> tuple[None, str]:
         """Registra no log e devolve desconhecido. TODO caminho que resulta em
@@ -234,7 +235,12 @@ class ResolvedorMinistro:
             # A tabela só cobre de 28/09/2023 em diante (migration 0006);
             # completar o histórico recupera ~19,4% do acervo. Até lá, entra
             # como desconhecido — a linha não se perde.
-            return self._nao_resolvido(f"{bruto} (sem presidência conhecida em {data_decisao})")
+            # Agrega sob UMA chave. Pôr a data no rótulo fragmentava o caso em
+            # centenas de entradas de contagem mínima ("251 distintos" no ano
+            # 2000, quase todas MINISTRO PRESIDENTE em datas diferentes), o que
+            # escondia o número real no relatório final.
+            self._sem_presidencia_datas.add(data_decisao or "?")
+            return self._nao_resolvido(f"{bruto} (sem presidência cadastrada)")
         if especial == "desconhecido":
             return self._nao_resolvido(bruto)
         if especial:
@@ -513,6 +519,13 @@ def run(ano: int, dry_run: bool = True) -> int:
               .replace(",", "."))
         for nome, n in sorted(resolvedor.desconhecidos.items(), key=lambda x: -x[1])[:20]:
             print(f"  {n:>8,}  {nome}".replace(",", "."))
+        if resolvedor._sem_presidencia_datas:
+            datas = sorted(resolvedor._sem_presidencia_datas)
+            print(f"  (presidência não cadastrada em {len(datas)} datas, "
+                  f"de {datas[0]} a {datas[-1]} — ver stf_presidencias)")
+        print("  Para resolver: cadastre o ministro em stf_ministros (nome exato "
+              "da fonte, sem o prefixo 'MIN.') ou o mandato em stf_presidencias, "
+              "e reexecute o ano. O upsert é idempotente.")
 
     return gravados
 
