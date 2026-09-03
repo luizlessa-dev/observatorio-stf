@@ -46,8 +46,7 @@ export interface Gasto {
 }
 
 const COLUNAS_MINISTRO =
-  "id, nome, iniciais_exibicao, data_posse, data_saida, indicado_por, " +
-  "indicado_por_curto, partido_indicante, cargo_anterior, aposentadoria_comp, ativo";
+  "id, nome, iniciais_exibicao, data_posse, data_saida, indicado_por, indicado_por_curto, partido_indicante, cargo_anterior, aposentadoria_comp, ativo" as const;
 
 /** Todos os ministros, em exercício e históricos, com o cargo atual anotado. */
 export async function carregarMinistros(): Promise<Ministro[]> {

@@ -3,7 +3,7 @@ import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { getAssinatura } from "../lib/auth";
 
-interface Assinatura { plano: "mensal" | "anual"; status: string; vigente_ate: string }
+interface Assinatura { plano: "mensal" | "anual"; status: string; vigente_ate: string | null }
 
 interface AuthCtx {
   user:       User | null;

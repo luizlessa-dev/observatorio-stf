@@ -8,23 +8,29 @@
  * uma por ministro, geradas no build com os dados já dentro do HTML.
  */
 import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
 import { carregarMinistros, carregarDecisoes, carregarGastos } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
-  const ministros = await carregarMinistros();
+  const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
       const [{ decisoes, total, comoPresidente }, gastos] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
       ]);
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos } };
+      const casos = todosCasos
+        .filter((c) => c.data.ministros.includes(m.slug))
+        .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, casos } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, casos } = Astro.props;
+
+const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
 const subsidio = gastos.find((g) => g.categoria === "subsidio_ministro");
 const gabinete = gastos.find((g) => g.categoria === "custo_gabinete");
@@ -113,6 +119,32 @@ const jsonLd = {
         </div>
       ))}
     </div>
+
+    {casos.length > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Casos relacionados</h2>
+        </div>
+        {casos.map((c) => (
+          <a href={`/casos/${c.id}`} class="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2 hover:bg-card transition-colors"
+             style="grid-template-columns: 74px 1fr 90px">
+            <time class="font-mono text-[9px] text-subtle pt-[1px]" datetime={c.data.data_publicacao}>
+              {fmtDataCurta(c.data.data_publicacao)}
+            </time>
+            <div>
+              <div class="text-[11px] text-ink font-medium leading-[1.35]">{c.data.titulo}</div>
+              <div class="text-[10px] text-subtle leading-[1.35] line-clamp-1 mt-[2px]">{c.data.resumo}</div>
+            </div>
+            <span class:list={[
+              "text-[9px] font-semibold uppercase tracking-[0.5px] px-[7px] py-[2px] rounded-sm text-right self-start justify-self-end",
+              c.data.status === "confirmado" ? "bg-white text-canvas" : "border border-border2 text-subtle",
+            ]}>
+              {ROTULO_STATUS_CASO[c.data.status]}
+            </span>
+          </a>
+        ))}
+      </section>
+    )}
 
     {gastos.length > 0 && (
       <section class="border border-border rounded-sm overflow-hidden mb-6">

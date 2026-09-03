@@ -33,6 +33,7 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_ministros"]["Row"], "created_at" | "updated_at">;
         Update: Partial<Database["public"]["Tables"]["stf_ministros"]["Insert"]>;
+        Relationships: [];
       };
       stf_votacoes: {
         Row: {
@@ -49,6 +50,7 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_votacoes"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_votacoes"]["Insert"]>;
+        Relationships: [];
       };
       stf_processos_politicos: {
         Row: {
@@ -67,6 +69,7 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_processos_politicos"]["Row"], "created_at" | "updated_at">;
         Update: Partial<Database["public"]["Tables"]["stf_processos_politicos"]["Insert"]>;
+        Relationships: [];
       };
       stf_repercussao_geral: {
         Row: {
@@ -79,11 +82,15 @@ export interface Database {
           data_julg:     string | null;
           processos_imp: number | null;  // estimativa de processos impactados
           relator_id:    string | null;
+          leading_case:  string | null;  // migration 0002 — processo paradigma do tema
+          destaque:      boolean;        // migration 0002 — flag editorial, default false
+          incidente_id:  string | null;  // migration 0002
           created_at:    string;
           updated_at:    string;
         };
         Insert: Omit<Database["public"]["Tables"]["stf_repercussao_geral"]["Row"], "created_at" | "updated_at">;
         Update: Partial<Database["public"]["Tables"]["stf_repercussao_geral"]["Insert"]>;
+        Relationships: [];
       };
       stf_gastos: {
         Row: {
@@ -94,10 +101,17 @@ export interface Database {
           categoria:   string;  // "diaria" | "passagem" | "hospedagem" | "outros"
           descricao:   string | null;
           valor:       number;
+          // migration 0002 — 5 colunas presentes em produção, ausentes na 0001
+          fonte:       string | null;
+          data_inicio: string | null;
+          data_fim:    string | null;
+          destino:     string | null;
+          num_diarias: number | null;
           created_at:  string;
         };
         Insert: Omit<Database["public"]["Tables"]["stf_gastos"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_gastos"]["Insert"]>;
+        Relationships: [];
       };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
@@ -137,6 +151,7 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_decisoes"]["Row"], "id" | "ingerido_em" | "fonte">;
         Update: Partial<Database["public"]["Tables"]["stf_decisoes"]["Insert"]>;
+        Relationships: [];
       };
       // Achado A6 (2026-08-17): períodos de presidência/vice do STF. Existe
       // para contextualizar o custo de gabinete do presidente, que não é
@@ -155,6 +170,7 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_presidencias"]["Row"], "id" | "created_at" | "updated_at">;
         Update: Partial<Database["public"]["Tables"]["stf_presidencias"]["Insert"]>;
+        Relationships: [];
       };
       // Fase C1 (2026-07-26): esta tabela NÃO existe no banco de produção
       // (confirmado por inspeção read-only). O script de ingestão
@@ -177,6 +193,28 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["stf_doadores_indicante"]["Row"], "created_at">;
         Update: Partial<Database["public"]["Tables"]["stf_doadores_indicante"]["Insert"]>;
+        Relationships: [];
+      };
+      // Criada fora do sistema de migrations (antes da migration 0001), por
+      // isso não tem `create table` rastreável no histórico. Colunas abaixo
+      // conferidas contra o uso real em api/webhook.ts e src/lib/auth.ts —
+      // não existe outra fonte de verdade para o schema desta tabela.
+      stf_assinaturas: {
+        Row: {
+          id:                  string;
+          email:               string;
+          user_id:             string | null;
+          stripe_customer_id:  string;
+          stripe_sub_id:       string;
+          plano:               "mensal" | "anual";
+          status:              "ativa" | "cancelada" | "pausada";
+          vigente_ate:         string | null;
+          created_at:          string;
+          updated_at:          string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_assinaturas"]["Row"], "id" | "created_at" | "updated_at">;
+        Update: Partial<Database["public"]["Tables"]["stf_assinaturas"]["Insert"]>;
+        Relationships: [];
       };
     };
     Views: {
@@ -199,6 +237,17 @@ export interface Database {
           aposentadoria_comp: string | null;
           ativo:              boolean;
         };
+        Relationships: [];
+      };
+    };
+    // `GenericSchema` do postgrest-js exige Tables, Views E Functions — sem
+    // esta chave o schema não bate na constraint e o client cai pra `never`
+    // silenciosamente, e todo `.select()` some dentro de "Property does not
+    // exist on type 'never'" em vez de checar as colunas de verdade.
+    Functions: {
+      stf_resolver_user_id: {
+        Args: { p_email: string };
+        Returns: string | null;
       };
     };
   };

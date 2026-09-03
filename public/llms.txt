@@ -16,6 +16,8 @@ Todo o conteúdo é aberto. Não há área restrita nem paywall.
 - **Custo ao erário**: subsídio do ministro e remuneração bruta dos servidores
   de cada gabinete, por mês de competência.
 - **Repercussão geral**: temas reconhecidos, com leading case e status.
+- **Casos**: apurações editoriais sobre controvérsias envolvendo ministros,
+  com fontes, status de apuração e ligação com a ficha de cada ministro.
 
 ## Fontes
 
@@ -38,6 +40,10 @@ Todo o conteúdo é aberto. Não há área restrita nem paywall.
 - **Parte do acervo histórico não tem ministro atribuído**, porque a base de
   ministros ainda não cobre toda a Corte desde 2000. Nenhuma decisão foi
   descartada por isso.
+- **O status de um caso reflete o estágio da apuração, não um veredito.**
+  "Em apuração" não significa culpa; "confirmado" exige um evento concreto
+  documentado nas fontes do próprio caso. O site não afirma culpa antes de o
+  devido processo concluir.
 
 ## Contato
 

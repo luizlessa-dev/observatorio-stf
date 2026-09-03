@@ -1,0 +1,126 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { carregarMinistros } from "../../lib/dados";
+import { fmtData } from "../../lib/formato";
+
+export async function getStaticPaths() {
+  const [casos, ministros] = await Promise.all([getCollection("casos"), carregarMinistros()]);
+  const porSlug = new Map(ministros.map((m) => [m.slug, m]));
+
+  return casos.map((c) => {
+    for (const slug of c.data.ministros) {
+      if (!porSlug.has(slug)) {
+        // Falhar alto: um caso citando um ministro que não existe é pior
+        // publicado do que travando o build. Ver src/lib/dados.ts.
+        throw new Error(`src/content/casos/${c.id}.md referencia ministro inexistente: "${slug}"`);
+      }
+    }
+    return {
+      params: { slug: c.id },
+      props: { caso: c, ministrosEnvolvidos: c.data.ministros.map((s) => porSlug.get(s)!) },
+    };
+  });
+}
+
+const { caso, ministrosEnvolvidos } = Astro.props;
+const { Content } = await render(caso);
+
+const ROTULO_STATUS = {
+  em_apuracao: "Em apuração",
+  confirmado: "Confirmado",
+  arquivado: "Arquivado",
+};
+
+const NOTA_STATUS = {
+  em_apuracao: "Apuração em andamento — nenhuma conclusão definitiva.",
+  confirmado: "Apurado com evento concreto documentado — ver fontes abaixo.",
+  arquivado: "Apuração arquivada — ver corpo do texto para o motivo.",
+};
+
+const titulo = `${caso.data.titulo} | Observatório do STF`;
+const descricao = caso.data.resumo;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: caso.data.titulo,
+  description: caso.data.resumo,
+  datePublished: caso.data.data_publicacao,
+  dateModified: caso.data.data_atualizacao ?? caso.data.data_publicacao,
+  url: `https://observatoriodostf.org/casos/${caso.id}`,
+  about: ministrosEnvolvidos.map((m) => ({
+    "@type": "Person",
+    name: m.nome,
+    url: `https://observatoriodostf.org/ministros/${m.slug}`,
+  })),
+  publisher: { "@type": "Organization", name: "Observatório do STF" },
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho={`/casos/${caso.id}`} jsonLd={jsonLd}>
+  <div class="px-8 py-7 max-w-3xl">
+    <nav class="text-[11px] text-subtle mb-[22px] flex items-center gap-[6px]">
+      <a href="/casos" class="hover:text-ink transition-colors">Casos</a>
+      <span class="text-border2">›</span>
+      <span class="text-ink font-medium">{caso.data.titulo}</span>
+    </nav>
+
+    <div class="flex items-center gap-2 mb-3">
+      <span class:list={[
+        "text-[9px] font-semibold uppercase tracking-[0.8px] px-[7px] py-[2px] rounded-sm",
+        caso.data.status === "confirmado" ? "bg-white text-canvas" : "border border-border2 text-subtle",
+      ]}>
+        {ROTULO_STATUS[caso.data.status]}
+      </span>
+      <time class="font-mono text-[9px] text-subtle" datetime={caso.data.data_publicacao}>
+        {fmtData(caso.data.data_publicacao)}
+        {caso.data.data_atualizacao && ` · atualizado ${fmtData(caso.data.data_atualizacao)}`}
+      </time>
+    </div>
+
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-2">{caso.data.titulo}</h1>
+    <p class="text-[13px] text-muted leading-[1.55] mb-3">{caso.data.resumo}</p>
+    <p class="text-[10px] text-subtle mb-6">{NOTA_STATUS[caso.data.status]}</p>
+
+    <div class="flex gap-[5px] flex-wrap mb-7">
+      {ministrosEnvolvidos.map((m) => (
+        <a
+          href={`/ministros/${m.slug}`}
+          class="text-[10px] font-medium px-[9px] py-[3px] rounded-sm border border-white/40 text-white hover:bg-card transition-colors"
+        >
+          {m.nome}
+        </a>
+      ))}
+    </div>
+
+    <div class="prose prose-invert prose-sm max-w-none
+                 prose-headings:font-display prose-headings:text-ink
+                 prose-p:text-muted prose-p:leading-[1.65]
+                 prose-a:text-ink prose-a:underline
+                 prose-strong:text-ink
+                 prose-li:text-muted
+                 mb-8">
+      <Content />
+    </div>
+
+    <section class="border border-border rounded-sm overflow-hidden">
+      <div class="px-4 py-[9px] bg-card border-b border-border">
+        <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Fontes</h2>
+      </div>
+      <ul>
+        {caso.data.fontes.map((f) => (
+          <li class="px-4 py-[9px] border-b border-border last:border-0">
+            <a href={f.url} target="_blank" rel="noopener noreferrer nofollow" class="text-[11px] text-ink underline hover:text-white">
+              {f.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <p class="text-[10px] text-subtle mt-4 max-w-2xl leading-[1.6]">
+      Encontrou um erro ou é parte citada neste caso?
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">Peça correção ou direito de resposta</a>.
+    </p>
+  </div>
+</Base>

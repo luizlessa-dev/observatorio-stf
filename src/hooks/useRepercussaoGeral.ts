@@ -26,7 +26,9 @@ export function useRepercussaoGeral(filtroStatus?: string, search?: string, limi
       .from("stf_repercussao_geral")
       .select("id, tema, titulo, tese, status, data_reconh, data_julg, leading_case, processos_imp, destaque, relator_id", { count: "exact" });
 
-    if (filtroStatus && filtroStatus !== "todos") q = q.eq("status", filtroStatus);
+    if (filtroStatus && filtroStatus !== "todos") {
+      q = q.eq("status", filtroStatus as Tema["status"]);
+    }
     if (search && search.length > 2) q = q.ilike("titulo", `%${search}%`);
 
     q.order("destaque", { ascending: false })

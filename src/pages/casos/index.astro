@@ -1,0 +1,82 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { carregarMinistros } from "../../lib/dados";
+import { fmtData } from "../../lib/formato";
+
+const [casos, ministros] = await Promise.all([getCollection("casos"), carregarMinistros()]);
+const nomePorSlug = new Map(ministros.map((m) => [m.slug, m.nome]));
+
+const ordenados = [...casos].sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
+
+const ROTULO_STATUS = {
+  em_apuracao: "Em apuração",
+  confirmado: "Confirmado",
+  arquivado: "Arquivado",
+};
+
+const titulo = "Casos — Observatório do STF";
+const descricao =
+  ordenados.length > 0
+    ? `${ordenados.length} apurações editoriais sobre controvérsias envolvendo ministros do STF, com fontes e status de apuração.`
+    : "Apurações editoriais sobre controvérsias envolvendo ministros do STF, com fontes e status de apuração.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Casos — Observatório do STF",
+  numberOfItems: ordenados.length,
+  itemListElement: ordenados.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `https://observatoriodostf.org/casos/${c.id}`,
+    name: c.data.titulo,
+  })),
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho="/casos" jsonLd={jsonLd}>
+  <div class="px-8 py-7">
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-1">Casos</h1>
+    <p class="text-[12px] text-subtle max-w-2xl leading-[1.6] mb-6">
+      Apurações editoriais sobre controvérsias envolvendo ministros do STF — com fontes,
+      status de apuração e ligação com a ficha de cada ministro. O status reflete o estágio
+      da apuração, não um veredito judicial.
+      <a href="/metodologia" class="underline hover:text-ink">Como apuramos</a>
+    </p>
+
+    {ordenados.length === 0 && (
+      <p class="border border-border rounded-sm px-4 py-5 text-[12px] text-subtle text-center">
+        Nenhum caso publicado ainda.
+      </p>
+    )}
+
+    <ul class="grid gap-px bg-border border border-border sm:grid-cols-2 lg:grid-cols-3">
+      {ordenados.map((c) => (
+        <li class="bg-canvas">
+          <a href={`/casos/${c.id}`} class="block px-5 py-4 hover:bg-card transition-colors h-full">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class:list={[
+                "text-[9px] font-semibold uppercase tracking-[0.8px] px-[7px] py-[2px] rounded-sm",
+                c.data.status === "confirmado" ? "bg-white text-canvas" : "border border-border2 text-subtle",
+              ]}>
+                {ROTULO_STATUS[c.data.status]}
+              </span>
+              <time class="font-mono text-[9px] text-subtle" datetime={c.data.data_publicacao}>
+                {fmtData(c.data.data_publicacao)}
+              </time>
+            </div>
+            <div class="text-[13px] font-semibold text-ink leading-tight mb-[6px]">{c.data.titulo}</div>
+            <p class="text-[11px] text-muted leading-[1.45] line-clamp-3 mb-[10px]">{c.data.resumo}</p>
+            <div class="flex gap-[5px] flex-wrap">
+              {c.data.ministros.map((slug) => (
+                <span class="text-[9px] font-medium px-[7px] py-[2px] rounded-sm border border-border2 text-subtle">
+                  {nomePorSlug.get(slug) ?? slug}
+                </span>
+              ))}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

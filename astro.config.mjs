@@ -31,6 +31,7 @@ export default defineConfig({
       serialize: (item) => {
         if (item.url === "https://observatoriodostf.org/") item.priority = 1.0;
         else if (item.url.includes("/ministros/")) item.priority = 0.8;
+        else if (item.url.includes("/casos/")) item.priority = 0.7;
         else item.priority = 0.6;
         item.changefreq = "daily";
         return item;
