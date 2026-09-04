@@ -57,7 +57,7 @@ const jsonLd = {
   publisher: { "@type": "Organization", name: "Observatório do STF" },
 };
 ---
-<Base titulo={titulo} descricao={descricao} caminho={`/casos/${caso.id}`} jsonLd={jsonLd}>
+<Base titulo={titulo} descricao={descricao} caminho={`/casos/${caso.id}`} jsonLd={jsonLd} imagemOg={`/og/casos/${caso.id}.png`} feedRss="/casos/rss.xml">
   <div class="px-8 py-7 max-w-3xl">
     <nav class="text-[11px] text-subtle mb-[22px] flex items-center gap-[6px]">
       <a href="/casos" class="hover:text-ink transition-colors">Casos</a>

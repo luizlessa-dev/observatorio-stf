@@ -11,11 +11,14 @@ interface Props {
   descricao: string;
   caminho: string;          // "/ministros/gilmar-mendes"
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  imagemOg?: string;        // caminho absoluto ou relativo da og:image; default: /og/padrao.png
+  feedRss?: string;         // caminho do RSS pra autodiscovery, só nas páginas de /casos
 }
 
-const { titulo, descricao, caminho, jsonLd } = Astro.props;
+const { titulo, descricao, caminho, jsonLd, imagemOg, feedRss } = Astro.props;
 const ORIGEM = "https://observatoriodostf.org";
 const canonical = new URL(caminho, ORIGEM).href;
+const imagemOgAbsoluta = new URL(imagemOg ?? "/og/padrao.png", ORIGEM).href;
 
 const NAV = [
   { href: "/",                  rotulo: "Ministros" },
@@ -40,9 +43,17 @@ const atual = Astro.url.pathname;
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descricao} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={imagemOgAbsoluta} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={titulo} />
     <meta name="twitter:description" content={descricao} />
+    <meta name="twitter:image" content={imagemOgAbsoluta} />
+
+    {feedRss && (
+      <link rel="alternate" type="application/rss+xml" title="Observatório do STF — Casos" href={new URL(feedRss, ORIGEM).href} />
+    )}
 
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

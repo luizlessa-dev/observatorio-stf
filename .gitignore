@@ -14,3 +14,7 @@ __pycache__/
 
 # Tipos gerados pelo Astro
 .astro/
+
+# og:image geradas em build time por scripts/gerar-og-images.mjs — refeitas
+# a cada build, não versionadas (ver package.json "build").
+public/og/
