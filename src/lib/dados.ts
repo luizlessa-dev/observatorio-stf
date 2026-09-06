@@ -117,21 +117,47 @@ export async function carregarGastos(ministroId: string): Promise<Gasto[]> {
   return (data ?? []) as Gasto[];
 }
 
+/**
+ * `count: "exact"` sem filtro em stf_decisoes (2,9M linhas) mede ~11s — perto
+ * do limite em que o build já viu esse fetch falhar em silêncio (o cliente
+ * volta `count: null`, sem lançar erro). Uma tentativa isolada some direto
+ * pro "0" no HTML. Retry curto cobre a instabilidade pontual; falhar alto no
+ * fim cobre o resto, no mesmo espírito do `carregarMinistros` acima.
+ */
+function esperar(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function contarExato(
+  fabricaDaQuery: () => PromiseLike<{ count: number | null; error: { message: string; code?: string } | null; status?: number }>,
+  rotulo: string,
+  tentativas = 5,
+): Promise<number> {
+  let ultimoErro = "";
+  for (let i = 0; i < tentativas; i++) {
+    const { count, error, status } = await fabricaDaQuery();
+    if (!error && count != null) return count;
+    ultimoErro = error?.message || `HTTP ${status}` || "count voltou null sem erro explícito";
+    if (i < tentativas - 1) await esperar(1500 * (i + 1));
+  }
+  throw new Error(`${rotulo}: falhou após ${tentativas} tentativas (${ultimoErro})`);
+}
+
 /** Números do acervo, para a home e para o JSON-LD. */
 export async function carregarResumo() {
-  const [decisoes, rg, ultima, semMinistro] = await Promise.all([
-    supabase.from("stf_decisoes").select("id", { count: "exact", head: true }),
-    supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }),
+  const [totalTemasRG, ultima] = await Promise.all([
+    contarExato(() => supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }), "stf_repercussao_geral total"),
     supabase.from("stf_decisoes").select("data_decisao").order("data_decisao", { ascending: false }).limit(1),
-    supabase.from("stf_decisoes").select("id", { count: "exact", head: true }).in("relator_bruto", ["MINISTRO PRESIDENTE", "VICE-PRESIDENTE"]),
   ]);
-  const totalDecisoes = decisoes.count ?? 0;
+  if (ultima.error) throw new Error(`stf_decisoes (data mais recente): ${ultima.error.message}`);
+
+  const totalDecisoes = await contarExato(
+    () => supabase.from("stf_decisoes").select("id", { count: "exact", head: true }),
+    "stf_decisoes total",
+  );
   return {
     totalDecisoes,
-    totalTemasRG: rg.count ?? 0,
+    totalTemasRG,
     dadosAte: ultima.data?.[0]?.data_decisao ?? null,
-    // Cresce com o acervo — ver achado da metodologia sobre presidências não
-    // atribuídas. Calculado no build, não fixo no texto, pra não desatualizar.
-    pctSemMinistro: totalDecisoes > 0 ? ((semMinistro.count ?? 0) / totalDecisoes) * 100 : 0,
   };
 }
