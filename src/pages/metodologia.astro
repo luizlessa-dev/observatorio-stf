@@ -82,8 +82,14 @@ const descricao =
           Parte do acervo histórico não tem ministro atribuído
         </h3>
         <p class="text-[12.5px] text-muted leading-[1.7]">
-          Cerca de {resumo.pctSemMinistro.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
-          das decisões estão registradas na fonte como "MINISTRO PRESIDENTE"
+          {/* Fixo, não calculado no build: relator_bruto não tem índice em
+              stf_decisoes (2,9M linhas) e um filtro .in() nessa coluna sem
+              índice consistentemente estoura o timeout do Postgres/PostgREST
+              (~11s+, falha bloqueou o build nos testes). Atualizar manualmente
+              se o acervo mudar muito, ou criar um índice em relator_bruto (ou
+              uma coluna/tabela de estatísticas cacheada) antes de tornar
+              dinâmico de novo. */}
+          Cerca de 19,5% das decisões estão registradas na fonte como "MINISTRO PRESIDENTE"
           ou "VICE-PRESIDENTE", sem nomear quem decidiu. Resolver isso depende de
           reconstruir o histórico de presidências desde 2000, apuração ainda em curso.
           Nenhuma decisão foi descartada por isso: todas estão no acervo, com o texto
