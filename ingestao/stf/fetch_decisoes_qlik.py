@@ -496,12 +496,41 @@ def mapear(linha: dict, resolvedor: ResolvedorMinistro) -> dict | None:
     }
 
 
+def _contar_por_ano(sb, ano_inicio: int = 2000) -> int:
+    """Soma `count: exact` ano a ano em vez de uma única contagem sem filtro.
+
+    Descoberta ao validar a migration 0012 (2026-09-06): o teto de ~8s não é
+    por papel (anon/authenticated/service_role) — é do `authenticator`, o
+    login que o PostgREST usa para TODA requisição antes de dar SET ROLE.
+    `ALTER ROLE authenticator SET statement_timeout` é um GUC de sessão, que
+    se aplica no login e sobrevive ao SET ROLE seguinte; escolher
+    service_role no client não muda esse teto. Medido: o head-count sem
+    filtro devolveu 500 (Postgres 57014, query_canceled) aos 8,04s via
+    service_role, mesmo o mesmo SQL direto (fora do PostgREST) levando só
+    ~10s por completo — perto o bastante do limite pra falhar quase sempre.
+
+    Cada ano é uma fração pequena da tabela (a maior tem ~165 mil linhas,
+    contra 2,98 milhões no total) e usa stf_decisoes_ano_idx — mesmo com
+    visibility map ruim (ver migration 0013), o pior ano observado ainda
+    ficou abaixo do teto. Também é mais resiliente do que uma trava de
+    tamanho só: no pior caso, um ano lento não derruba a soma inteira.
+    """
+    total = 0
+    for ano in range(ano_inicio, date.today().year + 1):
+        c = sb.table("stf_decisoes").select("id", count="exact", head=True).eq("ano_decisao", ano).execute().count
+        if c is None:
+            raise RuntimeError(f"contagem do ano {ano} voltou None")
+        total += c
+    return total
+
+
 def atualizar_estatisticas(sb, dry_run: bool) -> None:
     """Recalcula public.stf_estatisticas (migration 0012) para o build do site
-    ler por chave primária em vez de agregar 2,9M linhas sob o timeout do
-    papel anon. Roda aqui, sob service_role, que não tem statement_timeout —
-    o mesmo `count: exact` sem filtro que falhava no build (~11s, perto do
-    limite de 12s do anon) aqui só é lento, não arriscado.
+    ler por chave primária em vez de agregar 2,9M linhas no caminho crítico
+    do deploy. Roda aqui porque o pipeline não tem prazo apertado — mas
+    NENHUM papel de API escapa do teto de ~8s do `authenticator` (ver
+    `_contar_por_ano`), então mesmo aqui a contagem total é somada por ano,
+    não feita de uma vez.
 
     Best-effort: se isto falhar, a ingestão do dia (o que importa) já está
     gravada. O site continua servindo o número de ontem até a próxima
@@ -509,7 +538,7 @@ def atualizar_estatisticas(sb, dry_run: bool) -> None:
     estatística de exibição.
     """
     try:
-        total = sb.table("stf_decisoes").select("id", count="exact", head=True).execute().count
+        total = _contar_por_ano(sb)
         total_rg = sb.table("stf_repercussao_geral").select("id", count="exact", head=True).execute().count
         sem_ministro = (
             sb.table("stf_decisoes")

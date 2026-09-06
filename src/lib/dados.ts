@@ -180,13 +180,15 @@ async function contarExato(fabricaDaQuery: () => PromiseLike<RespostaComContagem
  * Números do acervo, para a home, o JSON-LD e /metodologia.
  *
  * Não agrega stf_decisoes ao vivo. `count: "exact"` sem filtro nas 2,9M
- * linhas media ~11s sob o papel `anon` — que tem statement_timeout de 12s
- * (config do projeto Supabase), então falhava sob qualquer variação de
- * carga. Nenhum índice resolve isso: o gargalo é o tamanho da agregação, não
- * a falta de um plano de acesso melhor. `stf_estatisticas` (migration 0012)
- * é recalculada pelo pipeline de ingestão, que roda sob `service_role` (sem
- * statement_timeout) uma vez por dia — o build só faz um select por chave
- * primária.
+ * linhas media ~10-11s, perto ou acima de um teto de ~8s que existe pra
+ * QUALQUER papel — anon, authenticated ou service_role. Não é config por
+ * papel (isso é `authenticator`, o login que o PostgREST usa antes do SET
+ * ROLE, com seu próprio `statement_timeout`, que sobrevive à troca de papel).
+ * Índice não resolve uma agregação sem filtro; o que ajuda é não rodar essa
+ * conta aqui. `stf_estatisticas` (migration 0012) é recalculada pelo
+ * pipeline de ingestão — que soma por ano em vez de contar a tabela inteira
+ * de uma vez, ver `_contar_por_ano` em fetch_decisoes_qlik.py — uma vez por
+ * dia. O build só faz um select por chave primária.
  */
 export async function carregarResumo() {
   const { data, error } = await supabase.from("stf_estatisticas").select("*").eq("id", 1).single();
