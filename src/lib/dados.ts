@@ -119,14 +119,19 @@ export async function carregarGastos(ministroId: string): Promise<Gasto[]> {
 
 /** Números do acervo, para a home e para o JSON-LD. */
 export async function carregarResumo() {
-  const [decisoes, rg, ultima] = await Promise.all([
+  const [decisoes, rg, ultima, semMinistro] = await Promise.all([
     supabase.from("stf_decisoes").select("id", { count: "exact", head: true }),
     supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }),
     supabase.from("stf_decisoes").select("data_decisao").order("data_decisao", { ascending: false }).limit(1),
+    supabase.from("stf_decisoes").select("id", { count: "exact", head: true }).in("relator_bruto", ["MINISTRO PRESIDENTE", "VICE-PRESIDENTE"]),
   ]);
+  const totalDecisoes = decisoes.count ?? 0;
   return {
-    totalDecisoes: decisoes.count ?? 0,
+    totalDecisoes,
     totalTemasRG: rg.count ?? 0,
     dadosAte: ultima.data?.[0]?.data_decisao ?? null,
+    // Cresce com o acervo — ver achado da metodologia sobre presidências não
+    // atribuídas. Calculado no build, não fixo no texto, pra não desatualizar.
+    pctSemMinistro: totalDecisoes > 0 ? ((semMinistro.count ?? 0) / totalDecisoes) * 100 : 0,
   };
 }
