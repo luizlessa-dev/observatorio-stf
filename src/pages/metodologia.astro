@@ -82,7 +82,8 @@ const descricao =
           Parte do acervo histórico não tem ministro atribuído
         </h3>
         <p class="text-[12.5px] text-muted leading-[1.7]">
-          Cerca de 15% das decisões estão registradas na fonte como "MINISTRO PRESIDENTE"
+          Cerca de {resumo.pctSemMinistro.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
+          das decisões estão registradas na fonte como "MINISTRO PRESIDENTE"
           ou "VICE-PRESIDENTE", sem nomear quem decidiu. Resolver isso depende de
           reconstruir o histórico de presidências desde 2000, apuração ainda em curso.
           Nenhuma decisão foi descartada por isso: todas estão no acervo, com o texto
