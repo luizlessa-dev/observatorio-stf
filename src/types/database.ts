@@ -153,6 +153,23 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_decisoes"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0012 (2026-09-06): cache dos números do resumo (home,
+      // JSON-LD, /metodologia). Uma linha só (id=1), recalculada pelo
+      // pipeline de ingestão — o build só lê por chave primária. Ver o
+      // comentário longo em carregarResumo() (src/lib/dados.ts).
+      stf_estatisticas: {
+        Row: {
+          id:             number;
+          total_decisoes: number;
+          total_temas_rg: number;
+          sem_ministro:   number;
+          dados_ate:      string | null;
+          atualizado_em:  string;
+        };
+        Insert: Database["public"]["Tables"]["stf_estatisticas"]["Row"];
+        Update: Partial<Database["public"]["Tables"]["stf_estatisticas"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado A6 (2026-08-17): períodos de presidência/vice do STF. Existe
       // para contextualizar o custo de gabinete do presidente, que não é
       // comparável ao dos demais. Períodos com início e fim, não flag — a

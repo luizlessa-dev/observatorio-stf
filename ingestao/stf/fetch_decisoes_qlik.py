@@ -496,6 +496,56 @@ def mapear(linha: dict, resolvedor: ResolvedorMinistro) -> dict | None:
     }
 
 
+def atualizar_estatisticas(sb, dry_run: bool) -> None:
+    """Recalcula public.stf_estatisticas (migration 0012) para o build do site
+    ler por chave primária em vez de agregar 2,9M linhas sob o timeout do
+    papel anon. Roda aqui, sob service_role, que não tem statement_timeout —
+    o mesmo `count: exact` sem filtro que falhava no build (~11s, perto do
+    limite de 12s do anon) aqui só é lento, não arriscado.
+
+    Best-effort: se isto falhar, a ingestão do dia (o que importa) já está
+    gravada. O site continua servindo o número de ontem até a próxima
+    execução recalcular — não vale abortar o pipeline inteiro por causa da
+    estatística de exibição.
+    """
+    try:
+        total = sb.table("stf_decisoes").select("id", count="exact", head=True).execute().count
+        total_rg = sb.table("stf_repercussao_geral").select("id", count="exact", head=True).execute().count
+        sem_ministro = (
+            sb.table("stf_decisoes")
+            .select("id", count="exact", head=True)
+            .in_("relator_bruto", ["MINISTRO PRESIDENTE", "VICE-PRESIDENTE"])
+            .execute()
+            .count
+        )
+        ultima = (
+            sb.table("stf_decisoes")
+            .select("data_decisao")
+            .order("data_decisao", desc=True)
+            .limit(1)
+            .execute()
+            .data
+        )
+        if total is None or total_rg is None or sem_ministro is None:
+            raise RuntimeError(f"count voltou None (total={total}, total_rg={total_rg}, sem_ministro={sem_ministro})")
+
+        linha = {
+            "id": 1,
+            "total_decisoes": total,
+            "total_temas_rg": total_rg,
+            "sem_ministro": sem_ministro,
+            "dados_ate": ultima[0]["data_decisao"] if ultima else None,
+            "atualizado_em": datetime.now().isoformat(),
+        }
+        verbo = "seria atualizada para" if dry_run else "atualizada:"
+        print(f"\nstf_estatisticas {verbo} {total:,} decisões, {sem_ministro:,} sem ministro, "
+              f"{total_rg:,} temas RG".replace(",", "."))
+        if not dry_run:
+            sb.table("stf_estatisticas").upsert(linha, on_conflict="id").execute()
+    except Exception as e:
+        print(f"\nAVISO: falha ao atualizar stf_estatisticas, mantendo valor anterior: {e}")
+
+
 def run(ano: int, dry_run: bool = True) -> int:
     tabela = resolver_destino()
     print(f"Tabela de destino autorizada: {DESTINATION_SCHEMA}.{tabela}")
@@ -559,6 +609,8 @@ def run(ano: int, dry_run: bool = True) -> int:
         print("  Para resolver: cadastre o ministro em stf_ministros (nome exato "
               "da fonte, sem o prefixo 'MIN.') ou o mandato em stf_presidencias, "
               "e reexecute o ano. O upsert é idempotente.")
+
+    atualizar_estatisticas(sb, dry_run)
 
     return gravados
 

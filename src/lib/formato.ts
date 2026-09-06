@@ -25,3 +25,7 @@ export function fmtBRL(v: number) {
 export function fmtNum(v: number) {
   return v.toLocaleString("pt-BR");
 }
+
+export function fmtPct(v: number) {
+  return v.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+}

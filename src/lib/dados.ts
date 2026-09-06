@@ -84,26 +84,40 @@ export async function carregarMinistros(): Promise<Ministro[]> {
  * redistribui a pauta. Ver o comentário longo em src/hooks/useDecisoes.ts.
  */
 export async function carregarDecisoes(ministroId: string, limite = 30) {
-  const [pauta, presidencia] = await Promise.all([
-    supabase
-      .from("stf_decisoes")
-      .select("id, processo, data_decisao, andamento_bruto, tipo_decisao, assunto", { count: "exact" })
-      .eq("ministro_id", ministroId)
-      .eq("ministro_resolucao", "nome")
-      .eq("tipo_origem", "MONOCRÁTICA")
-      .order("data_decisao", { ascending: false })
-      .limit(limite),
-    supabase
-      .from("stf_decisoes")
-      .select("id", { count: "exact", head: true })
-      .eq("ministro_id", ministroId)
-      .eq("ministro_resolucao", "presidencia"),
+  // As duas consultas usam stf_decisoes_ficha_idx (migration 0010, ~200ms) —
+  // rápidas isoladamente, mas o build dispara isto para os 33 ministros ao
+  // mesmo tempo (getStaticPaths, Promise.all sem limite de concorrência) e
+  // essa rajada já derrubou uma delas com "statement timeout" numa execução
+  // real de build, mesmo a query sendo barata sozinha. Por isso comRetry nas
+  // duas, não só na contagem.
+  const [pauta, comoPresidente] = await Promise.all([
+    comRetry(
+      () =>
+        supabase
+          .from("stf_decisoes")
+          .select("id, processo, data_decisao, andamento_bruto, tipo_decisao, assunto", { count: "exact" })
+          .eq("ministro_id", ministroId)
+          .eq("ministro_resolucao", "nome")
+          .eq("tipo_origem", "MONOCRÁTICA")
+          .order("data_decisao", { ascending: false })
+          .limit(limite),
+      `stf_decisoes (pauta do ministro ${ministroId})`,
+    ),
+    contarExato(
+      () =>
+        supabase
+          .from("stf_decisoes")
+          .select("id", { count: "exact", head: true })
+          .eq("ministro_id", ministroId)
+          .eq("ministro_resolucao", "presidencia"),
+      `stf_decisoes como presidente (ministro ${ministroId})`,
+    ),
   ]);
 
   return {
     decisoes: (pauta.data ?? []) as Decisao[],
-    total: pauta.count ?? 0,
-    comoPresidente: presidencia.count ?? 0,
+    total: pauta.count!,
+    comoPresidente,
   };
 }
 
@@ -118,46 +132,70 @@ export async function carregarGastos(ministroId: string): Promise<Gasto[]> {
 }
 
 /**
- * `count: "exact"` sem filtro em stf_decisoes (2,9M linhas) mede ~11s — perto
- * do limite em que o build já viu esse fetch falhar em silêncio (o cliente
- * volta `count: null`, sem lançar erro). Uma tentativa isolada some direto
- * pro "0" no HTML. Retry curto cobre a instabilidade pontual; falhar alto no
- * fim cobre o resto, no mesmo espírito do `carregarMinistros` acima.
+ * Consultas indexadas e normalmente rápidas (dezenas a poucas centenas de ms)
+ * ainda podem falhar por instabilidade pontual ou pela rajada de ~66
+ * consultas concorrentes que o build dispara para os 33 ministros de uma vez
+ * (getStaticPaths sem limite de concorrência). Retry curto cobre isso;
+ * falhar alto no fim cobre o resto, no mesmo espírito do `carregarMinistros`
+ * acima — nunca cair em silêncio para `0` ou lista vazia. Não serve para
+ * agregar a tabela inteira sem filtro: ver `carregarResumo` abaixo, que não
+ * conta nada ao vivo porque nenhum retry salva uma consulta que passa do
+ * statement_timeout por ser estruturalmente grande demais.
  */
 function esperar(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function contarExato(
-  fabricaDaQuery: () => PromiseLike<{ count: number | null; error: { message: string; code?: string } | null; status?: number }>,
+// Toda chamada daqui usa `count: "exact"`, então `count` sempre está na
+// resposta — inclusive quando a query também traz `data` (a pauta em
+// carregarDecisoes). `count == null` sem erro é o próprio sintoma que
+// motivou isto: o cliente volta null em silêncio em vez de lançar.
+type RespostaComContagem = {
+  count: number | null;
+  error: { message: string; code?: string } | null;
+  status?: number;
+};
+
+async function comRetry<T extends RespostaComContagem>(
+  fabricaDaQuery: () => PromiseLike<T>,
   rotulo: string,
   tentativas = 5,
-): Promise<number> {
+): Promise<T> {
   let ultimoErro = "";
   for (let i = 0; i < tentativas; i++) {
-    const { count, error, status } = await fabricaDaQuery();
-    if (!error && count != null) return count;
-    ultimoErro = error?.message || `HTTP ${status}` || "count voltou null sem erro explícito";
+    const resultado = await fabricaDaQuery();
+    if (!resultado.error && resultado.count != null) return resultado;
+    ultimoErro = resultado.error?.message || `HTTP ${resultado.status}` || "count voltou null sem erro explícito";
     if (i < tentativas - 1) await esperar(1500 * (i + 1));
   }
   throw new Error(`${rotulo}: falhou após ${tentativas} tentativas (${ultimoErro})`);
 }
 
-/** Números do acervo, para a home e para o JSON-LD. */
-export async function carregarResumo() {
-  const [totalTemasRG, ultima] = await Promise.all([
-    contarExato(() => supabase.from("stf_repercussao_geral").select("id", { count: "exact", head: true }), "stf_repercussao_geral total"),
-    supabase.from("stf_decisoes").select("data_decisao").order("data_decisao", { ascending: false }).limit(1),
-  ]);
-  if (ultima.error) throw new Error(`stf_decisoes (data mais recente): ${ultima.error.message}`);
+async function contarExato(fabricaDaQuery: () => PromiseLike<RespostaComContagem>, rotulo: string, tentativas = 5): Promise<number> {
+  const resultado = await comRetry(fabricaDaQuery, rotulo, tentativas);
+  return resultado.count!;
+}
 
-  const totalDecisoes = await contarExato(
-    () => supabase.from("stf_decisoes").select("id", { count: "exact", head: true }),
-    "stf_decisoes total",
-  );
+/**
+ * Números do acervo, para a home, o JSON-LD e /metodologia.
+ *
+ * Não agrega stf_decisoes ao vivo. `count: "exact"` sem filtro nas 2,9M
+ * linhas media ~11s sob o papel `anon` — que tem statement_timeout de 12s
+ * (config do projeto Supabase), então falhava sob qualquer variação de
+ * carga. Nenhum índice resolve isso: o gargalo é o tamanho da agregação, não
+ * a falta de um plano de acesso melhor. `stf_estatisticas` (migration 0012)
+ * é recalculada pelo pipeline de ingestão, que roda sob `service_role` (sem
+ * statement_timeout) uma vez por dia — o build só faz um select por chave
+ * primária.
+ */
+export async function carregarResumo() {
+  const { data, error } = await supabase.from("stf_estatisticas").select("*").eq("id", 1).single();
+  if (error || !data) throw new Error(`stf_estatisticas: ${error?.message ?? "sem linha"}`);
+
   return {
-    totalDecisoes,
-    totalTemasRG,
-    dadosAte: ultima.data?.[0]?.data_decisao ?? null,
+    totalDecisoes: data.total_decisoes,
+    totalTemasRG: data.total_temas_rg,
+    dadosAte: data.dados_ate,
+    pctSemMinistro: data.total_decisoes > 0 ? (data.sem_ministro / data.total_decisoes) * 100 : null,
   };
 }
