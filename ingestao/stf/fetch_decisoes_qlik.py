@@ -575,6 +575,50 @@ def atualizar_estatisticas(sb, dry_run: bool) -> None:
         print(f"\nAVISO: falha ao atualizar stf_estatisticas, mantendo valor anterior: {e}")
 
 
+def atualizar_perfil_decisorio(dry_run: bool) -> None:
+    """Recalcula stf_ministros_perfil_decisorio e stf_ministros_mix_atuacao
+    (migrations 0016-0019) chamando public.refresh_perfil_decisorio_ministros()
+    via conexão Postgres DIRETA — não PostgREST.
+
+    Medido em produção (2026-09-10): a mesma function via `sb.rpc()` (PostgREST)
+    estourou o teto de ~8s do `authenticator` sozinha, sem nenhuma concorrência
+    — é o tamanho da agregação (~1,9M linhas), não uma rajada. Não há como
+    fazer isto pelo cliente supabase-py normal.
+
+    Por que roda aqui (runner self-hosted) e não em ubuntu-latest: o host do
+    Postgres deste projeto só tem endereço IPv6 (sem o add-on pago de IPv4 do
+    Supabase) — confirmado por consulta DNS. `ubuntu-latest` não tem saída
+    IPv6; este runner (rede residencial) tem, e já é usado aqui por outro
+    motivo (o WAF do STF bloqueia IP de datacenter — ver o comentário em
+    `on:` do workflow). SUPABASE_DB_URL é opcional de propósito: só este
+    refresh depende dela, nunca a ingestão de decisões em si.
+
+    Best-effort, mesmo padrão de atualizar_estatisticas(): se isto falhar, a
+    ingestão do dia (o que importa) já está gravada.
+    """
+    db_url = os.environ.get("SUPABASE_DB_URL")
+    if not db_url:
+        print("\nAVISO: SUPABASE_DB_URL não configurada — perfil decisório não recalculado hoje.")
+        return
+    try:
+        import psycopg2
+
+        verbo = "seria recalculado" if dry_run else "recalculado"
+        print(f"\nstf_ministros_perfil_decisorio/stf_ministros_mix_atuacao {verbo} via Postgres direto")
+        if dry_run:
+            return
+        conn = psycopg2.connect(db_url, connect_timeout=15)
+        try:
+            conn.autocommit = True
+            with conn.cursor() as cur:
+                cur.execute("select public.refresh_perfil_decisorio_ministros();")
+        finally:
+            conn.close()
+        print("stf_ministros_perfil_decisorio/stf_ministros_mix_atuacao: recalculados")
+    except Exception as e:
+        print(f"\nAVISO: falha ao recalcular perfil decisório, mantendo valor anterior: {e}")
+
+
 def run(ano: int, dry_run: bool = True) -> int:
     tabela = resolver_destino()
     print(f"Tabela de destino autorizada: {DESTINATION_SCHEMA}.{tabela}")
@@ -593,6 +637,7 @@ def run(ano: int, dry_run: bool = True) -> int:
     # ontem, já assentadas. `stf_estatisticas` fica com o número de ontem por
     # design (ver o comentário da função); isto só torna essa garantia real.
     atualizar_estatisticas(sb, dry_run)
+    atualizar_perfil_decisorio(dry_run)
 
     ministros = sb.table("stf_ministros").select("id, nome").execute().data
     presidencias = (

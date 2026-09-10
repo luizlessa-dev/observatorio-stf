@@ -229,6 +229,44 @@ class TestMapeamento(unittest.TestCase):
                               f"linha sem {campo} não satisfaz os NOT NULL da tabela")
 
 
+class TestPerfilDecisorio(unittest.TestCase):
+    """atualizar_perfil_decisorio (migrations 0016-0019). Best-effort, mesmo
+    espírito de atualizar_estatisticas(): nunca deve derrubar a ingestão do
+    dia, mesmo sem SUPABASE_DB_URL configurada (psycopg2 é import tardio, só
+    dentro da function — o resto do pipeline não depende dele)."""
+
+    def setUp(self):
+        self._db_url_original = os.environ.pop("SUPABASE_DB_URL", None)
+
+    def tearDown(self):
+        if self._db_url_original is not None:
+            os.environ["SUPABASE_DB_URL"] = self._db_url_original
+
+    def test_chamada_logo_apos_atualizar_estatisticas(self):
+        src = SCRIPT.read_text(encoding="utf-8")
+        self.assertIn(
+            "atualizar_estatisticas(sb, dry_run)\n    atualizar_perfil_decisorio(dry_run)",
+            src,
+            "atualizar_perfil_decisorio deveria rodar logo após atualizar_estatisticas, "
+            "antes da ingestão do dia — mesmo motivo: dado de ontem, já assentado no autovacuum",
+        )
+
+    def test_nao_falha_sem_supabase_db_url(self):
+        # Não deveria levantar exceção nem em dry-run nem em escrita real —
+        # ausência da variável é um estado válido (nem todo ambiente precisa
+        # dela), só a ingestão de decisões em si é obrigatória.
+        mod.atualizar_perfil_decisorio(dry_run=True)
+        mod.atualizar_perfil_decisorio(dry_run=False)
+
+    def test_import_de_psycopg2_e_tardio(self):
+        # psycopg2 só pode ser importado DENTRO da function — se subir pro
+        # topo do arquivo, todo o resto do script (que não precisa dele)
+        # passa a exigir a dependência.
+        src = SCRIPT.read_text(encoding="utf-8")
+        topo = src.split("def atualizar_perfil_decisorio")[0]
+        self.assertNotIn("import psycopg2", topo, "psycopg2 não deveria ser importado no topo do arquivo")
+
+
 class TestGuardaDeEscritaNoCodigoFonte(unittest.TestCase):
     def test_upsert_atras_da_flag_de_dry_run(self):
         src = SCRIPT.read_text(encoding="utf-8")
