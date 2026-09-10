@@ -18,3 +18,4 @@ __pycache__/
 # og:image geradas em build time por scripts/gerar-og-images.mjs — refeitas
 # a cada build, não versionadas (ver package.json "build").
 public/og/
+.env*
