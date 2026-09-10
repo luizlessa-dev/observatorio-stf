@@ -46,14 +46,16 @@ test("workflow_dispatch expõe dry_run booleano, obrigatório, com padrão true"
   assert.ok(/type:\s*boolean/.test(corpo), "dry_run deveria ser type: boolean");
 });
 
-test("cron está suspenso (comentado), não removido silenciosamente", () => {
+test("cron está encerrado (comentado), não removido silenciosamente", () => {
   const src = workflowSrc();
   assert.ok(!/^\s*schedule:\s*$/m.test(src), "schedule: não deveria estar ativo");
   assert.ok(!/^\s*-\s*cron:/m.test(src), "nenhuma linha de cron ativa deveria existir");
   assert.ok(src.includes('#   - cron: "0 8 * * *"'), "cron original deveria continuar documentado, só comentado");
   assert.ok(
-    /temporariamente suspenso/i.test(src),
-    "workflow deveria documentar explicitamente que o schedule está suspenso"
+    /ENCERRADO/i.test(src),
+    "workflow deveria documentar explicitamente que o schedule foi encerrado (Fase D3: não há voto por " +
+      "ministro extraível de nenhuma fonte atual, ver docs/ingestao-votacoes-stf.md §14) — não é mais uma " +
+      "suspensão temporária"
   );
 });
 

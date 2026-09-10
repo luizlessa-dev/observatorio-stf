@@ -9,28 +9,59 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
+        carregarPerfilDecisorio(m.id),
       ]);
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, casos } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, casos } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
+
+const ROTULO_NATUREZA = {
+  merito: "Mérito",
+  admissibilidade: "Admissibilidade",
+  cautelar: "Cautelar",
+  processual: "Processual",
+  devolucao: "Devolução",
+} as const;
+
+const segmentosNatureza = perfil
+  ? ([
+      ["merito", perfil.pctMerito],
+      ["admissibilidade", perfil.pctAdmissibilidade],
+      ["cautelar", perfil.pctCautelar],
+      ["processual", perfil.pctProcessual],
+      ["devolucao", perfil.pctDevolucao],
+    ] as const)
+      .filter(([, pct]) => pct !== null && pct > 0)
+      .map(([chave, pct]) => ({ chave, rotulo: ROTULO_NATUREZA[chave], pct: pct! }))
+  : [];
+
+const segmentosSentido = perfil
+  ? ([
+      ["favoravel", "Favorável", perfil.pctFavoravel],
+      ["contrario", "Contrário", perfil.pctContrario],
+      ["parcial", "Parcial", perfil.pctParcial],
+    ] as const)
+      .filter(([, , pct]) => pct !== null && pct > 0)
+      .map(([chave, rotulo, pct]) => ({ chave, rotulo, pct: pct! }))
+  : [];
 
 const subsidio = gastos.find((g) => g.categoria === "subsidio_ministro");
 const gabinete = gastos.find((g) => g.categoria === "custo_gabinete");
@@ -182,6 +213,95 @@ const jsonLd = {
       </section>
     )}
 
+    {perfil && segmentosNatureza.length > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Perfil decisório</h2>
+          <span class="text-[8.5px] text-subtle">{fmtNum(perfil.totalDecisoes)} decisões classificadas por regra</span>
+        </div>
+
+        <div class="px-4 py-[13px]">
+          <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-2">
+            Natureza do ato — o que o ministro decidiu, não como decidiu
+          </div>
+          <div class="flex h-[10px] rounded-sm overflow-hidden border border-border2">
+            {segmentosNatureza.map((s) => (
+              <div
+                class:list={[
+                  "h-full",
+                  s.chave === "merito" ? "bg-white" : "bg-border2",
+                ]}
+                style={`width:${s.pct}%`}
+                title={`${s.rotulo}: ${s.pct}%`}
+              />
+            ))}
+          </div>
+          <div class="flex gap-x-4 gap-y-1 flex-wrap mt-2">
+            {segmentosNatureza.map((s) => (
+              <span class="text-[10px] text-muted flex items-center gap-[5px]">
+                <span class:list={["w-[7px] h-[7px] rounded-sm inline-block", s.chave === "merito" ? "bg-white" : "bg-border2"]} />
+                {s.rotulo} <span class="text-subtle">{s.pct}%</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {segmentosSentido.length > 0 && (
+          <div class="px-4 py-[13px] border-t border-border">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-2">
+              Dentro do mérito ({fmtNum(perfil.nMeritoComSentido)} decisões) — resultado em relação ao pedido
+            </div>
+            <div class="flex h-[10px] rounded-sm overflow-hidden border border-border2">
+              {segmentosSentido.map((s) => (
+                <div
+                  class:list={["h-full", s.chave === "favoravel" ? "bg-white" : s.chave === "contrario" ? "bg-border2" : "bg-subtle"]}
+                  style={`width:${s.pct}%`}
+                  title={`${s.rotulo}: ${s.pct}%`}
+                />
+              ))}
+            </div>
+            <div class="flex gap-x-4 gap-y-1 flex-wrap mt-2">
+              {segmentosSentido.map((s) => (
+                <span class="text-[10px] text-muted flex items-center gap-[5px]">
+                  <span class:list={["w-[7px] h-[7px] rounded-sm inline-block", s.chave === "favoravel" ? "bg-white" : s.chave === "contrario" ? "bg-border2" : "bg-subtle"]} />
+                  {s.rotulo} <span class="text-subtle">{s.pct}%</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="grid grid-cols-2 divide-x divide-border border-t border-border">
+          <div class="px-4 py-[10px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Estilo de atuação</div>
+            <div class="text-[11px] text-muted">
+              {perfil.pctMonocratica !== null
+                ? <>{perfil.pctMonocratica}% monocrática · {perfil.pctColegiada}% colegiada</>
+                : "—"}
+            </div>
+          </div>
+          <div class="px-4 py-[10px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Tempo médio até a decisão</div>
+            <div class="text-[11px] text-muted">
+              {perfil.tempoMedioDias !== null ? `${fmtNum(perfil.tempoMedioDias)} dias desde a autuação` : "—"}
+            </div>
+          </div>
+        </div>
+
+        <div class="px-4 py-[10px] border-t border-border bg-card/50">
+          <p class="text-[10px] text-muted leading-[1.55]">
+            <strong class="font-semibold text-ink">Classificação por regra, não por IA.</strong>
+            {" "}"Favorável"/"contrário" é o resultado literal que o STF escreveu (provido, negado
+            provimento, etc.) em relação ao que foi pedido — não uma leitura de mérito substantivo
+            nem de lado político. "Negado seguimento"/"não conhecido" (admissibilidade) nunca conta
+            como "contrário": são coisas diferentes. Escopo: decisões monocráticas como relator
+            nomeado — exclui decisões institucionais da Presidência e colegiadas.
+            <a href="/metodologia#perfil-decisorio" class="underline hover:text-ink ml-1">Metodologia completa</a>
+          </p>
+        </div>
+      </section>
+    )}
+
     <section class="border border-border rounded-sm overflow-hidden">
       <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
         <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">
@@ -225,9 +345,9 @@ const jsonLd = {
     </section>
 
     <p class="text-[10px] text-subtle mt-4 max-w-2xl leading-[1.6]">
-      O andamento aparece exatamente como o STF o registrou. "Negado seguimento" é
-      recusa de admissibilidade, não julgamento de mérito — o Observatório não
-      traduz isso para favorável ou contrário sem metodologia publicada.
+      O andamento aparece exatamente como o STF o registrou. A leitura agregada de
+      favorável/contrário acima (quando existe) segue metodologia publicada e por
+      regra — nunca inferência de IA sobre o conteúdo do caso.
       <a href="/metodologia" class="underline hover:text-ink ml-1">Como lemos os dados</a>
     </p>
   </div>

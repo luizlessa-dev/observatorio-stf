@@ -121,6 +121,87 @@ export async function carregarDecisoes(ministroId: string, limite = 30) {
   };
 }
 
+export interface PerfilDecisorio {
+  totalDecisoes: number;
+  pctClassificadas: number | null;
+  pctMerito: number | null;
+  pctAdmissibilidade: number | null;
+  pctCautelar: number | null;
+  pctProcessual: number | null;
+  pctDevolucao: number | null;
+  nMeritoComSentido: number;
+  pctFavoravel: number | null;
+  pctContrario: number | null;
+  pctParcial: number | null;
+  tempoMedioDias: number | null;
+  pctMonocratica: number | null;
+  pctColegiada: number | null;
+}
+
+/**
+ * Perfil decisório do ministro: natureza do ato (mérito/admissibilidade/
+ * cautelar/processual/devolução) e, dentro de mérito, taxa de
+ * favorável/contrário/parcial — classificado por regra sobre o texto literal
+ * de andamento_bruto (migration 0016), sem LLM e sem eixo ideológico. Ver
+ * /metodologia#perfil-decisorio.
+ *
+ * `null` quando não há linha pro ministro, quando a amostra é menor que 10
+ * decisões classificadas (evita "100%" a partir de 1 decisão — tecnicamente
+ * exato, ainda assim enganoso isolado), ou quando um denominador individual
+ * é zero — nunca um valor fabricado. O chamador decide se omite a seção;
+ * nunca inventamos "sem dados = 0%".
+ */
+const COLUNAS_PERFIL_DECISORIO =
+  "total_decisoes, total_classificadas, pct_classificadas, n_merito, n_admissibilidade, n_cautelar, n_processual, n_devolucao, pct_merito, pct_admissibilidade, pct_cautelar, pct_processual, pct_devolucao, n_merito_com_sentido, n_favoravel, n_contrario, n_parcial, pct_favoravel, pct_contrario, pct_parcial, tempo_medio_dias" as const;
+const COLUNAS_MIX_ATUACAO = "n_monocratica, n_colegiada, pct_monocratica, pct_colegiada" as const;
+
+export async function carregarPerfilDecisorio(ministroId: string): Promise<PerfilDecisorio | null> {
+  const [perfil, mix] = await Promise.all([
+    comRetrySimples(
+      () =>
+        supabase
+          .from("stf_ministros_perfil_decisorio")
+          .select(COLUNAS_PERFIL_DECISORIO)
+          .eq("ministro_id", ministroId)
+          .maybeSingle(),
+      `stf_ministros_perfil_decisorio (ministro ${ministroId})`,
+    ),
+    comRetrySimples(
+      () =>
+        supabase
+          .from("stf_ministros_mix_atuacao")
+          .select(COLUNAS_MIX_ATUACAO)
+          .eq("ministro_id", ministroId)
+          .maybeSingle(),
+      `stf_ministros_mix_atuacao (ministro ${ministroId})`,
+    ),
+  ]);
+
+  // Amostra mínima antes de mostrar qualquer percentual — sem isto, um
+  // ministro histórico com 1 decisão classificada aparece com "100%" numa
+  // categoria, que é tecnicamente exato e ainda assim engana quem só olha a
+  // barra. 10 é bem acima do MIN_VOTOS_RELEVANTES=3 do termômetro antigo.
+  const AMOSTRA_MINIMA = 10;
+  if (!perfil.data || perfil.data.total_classificadas < AMOSTRA_MINIMA) return null;
+
+  return {
+    totalDecisoes: perfil.data.total_decisoes,
+    pctClassificadas: perfil.data.pct_classificadas,
+    pctMerito: perfil.data.pct_merito,
+    pctAdmissibilidade: perfil.data.pct_admissibilidade,
+    pctCautelar: perfil.data.pct_cautelar,
+    pctProcessual: perfil.data.pct_processual,
+    pctDevolucao: perfil.data.pct_devolucao,
+    nMeritoComSentido: perfil.data.n_merito_com_sentido,
+    pctFavoravel: perfil.data.pct_favoravel,
+    pctContrario: perfil.data.pct_contrario,
+    pctParcial: perfil.data.pct_parcial,
+    tempoMedioDias: perfil.data.tempo_medio_dias,
+    pctMonocratica: mix.data?.pct_monocratica ?? null,
+    pctColegiada: mix.data?.pct_colegiada ?? null,
+  };
+}
+
 export async function carregarGastos(ministroId: string): Promise<Gasto[]> {
   const { data } = await supabase
     .from("stf_gastos")
@@ -176,6 +257,24 @@ async function contarExato(fabricaDaQuery: () => PromiseLike<RespostaComContagem
   return resultado.count!;
 }
 
+type RespostaSimples = { data: unknown; error: { message: string } | null; status?: number };
+
+/** Mesma disciplina de `comRetry`, para consultas sem `count` (ex.: `.maybeSingle()`). */
+async function comRetrySimples<T extends RespostaSimples>(
+  fabricaDaQuery: () => PromiseLike<T>,
+  rotulo: string,
+  tentativas = 5,
+): Promise<T> {
+  let ultimoErro = "";
+  for (let i = 0; i < tentativas; i++) {
+    const resultado = await fabricaDaQuery();
+    if (!resultado.error) return resultado;
+    ultimoErro = resultado.error.message || `HTTP ${resultado.status}`;
+    if (i < tentativas - 1) await esperar(1500 * (i + 1));
+  }
+  throw new Error(`${rotulo}: falhou após ${tentativas} tentativas (${ultimoErro})`);
+}
+
 /**
  * Números do acervo, para a home, o JSON-LD e /metodologia.
  *
@@ -191,7 +290,11 @@ async function contarExato(fabricaDaQuery: () => PromiseLike<RespostaComContagem
  * dia. O build só faz um select por chave primária.
  */
 export async function carregarResumo() {
-  const { data, error } = await supabase.from("stf_estatisticas").select("*").eq("id", 1).single();
+  const { data, error } = await supabase
+    .from("stf_estatisticas")
+    .select("total_decisoes, total_temas_rg, sem_ministro, dados_ate")
+    .eq("id", 1)
+    .single();
   if (error || !data) throw new Error(`stf_estatisticas: ${error?.message ?? "sem linha"}`);
 
   return {

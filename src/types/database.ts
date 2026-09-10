@@ -233,6 +233,22 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_assinaturas"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0016 (2026-09-10): dicionário andamento_bruto -> natureza do
+      // ato, classificado por regra (sem LLM, sem eixo ideológico). Substitui
+      // a tentativa de reconstruir o "termômetro" via classificação por IA
+      // (0014, revertida em 0015 — custo de API descartado pelo usuário).
+      stf_natureza_ato_mapa: {
+        Row: {
+          andamento_bruto: string;
+          natureza_ato:    "merito" | "admissibilidade" | "cautelar" | "processual" | "devolucao";
+          sentido_merito:  "favoravel" | "contrario" | "parcial" | null;
+          notas:           string | null;
+          criado_em:       string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_natureza_ato_mapa"]["Row"], "criado_em">;
+        Update: Partial<Database["public"]["Tables"]["stf_natureza_ato_mapa"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: {
       // Fase C1 (2026-07-26): a tipagem da view stf_v_ministros_scores foi
@@ -253,6 +269,49 @@ export interface Database {
           formacao:           string | null;
           aposentadoria_comp: string | null;
           ativo:              boolean;
+        };
+        Relationships: [];
+      };
+      // Migration 0017 (2026-09-10): perfil decisório por ministro — natureza
+      // do ato e, dentro de mérito, taxa de favorável/contrário/parcial. Sem
+      // eixo ideológico. Ver src/lib/dados.ts::carregarPerfilDecisorio e
+      // /metodologia#perfil-decisorio. Percentuais são `number | null` —
+      // null quando o denominador é zero, nunca um valor fabricado.
+      stf_ministros_perfil_decisorio: {
+        Row: {
+          ministro_id:           string;
+          total_decisoes:        number;
+          total_classificadas:   number;
+          pct_classificadas:     number | null;
+          n_merito:               number;
+          n_admissibilidade:      number;
+          n_cautelar:             number;
+          n_processual:           number;
+          n_devolucao:            number;
+          pct_merito:             number | null;
+          pct_admissibilidade:    number | null;
+          pct_cautelar:           number | null;
+          pct_processual:         number | null;
+          pct_devolucao:          number | null;
+          n_merito_com_sentido:   number;
+          n_favoravel:            number;
+          n_contrario:            number;
+          n_parcial:              number;
+          pct_favoravel:          number | null;
+          pct_contrario:          number | null;
+          pct_parcial:            number | null;
+          tempo_medio_dias:       number | null;
+        };
+        Relationships: [];
+      };
+      stf_ministros_mix_atuacao: {
+        Row: {
+          ministro_id:      string;
+          total_nome:       number;
+          n_monocratica:    number;
+          n_colegiada:      number;
+          pct_monocratica:  number | null;
+          pct_colegiada:    number | null;
         };
         Relationships: [];
       };

@@ -7,10 +7,9 @@ const resumo = await carregarResumo();
 
 const titulo = "Metodologia — como o Observatório do STF lê os dados";
 const descricao =
-  "De onde vêm os dados, com que frequência são atualizados, e as quatro leituras " +
-  "erradas que o Observatório evita: andamento não é voto, decisão como presidente " +
-  "não é pauta do relator, gabinete do presidente não é comparável, e parte do " +
-  "acervo histórico não tem ministro atribuído.";
+  "De onde vêm os dados, as quatro leituras erradas que o Observatório evita, e a " +
+  "metodologia por regra (sem IA, sem eixo ideológico) do perfil decisório por " +
+  "ministro.";
 ---
 <Base titulo={titulo} descricao={descricao} caminho="/metodologia">
   <article class="px-8 py-10 max-w-2xl prose-invert">
@@ -47,9 +46,10 @@ const descricao =
           O STF registra a disposição de cada decisão num vocabulário de 293 valores.
           "Negado seguimento", o mais frequente, é <strong class="text-ink">recusa de
           admissibilidade</strong> — o relator não conhece do recurso — e não julgamento
-          de mérito contrário. Publicamos o texto como o tribunal escreveu e não o
-          traduzimos para favorável ou contrário, porque não existe metodologia
-          publicada que sustente essa tradução.
+          de mérito contrário. Na lista de decisões, publicamos o texto exatamente como
+          o tribunal escreveu, sem tradução individual. A única leitura agregada de
+          favorável/contrário que existe no site segue metodologia publicada por
+          regra — <a href="#perfil-decisorio" class="underline hover:text-ink">ver abaixo</a> — e nunca aparece decisão por decisão.
         </p>
       </section>
 
@@ -94,6 +94,52 @@ const descricao =
           original do relator preservado.
         </p>
       </section>
+    </div>
+
+    <h2 id="perfil-decisorio" class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">
+      Perfil decisório: regra publicada, não IA
+    </h2>
+    <div class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-3">
+      <p>
+        A ficha de cada ministro pode mostrar um "perfil decisório": qual fração da
+        pauta é <strong class="text-ink">mérito</strong> de fato (o tribunal decidiu o
+        pedido) versus <strong class="text-ink">admissibilidade</strong> (recusa de
+        processar), <strong class="text-ink">cautelar</strong> (liminar),
+        <strong class="text-ink">processual</strong> (sobrestamento, desistência,
+        arquivamento) ou <strong class="text-ink">devolução</strong> (repercussão
+        geral/543-B) — e, só dentro de mérito, que fração foi
+        favorável/contrária/parcial ao que a parte pediu.
+      </p>
+      <p>
+        <strong class="text-ink">Isto não é uma leitura ideológica.</strong> Não há
+        classificação de "progressista" ou "conservador" em lugar nenhum do site — o
+        Observatório já tentou isso uma vez (um "termômetro" com score 0–10) e
+        descontinuou por falta de sustentação metodológica. "Favorável"/"contrário" aqui
+        é o resultado literal que o próprio STF escreveu no andamento
+        ("provido"/"não provido", "deferido"/"indeferido" etc.) em relação ao pedido —
+        não uma leitura de mérito substantivo nem de lado político.
+      </p>
+      <p>
+        A classificação é feita por <strong class="text-ink">regra determinística</strong>,
+        não por inteligência artificial: um dicionário público mapeia cada um dos 169
+        textos de andamento distintos (nesse recorte de decisões) para a categoria
+        correspondente — "Provido" é mérito favorável, "Negado seguimento" é
+        admissibilidade, e assim por diante. O dicionário completo, com a nota de cada
+        classificação, está em
+        <code class="text-[11px]">supabase/migrations/0016_natureza_ato_regra.sql</code>
+        no repositório público do projeto.
+      </p>
+      <p>
+        A seção só aparece na ficha quando há pelo menos 10 decisões classificadas
+        para aquele ministro — abaixo disso, um único caso já produziria "100%" numa
+        categoria, exato mas enganoso isolado. Cobertura: entre 87% e 100% das decisões de cada ministro são classificadas; o
+        resto usa um andamento genérico demais para saber o resultado só pelo texto
+        (ex.: "Decisão do Relator" sem outro detalhe, ou decisões sigilosas) e fica
+        marcado como "não classificado" — nunca contado como se fosse um resultado.
+        Escopo: só decisões monocráticas com o ministro nomeado como relator — exclui
+        decisões assinadas na condição de presidente da Corte e decisões colegiadas
+        (onde o resultado é do colegiado, não de um único ministro).
+      </p>
     </div>
 
     <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Erros</h2>
