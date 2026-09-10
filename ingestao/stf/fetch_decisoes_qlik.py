@@ -581,6 +581,19 @@ def run(ano: int, dry_run: bool = True) -> int:
     print(f"Modo: {'DRY-RUN (nada é gravado)' if dry_run else 'ESCRITA REAL'}")
 
     sb = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+    # Roda ANTES da ingestão do dia, não depois — de propósito. Medido em
+    # produção (2026-09-10): rodar logo depois do upsert do ano corrente bate
+    # no mesmo teto de ~8s (ver `_contar_por_ano`) porque as páginas que
+    # acabaram de ser escritas ainda não passaram pelo autovacuum (a
+    # migration 0013 deixou o limiar mais baixo, mas autovacuum roda
+    # assíncrono — não dá pra garantir que já rodou nos segundos entre o
+    # upsert e a contagem). Contando aqui, no início, a única coisa que muda
+    # é a leitura do ano corrente ANTES da escrita de hoje — páginas escritas
+    # ontem, já assentadas. `stf_estatisticas` fica com o número de ontem por
+    # design (ver o comentário da função); isto só torna essa garantia real.
+    atualizar_estatisticas(sb, dry_run)
+
     ministros = sb.table("stf_ministros").select("id, nome").execute().data
     presidencias = (
         sb.table("stf_presidencias").select("ministro_id, cargo, inicio, fim").execute().data
@@ -638,8 +651,6 @@ def run(ano: int, dry_run: bool = True) -> int:
         print("  Para resolver: cadastre o ministro em stf_ministros (nome exato "
               "da fonte, sem o prefixo 'MIN.') ou o mandato em stf_presidencias, "
               "e reexecute o ano. O upsert é idempotente.")
-
-    atualizar_estatisticas(sb, dry_run)
 
     return gravados
 
