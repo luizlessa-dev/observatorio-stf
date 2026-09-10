@@ -233,3 +233,42 @@ metodologia publicada — não é uma mudança técnica.
   implementação incompleta (sem resolução de `ministro_id`, sem upsert). Hoje
   não há caminho funcional para dados mais recentes que 19/01/2025. Ver
   auditoria da Fase D2, seções 2–4 e 7.
+
+## 14. Fase D3 (2026-09-10) — encerramento: voto por ministro não é extraível de nenhuma fonte atual
+
+Investigação motivada pela pergunta "dá pra reativar as votações usando a
+fonte viva (Corte Aberta/Qlik), já que ela está funcionando pra
+`stf_decisoes`?". Resposta: **não** — o problema não é a fonte estar
+congelada, é que nenhuma das duas fontes (BigQuery morto ou Qlik vivo) tem
+granularidade de voto por ministro.
+
+Consulta direta em `stf_decisoes` (produção, 2026-09-10): 408.640 registros
+com `tipo_origem = 'COLEGIADA'`. Cada linha é **um processo**, não um voto —
+o resultado do colegiado vive inteiro dentro de `observacao`, em prosa livre
+da ata, por exemplo:
+
+> "O Tribunal, por unanimidade, negou provimento ao agravo regimental, nos
+> termos do voto do Relator, Ministro Alexandre de Moraes. Os Ministros Luiz
+> Fux e Nunes Marques acompanharam o Relator com ressalvas."
+
+> "Tudo nos termos do voto do Relator, Ministro Dias Toffoli. Não votou a
+> Ministra Cármen Lúcia."
+
+Às vezes cita ministros individualmente (divergência, ressalva, ausência),
+mas sem estrutura nenhuma — não existe um campo `voto_ministro` nem
+equivalente. Extrair "ministro X votou favor/contra" dessas frases exigiria
+parsing de linguagem natural sobre texto jurídico livre, que é uma versão
+*pior* do mesmo erro que já produziu os 64% de `"Ausente"` em
+`stf_votacoes` (seção 13 acima) — lá pelo menos a fonte tinha uma coluna
+categórica (`andamento`) com valores fechados; aqui é prosa solta, sem
+vocabulário fechado nenhum. `fetch_decisoes_qlik.py` já reconhece isso e
+deliberadamente não preenche `sentido` (ver docstring do script).
+
+**Conclusão:** o pipeline de votações via BigQuery está formalmente
+encerrado (workflow `ingestao-diaria.yml`, schedule permanece comentado, com
+comentário atualizado apontando pra esta seção). Não é um problema de
+credencial, WIF ou fonte desatualizada que se resolve tecnicamente — é que
+o dado "como cada ministro votou" não existe, estruturado, em nenhuma fonte
+que o Observatório tem acesso hoje. Se isso virar prioridade editorial no
+futuro, o caminho realista é OCR/NLP sobre acórdãos em PDF publicados pelo
+STF (fonte diferente, projeto bem maior), não uma correção deste pipeline.

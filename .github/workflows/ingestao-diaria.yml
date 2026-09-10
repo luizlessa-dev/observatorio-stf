@@ -1,14 +1,14 @@
 name: Ingestão Diária — STF
 
 on:
-  # Fase D1 (2026-07-27): schedule temporariamente suspenso até:
-  #   1) dry-run manual (workflow_dispatch com dry_run=true) validar o
-  #      caminho completo GitHub OIDC → WIF → BigQuery;
-  #   2) primeira ingestão real controlada ser validada;
-  #   3) teste de idempotência (segunda execução) confirmar zero duplicatas.
-  # Reative descomentando as duas linhas abaixo apenas após essas três
-  # condições estarem cumpridas e documentadas em
-  # docs/ingestao-votacoes-stf.md.
+  # ENCERRADO (Fase D3, 2026-09-10) — não reativar o schedule.
+  # A fonte (basedosdados.br_stf_corte_aberta.decisoes) está congelada desde
+  # março/2025, e mesmo com a fonte viva (Corte Aberta/Qlik, que já alimenta
+  # stf_decisoes) não existe voto por ministro extraível: decisão colegiada é
+  # uma linha por processo, com o resultado só em prosa livre de ata
+  # (`observacao`), não um campo estruturado por ministro. Ver seção 14 de
+  # docs/ingestao-votacoes-stf.md para a investigação completa e o porquê de
+  # não valer a pena consertar este pipeline.
   # schedule:
   #   - cron: "0 8 * * *"   # todo dia às 08h UTC (05h BRT)
   workflow_dispatch:
