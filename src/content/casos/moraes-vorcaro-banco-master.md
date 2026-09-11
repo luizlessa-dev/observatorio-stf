@@ -20,6 +20,8 @@ fontes:
     url: "https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/10/fachin-solicita-a-mendonca-que-levante-sigilo-do-caso-master.ghtm"
   - label: "Mendonça afasta diretor-geral da PF, Dino reintegra, Fachin suspende — Gazeta do Povo"
     url: "https://www.gazetadopovo.com.br/republica/mendonca-afasta-andrei-rodrigues-do-cargo/"
+  - label: "Como a PF rastreou as 52 mensagens de Vorcaro a Moraes — CNN Brasil"
+    url: "https://www.cnnbrasil.com.br/blogs/jussara-soares/politica/como-a-pf-rastreou-as-mensagens-de-vorcaro-a-contato-atribuido-a-moraes/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -28,7 +30,10 @@ Alexandre de Moraes e o ex-banqueiro Daniel Vorcaro, ex-controlador do banco.
 As mensagens foram extraídas pela Polícia Federal do celular de Vorcaro, que
 segundo a apuração fotografava anotações no bloco de notas do aparelho e as
 enviava como imagens de visualização única, num método que teria como
-objetivo dificultar o rastreamento pela PF.
+objetivo dificultar o rastreamento pela PF. A perícia identificou esse padrão
+em 52 ocasiões entre 28 de outubro e 17 de novembro de 2025 — dia em que
+Vorcaro foi preso pela primeira vez —, com um intervalo médio de 11 a 35
+segundos entre a redação da nota e o envio da imagem pelo WhatsApp.
 
 Entre as mensagens reveladas, uma trocada em 15 de novembro de 2025 — dois
 dias antes da prisão de Vorcaro — mostra o banqueiro perguntando a Moraes:
@@ -51,10 +56,12 @@ relação entre Moraes e Vorcaro:
   Vorcaro. Segundo a apuração, Vorcaro chegou a tentar quitar parte desse
   valor oferecendo duas aeronaves. Somados, os dois contratos chegam a
   aproximadamente R$ 180 milhões.
-- **Mais mensagens.** Entre 12 e 17 de dezembro de 2025, Vorcaro enviou 28
-  mensagens para um número de celular atribuído a Moraes, usando o recurso de
-  visualização única do WhatsApp — método que impede o destinatário de
-  encaminhar ou preservar a mensagem, e dificulta a extração posterior.
+- **Mais mensagens, período posterior.** Além das 52 ocasiões de
+  outubro–novembro já mencionadas, reportagens identificaram uma leva
+  seguinte: entre 12 e 17 de dezembro de 2025 — depois, portanto, da prisão
+  de Vorcaro em 17 de novembro —, o ex-banqueiro enviou mais 28 mensagens
+  para o mesmo número atribuído a Moraes, pelo mesmo método de visualização
+  única.
 - **Metadados de documento.** Reportagens exibiram metadados de um arquivo em
   PDF que teria como último editor um usuário identificado como "Ministro
   Alexandre de Moraes".
