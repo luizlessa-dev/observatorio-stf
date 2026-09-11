@@ -16,6 +16,10 @@ fontes:
     url: "https://www.aosfatos.org/noticias/explicamos-novas-revelacoes-caso-master/"
   - label: "STF marca sessão para 15/9 sobre investigar Moraes — O Tempo, 2026-09-09"
     url: "https://www.otempo.com.br/politica/judiciario/2026/9/9/stf-vai-decidir-se-abre-investigacao-contra-moraes-na-proxima-terca-15-9"
+  - label: "Fachin pede a Mendonça que levante sigilo do caso Master — UOL, 2026-09-10"
+    url: "https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/10/fachin-solicita-a-mendonca-que-levante-sigilo-do-caso-master.ghtm"
+  - label: "Mendonça afasta diretor-geral da PF, Dino reintegra, Fachin suspende — Gazeta do Povo"
+    url: "https://www.gazetadopovo.com.br/republica/mendonca-afasta-andrei-rodrigues-do-cargo/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -65,6 +69,40 @@ relação entre Moraes e Vorcaro:
 Nenhum desses pontos foi confirmado ou julgado pelo STF até a publicação
 desta atualização — são elementos de reportagens jornalísticas sobre a
 apuração em curso, não fatos estabelecidos pelo tribunal.
+
+## Escalada institucional — noite de 10 de setembro de 2026
+
+Nas horas antes da sessão de 15/9, a crise ganhou uma dimensão além do
+conteúdo das mensagens: uma disputa sobre quem comanda a apuração e a Polícia
+Federal.
+
+- **Fachin pede que Mendonça levante o sigilo de todo o caso Master.** Como
+  presidente do STF, Fachin não pode determinar isso diretamente — quem
+  decide é o relator, Mendonça — mas solicitou que ele torne públicos todos
+  os procedimentos do caso, com exceção de diligências cujo sigilo seja
+  "imprescindível".
+- **Diretores da PF afastados e depois reintegrados.** Mendonça determinou o
+  afastamento do diretor-geral da Polícia Federal, Andrei Rodrigues, e do
+  diretor de Inteligência Policial, Leandro Almada, e abriu investigação
+  sobre a atuação dos dois. Flávio Dino reintegrou ambos ao cargo. Fachin, em
+  seguida, suspendeu as duas decisões — a de Mendonça e a de Dino.
+- **Decisões envolvendo ministros passam a depender da presidência.** Fachin
+  determinou que qualquer decisão que envolva ministro do STF neste caso
+  precisa passar por ele antes.
+- **Pedido de investigação contra Mendonça.** Segundo reportagens, Moraes
+  havia pedido que Mendonça fosse investigado, protocolando o pedido no
+  inquérito das fake news (do qual é relator). Fachin retirou esse pedido do
+  inquérito na sexta-feira anterior (04/09) e cobrou explicações dos
+  envolvidos.
+- **PGR aponta "dupla nulidade".** O procurador-geral da República, Paulo
+  Gonet, apontou dupla nulidade no processo conduzido por Mendonça — no mesmo
+  sentido do pedido de anulação já mencionado abaixo.
+
+Como nos pontos anteriores, nada disso foi julgado pelo plenário até a
+publicação desta atualização — são decisões monocráticas e pedidos dentro de
+uma disputa institucional em curso, sujeitos à sessão de 15/9. O
+pronunciamento de Moraes sobre o caso é esperado para a véspera da sessão
+(14/9), segundo a imprensa.
 
 ## A disputa sobre o próprio relatório
 
