@@ -4,7 +4,7 @@ resumo: "André Mendonça tornou públicas mensagens entre Alexandre de Moraes e
 ministros: ["alexandre-de-moraes", "andre-mendonca"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-10"
+data_atualizacao: "2026-09-11"
 fontes:
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
@@ -22,6 +22,10 @@ fontes:
     url: "https://www.gazetadopovo.com.br/republica/mendonca-afasta-andrei-rodrigues-do-cargo/"
   - label: "Como a PF rastreou as 52 mensagens de Vorcaro a Moraes — CNN Brasil"
     url: "https://www.cnnbrasil.com.br/blogs/jussara-soares/politica/como-a-pf-rastreou-as-mensagens-de-vorcaro-a-contato-atribuido-a-moraes/"
+  - label: "Toffoli admite sociedade em resort, mas nega pagamentos de Vorcaro — Agência Brasil, 2026-02-12"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/toffoli-admite-sociedade-em-resort-mas-nega-pagamentos-de-vorcaro"
+  - label: "Toffoli puxou o caso Master ao STF um dia após PF descartar pessoas com foro — CNN Brasil, 2026-09-11"
+    url: "https://www.cnnbrasil.com.br/politica/toffoli-puxou-caso-master-ao-stf-um-dia-apos-pf-descartar-pessoas-com-foro/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -110,6 +114,33 @@ publicação desta atualização — são decisões monocráticas e pedidos dent
 uma disputa institucional em curso, sujeitos à sessão de 15/9. O
 pronunciamento de Moraes sobre o caso é esperado para a véspera da sessão
 (14/9), segundo a imprensa.
+
+## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
+
+Moraes não é o único ministro do STF com um vínculo relatado à órbita de
+Vorcaro. Antes de Mendonça, o relator original dos inquéritos do Banco Master
+era **Dias Toffoli**:
+
+- Em 2 de dezembro de 2025, a Polícia Federal informou a Toffoli que não
+  havia encontrado indício de crime por parte de autoridades com foro
+  privilegiado no caso. No dia seguinte, 3 de dezembro, Toffoli trouxe o
+  processo inteiro do Master para o STF.
+- Em fevereiro de 2026, Toffoli se declarou impedido de seguir como relator
+  depois que veio à tona que a Maridt Participações — empresa da família
+  dele — vendeu participações no resort Tayayá (Ribeirão Claro, PR) para um
+  fundo chamado Arllen (setembro de 2021) e para a empresa PHD Holding
+  (fevereiro de 2025), ambos com algum grau de ligação a Vorcaro segundo
+  reportagens. Toffoli afirmou publicamente que "jamais recebeu qualquer
+  valor" de Vorcaro ou do cunhado dele, Fabiano Zettel, e negou relação de
+  amizade com o banqueiro.
+- Foi assim, com a saída de Toffoli, que o processo chegou às mãos de
+  Mendonça — o relator que depois tornaria públicas as mensagens entre
+  Moraes e Vorcaro.
+
+Como no caso de Moraes, não há decisão do STF sobre o mérito da relação de
+Toffoli com Vorcaro — o próprio ministro nega qualquer irregularidade, e o
+afastamento da relatoria foi voluntário (impedimento declarado por ele
+mesmo), não uma punição imposta pela Corte.
 
 ## A disputa sobre o próprio relatório
 
