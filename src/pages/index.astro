@@ -64,9 +64,14 @@ const jsonLd = {
   </section>
 
   <section class="px-8 py-10">
-    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-5">
-      {emExercicio.length} em exercício
-    </h2>
+    <div class="flex items-center justify-between gap-3 mb-5">
+      <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle">
+        {emExercicio.length} em exercício
+      </h2>
+      <a href="/ministros/comparativo" class="text-[10px] text-subtle hover:text-ink underline">
+        Comparar perfil decisório
+      </a>
+    </div>
     <ul class="grid gap-px bg-border border border-border sm:grid-cols-2 lg:grid-cols-3">
       {emExercicio.map((m) => (
         <li class="bg-canvas">

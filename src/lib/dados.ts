@@ -155,6 +155,13 @@ const COLUNAS_PERFIL_DECISORIO =
   "total_decisoes, total_classificadas, pct_classificadas, n_merito, n_admissibilidade, n_cautelar, n_processual, n_devolucao, pct_merito, pct_admissibilidade, pct_cautelar, pct_processual, pct_devolucao, n_merito_com_sentido, n_favoravel, n_contrario, n_parcial, pct_favoravel, pct_contrario, pct_parcial, tempo_medio_dias" as const;
 const COLUNAS_MIX_ATUACAO = "n_monocratica, n_colegiada, pct_monocratica, pct_colegiada" as const;
 
+// Sem isto, um ministro histórico com 1 decisão classificada aparece com
+// "100%" numa categoria — tecnicamente exato, ainda assim enganoso isolado.
+// 10 é bem acima do MIN_VOTOS_RELEVANTES=3 do termômetro antigo. Compartilhado
+// entre carregarPerfilDecisorio (ficha individual) e carregarComparativoDecisorio
+// (ranking) — o mesmo piso vale pra aparecer sozinho ou junto de outros.
+const AMOSTRA_MINIMA = 10;
+
 export async function carregarPerfilDecisorio(ministroId: string): Promise<PerfilDecisorio | null> {
   const [perfil, mix] = await Promise.all([
     comRetrySimples(
@@ -177,11 +184,6 @@ export async function carregarPerfilDecisorio(ministroId: string): Promise<Perfi
     ),
   ]);
 
-  // Amostra mínima antes de mostrar qualquer percentual — sem isto, um
-  // ministro histórico com 1 decisão classificada aparece com "100%" numa
-  // categoria, que é tecnicamente exato e ainda assim engana quem só olha a
-  // barra. 10 é bem acima do MIN_VOTOS_RELEVANTES=3 do termômetro antigo.
-  const AMOSTRA_MINIMA = 10;
   if (!perfil.data || perfil.data.total_classificadas < AMOSTRA_MINIMA) return null;
 
   return {
@@ -200,6 +202,57 @@ export async function carregarPerfilDecisorio(ministroId: string): Promise<Perfi
     pctMonocratica: mix.data?.pct_monocratica ?? null,
     pctColegiada: mix.data?.pct_colegiada ?? null,
   };
+}
+
+export interface PerfilComparativo {
+  ministroId: string;
+  nome: string;
+  slug: string;
+  totalClassificadas: number;
+  nMeritoComSentido: number;
+  pctFavoravel: number | null;
+  pctContrario: number | null;
+  pctParcial: number | null;
+  pctMerito: number | null;
+}
+
+/**
+ * Ranking dos ministros em exercício por taxa de contrário/favorável, pra
+ * comparar lado a lado — mesmo dado de carregarPerfilDecisorio, mesmo piso de
+ * amostra mínima, mesma metodologia por regra (/metodologia#perfil-decisorio).
+ * Só entram ministros ATIVOS com amostra suficiente na dimensão de mérito
+ * (n_merito_com_sentido, não total_classificadas — é ela que embasa
+ * pct_favoravel/pct_contrario, que é o que a página ordena).
+ */
+export async function carregarComparativoDecisorio(): Promise<PerfilComparativo[]> {
+  const [ministros, { data: perfis, error }] = await Promise.all([
+    carregarMinistros(),
+    supabase
+      .from("stf_ministros_perfil_decisorio")
+      .select("ministro_id, total_classificadas, n_merito_com_sentido, pct_favoravel, pct_contrario, pct_parcial, pct_merito"),
+  ]);
+  if (error) throw new Error(`stf_ministros_perfil_decisorio: ${error.message}`);
+
+  const porMinistro = new Map(ministros.map((m) => [m.id, m]));
+  const linhas: PerfilComparativo[] = [];
+  for (const p of perfis ?? []) {
+    if (p.n_merito_com_sentido < AMOSTRA_MINIMA) continue;
+    const m = porMinistro.get(p.ministro_id);
+    if (!m?.ativo) continue;
+    linhas.push({
+      ministroId: p.ministro_id,
+      nome: m.nome,
+      slug: m.slug,
+      totalClassificadas: p.total_classificadas,
+      nMeritoComSentido: p.n_merito_com_sentido,
+      pctFavoravel: p.pct_favoravel,
+      pctContrario: p.pct_contrario,
+      pctParcial: p.pct_parcial,
+      pctMerito: p.pct_merito,
+    });
+  }
+  linhas.sort((a, b) => (b.pctContrario ?? 0) - (a.pctContrario ?? 0));
+  return linhas;
 }
 
 export async function carregarGastos(ministroId: string): Promise<Gasto[]> {

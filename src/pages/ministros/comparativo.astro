@@ -1,0 +1,99 @@
+---
+import Base from "../../layouts/Base.astro";
+import { carregarComparativoDecisorio } from "../../lib/dados";
+import { fmtNum } from "../../lib/formato";
+
+const ranking = await carregarComparativoDecisorio();
+
+const titulo = "Comparativo entre ministros — taxa de provimento | Observatório do STF";
+const descricao =
+  "Os ministros em exercício do STF, comparados pela taxa de decisões favoráveis/" +
+  "contrárias ao pedido em casos de mérito — classificação por regra, sem IA e sem " +
+  "eixo ideológico. Metodologia publicada.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Comparativo de perfil decisório — ministros do STF",
+  numberOfItems: ranking.length,
+  itemListElement: ranking.map((r, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `https://observatoriodostf.org/ministros/${r.slug}`,
+    name: r.nome,
+  })),
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho="/ministros/comparativo" jsonLd={jsonLd}>
+  <div class="px-8 py-7 max-w-4xl">
+    <nav class="text-[11px] text-subtle mb-[22px] flex items-center gap-[6px]">
+      <a href="/" class="hover:text-ink transition-colors">Ministros</a>
+      <span class="text-border2">›</span>
+      <span class="text-ink font-medium">Comparativo</span>
+    </nav>
+
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-2">
+      Comparativo entre ministros
+    </h1>
+    <p class="text-[12.5px] text-subtle max-w-2xl leading-[1.6] mb-6">
+      Taxa de decisões favoráveis/contrárias ao pedido, em casos de mérito, entre os
+      ministros em exercício — mesmo dado da ficha individual de cada um, lado a lado.
+      "Favorável"/"contrário" é o resultado literal do STF em relação ao pedido, não uma
+      leitura ideológica.
+      <a href="/metodologia#perfil-decisorio" class="underline hover:text-ink">Metodologia</a>
+    </p>
+
+    {ranking.length === 0 && (
+      <p class="border border-border rounded-sm px-4 py-5 text-[11px] text-subtle text-center">
+        Nenhum ministro com amostra suficiente ainda.
+      </p>
+    )}
+
+    <ul class="border border-border rounded-sm overflow-hidden divide-y divide-border">
+      {ranking.map((r) => (
+        <li>
+          <a href={`/ministros/${r.slug}`} class="block px-4 py-[13px] hover:bg-card transition-colors">
+            <div class="flex items-center justify-between gap-3 mb-2">
+              <span class="text-[12.5px] font-semibold text-ink">{r.nome}</span>
+              <span class="text-[9px] text-subtle flex-shrink-0">
+                {fmtNum(r.nMeritoComSentido)} decisões de mérito
+              </span>
+            </div>
+            <div class="flex h-[8px] rounded-sm overflow-hidden border border-border2">
+              {r.pctFavoravel !== null && r.pctFavoravel > 0 && (
+                <div class="h-full bg-white" style={`width:${r.pctFavoravel}%`} title={`Favorável: ${r.pctFavoravel}%`} />
+              )}
+              {r.pctContrario !== null && r.pctContrario > 0 && (
+                <div class="h-full bg-border2" style={`width:${r.pctContrario}%`} title={`Contrário: ${r.pctContrario}%`} />
+              )}
+              {r.pctParcial !== null && r.pctParcial > 0 && (
+                <div class="h-full bg-subtle" style={`width:${r.pctParcial}%`} title={`Parcial: ${r.pctParcial}%`} />
+              )}
+            </div>
+            <div class="flex gap-x-4 gap-y-1 flex-wrap mt-[6px]">
+              <span class="text-[10px] text-muted flex items-center gap-[5px]">
+                <span class="w-[7px] h-[7px] rounded-sm inline-block bg-white" />
+                Favorável <span class="text-subtle">{r.pctFavoravel ?? "—"}%</span>
+              </span>
+              <span class="text-[10px] text-muted flex items-center gap-[5px]">
+                <span class="w-[7px] h-[7px] rounded-sm inline-block bg-border2" />
+                Contrário <span class="text-subtle">{r.pctContrario ?? "—"}%</span>
+              </span>
+              <span class="text-[10px] text-muted flex items-center gap-[5px]">
+                <span class="w-[7px] h-[7px] rounded-sm inline-block bg-subtle" />
+                Parcial <span class="text-subtle">{r.pctParcial ?? "—"}%</span>
+              </span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="text-[10px] text-subtle mt-4 max-w-2xl leading-[1.6]">
+      Ordenado por taxa de contrário, decrescente. Só entram ministros em exercício com
+      pelo menos 10 decisões de mérito classificadas. Classificação por regra sobre o
+      texto literal do andamento — sem IA, sem eixo ideológico.
+      <a href="/metodologia#perfil-decisorio" class="underline hover:text-ink ml-1">Como classificamos</a>
+    </p>
+  </div>
+</Base>
