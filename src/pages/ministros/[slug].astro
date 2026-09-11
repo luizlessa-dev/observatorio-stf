@@ -79,18 +79,29 @@ const periodo = m.ativo
   ? `desde ${fmtData(m.data_posse)}`
   : `${fmtData(m.data_posse)} a ${fmtData(m.data_saida)}`;
 
-const titulo = `${m.nome} — ministro do STF | Observatório do STF`;
+// Só 3 mulheres já integraram o STF (Ellen Gracie, Cármen Lúcia, Rosa Weber)
+// — lista estável e de conhecimento público, não uma coluna de banco que
+// precise de pipeline pra 3 nomes que praticamente nunca mudam.
+const MINISTRAS = new Set(["Ellen Gracie", "Cármen Lúcia", "Rosa Weber"]);
+const ehMinistra = MINISTRAS.has(m.nome);
+const substantivo = ehMinistra ? "ministra" : "ministro";
+const artigoIndicado = ehMinistra ? "indicada" : "indicado";
+const relatora = ehMinistra ? "relatora" : "relator";
+
+const titulo = `${m.nome} — ${substantivo} do STF | Observatório do STF`;
 const descricao = m.ativo
-  ? `${m.nome} é ministro do STF desde ${fmtData(m.data_posse)}, indicado por ${m.indicado_por}. ` +
-    `${fmtNum(total)} decisões monocráticas como relator, custo de gabinete e aposentadoria compulsória.`
-  : `${m.nome} foi ministro do STF de ${fmtData(m.data_posse)} a ${fmtData(m.data_saida)}, ` +
-    `indicado por ${m.indicado_por}. ${fmtNum(total)} decisões monocráticas como relator.`;
+  ? `${m.nome} é ${substantivo} do STF desde ${fmtData(m.data_posse)}, ${artigoIndicado} por ${m.indicado_por}. ` +
+    `${fmtNum(total)} decisões monocráticas como ${relatora}, custo de gabinete e aposentadoria compulsória.`
+  : `${m.nome} foi ${substantivo} do STF de ${fmtData(m.data_posse)} a ${fmtData(m.data_saida)}, ` +
+    `${artigoIndicado} por ${m.indicado_por}. ${fmtNum(total)} decisões monocráticas como ${relatora}.`;
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: m.nome,
-  jobTitle: m.ativo ? "Ministro do Supremo Tribunal Federal" : "Ex-ministro do Supremo Tribunal Federal",
+  jobTitle: m.ativo
+    ? `${ehMinistra ? "Ministra" : "Ministro"} do Supremo Tribunal Federal`
+    : `${ehMinistra ? "Ex-ministra" : "Ex-ministro"} do Supremo Tribunal Federal`,
   affiliation: { "@type": "GovernmentOrganization", name: "Supremo Tribunal Federal" },
   url: `https://observatoriodostf.org/ministros/${m.slug}`,
 };
@@ -110,7 +121,7 @@ const jsonLd = {
       <div>
         <h1 class="font-display text-[26px] font-bold text-white leading-[1.2] mb-1">{m.nome}</h1>
         <div class="text-[12px] text-subtle mb-[10px]">
-          Ministro {periodo}
+          {ehMinistra ? "Ministra" : "Ministro"} {periodo}
           {m.ativo && m.aposentadoria_comp && ` · Aposentadoria compulsória ${fmtData(m.aposentadoria_comp)}`}
         </div>
         <div class="flex gap-[5px] flex-wrap">

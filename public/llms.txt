@@ -26,12 +26,62 @@ Todo o conteúdo é aberto. Não há área restrita nem paywall.
 - Gastos: egesp-portal.stf.jus.br/transparencia
 - Dados biográficos: portal do STF, páginas "Dados e Datas" de cada ministro.
 
+## Páginas
+
+- [Ministros e composição da Corte](https://observatoriodostf.org/): lista completa, em exercício e histórico.
+- [Comparativo entre ministros](https://observatoriodostf.org/ministros/comparativo): taxa de favorável/contrário por regra, lado a lado.
+- [Casos](https://observatoriodostf.org/casos): apurações editoriais, com feed RSS em /casos/rss.xml.
+- [Repercussão geral](https://observatoriodostf.org/repercussao-geral): temas reconhecidos.
+- [Metodologia](https://observatoriodostf.org/metodologia): fontes, leituras evitadas, e a metodologia do perfil decisório.
+
+### Ministros em exercício
+
+- [Flávio Dino](https://observatoriodostf.org/ministros/flavio-dino)
+- [Cristiano Zanin](https://observatoriodostf.org/ministros/cristiano-zanin)
+- [André Mendonça](https://observatoriodostf.org/ministros/andre-mendonca)
+- [Nunes Marques](https://observatoriodostf.org/ministros/nunes-marques)
+- [Alexandre de Moraes](https://observatoriodostf.org/ministros/alexandre-de-moraes)
+- [Edson Fachin](https://observatoriodostf.org/ministros/edson-fachin) — presidente do STF
+- [Luiz Fux](https://observatoriodostf.org/ministros/luiz-fux)
+- [Dias Toffoli](https://observatoriodostf.org/ministros/dias-toffoli)
+- [Cármen Lúcia](https://observatoriodostf.org/ministros/carmen-lucia)
+- [Gilmar Mendes](https://observatoriodostf.org/ministros/gilmar-mendes)
+
+### Ministros históricos
+
+- [Luís Roberto Barroso](https://observatoriodostf.org/ministros/luis-roberto-barroso)
+- [Rosa Weber](https://observatoriodostf.org/ministros/rosa-weber)
+- [Ricardo Lewandowski](https://observatoriodostf.org/ministros/ricardo-lewandowski)
+- [Teori Zavascki](https://observatoriodostf.org/ministros/teori-zavascki)
+- [Menezes Direito](https://observatoriodostf.org/ministros/menezes-direito)
+- [Eros Grau](https://observatoriodostf.org/ministros/eros-grau)
+- [Cezar Peluso](https://observatoriodostf.org/ministros/cezar-peluso)
+- [Ayres Britto](https://observatoriodostf.org/ministros/ayres-britto)
+- [Joaquim Barbosa](https://observatoriodostf.org/ministros/joaquim-barbosa)
+- [Ellen Gracie](https://observatoriodostf.org/ministros/ellen-gracie)
+- [Nelson Jobim](https://observatoriodostf.org/ministros/nelson-jobim)
+- [Maurício Corrêa](https://observatoriodostf.org/ministros/mauricio-correa)
+- [Ilmar Galvão](https://observatoriodostf.org/ministros/ilmar-galvao)
+- [Marco Aurélio Mello](https://observatoriodostf.org/ministros/marco-aurelio-mello)
+- [Carlos Velloso](https://observatoriodostf.org/ministros/carlos-velloso)
+- [Celso de Mello](https://observatoriodostf.org/ministros/celso-de-mello)
+- [Sepúlveda Pertence](https://observatoriodostf.org/ministros/sepulveda-pertence)
+- [Octavio Gallotti](https://observatoriodostf.org/ministros/octavio-gallotti)
+- [Sydney Sanches](https://observatoriodostf.org/ministros/sydney-sanches)
+- [Francisco Rezek](https://observatoriodostf.org/ministros/francisco-rezek)
+- [Aldir Passarinho](https://observatoriodostf.org/ministros/aldir-passarinho)
+- [Néri da Silveira](https://observatoriodostf.org/ministros/neri-da-silveira)
+- [Moreira Alves](https://observatoriodostf.org/ministros/moreira-alves)
+
 ## Como ler os dados sem errar
 
 - **O andamento não é um voto.** O site publica o texto original do STF
   ("Negado seguimento", "Deferido em parte"). "Negado seguimento" é recusa de
-  admissibilidade, não julgamento de mérito. O site deliberadamente NÃO traduz
-  isso para favorável/contrário — não há metodologia publicada para tanto.
+  admissibilidade, não julgamento de mérito. Na lista de decisões, o texto
+  nunca é traduzido individualmente para favorável/contrário. A única leitura
+  agregada desse tipo (perfil decisório, em cada ficha de ministro e em
+  /ministros/comparativo) segue metodologia publicada por regra determinística
+  — sem IA, sem eixo ideológico. Ver /metodologia#perfil-decisorio.
 - **Decisões assinadas como presidente não são a pauta do ministro.** Quem
   preside o STF assina decisões de plantão e de competência da Presidência.
   O site conta essas separadamente das decisões como relator.

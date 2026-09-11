@@ -29,25 +29,15 @@ export default function TabelaRepercussao() {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(50);
 
-  const { temas, loading, total } = useRepercussaoGeral(filtroStatus, search, limit);
+  // Cabeçalho (H1 + contagem real) já vem do wrapper estático em
+  // src/pages/repercussao-geral.astro, computado no build — não duplicar
+  // aqui. Duplicar produzia dois H1 na página e um "0 temas" piscando antes
+  // da hidratação, porque o total desta ilha só chega depois do fetch
+  // client-side (achado da auditoria de SEO, item 8).
+  const { temas, loading } = useRepercussaoGeral(filtroStatus, search, limit);
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
-      {/* Cabeçalho */}
-      <div className="text-[11px] text-subtle mb-[22px] flex items-center gap-[6px]">
-        <span>Repercussão Geral</span>
-      </div>
-
-      <div className="mb-6">
-        <h1 className="font-display text-[28px] font-bold text-white leading-[1.2] mb-1">
-          Repercussão Geral
-        </h1>
-        <p className="text-[12px] text-subtle max-w-lg">
-          Temas com repercussão geral reconhecida pelo STF — {total.toLocaleString("pt-BR")} temas no total.
-          Processos sobrestados aguardam o julgamento do leading case.
-        </p>
-      </div>
-
       {/* Filtros */}
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <div className="flex items-center gap-[2px] bg-card border border-border rounded-sm overflow-hidden">

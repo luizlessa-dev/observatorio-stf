@@ -19,3 +19,4 @@ __pycache__/
 # a cada build, não versionadas (ver package.json "build").
 public/og/
 .env*
+seo-audit/
