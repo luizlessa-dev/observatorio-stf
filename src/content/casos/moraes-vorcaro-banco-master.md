@@ -80,6 +80,8 @@ fontes:
     url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/fachin-aguarda-explicacoes-de-ministros-para-decidir-sobre-crise"
   - label: "Ministros aposentados do STF pedem apuração 'imediata e rigorosa' a Fachin — ConJur, 2026-09-08"
     url: "https://conjur.com.br/2026-set-08/ex-ministros-do-stf-pedem-apuracao-imediata-e-rigorosa-de-fachin/"
+  - label: "PF produziu relatório paralelo sobre atuação de Mendonça no caso Master — Poder360, 2026-09-03"
+    url: "https://www.poder360.com.br/poder-justica/pf-produziu-relatorio-paralelo-sobre-atuacao-de-mendonca-no-caso-master/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -530,6 +532,84 @@ mais claros:
 Nenhum desses pontos muda o que já estava registrado sobre o mérito do caso —
 são peças do mesmo quebra-cabeça institucional, vindas de reportagens
 publicadas na sexta-feira que o Observatório só incorporou nesta atualização.
+
+## O relatório que a PF fez sobre o próprio Mendonça
+
+Voltando a um documento já mencionado nesta cobertura, mas não detalhado até
+aqui: o "relatório de inteligência" que Moraes usou para pedir a investigação
+de Mendonça, incorporado ao inquérito das fake news, tem 50 páginas e foi
+produzido pela PF **antes** de Mendonça tornar públicas as mensagens
+Moraes–Vorcaro, em 1º de setembro — não como retaliação, mas como um
+documento paralelo já em produção.
+
+**Uma ressalva que vale repetir com força.** O próprio relatório se descreve
+como documento de inteligência para "subsidiar decisões em ambiente de
+informação incompleta", sem "valor probatório" e sem ser "peça de instrução
+processual". Chegou ao gabinete de Moraes sem timbre da PF, sem assinatura e
+sem data — o que Andrei Rodrigues, na manifestação já citada acima, contesta
+frontalmente, dizendo que os relatórios "têm autoria institucional". As duas
+versões não são necessariamente incompatíveis (pode haver a cópia que
+circulou e o registro formal no sistema da PF), mas o Observatório não pôde
+confirmar qual delas é exata.
+
+- **A confirmação de Cláudio Castro que faltava.** O relatório tem uma seção
+  chamada "Assimetria nos prazos de apreciação", comparando quanto tempo
+  Mendonça levou para decidir medidas envolvendo diferentes políticos: uma
+  medida sobre Jaques Wagner levou 9 dias; uma sobre Ciro Nogueira, 29; duas
+  envolvendo **Cláudio Castro**, 75 e 46 dias; e uma cautelar sobre o
+  Instituto de Previdência de Maceió seguia pendente havia mais de 53 dias.
+  A PF chama essa variação de "expressiva" e diz que os dados "sugerem uma
+  possível correlação" entre o tempo de apreciação e o perfil do
+  investigado — mas ressalva que a amostra é "pequena e não controlada".
+  Isso confirma, por uma via diferente do portal do STF, que Castro é mesmo
+  parte da apuração ligada à Operação Compliance Zero.
+- **A hipótese mais sensível do documento: Davi Alcolumbre como "alvo
+  estratégico".** Numa avaliação de caráter político, os analistas escrevem
+  que o presidente do Senado seria um "provável alvo estratégico", dada sua
+  força política e o controle que exerce sobre o rito de pedidos de
+  impeachment de ministros do STF, e levantam a hipótese de que Mendonça
+  veria no presidente do União Brasil, Antonio Rueda, uma "rota de acesso" a
+  Alcolumbre — ligando isso à resistência histórica do senador à indicação
+  de Mendonça ao STF em 2020. O próprio relatório é explícito: não afirma
+  ter comprovado que Mendonça tenha usado alguma investigação para atingir
+  Alcolumbre. É uma hipótese de inteligência, não um fato apurado — e assim
+  deve ser lido.
+- **Moraes e Toffoli, tratados de formas diferentes segundo o relatório —
+  mas sem uma causa comprovada.** Os analistas registram que, diante de
+  informações sobre Moraes, Mendonça sinalizou interesse em abrir
+  investigação formal; diante de "graves elementos de prova" sobre Toffoli
+  (já citados na seção sobre o ex-relator, abaixo), identificaram
+  "contemporização". O relatório mesmo pondera que a diferença "seria
+  verificável documentalmente, mas sua causa não estaria demonstrada" — não
+  conclui favorecimento a Toffoli nem perseguição a Moraes.
+- **Falas atribuídas a Mendonça sobre Andrei Rodrigues e Paulo Gonet.**
+  Segundo o relatório, Mendonça teria dito, em reuniões internas, que Andrei
+  Rodrigues mantinha "proximidade inadequada" com o presidente Lula, e
+  chegou a mencionar um procedimento avaliando o afastamento do
+  diretor-geral da PF — semanas antes de, de fato, afastá-lo. Sobre Gonet, o
+  relatório atribui a Mendonça a avaliação de que a proximidade do
+  procurador-geral com Gilmar Mendes o tornaria "indigno de confiança", e
+  registra que o ministro teria cogitado arrolar Gonet como testemunha em
+  processos derivados das operações. Nenhuma dessas falas foi confirmada por
+  Mendonça — são atribuições feitas por um documento que o próprio Andrei
+  Rodrigues contesta.
+- **O pano de fundo do inquérito das fake news.** O Inq 4.781, ao qual o
+  relatório foi anexado, foi aberto em 2019 por determinação direta do
+  então presidente do STF, Dias Toffoli, que nomeou Moraes como relator sem
+  o sorteio eletrônico normalmente usado para distribuir processos — os
+  dois foram colegas de turma na Faculdade de Direito da USP. Segue aberto e
+  sigiloso até hoje, sem prazo para encerrar. Em abril de 2026, Gilmar
+  Mendes defendeu publicamente sua utilidade: "Tenho a impressão de que o
+  inquérito continua necessário e vai acabar quando terminar. [...] O
+  Tribunal vem sendo vilipendiado. [...] Foi um momento importante abrir o
+  inquérito e mantê-lo até as eleições."
+
+Como em todo o resto desta cobertura: hipóteses de inteligência não são
+provas, e um documento que se declara não-conclusivo não deveria ser lido
+como uma acusação. O Observatório optou por detalhar o conteúdo porque ele
+já circula publicamente e embasou decisões reais — mas o peso de cada
+afirmação aqui é o que o próprio documento admite ter: uma hipótese de
+trabalho, não um fato apurado.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
