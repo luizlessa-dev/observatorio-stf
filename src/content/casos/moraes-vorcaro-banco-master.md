@@ -82,6 +82,8 @@ fontes:
     url: "https://conjur.com.br/2026-set-08/ex-ministros-do-stf-pedem-apuracao-imediata-e-rigorosa-de-fachin/"
   - label: "PF produziu relatório paralelo sobre atuação de Mendonça no caso Master — Poder360, 2026-09-03"
     url: "https://www.poder360.com.br/poder-justica/pf-produziu-relatorio-paralelo-sobre-atuacao-de-mendonca-no-caso-master/"
+  - label: "Íntegra dos relatórios de inteligência da PF sobre Mendonça (documento vazado, não oficial, PDF 50 págs., publicado pelo Poder360)"
+    url: "https://static.poder360.com.br/uploads/2026/09/INQ4781-relatorios-Da-PF-contra-Mendonca.pdf"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -604,12 +606,83 @@ confirmar qual delas é exata.
   Tribunal vem sendo vilipendiado. [...] Foi um momento importante abrir o
   inquérito e mantê-lo até as eleições."
 
-Como em todo o resto desta cobertura: hipóteses de inteligência não são
-provas, e um documento que se declara não-conclusivo não deveria ser lido
-como uma acusação. O Observatório optou por detalhar o conteúdo porque ele
-já circula publicamente e embasou decisões reais — mas o peso de cada
-afirmação aqui é o que o próprio documento admite ter: uma hipótese de
-trabalho, não um fato apurado.
+**Uma ressalva antes de ir adiante: isto não é um documento oficial.** Ao
+contrário dos despachos citados nas seções anteriores — obtidos diretamente
+do sistema do STF, autenticáveis pelo próprio tribunal —, este é um
+relatório interno de inteligência da PF, marcado "acesso restrito" e
+"difusão restrita", que chegou ao público por meio do Poder360, presumivelmente
+por vazamento. O Observatório não tem como autenticar o documento de forma
+independente; está confiando na apuração do Poder360, que o publicou como
+parte de uma reportagem assinada. Tratando-se de documento de inteligência
+policial vazado — não de um ato processual público —, o padrão de cautela
+aqui é mais alto que o de qualquer outra fonte primária usada nesta
+cobertura.
+
+Com essa ressalva registrada: o documento completo tem 50 páginas, e o
+Observatório leu todas, direto do PDF publicado pelo Poder360. Internamente,
+o relatório classifica cada afirmação com um código de confiança ([D]
+documentado, [R] relatado sem redução a termo, [A] avaliação do analista) e
+um grau (ALTA/MODERADA/BAIXA) — uma metodologia da própria PF, não do
+Observatório, e que diz respeito à confiança do analista na sua própria
+conclusão, não à autenticidade do documento como um todo. Abaixo estão só os
+pontos que o documento classifica como ALTA ou MODERADA confiança e que se
+apoiam em decisões, ofícios ou citações literais atribuídas a peças
+específicas — não nas avaliações de cenário de confiança BAIXA (que incluem,
+por exemplo, hipóteses sobre motivação política de Mendonça envolvendo
+outros ministros e parlamentares, deliberadamente deixadas de fora desta
+cobertura por não passarem no próprio critério de confiança do documento):
+
+- **Um padrão duplo, documentado com citações literais de decisões reais.**
+  O relatório compara dois casos de Mendonça, cinco meses de distância: em
+  16/12/2025, negou a prisão preventiva do senador Weverton Rocha (Operação
+  Sem Desconto) mesmo reconhecendo, nas palavras da própria decisão, "fortes
+  indícios do seu envolvimento" — sem aplicar nenhuma cautelar alternativa a
+  ele. Já em 31/03/2026, diante de um pedido bem mais brando contra Ciro
+  Nogueira (mera instauração de inquérito, não prisão) apoiado em prova
+  documentada — a Emenda nº 11 à PEC 65/2023, que teria sido escrita por
+  advogados do Banco Master e entregue à casa do senador por ordem de
+  Vorcaro ("Imprimi e deixa num envelope [...] Para: Ciro", teria escrito
+  Vorcaro; "Foi a versão. Que o andre me mandou. Final. Saiu exatamente como
+  mandei", teria dito depois, sobre o texto final aprovado no Senado) —,
+  Mendonça suspendeu a própria apreciação do pedido até que a PF produzisse
+  mais provas.
+- **Uma disputa institucional com números de processo próprios: Pets
+  16.080/DF e 16.319/DF.** A Direção-Geral da PF pediu formalmente à AGU que
+  avaliasse medidas judiciais contra três tipos de determinação de Mendonça:
+  exigência de autorização prévia para mudanças na equipe de investigação;
+  restrição ao fluxo interno de informação entre a equipe e a chefia da PF; e
+  a obrigação de enviar dados brutos ao gabinete do relator já em formato
+  compatível com ferramenta forense, antes da triagem da própria PF. A AGU
+  decidiu não recorrer.
+- **A origem de uma dessas petições: uma reunião com advogado de
+  delator.** Na decisão que abriu a Pet 16.080/DF, o próprio Mendonça
+  registrou a origem do que motivou o procedimento: "Na data de 05 de maio
+  de 2026, em audiência com advogado de pretenso colaborador investigado no
+  contexto da operação Sem Desconto, tomei conhecimento de que o Delegado de
+  Polícia Federal Guilherme Figueiredo Silva havia deixado a coordenação da
+  referida operação policial." Ou seja: soube de uma mudança na chefia da PF
+  por meio do advogado de alguém negociando delação — não por canal
+  oficial — e abriu um procedimento formal a partir disso.
+- **Indícios de participação nas próprias tratativas de colaboração
+  premiada** — algo que a Lei 12.850/2013 (art. 4º, § 6º) proíbe
+  expressamente ao juiz. O relatório registra que Mendonça indagou, em mais
+  de uma reunião, sobre o andamento de negociações de delação em curso.
+- **Escala da Operação Sem Desconto**, segundo o próprio ofício da
+  Direção-Geral da PF citado no relatório: nove fases, 419 mandados de busca
+  e apreensão e 236 afastamentos de sigilo telemático.
+
+Duas ressalvas finais, e nenhuma delas dispensa a outra. Primeira: hipóteses
+de inteligência não são provas, e um documento que se declara não-conclusivo
+não deveria ser lido como uma acusação — mesmo os itens de confiança ALTA
+listados acima são avaliações internas da PF sobre a solidez de uma
+conclusão, não uma decisão judicial sobre o mérito. Segunda, e talvez mais
+importante: todo este bloco depende de um documento vazado, sem chancela
+oficial e sem verificação independente do Observatório — se o documento
+revelado ao Poder360 for parcial, editado ou inautêntico, tudo o que se
+apoia nele está comprometido. O Observatório optou por publicar mesmo assim,
+por já circular publicamente e ter embasado decisões reais dentro do STF,
+mas pede ao leitor o mesmo grau de ceticismo que aplicaria a qualquer
+material de origem não oficial.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
