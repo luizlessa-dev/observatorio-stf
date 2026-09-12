@@ -42,6 +42,10 @@ fontes:
     url: "https://www.poder360.com.br/poder-justica/vorcaro-aprovou-cartoes-de-credito-para-filhos-de-moraes-diz-jornal/"
   - label: "Vorcaro para Moraes: tenho \"gratidão da minha vida a você\" — Poder360, 2026-09-01"
     url: "https://www.poder360.com.br/poder-justica/vorcaro-para-moraes-tenho-gratidao-da-minha-vida-a-voce/"
+  - label: "Gilmar Mendes pede que Fachin reúna casos de Moraes e Mendonça — Exame, 2026-09-12"
+    url: "https://exame.com/brasil/gilmar-mendes-pede-que-fachin-reuna-casos-sobre-moraes-e-mendonca-e-assuma-a-relatoria-no-stf/"
+  - label: "Master sem sigilo: o que há em cada documento — Poder360, 2026-09-12"
+    url: "https://www.poder360.com.br/poder-justica/master-sem-sigilo-saiba-o-que-ha-em-cada-documento/"
   - label: "PET 16.662 — andamentos processuais (fonte primária) — Portal do STF"
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7681133"
   - label: "PET 16.704 — andamentos processuais (fonte primária) — Portal do STF"
@@ -198,9 +202,19 @@ Federal.
   inquérito das fake news (do qual é relator). Fachin retirou esse pedido do
   inquérito na sexta-feira anterior (04/09) e cobrou explicações dos
   envolvidos.
-- **PGR aponta "dupla nulidade".** O procurador-geral da República, Paulo
-  Gonet, apontou dupla nulidade no processo conduzido por Mendonça — no mesmo
-  sentido do pedido de anulação já mencionado abaixo.
+- **PGR aponta "dupla nulidade" — e os dois fundamentos jurídicos são
+  específicos.** O procurador-geral da República, Paulo Gonet, apontou dupla
+  nulidade no processo conduzido por Mendonça, com base em dois argumentos
+  distintos, segundo reportagem da Agência Pública: primeiro, que um
+  magistrado não pode investigar uma causa da qual ele próprio faz parte —
+  princípio da imparcialidade; segundo, que investigar um ministro do STF
+  exige aprovação do Plenário, não decisão individual do relator. A mesma
+  reportagem registra que delegados da Polícia Federal convocados para a
+  reunião de 24/8 com Mendonça — a origem do despacho investigativo, citado
+  na seção sobre o relatório da PF mais abaixo — teriam sido chamados a
+  princípio para tratar de outro assunto e diante de um mandado de
+  investigação inesperado; a PGR respondeu ao levantamento do sigilo em
+  menos de doze horas, em 1º de setembro.
 
 Como nos pontos anteriores, nada disso foi julgado pelo plenário até a
 publicação desta atualização — são decisões monocráticas e pedidos dentro de
@@ -467,6 +481,56 @@ São disputas sobre sigilo, competência e o alcance da transparência,
 concentradas nos dias que antecedem a sessão de 15/9 — mas o pedido de Gilmar
 Mendes, se aceito, pode mudar o que, exatamente, o plenário vai julgar naquele
 dia.
+
+## A escala da Operação Compliance Zero, fora da crise Moraes-Mendonça
+
+Os procedimentos liberados nos dias 10 e 11/9 não giram só em torno da crise
+entre ministros — a maior parte pertence à investigação original sobre a
+quebra do Banco Master, batizada pelo STF de Operação Compliance Zero. Um
+levantamento do Poder360, publicado depois da liberação, mapeia o conteúdo de
+cada processo por número. O Observatório não teve acesso direto aos arquivos
+— que exigem credenciamento e-STF, como já registrado na seção "Direto do
+sistema do STF" — e por isso trata esse mapeamento como fonte jornalística
+secundária, não verificada processo a processo pelo Observatório.
+
+- **A escala financeira do núcleo do caso.** O Inq 5.026 — a matriz da
+  Compliance Zero, com mais de mil arquivos segundo o levantamento — apura
+  fraudes em cessões de carteiras de crédito entre o Banco Master e o Banco
+  de Brasília (BRB) da ordem de R$ 12 bilhões. Outro processo do mesmo lote,
+  a Pet 15.478, investiga uma hipótese de CCBs (Cédulas de Crédito Bancário)
+  fraudulentas somando cerca de R$ 17 bilhões — números que dão a real
+  dimensão financeira por trás da crise institucional que dominou as
+  manchetes.
+- **Uma frente sobre o próprio Banco Central.** O Inq 5.035, chamado
+  internamente de "Projeto DV", apura uma suposta campanha coordenada de
+  influenciadores contratados para defender Vorcaro e atacar a atuação do
+  Banco Central — a mesma frente já mencionada, em termos gerais, na seção
+  anterior.
+- **Nomes de pessoas físicas nos núcleos "A Turma" e "Os Meninos", pela
+  primeira vez nesta cobertura.** As Pets 15.976, 15.977 e 16.019 — ligadas
+  aos dois núcleos já citados acima — apontam, segundo o mesmo levantamento,
+  Manoel Mendes Rodrigues como a liderança do núcleo do Rio de Janeiro
+  ("A Turma") e Luiz Phillipi Mourão como ligado a "Os Meninos", que teria
+  acessado sistemas da própria Polícia Federal de forma irregular. A Pet
+  15.978 registra prisões preventivas de sete pessoas, entre elas Henrique
+  Vorcaro — nome que não havia aparecido nas reportagens consultadas pelo
+  Observatório sobre este caso até aqui.
+- **Suspeita de corrupção dentro do Banco Central.** A Pet 15.504 apura a
+  relação entre Vorcaro e dois servidores do BC, identificados como Paulo
+  Sérgio Neves e Belline Santana, sob suspeita de terem favorecido o
+  banqueiro no exercício da função pública.
+- **Um deputado federal citado, fora do radar até agora.** A Reclamação
+  88.121 — defesa de Vorcaro questionando a competência do STF para o caso —
+  menciona o deputado federal João Carlos Bacelar (União-BA), segundo o
+  levantamento; o Observatório não localizou, até a publicação desta
+  atualização, detalhamento sobre a natureza dessa menção nem confirmação em
+  fonte independente.
+
+Nenhum dos nomes citados nesta seção teve qualquer fato aqui descrito
+julgado pelo STF — são investigações em curso, a maioria delas fora do
+recorte da crise Moraes-Mendonça que é o centro desta cobertura, mas parte
+do mesmo conjunto de procedimentos que teve o sigilo levantado nos dias que
+antecederam a sessão de 15/9.
 
 ## Peças que faltavam da sexta — Partido Novo, PGR citado e o elo com o Dark Horse
 
