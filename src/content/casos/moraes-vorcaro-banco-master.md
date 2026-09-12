@@ -68,6 +68,10 @@ fontes:
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7556527"
   - label: "PET 16.292 — representação de Lindbergh Farias contra Eduardo Bolsonaro (fonte primária) — Portal do STF"
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7629247"
+  - label: "INQ 5.070 — inquérito Dark Horse, partes e investigados (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7661993"
+  - label: "PET 16.727 — nova representação de Lindbergh Farias contra Flávio Bolsonaro, 11/9/2026 (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7694235"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -396,19 +400,46 @@ dois inquéritos que o próprio despacho de Mendonça lista como acréscimo dele
 além do pedido do Vice-PGR. Ampliando essa checagem: dos processos da lista
 que ainda não tinham sido abertos por nós, a Pet 16.292 tem como requerido
 **Eduardo Bolsonaro** — a petição foi movida pelo senador Lindbergh Farias
-(PT-RJ) em junho de 2026 e redistribuída a Mendonça por prevenção, o que
-confirma, por fonte primária, a ponta do Dark Horse relativa a Eduardo (o
-suposto gestor dos recursos nos EUA, segundo a reportagem). Já as Pets
-16.229, 16.230, 16.344 e 16.346 — também parte do lote de hoje — nomeiam como
-requeridos Augusto Ferreira Lima, Andrea Lima Novaes e Thiago Miranda Silva,
-não os quatro políticos citados pela imprensa; nenhuma delas nomeia Flávio
-Bolsonaro ou Cláudio Castro diretamente. Não é possível descartar que as
-apurações sobre os dois estejam em processos ainda não abertos por nós dentro
-da lista de 38, ou indexadas sob outro nome — o Observatório não esgotou a
-lista completa. Também não localizamos, nos três processos que já
-acompanhamos no portal, o ofício de Gilmar Mendes à Presidência: pode não ter
-sido ainda publicado no andamento público, ou ter tramitado por canal interno
-sem autuação própria.
+(PT-RJ) em junho de 2026 e redistribuída a Mendonça por prevenção. As Pets
+16.229, 16.230, 16.344 e 16.346, também do lote de hoje, nomeiam como
+requeridos Augusto Ferreira Lima, Andrea Lima Novaes e Thiago Miranda Silva.
+Não localizamos, nos três processos que já acompanhamos no portal, o ofício
+de Gilmar Mendes à Presidência: pode não ter sido ainda publicado no
+andamento público, ou ter tramitado por canal interno sem autuação própria.
+
+**O Inquérito 5.070 é o Dark Horse — e tem uma lista de investigados maior do
+que qualquer reportagem publicou.** Buscando pelo nome completo de Flávio
+Bolsonaro no cadastro do STF — "Flávio Nantes Bolsonaro", não só "Flávio
+Bolsonaro" — o Observatório localizou dez processos em que ele é parte, um
+deles o próprio Inq 5.070, aberto em agosto de 2026 a partir da reautuação da
+Pet 16.369 (um dos itens do despacho de ontem) e vinculado ao Inq 5.026, a
+matriz da Operação Compliance Zero. A aba "Partes" do processo lista, como
+investigados: **Flávio Nantes Bolsonaro** (com três advogados constituídos,
+o que indica defesa já formalizada), **Eduardo Nantes Bolsonaro**, **Mário
+Luís Frias** — ex-secretário especial de Cultura do governo Bolsonaro —,
+Thiago Miranda Silva (o mesmo nome da Pet 16.346), **Fabiano Campos Zettel**
+— o mesmo cunhado de Dias Toffoli já citado na seção sobre o ex-relator do
+caso, o que conecta as duas frentes por fonte primária, não só por
+especulação —, além de Paulo Sérgio Camin Calixto, Altieris Chaves Santana e
+Antonio Carlos Freixo Junior. Entre as pessoas jurídicas investigadas estão
+Entre Investimentos e Participações Ltda. e duas entidades com sede
+aparentemente nos Estados Unidos — Havengate Development Fund LP e Havengate
+Development Fund GP LLC —, uma estrutura (fundo + gestora) comum em veículos
+de investimento americanos; nenhuma reportagem consultada pelo Observatório
+havia citado esses nomes. O único despacho não sigiloso disponível na aba de
+andamentos, de 28/8, é administrativo — abre vista à PGR sobre um pedido de
+uma terceira pessoa, Karina Ferreira da Gama, sem detalhar o mérito.
+**Nenhum desses nomes sofreu condenação ou mesmo denúncia formal** — são
+investigados, com direito a defesa, num inquérito que a PGR ainda está
+analisando.
+
+**Hoje, horas depois do sigilo cair, uma nova ação.** Às 13h04 de hoje, o
+senador Lindbergh Farias protocolou a Pet 16.727 — uma representação eleitoral
+contra Flávio Bolsonaro — ainda sem relator distribuído. É a terceira petição
+de Lindbergh contra a família Bolsonaro que o Observatório encontrou no
+portal (as outras duas são a Pet 16.292, contra Eduardo, e a Pet 16.640,
+autuada em agosto, também contra Flávio, mas ainda sob a Presidência, fora da
+lista de hoje).
 
 Como em cada ponto anterior deste caso: nada disso é uma decisão de mérito.
 São disputas sobre sigilo, competência e o alcance da transparência,
