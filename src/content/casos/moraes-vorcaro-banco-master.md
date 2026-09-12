@@ -1,7 +1,7 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
 resumo: "André Mendonça tornou públicas mensagens entre Alexandre de Moraes e o banqueiro Daniel Vorcaro, extraídas pela PF, além de dois contratos de R$ 180 milhões com o escritório da esposa do ministro. Plenário do STF decide em 15/9 se abre investigação."
-ministros: ["alexandre-de-moraes", "andre-mendonca"]
+ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
 data_atualizacao: "2026-09-11"
@@ -50,6 +50,16 @@ fontes:
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7690807"
   - label: "Ata de julgamento, 2ª Turma, sessão virtual extraordinária de 8/9/2026 — Diário da Justiça Eletrônico do STF"
     url: "https://digital.stf.jus.br/publico/publicacao/1008681"
+  - label: "Mendonça derruba sigilo do caso Dark Horse e dos que envolvem Ciro Nogueira e Jaques Wagner — Gazeta do Povo, 2026-09-11"
+    url: "https://www.gazetadopovo.com.br/republica/mendonca-derruba-sigilo-do-caso-dark-horse-e-dos-que-envolvem-ciro-nogueira-e-jaques-wagner/"
+  - label: "Mendonça levanta sigilo de investigação sobre 'Dark Horse' (Flávio Bolsonaro, Eduardo Bolsonaro) — CartaCapital, 2026-09-11"
+    url: "https://www.cartacapital.com.br/justica/mendonca-levanta-sigilo-de-investigacao-sobre-dark-horse/"
+  - label: "Gilmar Mendes pede que Fachin assuma relatoria de apuração contra Moraes — CartaCapital, 2026-09-11"
+    url: "https://www.cartacapital.com.br/justica/gilmar-mendes-pede-que-fachin-assuma-relatoria-de-apuracao-contra-moraes/"
+  - label: "Moraes diz que Mendonça tenta proteger 'grupo político' ao manter sigilo de parte do Caso Master — CartaCapital, 2026-09-11"
+    url: "https://www.cartacapital.com.br/justica/moraes-diz-que-mendonca-tenta-proteger-grupo-politico-ao-manter-sigilo-de-parte-do-caso-master/"
+  - label: "Vorcaro pede a manutenção de sigilo de mensagens 'exclusivamente pessoais' — CartaCapital, 2026-09-11"
+    url: "https://www.cartacapital.com.br/justica/vorcaro-pede-a-manutencao-de-sigilo-de-mensagens-exclusivamente-pessoais/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -192,13 +202,12 @@ transparência:
   atuado na derrubada de perfis que criticavam Vorcaro e o Master. Outra
   frente liberada apura se influenciadores foram contratados para divulgar
   conteúdo favorável a Vorcaro e contrário ao Banco Central.
-- **O que continuou sob sigilo.** A apuração sobre o financiamento do filme
-  *Dark Horse*, biografia de Jair Bolsonaro cujo custeio por Vorcaro já havia
-  sido mencionado por Alfredo Gaspar (vice na chapa de Flávio Bolsonaro) em
-  entrevista à revista Veja, permanece sigilosa — segundo reportagens,
-  apura a origem e a movimentação dos recursos da produção. É uma frente de
-  apuração distinta da relação Moraes–Vorcaro, sem ligação direta com este
-  caso.
+- **O que continuou sob sigilo — até esta sexta.** Na noite de 10/9, a
+  apuração sobre o financiamento do filme *Dark Horse*, biografia de Jair
+  Bolsonaro cujo custeio por Vorcaro já havia sido mencionado por Alfredo
+  Gaspar (vice na chapa de Flávio Bolsonaro) em entrevista à revista Veja,
+  permanecia sigilosa. Isso mudou horas depois — ver a seção abaixo, "Mais 38
+  processos sem sigilo".
 - **Moraes reclama que a liberação foi seletiva.** Nesta sexta-feira (11/9),
   Moraes enviou ofício a Fachin pedindo o fim total do sigilo do caso.
   Segundo o ministro, os 15 procedimentos liberados não representam a
@@ -289,6 +298,7 @@ documentos anexados a eles.
   dados extraídos do celular de Vorcaro — entregue voluntariamente pela PF ao
   gabinete em março de 2026, segundo o Ofício nº 33-V/2026 — "permanece
   lacrada e intocada até o presente momento", sob o lacre nº B0003311945.
+  Moraes contestou as duas afirmações horas depois — ver a seção abaixo.
 
 Nenhum desses despachos julga o mérito do caso — tratam de sigilo, competência
 e disputa entre gabinetes, questões preliminares à sessão de 15/9. Mas alguns
@@ -296,6 +306,80 @@ detalhes aqui só existem porque os processos são, por regra, públicos: o dado
 de que foi a União, e não a Presidência por conta própria, quem pediu a
 suspensão da decisão de Mendonça, por exemplo, não havia aparecido nas
 coberturas consultadas pelo Observatório até a publicação desta atualização.
+
+## Mais 38 processos sem sigilo — noite de 11 de setembro de 2026
+
+O prazo de 24 horas dado por Fachin (seção anterior) não esperou até o fim:
+ainda na sexta-feira à noite, Mendonça publicou uma nova manifestação
+levantando o sigilo de mais 38 processos ligados à Operação Compliance Zero —
+elevando para 53 o total de procedimentos tornados públicos desde 1º de
+setembro. O despacho, publicado no Diário de Justiça Eletrônico, lista os
+processos por número, sem detalhar do que trata cada um; quem deu esse
+detalhamento foi a imprensa, a partir de fontes na apuração.
+
+- **Dark Horse deixa de ser só uma menção lateral.** Entre os processos
+  liberados está a investigação sobre o financiamento da cinebiografia de
+  Jair Bolsonaro, que envolve o senador e pré-candidato à Presidência
+  **Flávio Bolsonaro** (PL-RJ). Segundo reportagens que citam mensagens
+  reveladas pelo The Intercept Brasil e apurações da Polícia Federal, Flávio
+  teria atuado como contato direto com Vorcaro para pedir recursos para o
+  filme — chegando a cobrar, em ligações telefônicas, o pagamento de R$ 134
+  milhões — verba que seria depois administrada nos Estados Unidos pelo
+  ex-deputado Eduardo Bolsonaro (PL-SP), irmão de Flávio.
+- **Três outros políticos, três frentes diferentes.** O mesmo lote de
+  processos também destravou investigações envolvendo:
+  - o senador **Ciro Nogueira** (PP-PI), sobre alegada atuação no Congresso
+    em benefício do Master e de Vorcaro — a PF aponta repasses financeiros
+    ao parlamentar, que ele nega;
+  - o ex-governador do Rio de Janeiro **Cláudio Castro** (PL), sobre
+    supostas inconsistências na transferência de R$ 3,6 bilhões do
+    Rioprevidência (fundo de previdência dos servidores do estado) ao Banco
+    Master;
+  - o senador **Jaques Wagner** (PT-BA), sobre sua proximidade com Augusto
+    Lima, ex-sócio do Master — a hipótese apurada é de vantagens indevidas
+    via transferências a uma empresa de parentes do senador e a compra de um
+    imóvel de alto padrão em Salvador.
+  
+  Nenhuma dessas quatro apurações foi confirmada ou julgada pelo STF — são
+  investigações em curso, com direito à ampla defesa dos citados.
+- **Por que agora.** Quem pediu essa liberação foi o vice-procurador-geral da
+  República, Hindenburgo Chateaubriand Filho: a lista enviada por Mendonça na
+  noite anterior, segundo ele, "não se contêm grande parte dos procedimentos
+  atualmente correlatos à investigação mais ampla da chamada Operação
+  Compliance Zero" — o que, mesmo sem má-fé, "pode induzir à ideia equivocada
+  de que a transparência que animou a medida proposta, perca, ao fim e ao
+  cabo, o seu sentido último".
+- **Moraes contesta a versão de Mendonça sobre o material do celular de
+  Vorcaro.** Em ofício a Fachin, Moraes disse que os demais ministros
+  continuam sem acesso integral aos documentos e classificou a liberação de
+  Mendonça como um "levantamento seletivo e direcionado" feito para proteger,
+  em suas palavras, "determinado grupo político" — sem identificar qual.
+  Sobre a cópia de segurança do celular de Vorcaro que Mendonça descreveu
+  como "lacrada e intocada" (ver seção anterior), Moraes argumentou que o
+  lacre não é impedimento para o compartilhamento, "notadamente porque
+  trata-se de cópia, o que não impõe risco à preservação da cadeia de
+  custódia do material original".
+- **Gilmar Mendes pede que Fachin assuma a relatoria da apuração contra
+  Moraes.** Também nesta sexta, o decano do STF pediu à Presidência que
+  concentre a condução de todos os procedimentos sobre as conversas
+  Moraes–Vorcaro, argumentando que a distribuição das petições ligadas a
+  Moraes feriu os princípios da impessoalidade e do juiz natural. Gilmar
+  também defendeu que o plenário julgue em conjunto os relatórios da PF sobre
+  Moraes e sobre Mendonça — este segundo, denunciado por Moraes por suposto
+  abuso de autoridade e improbidade na condução dos casos Master e INSS junto
+  à PF — e que, se só o relatório sobre Moraes estiver pronto para a sessão
+  de 15/9, o julgamento seja adiado até que os dois cheguem ao mesmo estágio.
+- **A defesa de Vorcaro pede filtro antes da publicação.** O advogado de
+  Daniel Vorcaro protocolou pedido a Fachin para que dados sensíveis sem
+  relação com a investigação — fotos de familiares, mensagens com advogados
+  protegidas por sigilo profissional — sejam triados antes da divulgação dos
+  documentos.
+
+Como em cada ponto anterior deste caso: nada disso é uma decisão de mérito.
+São disputas sobre sigilo, competência e o alcance da transparência,
+concentradas nos dias que antecedem a sessão de 15/9 — mas o pedido de Gilmar
+Mendes, se aceito, pode mudar o que, exatamente, o plenário vai julgar naquele
+dia.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
