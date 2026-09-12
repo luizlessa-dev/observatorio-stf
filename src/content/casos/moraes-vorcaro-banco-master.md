@@ -1,10 +1,10 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
 resumo: "André Mendonça tornou públicas mensagens entre Alexandre de Moraes e o banqueiro Daniel Vorcaro, extraídas pela PF, além de dois contratos de R$ 180 milhões com o escritório da esposa do ministro. Plenário do STF decide em 15/9 se abre investigação."
-ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes"]
+ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-11"
+data_atualizacao: "2026-09-12"
 fontes:
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
@@ -72,6 +72,14 @@ fontes:
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7661993"
   - label: "PET 16.727 — nova representação de Lindbergh Farias contra Flávio Bolsonaro, 11/9/2026 (fonte primária) — Portal do STF"
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7694235"
+  - label: "STF: Gilmar Mendes sugere adiar sessão sobre conduta de Moraes — Agência Brasil, 2026-09-11"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-gilmar-mendes-sugere-adiar-sessao-sobre-conduta-de-moraes"
+  - label: "Andrei Rodrigues nega que PF tenha monitorado ministro André Mendonça — Agência Brasil, 2026-09-11"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/andrei-rodrigues-nega-que-pf-monitorou-ministro-andre-mendonca"
+  - label: "Fachin aguarda explicações de ministros para decidir sobre crise — Agência Brasil, 2026-09-07"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/fachin-aguarda-explicacoes-de-ministros-para-decidir-sobre-crise"
+  - label: "Ministros aposentados do STF pedem apuração 'imediata e rigorosa' a Fachin — ConJur, 2026-09-08"
+    url: "https://conjur.com.br/2026-set-08/ex-ministros-do-stf-pedem-apuracao-imediata-e-rigorosa-de-fachin/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -371,16 +379,25 @@ detalhamento foi a imprensa, a partir de fontes na apuração.
   lacre não é impedimento para o compartilhamento, "notadamente porque
   trata-se de cópia, o que não impõe risco à preservação da cadeia de
   custódia do material original".
-- **Gilmar Mendes pede que Fachin assuma a relatoria da apuração contra
-  Moraes.** Também nesta sexta, o decano do STF pediu à Presidência que
-  concentre a condução de todos os procedimentos sobre as conversas
-  Moraes–Vorcaro, argumentando que a distribuição das petições ligadas a
-  Moraes feriu os princípios da impessoalidade e do juiz natural. Gilmar
-  também defendeu que o plenário julgue em conjunto os relatórios da PF sobre
-  Moraes e sobre Mendonça — este segundo, denunciado por Moraes por suposto
-  abuso de autoridade e improbidade na condução dos casos Master e INSS junto
-  à PF — e que, se só o relatório sobre Moraes estiver pronto para a sessão
-  de 15/9, o julgamento seja adiado até que os dois cheguem ao mesmo estágio.
+- **Gilmar Mendes pede que Fachin assuma a relatoria e questiona se a Pet
+  16.662 está madura para julgamento.** Na noite de sexta, o decano do STF
+  enviou ofício a Fachin pedindo o adiamento da sessão de 15/9 e que o caso de
+  Moraes seja analisado em conjunto com o de Mendonça, "sob a coordenação da
+  Presidência". O argumento central não é sobre prazo, mas sobre a própria
+  base processual: "Os autos se formaram a partir de informação de polícia
+  judiciária que o próprio relator requisitou à Polícia Federal e a própria
+  autuação registra tratar-se de feito instaurado 'de ofício', sem
+  representação nos autos. Não há representação da autoridade policial e
+  tampouco a Procuradoria-Geral da República, ao se manifestar, requereu ao
+  Plenário qualquer providência, limitando-se a arguir a nulidade do
+  relatório". Por isso, escreveu, "não há, na Pet 16.662, definição adequada
+  quanto aos próprios contornos processuais do feito, à identificação de quem
+  ocupa a posição de investigado, ao objeto preciso da investigação, ao rito
+  a ser observado e, em última análise, à questão madura que reclama
+  pronunciamento do colegiado". Gilmar sugeriu que o próprio Fachin assuma a
+  relatoria, determine "saneamento e instrução" e só depois submeta o caso ao
+  plenário — e que, se a sessão de terça for mantida mesmo assim, comece
+  pelas preliminares, a começar pelo pedido de nulidade da PGR.
 - **A defesa de Vorcaro pede filtro antes da publicação.** O advogado de
   Daniel Vorcaro protocolou pedido a Fachin para que dados sensíveis sem
   relação com a investigação — fotos de familiares, mensagens com advogados
@@ -446,6 +463,73 @@ São disputas sobre sigilo, competência e o alcance da transparência,
 concentradas nos dias que antecedem a sessão de 15/9 — mas o pedido de Gilmar
 Mendes, se aceito, pode mudar o que, exatamente, o plenário vai julgar naquele
 dia.
+
+## Peças que faltavam da sexta — Partido Novo, PGR citado e o elo com o Dark Horse
+
+Reconstituindo com mais detalhe a sexta-feira (11/9), a partir de reportagens
+da Agência Brasil não incorporadas nas seções anteriores, alguns elos ficam
+mais claros:
+
+- **Quem pediu o afastamento de Andrei Rodrigues foi o partido Novo — não
+  Mendonça por iniciativa própria.** A liminar de Mendonça que afastou o
+  diretor-geral da PF e o diretor de Inteligência, Leandro Almada, atendeu a
+  um pedido do partido Novo. Isso foi justamente um dos argumentos de Flávio
+  Dino para reverter a decisão: "o partido Novo não tinha legitimidade para
+  fazer tal pedido." Rodrigues, em sua defesa a Fachin, repetiu o argumento —
+  um partido político poderia comunicar à autoridade policial a existência
+  de uma possível infração penal, mas não teria legitimidade para requerer
+  diretamente ao Judiciário uma medida cautelar contra uma pessoa
+  determinada.
+- **A cúpula da PF reagiu em bloco.** Segundo a Agência Brasil, o afastamento
+  de Rodrigues e Almada "provocou reação dentro da Polícia Federal, com os
+  demais diretores colocando seus cargos à disposição, em apoio a Andrei
+  Rodrigues" — um gesto coletivo de protesto que nenhuma outra fonte
+  consultada pelo Observatório havia registrado.
+- **Rodrigues nega monitoramento e nega que os relatórios fossem anônimos.**
+  Na manifestação que apresentou a Fachin, o delegado escreveu: "Não existiu,
+  em absoluto, qualquer monitoramento ilícito de Ministro deste E. STF e
+  tampouco do Ilmo. Advogado-Geral da União. Os documentos que foram
+  questionados pela decisão proferida na Pet 16662 não são decorrentes de
+  ações de vigilância, coleta clandestina de dados, ou qualquer medida
+  invasiva." Sobre a acusação de que os relatórios seriam "apócrifos" — sem
+  autor identificado —, respondeu que "têm autoria institucional, a qual foi
+  declarada no próprio documento e restou confirmada pelo registro em
+  sistema", e que a ausência do nome do analista individual decorre do dever
+  de proteção previsto no Decreto nº 8.793/2016, não de irregularidade.
+- **A AGU também defendeu Rodrigues, por um argumento diferente.** Para a
+  Advocacia-Geral da União, afastar judicialmente o diretor-geral da PF
+  interfere na competência constitucional do presidente da República sobre a
+  administração federal, já que a direção-geral e a diretoria de Inteligência
+  integram o "núcleo de direção estratégica" da corporação.
+- **O procurador-geral Paulo Gonet também é citado nas mensagens de
+  Vorcaro** — não só Moraes. A Agência Brasil registra que "as conversas
+  mostram citações aos nomes de Moraes e do procurador-geral da República,
+  Paulo Gonet", extraídas do mesmo celular. É Gonet quem pede a anulação do
+  relatório da PF (ver seção "A disputa sobre o próprio relatório", abaixo) —
+  um interessado direto pedindo a anulação de um documento que também o cita.
+- **A decisão de Flávio Dino que reintegrou Rodrigues tem uma origem
+  específica: o Dark Horse.** Segundo a Agência Brasil, a decisão de Dino foi
+  tomada "no processo em que a PF analisa o material apreendido pela Polícia
+  Civil de São Paulo em investigações sobre o desvio de emendas
+  parlamentares para financiar a produção do filme Dark Horse" — ou seja, a
+  Pet 16.669 (já identificada nesta cobertura como de relatoria de Dino) não
+  é sobre a disputa institucional em si, mas sobre uma apuração distinta, de
+  possível desvio de emendas parlamentares, que corre sob a relatoria dele.
+  É mais um ponto de contato entre a frente Moraes–Vorcaro e a frente Dark
+  Horse, além do já registrado Inq 5.070.
+- **Treze ex-ministros do STF já haviam cobrado uma apuração rigorosa antes
+  da escalada do fim de semana.** Em carta enviada a Fachin em 7/9, ministros
+  aposentados e ex-presidentes da Corte disseram ter "plena confiança na
+  seriedade, discernimento e firmeza" de Fachin e "absoluta convicção" de que
+  ele convocaria uma sessão pública com urgência. Na carta, afirmaram que os
+  fatos "vêm comprometendo o prestígio e a autoridade desse Tribunal, a
+  confiança do povo e até mesmo a estabilidade das instituições
+  democráticas" — um sinal de pressão institucional anterior a boa parte do
+  que está registrado nesta cobertura.
+
+Nenhum desses pontos muda o que já estava registrado sobre o mérito do caso —
+são peças do mesmo quebra-cabeça institucional, vindas de reportagens
+publicadas na sexta-feira que o Observatório só incorporou nesta atualização.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
