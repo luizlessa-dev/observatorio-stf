@@ -26,6 +26,14 @@ fontes:
     url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/toffoli-admite-sociedade-em-resort-mas-nega-pagamentos-de-vorcaro"
   - label: "Toffoli puxou o caso Master ao STF um dia após PF descartar pessoas com foro — CNN Brasil, 2026-09-11"
     url: "https://www.cnnbrasil.com.br/politica/toffoli-puxou-caso-master-ao-stf-um-dia-apos-pf-descartar-pessoas-com-foro/"
+  - label: "Mendonça atende Fachin e levanta sigilo do Caso Master — CartaCapital, 2026-09-10"
+    url: "https://www.cartacapital.com.br/justica/apos-ordem-de-fachin-mendonca-levanta-sigilo-do-caso-master/"
+  - label: "Mendonça retira sigilo de parte do caso Master (15 procedimentos) — Gazeta da Amazônia, 2026-09-11"
+    url: "https://gazetadaamazonia.com.br/11/09/2026/mendonca-sigilo-caso-master/"
+  - label: "Fachin dá 24 horas para Mendonça liberar sigilo do caso Master — Gazeta da Amazônia, 2026-09-11"
+    url: "https://gazetadaamazonia.com.br/11/09/2026/fachin-sigilo-caso-master/"
+  - label: "Moraes pede fim completo do sigilo e critica Mendonça — Gazeta da Amazônia, 2026-09-11"
+    url: "https://gazetadaamazonia.com.br/11/09/2026/moraes-sigilo-caso-master/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -91,7 +99,9 @@ Federal.
   presidente do STF, Fachin não pode determinar isso diretamente — quem
   decide é o relator, Mendonça — mas solicitou que ele torne públicos todos
   os procedimentos do caso, com exceção de diligências cujo sigilo seja
-  "imprescindível".
+  "imprescindível". Mendonça atendeu ainda na noite do dia 10, levantando o
+  sigilo da Petição 15.556 — mas essa não foi a palavra final: ver a seção
+  abaixo, "Sigilo, ida e volta — 11 de setembro".
 - **Diretores da PF afastados e depois reintegrados.** Mendonça determinou o
   afastamento do diretor-geral da Polícia Federal, Andrei Rodrigues, e do
   diretor de Inteligência Policial, Leandro Almada, e abriu investigação
@@ -114,6 +124,52 @@ publicação desta atualização — são decisões monocráticas e pedidos dent
 uma disputa institucional em curso, sujeitos à sessão de 15/9. O
 pronunciamento de Moraes sobre o caso é esperado para a véspera da sessão
 (14/9), segundo a imprensa.
+
+## Sigilo, ida e volta — 11 de setembro de 2026
+
+O levantamento de sigilo prometido na noite do dia 10 não encerrou a disputa —
+pelo contrário, expôs uma nova frente de desacordo sobre o alcance da
+transparência:
+
+- **O que foi liberado.** Mendonça levantou o sigilo de 15 procedimentos
+  vinculados à Petição 15.556, incluindo os inquéritos 5.026 e 5.035, e
+  determinou o envio de cópia integral dos autos, em HD próprio, à Presidência
+  e aos gabinetes dos demais ministros. Entre as frentes que passaram a ter
+  informação pública estão a relação Master–escritório de Viviane Barci de
+  Moraes, o vazamento de dados sigilosos e a atuação de dois núcleos
+  apontados pela PF — chamados "A Turma" e "Os Meninos" — investigados por
+  intimidação, acesso clandestino a informações, monitoramento e ataques
+  cibernéticos; "Os Meninos" é descrito como um braço digital que teria
+  atuado na derrubada de perfis que criticavam Vorcaro e o Master. Outra
+  frente liberada apura se influenciadores foram contratados para divulgar
+  conteúdo favorável a Vorcaro e contrário ao Banco Central.
+- **O que continuou sob sigilo.** A apuração sobre o financiamento do filme
+  *Dark Horse*, biografia de Jair Bolsonaro cujo custeio por Vorcaro já havia
+  sido mencionado por Alfredo Gaspar (vice na chapa de Flávio Bolsonaro) em
+  entrevista à revista Veja, permanece sigilosa — segundo reportagens,
+  apura a origem e a movimentação dos recursos da produção. É uma frente de
+  apuração distinta da relação Moraes–Vorcaro, sem ligação direta com este
+  caso.
+- **Moraes reclama que a liberação foi seletiva.** Nesta sexta-feira (11/9),
+  Moraes enviou ofício a Fachin pedindo o fim total do sigilo do caso.
+  Segundo o ministro, os 15 procedimentos liberados não representam a
+  totalidade do que está vinculado à Petição 15.556, e mesmo dentro deles
+  180 documentos continuaram protegidos — o que, em suas palavras, "dificulta
+  a análise probatória". Moraes também citou duas petições associadas
+  especificamente ao seu caso, as PETs 16.704 e 16.662, ao dizer que Mendonça,
+  "diretamente interessado no julgamento" de ambas, "selecionou
+  subjetivamente" o que tornar público.
+- **Fachin dá 24 horas.** Ainda na sexta-feira, acolhendo pedido do
+  vice-procurador-geral da República — que classificou a liberação parcial
+  como uma "ideia equivocada de transparência" — e ofícios semelhantes de
+  Moraes e Cristiano Zanin, Fachin determinou que Mendonça envie, em até 24
+  horas, todos os procedimentos ligados à Petição 15.556 e à Operação
+  Compliance Zero aos demais ministros, ressalvadas apenas diligências em
+  andamento cuja divulgação possa prejudicar a apuração.
+
+Como em toda a cobertura deste caso, o volume de sigilo levantado ou mantido
+é, em si, uma disputa em curso dentro do STF — não um fato julgado pela
+Corte. O Observatório segue acompanhando até a sessão de 15/9.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
