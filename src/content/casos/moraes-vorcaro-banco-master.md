@@ -66,6 +66,8 @@ fontes:
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7600724"
   - label: "PET 15.855 — investigação sobre Ciro Nogueira (fonte primária) — Portal do STF"
     url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7556527"
+  - label: "PET 16.292 — representação de Lindbergh Farias contra Eduardo Bolsonaro (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7629247"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -391,13 +393,22 @@ em maio —, e um deles (Pet 15.855) também nomeia a empresa "Ciro Nogueira
 Comércio de Motocicletas Ltda." como parte. Jaques Wagner e Augusto Ferreira
 Lima aparecem como investigados no Inq 5.050, aberto em maio de 2026 — um dos
 dois inquéritos que o próprio despacho de Mendonça lista como acréscimo dele,
-além do pedido do Vice-PGR. Não encontramos, no tempo desta apuração, um
-processo que confirmasse da mesma forma direta os casos de Flávio Bolsonaro
-ou de Cláudio Castro — o que não significa que a reportagem esteja errada,
-apenas que o Observatório não verificou essa parte por fonte primária.
-Também não localizamos, nos três processos que já acompanhamos no portal, o
-ofício de Gilmar Mendes à Presidência: pode não ter sido ainda publicado no
-andamento público, ou ter tramitado por canal interno sem autuação própria.
+além do pedido do Vice-PGR. Ampliando essa checagem: dos processos da lista
+que ainda não tinham sido abertos por nós, a Pet 16.292 tem como requerido
+**Eduardo Bolsonaro** — a petição foi movida pelo senador Lindbergh Farias
+(PT-RJ) em junho de 2026 e redistribuída a Mendonça por prevenção, o que
+confirma, por fonte primária, a ponta do Dark Horse relativa a Eduardo (o
+suposto gestor dos recursos nos EUA, segundo a reportagem). Já as Pets
+16.229, 16.230, 16.344 e 16.346 — também parte do lote de hoje — nomeiam como
+requeridos Augusto Ferreira Lima, Andrea Lima Novaes e Thiago Miranda Silva,
+não os quatro políticos citados pela imprensa; nenhuma delas nomeia Flávio
+Bolsonaro ou Cláudio Castro diretamente. Não é possível descartar que as
+apurações sobre os dois estejam em processos ainda não abertos por nós dentro
+da lista de 38, ou indexadas sob outro nome — o Observatório não esgotou a
+lista completa. Também não localizamos, nos três processos que já
+acompanhamos no portal, o ofício de Gilmar Mendes à Presidência: pode não ter
+sido ainda publicado no andamento público, ou ter tramitado por canal interno
+sem autuação própria.
 
 Como em cada ponto anterior deste caso: nada disso é uma decisão de mérito.
 São disputas sobre sigilo, competência e o alcance da transparência,
