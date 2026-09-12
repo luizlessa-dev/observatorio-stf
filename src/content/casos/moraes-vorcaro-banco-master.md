@@ -34,6 +34,14 @@ fontes:
     url: "https://gazetadaamazonia.com.br/11/09/2026/fachin-sigilo-caso-master/"
   - label: "Moraes pede fim completo do sigilo e critica Mendonça — Gazeta da Amazônia, 2026-09-11"
     url: "https://gazetadaamazonia.com.br/11/09/2026/moraes-sigilo-caso-master/"
+  - label: "Íntegra do relatório da PF sobre o celular de Vorcaro (documento primário, PDF, 218 págs.) — Poder360"
+    url: "https://static.poder360.com.br/uploads/2026/09/pet16662_relatorio_pf_celular_vorcaro_moraes_gonet_andrei_barci.pdf"
+  - label: "Leia as íntegras dos documentos da Petição 16.662 — Poder360, 2026-09-01"
+    url: "https://www.poder360.com.br/poder-justica/leia-as-integras-de-documentos-que-revelam-relacao-de-moraes-com-vorcaro/"
+  - label: "Vorcaro aprovou cartões de crédito para filhos de Moraes, diz jornal — Poder360, 2026-09-01"
+    url: "https://www.poder360.com.br/poder-justica/vorcaro-aprovou-cartoes-de-credito-para-filhos-de-moraes-diz-jornal/"
+  - label: "Vorcaro para Moraes: tenho \"gratidão da minha vida a você\" — Poder360, 2026-09-01"
+    url: "https://www.poder360.com.br/poder-justica/vorcaro-para-moraes-tenho-gratidao-da-minha-vida-a-voce/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -56,6 +64,39 @@ advocacia de Viviane Barci de Moraes, esposa do ministro: R$ 3,6 milhões por
 mês, ao longo de três anos (soma aproximada de R$ 131 milhões), assinado em
 23 de janeiro de 2024. O valor e o momento do contrato levantaram questões
 sobre eventual conflito de interesse.
+
+## Direto dos documentos primários
+
+O sigilo levantado em 1º de setembro tornou público o próprio relatório da
+PF — 218 páginas, produzido a partir da perícia no celular de Vorcaro — e
+seus anexos (contratos, prints de conversa, despachos). O Observatório foi
+direto a essas peças, publicadas com dados pessoais sensíveis de terceiros já
+tarjados por veículos que as obtiveram. Alguns pontos que não apareciam nos
+resumos anteriores:
+
+- **A fuga.** Vorcaro foi preso em 17 de novembro de 2025 no Aeroporto
+  Internacional de Guarulhos quando tentava embarcar num jato particular com
+  destino a Dubai.
+- **"Gratidão da minha vida a você".** Três dias antes da prisão, em 14 de
+  novembro, Vorcaro escreveu a Moraes: "Estamos juntos sempre. Você sabe que
+  tenho gratidão da minha vida a você. Toda minha família, funcionários,
+  parceiros, amigos que dependem de nós têm uma dívida de vida contigo e com
+  a sua família." Dois dias depois, em 16 de novembro, pediu um encontro
+  rápido — um dia antes de ser preso.
+- **Cartões de crédito para os filhos do ministro.** Em outubro de 2025, a
+  pedido do administrador do escritório Barci de Moraes, o Banco Master
+  emitiu cartões de crédito com limite de R$ 300 mil cada para Giuliana e
+  Alexandre Barci de Moraes, filhos de Alexandre de Moraes. Numa mensagem
+  recuperada pela PF, uma executiva do Master escreveu a Vorcaro pedindo
+  autorização; ele respondeu "ok". O escritório Barci de Moraes, em nota,
+  afirmou que os cartões "jamais foram usados por qualquer advogado ou
+  pessoa do escritório".
+
+Como em todo o restante deste caso, essas informações vêm de um relatório
+policial ainda não julgado pelo STF — a própria PF classifica a análise como
+"não exaustiva", já que foi produzida em 72 horas, e boa parte das
+conversas só preserva o lado de Vorcaro, por causa do recurso de
+visualização única do WhatsApp; não se sabe o que Moraes respondeu.
 
 ## Atualização — 10 de setembro de 2026
 
