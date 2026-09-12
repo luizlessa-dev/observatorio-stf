@@ -60,6 +60,12 @@ fontes:
     url: "https://www.cartacapital.com.br/justica/moraes-diz-que-mendonca-tenta-proteger-grupo-politico-ao-manter-sigilo-de-parte-do-caso-master/"
   - label: "Vorcaro pede a manutenção de sigilo de mensagens 'exclusivamente pessoais' — CartaCapital, 2026-09-11"
     url: "https://www.cartacapital.com.br/justica/vorcaro-pede-a-manutencao-de-sigilo-de-mensagens-exclusivamente-pessoais/"
+  - label: "Despacho de Mendonça sobre o Ofício GMCZ nº 14/2026 (fonte primária) — Diário da Justiça Eletrônico do STF"
+    url: "https://portal.stf.jus.br/processos/downloadPeca.asp?id=15390364049&ext=.pdf"
+  - label: "INQ 5.050 — investigação sobre Jaques Wagner (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7600724"
+  - label: "PET 15.855 — investigação sobre Ciro Nogueira (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7556527"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -374,6 +380,24 @@ detalhamento foi a imprensa, a partir de fontes na apuração.
   relação com a investigação — fotos de familiares, mensagens com advogados
   protegidas por sigilo profissional — sejam triados antes da divulgação dos
   documentos.
+
+**Conferência cruzada com o portal do STF.** O Observatório buscou, pelo
+número de cada processo citado no despacho de Mendonça e pelo nome das partes
+no buscador oficial do STF, confirmar diretamente duas das quatro frentes
+acima. Ciro Nogueira Lima Filho aparece como requerido em pelo menos quatro
+processos da lista liberada hoje — Pets 15.674, 15.855, 15.873 e 15.877,
+abertos entre março e abril de 2026, com mandados de intimação expedidos já
+em maio —, e um deles (Pet 15.855) também nomeia a empresa "Ciro Nogueira
+Comércio de Motocicletas Ltda." como parte. Jaques Wagner e Augusto Ferreira
+Lima aparecem como investigados no Inq 5.050, aberto em maio de 2026 — um dos
+dois inquéritos que o próprio despacho de Mendonça lista como acréscimo dele,
+além do pedido do Vice-PGR. Não encontramos, no tempo desta apuração, um
+processo que confirmasse da mesma forma direta os casos de Flávio Bolsonaro
+ou de Cláudio Castro — o que não significa que a reportagem esteja errada,
+apenas que o Observatório não verificou essa parte por fonte primária.
+Também não localizamos, nos três processos que já acompanhamos no portal, o
+ofício de Gilmar Mendes à Presidência: pode não ter sido ainda publicado no
+andamento público, ou ter tramitado por canal interno sem autuação própria.
 
 Como em cada ponto anterior deste caso: nada disso é uma decisão de mérito.
 São disputas sobre sigilo, competência e o alcance da transparência,
