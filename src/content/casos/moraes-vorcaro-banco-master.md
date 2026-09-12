@@ -42,6 +42,14 @@ fontes:
     url: "https://www.poder360.com.br/poder-justica/vorcaro-aprovou-cartoes-de-credito-para-filhos-de-moraes-diz-jornal/"
   - label: "Vorcaro para Moraes: tenho \"gratidão da minha vida a você\" — Poder360, 2026-09-01"
     url: "https://www.poder360.com.br/poder-justica/vorcaro-para-moraes-tenho-gratidao-da-minha-vida-a-voce/"
+  - label: "PET 16.662 — andamentos processuais (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7681133"
+  - label: "PET 16.704 — andamentos processuais (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7687920"
+  - label: "SL 1.946 — andamentos processuais (fonte primária) — Portal do STF"
+    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7690807"
+  - label: "Ata de julgamento, 2ª Turma, sessão virtual extraordinária de 8/9/2026 — Diário da Justiça Eletrônico do STF"
+    url: "https://digital.stf.jus.br/publico/publicacao/1008681"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -211,6 +219,83 @@ transparência:
 Como em toda a cobertura deste caso, o volume de sigilo levantado ou mantido
 é, em si, uma disputa em curso dentro do STF — não um fato julgado pela
 Corte. O Observatório segue acompanhando até a sessão de 15/9.
+
+## Direto do sistema do STF — 11 de setembro de 2026
+
+Até aqui, os detalhes desta cobertura vinham de reportagens que citavam
+despachos e decisões. O Observatório consultou diretamente os andamentos
+públicos de três processos no site oficial do STF — PET 16.662 (relatoria de
+Mendonça), PET 16.704 (aberta pela Presidência) e SL 1.946 (Suspensão de
+Liminar) — para conferir o texto exato de decisões já noticiadas e localizar
+dados que não haviam aparecido nas reportagens consultadas pelo Observatório.
+
+**Uma ressalva sobre o que dá para ver.** O portal do STF classifica os três
+processos como "público", mas isso libera apenas certidões e atos decisórios
+— despachos, decisões, atas de julgamento. As petições e os anexos completos
+("peças eletrônicas") exigem credenciamento e-STF com certificado digital
+ICP-Brasil, mesmo em processos públicos. O que segue vem da aba "Andamentos"
+de cada processo, que reproduz trechos literais de despachos — não dos
+documentos anexados a eles.
+
+- **Quem pediu a suspensão da decisão de Mendonça foi a União, não a
+  Presidência por iniciativa própria.** A SL 1.946 foi protocolada em 8/9
+  pela Advocacia-Geral da União, pedindo a suspensão da decisão de Mendonça
+  na PET 16.662. Fachin, como presidente, decidiu o pedido no dia seguinte —
+  foi essa decisão, e não um ato espontâneo da Presidência, que suspendeu a
+  decisão de Mendonça, sobrestou a PET 16.662 e também suspendeu uma decisão
+  do ministro Flávio Dino (na PET 16.669, de relatoria dele) proferida no
+  mesmo dia.
+- **A decisão de Fachin foi mais ampla do que as duas decisões suspensas.**
+  Além de suspender Mendonça e Dino, Fachin determinou "a suspensão de todo e
+  qualquer procedimento que verse sobre potencial investigação em face de
+  integrantes deste Supremo Tribunal Federal" até a sessão de 15/9, e deu ao
+  diretor-geral da PF, Andrei Rodrigues, 48 horas para se manifestar antes de
+  a Presidência avaliar sua permanência no cargo — à luz do art. 33,
+  parágrafo único, da Lei Orgânica da Magistratura, dispositivo que rege
+  investigação de autoridades com foro no STF.
+- **Uma apuração sobre a própria condução do caso por Moraes já estava aberta
+  desde 3 de setembro.** A PET 16.704 nasceu de um despacho da Presidência
+  determinando que a decisão de Moraes que originou o caso fosse destacada do
+  Inq 4.781/DF e autuada à parte, para apurar, entre outros pontos,
+  "eventuais indícios de que credenciais de acesso institucional tenham sido
+  utilizadas para avaliar documento estritamente particular e de que
+  informações sujeitas ao sigilo judicial foram reveladas a pessoa
+  investigada" — sem, segundo o próprio despacho, prejulgar admissibilidade,
+  regularidade ou mérito. Moraes, Mendonça, o procurador-geral Paulo Gonet e
+  o diretor-geral da PF foram intimados a se manifestar em 5 dias úteis.
+- **O voto da Segunda Turma, na íntegra.** A ata de julgamento confirma o que
+  a imprensa já noticiara: "Após o voto do Ministro André Mendonça (Relator)
+  que referendava a decisão anteriormente proferida, pelos seus próprios
+  fundamentos, no que foi acompanhado pelos Ministros Luiz Fux e Nunes
+  Marques, pediu vista dos autos o Ministro Gilmar Mendes." O despacho de
+  Gilmar Mendes, de 8/9, registra a razão do pedido de vista nestes termos:
+  "diante de elementos que apontam para a incompetência da Segunda Turma e do
+  risco de decisões conflitantes sobre uma mesma matéria, pedi vista do
+  processo para melhor exame dos autos."
+- **A lista exata dos procedimentos liberados.** O despacho de Mendonça de
+  10/9 nomeia, além da própria Petição 15.556: Inq 5.026, Rcl 88.121, Pet
+  15.198, Inq 5.035, Pet 15.478, Pet 15.504, Pet 15.562, Pet 15.563, Pet
+  15.693, Pet 15.976, Pet 15.977, Pet 15.978, Pet 16.019 e Pet 16.662— 15 ao
+  todo, incluindo a matriz, confirmando o número já noticiado. Um despacho da
+  Presidência do dia anterior também confirma o nome dado a uma das frentes:
+  "Operação Compliance Zero" é como o STF se refere oficialmente ao Inq
+  5.026.
+- **Mendonça respondeu a Zanin nesta quinta-feira.** Em despacho de 11/9, em
+  resposta a ofício do ministro Cristiano Zanin perguntando sobre a
+  disponibilidade de material, Mendonça afirmou que todos os procedimentos
+  ligados ao julgamento de terça-feira "já tiveram seus sigilos levantados
+  [...] e estão integralmente disponibilizados aos gabinetes dos eminentes
+  Ministros". No mesmo despacho, esclareceu que uma cópia de segurança dos
+  dados extraídos do celular de Vorcaro — entregue voluntariamente pela PF ao
+  gabinete em março de 2026, segundo o Ofício nº 33-V/2026 — "permanece
+  lacrada e intocada até o presente momento", sob o lacre nº B0003311945.
+
+Nenhum desses despachos julga o mérito do caso — tratam de sigilo, competência
+e disputa entre gabinetes, questões preliminares à sessão de 15/9. Mas alguns
+detalhes aqui só existem porque os processos são, por regra, públicos: o dado
+de que foi a União, e não a Presidência por conta própria, quem pediu a
+suspensão da decisão de Mendonça, por exemplo, não havia aparecido nas
+coberturas consultadas pelo Observatório até a publicação desta atualização.
 
 ## Um segundo ministro com conflito de interesse declarado — Dias Toffoli
 
