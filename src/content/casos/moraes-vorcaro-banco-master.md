@@ -1,10 +1,10 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
-resumo: "André Mendonça tornou públicas mensagens entre Alexandre de Moraes e o banqueiro Daniel Vorcaro, extraídas pela PF, além de dois contratos de R$ 180 milhões com o escritório da esposa do ministro. Plenário do STF decide em 15/9 se abre investigação."
+resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Moraes e Vorcaro, e dois contratos somando R$ 180 milhões — mas também recebeu Vorcaro pessoalmente. Toffoli e o Dark Horse entram na crise. STF trata do caso Moraes em 15/9 e de Mendonça em 23/9."
 ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-12"
+data_atualizacao: "2026-09-16"
 fontes:
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
@@ -88,6 +88,34 @@ fontes:
     url: "https://www.poder360.com.br/poder-justica/pf-produziu-relatorio-paralelo-sobre-atuacao-de-mendonca-no-caso-master/"
   - label: "Íntegra dos relatórios de inteligência da PF sobre Mendonça (documento vazado, não oficial, PDF 50 págs., publicado pelo Poder360)"
     url: "https://static.poder360.com.br/uploads/2026/09/INQ4781-relatorios-Da-PF-contra-Mendonca.pdf"
+  - label: "Moraes editou contrato de R$ 131 milhões entre sua mulher e Vorcaro — Poder360, 2026-09-12"
+    url: "https://www.poder360.com.br/poder-justica/moraes-editou-contrato-de-r-131-milhoes-entre-sua-mulher-e-vorcaro/"
+  - label: "Ministro André Mendonça admite encontro com Vorcaro 'uma única vez' — Agência Brasil, 2026-09-12"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/ministro-andre-mendonca-admite-encontro-com-vorcaro-uma-unica-vez"
+  - label: "Vaza Mendonça: mensagens e áudios inéditos revelam encontro de Vorcaro e André Mendonça — ICL Notícias"
+    url: "https://iclnoticias.com.br/vaza-mendonca-mensagens-e-audios-ineditos/"
+  - label: "Mendonça recebeu Vorcaro, ouviu e votou contra interesse do ex-banqueiro — Poder360"
+    url: "https://www.poder360.com.br/poder-justica/mendonca-diz-que-esteve-com-vorcaro-uma-vez-e-que-se-limitou-a-ouvi-lo/"
+  - label: "PF suspeita que Toffoli tenha dinheiro de Vorcaro em paraíso fiscal, diz revista piauí — CNN Brasil, 2026-09-12"
+    url: "https://www.cnnbrasil.com.br/politica/toffoli-seria-beneficiario-de-fundo-ligado-a-vorcaro-diz-revista/"
+  - label: "PF vê possível elo de Toffoli com R$ 35 milhões repassados por Vorcaro — CartaCapital, 2026-09-12"
+    url: "https://www.cartacapital.com.br/justica/pf-ve-possivel-elo-de-toffoli-com-r-35-milhoes-repassados-por-vorcaro/"
+  - label: "PF mostra conversas de Flávio com Vorcaro sobre recursos para Dark Horse — CNN Brasil, 2026-09-11"
+    url: "https://www.cnnbrasil.com.br/politica/pf-mostra-conversas-de-flavio-com-vorcaro-sobre-recursos-para-dark-horse/"
+  - label: "ONG da produtora de Dark Horse cedeu dados de usuários de wi-fi livre em SP para disparos em massa — Intercept Brasil, 2026-06-02"
+    url: "https://www.intercept.com.br/2026/06/02/ong-produtora-dark-horse-dados-usuarios-wi-fi-livre-sp-disparos-massa/"
+  - label: "Karina Gama: como atuou a produtora de Dark Horse, alvo da PF com Mário Frias — Revista Fórum"
+    url: "https://revistaforum.com.br/politica/karina-gama-dark-horse-pf/"
+  - label: "Fachin afasta Mendonça de caso contra Moraes e manda parar apurações de Master e INSS — Estado de Minas, 2026-09-12"
+    url: "https://www.em.com.br/politica/2026/09/7499402-fachin-afasta-mendonca-de-caso-contra-moraes-e-manda-parar-apuracoes-de-master-e-inss.html"
+  - label: "Fachin nega pedido para julgamento simultâneo de Moraes e Mendonça no STF — Revista Oeste, 2026-09-12"
+    url: "https://revistaoeste.com/politica/fachin-nega-pedido-para-julgamento-simultaneo-de-moraes-e-mendonca-no-stf/"
+  - label: "Racha Supremo — reportagem de capa, revista Veja, edição 3012, 2026-09-11"
+    url: "https://veja.abril.com.br/"
+  - label: "Em cartaz, a caixa-preta — Breno Pires, revista piauí, edição 240, setembro de 2026"
+    url: "https://piaui.folha.uol.com.br/"
+  - label: "Corte em pedaços — André Barrocal, revista CartaCapital, edição 1430, 2026-09-16"
+    url: "https://www.cartacapital.com.br/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -189,11 +217,20 @@ Federal.
   "imprescindível". Mendonça atendeu ainda na noite do dia 10, levantando o
   sigilo da Petição 15.556 — mas essa não foi a palavra final: ver a seção
   abaixo, "Sigilo, ida e volta — 11 de setembro".
-- **Diretores da PF afastados e depois reintegrados.** Mendonça determinou o
-  afastamento do diretor-geral da Polícia Federal, Andrei Rodrigues, e do
-  diretor de Inteligência Policial, Leandro Almada, e abriu investigação
-  sobre a atuação dos dois. Flávio Dino reintegrou ambos ao cargo. Fachin, em
-  seguida, suspendeu as duas decisões — a de Mendonça e a de Dino.
+- **Diretores da PF afastados e depois reintegrados, em menos de 24 horas.**
+  Mendonça determinou o afastamento do diretor-geral da Polícia Federal,
+  Andrei Rodrigues, e do diretor de Inteligência Policial, Leandro Almada, e
+  abriu investigação sobre a atuação dos dois, afirmando ter sido "monitorado
+  de maneira ilícita" pela PF. A Segunda Turma do STF se reuniu para validar
+  ou não a medida: o decano Gilmar Mendes pediu vista, mas os ministros Luiz
+  Fux e Kassio Nunes Marques anteciparam voto e formaram maioria a favor de
+  manter o afastamento; Dias Toffoli se declarou impedido por sua própria
+  relação com o caso Master (ver seção abaixo). No dia seguinte, o ministro
+  Flávio Dino anulou monocraticamente essa decisão do colegiado e reconduziu
+  Andrei Rodrigues ao cargo — usando, segundo reportagem da revista *Veja*
+  (edição 3012, 11/9), o mesmo argumento de risco eleitoral que Gilmar havia
+  esboçado. Fachin, na quarta-feira seguinte, suspendeu as decisões de
+  Mendonça e de Dino e convocou o plenário.
 - **Decisões envolvendo ministros passam a depender da presidência.** Fachin
   determinou que qualquer decisão que envolva ministro do STF neste caso
   precisa passar por ele antes.
@@ -775,6 +812,67 @@ Toffoli com Vorcaro — o próprio ministro nega qualquer irregularidade, e o
 afastamento da relatoria foi voluntário (impedimento declarado por ele
 mesmo), não uma punição imposta pela Corte.
 
+### Atualização — 12 de setembro de 2026: o fundo Arleen, R$ 35 milhões e um voto suspeito sobre precatórios
+
+Um relatório da PF enviado a Fachin — revelado pela revista *piauí* e
+confirmado por outros veículos — aprofunda a suspeita sobre Toffoli, ainda
+sem confirmação do STF:
+
+- **"Beneficiário final ou proprietário de fato".** É como o relatório da PF
+  descreve a suspeita sobre a relação de Toffoli com o fundo de investimento
+  Arleen (FIP), que recebeu R$ 35 milhões de Daniel Vorcaro. O fundo comprou
+  cotas da Maridt — a empresa dos irmãos do ministro, José Eugênio e José
+  Carlos Dias Toffoli, dona de parte do resort Tayayá, onde o próprio
+  ministro admite ter integrado o quadro societário. Em fevereiro de 2025, o
+  Arleen mudou de dono: foi comprado pelo empresário Alberto Leite, descrito
+  como amigo de Toffoli. Um mês depois, o fundo alterou seu regulamento para
+  permitir investimentos no exterior e, em dezembro, transferiu todos os
+  ativos para a holding Égide I, registrada nas Ilhas Virgens Britânicas —
+  território que a reportagem qualifica como paraíso fiscal do Caribe. "Documentos
+  e comunicação [...] sugerem uso de interpostas pessoas e estruturas no
+  exterior, incluindo movimentações envolvendo a Edige I Holding nas Ilhas
+  Virgens Britânicas", diz o relatório da PF, segundo a *piauí*.
+- **Um voto que preocupou o Master, segundo diálogos do celular de Vorcaro.**
+  A PF suspeita que Vorcaro tentou influenciar um voto de Toffoli numa ação
+  sobre precatórios da destilaria Alcídia (grupo Atvos), que cobrava da União
+  reparação por prejuízos da década de 1980. Toffoli tinha histórico de
+  posições favoráveis a usinas em casos parecidos, mas votou a favor da União
+  no julgamento da Alcídia — inversão que, segundo a reportagem, preocupou
+  pessoas ligadas ao Master, já que a carteira de precatórios do setor
+  sucroalcooleiro no balanço do banco somava mais de R$ 10 bilhões. Mensagens
+  atribuídas ao diretor jurídico do banco, André Kruschewsky, e ao ex-ministro
+  das Comunicações Fábio Faria, sugeriram que Kruschewsky teria "acesso ao STF
+  inclusive para 'tirar de pauta' o processo em questão". No dia do
+  julgamento, Kassio Nunes Marques pediu vista e Toffoli registrou ausência
+  justificada; o caso foi retomado depois e terminou em 3 votos a 2, com
+  Toffoli a favor da usina — posição que marcou o desempate, mas não decidiu
+  o resultado final, já que a tese da Alcídia (contrária à União) prevaleceu.
+  O gabinete de Toffoli nega qualquer "alteração de voto".
+- **Encontros sociais, segundo mensagens do celular de Vorcaro.** A reportagem
+  cita um convite feito por Toffoli a Vorcaro para seu aniversário de 56 anos,
+  em outubro de 2023, num bar em São Paulo — sem evidência de que o banqueiro
+  tenha comparecido —, uma ida de Vorcaro à casa de Toffoli em novembro de
+  2023 por sugestão de Fábio Faria, e um segundo convite de aniversário em
+  2024, desta vez recusado por Vorcaro ("Puxa que pena, vou estar na Suíça a
+  trabalho!").
+- **A resposta de Toffoli.** Por nota, o gabinete do ministro afirmou que ele
+  "jamais manteve ou teve direta ou indiretamente recursos no exterior",
+  "jamais realizou qualquer operação direta ou indiretamente nas Ilhas
+  Virgens Britânicas" e "jamais teve relação de amizade ou intimidade com
+  Daniel Vorcaro". Sobre o caso Alcídia, informou que o processo "foi
+  arquivado, com decisão de trânsito em julgado" e que, segundo nota oficial
+  do STF de 12 de fevereiro de 2026, "os dez ministros tiveram ciência de todo
+  o conteúdo [...] deliberando não ser o caso de suspeição".
+- **Por que isso chegou a Fachin, e não a Mendonça.** A PF enviou o relatório
+  à Presidência do STF porque Toffoli foi relator do caso Master e porque
+  ministros da Corte não podem ser investigados sem aval do próprio tribunal.
+  Questionado pela reportagem, o gabinete de Mendonça — atual relator do
+  inquérito do Master — afirmou que o relatório não lhe foi enviado.
+
+Como em todo o restante deste caso: nada disso foi julgado pelo STF. É um
+relatório de inteligência policial, ainda sob análise, contestado ponto a
+ponto pelo próprio Toffoli.
+
 ## A disputa sobre o próprio relatório
 
 A Procuradoria-Geral da República pediu a anulação do relatório da PF que
@@ -782,11 +880,443 @@ originou a revelação, argumentando que Mendonça não poderia ter solicitado
 diretamente à corporação uma apuração sobre um colega de tribunal — que,
 segundo esse argumento, exigiria autorização prévia do plenário do STF.
 
+## Não foram só mensagens — ao menos seis encontros presenciais desde 2024
+
+Reportagens publicadas em 12 de setembro, reconstruindo a cronologia da
+crise a partir dos documentos liberados, acrescentam um dado que não estava
+registrado nas seções anteriores: segundo diálogos recuperados do celular de
+Vorcaro, o banqueiro e Moraes **se encontraram pessoalmente pelo menos seis
+vezes desde 2024** — não apenas trocaram mensagens. O mesmo levantamento
+confirma, com base em metadados técnicos do arquivo, que o contrato entre o
+Banco Master e o escritório de Viviane Barci de Moraes (a soma de
+aproximadamente R$ 131 milhões já mencionada) foi editado por um usuário
+identificado como "Ministro Alexandre de Moraes" às 23h04 de 15 de janeiro de
+2024 — cerca de 1h40 depois de Vorcaro devolver a minuta do contrato com
+sugestões de alteração. Segundo nota do escritório Barci de Moraes, Alexandre
+de Moraes acessou o documento a pedido do setor de compliance do próprio
+escritório e, não tendo processo envolvendo o Master sob sua relatoria à
+época nem identificado impedimento legal, não haveria irregularidade.
+
+Nenhum desses pontos é, por si, uma decisão sobre o mérito — mas mudam a
+natureza do que está em jogo na sessão de 15/9: não se trata apenas de saber
+se houve troca de mensagens, mas se um ministro do STF interveio diretamente
+na redação de um contrato milionário entre sua esposa e uma parte de
+interesse do banco sob apuração da própria Corte.
+
+## Mendonça também recebeu Vorcaro — e confirmou o encontro
+
+Até aqui, a cobertura deste caso tratava de mensagens e contratos entre
+Moraes e Vorcaro, revelados por Mendonça. Reportagens do ICL Notícias,
+confirmadas por outros veículos e pelo próprio ministro em 12 de setembro,
+mostram que **Mendonça também se encontrou pessoalmente com Vorcaro**:
+
+- **O encontro.** Em 14 de março de 2025, em São Paulo, Vorcaro foi recebido
+  por Mendonça num imóvel ligado ao Instituto Iter — instituto fundado pelo
+  próprio ministro —, num encontro que durou cerca de duas horas. O
+  intermédio, segundo mensagens do celular de Vorcaro, teria partido do
+  deputado federal Cezinha de Madureira (PL-SP) e do advogado Ciro Rocha
+  Soares, que representa Vorcaro.
+- **A versão de Mendonça.** O ministro confirmou o encontro publicamente,
+  dizendo tê-lo recebido "uma única vez" e "por iniciativa do próprio
+  empresário", e que "se limitou a ouvi-lo". Segundo seu gabinete, a conversa
+  tratou de um processo sobre precatórios de interesse do Master que estava
+  sob julgamento no STF, e Moraes não foi tema da conversa. O ministro
+  também teria se reunido com Ciro Soares, advogado de Vorcaro, em ocasião
+  distinta.
+- **Por que isso importa para o caso.** Mendonça é o ministro que, desde 1º de
+  setembro, tornou públicas as mensagens e os contratos que expuseram Moraes —
+  e é também o relator que decide o que permanece sob sigilo. A revelação de
+  que ele próprio recebeu Vorcaro pessoalmente, num processo de interesse do
+  banco, é o argumento central por trás da acusação de Moraes de que Mendonça
+  age com parcialidade neste caso (ver seção sobre o pedido de investigação
+  contra Mendonça, abaixo).
+- **Mendonça anunciou saída da sociedade do Instituto Iter depois da
+  revelação.** Segundo a revista *CartaCapital* (edição 1430, 16 de setembro
+  de 2026, reportagem de capa "Corte em pedaços", de André Barrocal), foi a
+  notícia desse encontro que levou o próprio Mendonça a anunciar sua saída da
+  sociedade do Iter — instituto que ele fundou em 2023. À época do encontro,
+  Mendonça ainda não era relator do caso Master.
+- **Um mês antes do encontro, uma ida à alfaiataria.** A mesma reportagem,
+  citando newsletter do jornalista Paulo Motoryn, relata que Mendonça foi a
+  uma alfaiataria acompanhado de Ciro Soares — o mesmo advogado de Vorcaro —
+  para fazer um terno, um mês antes do encontro de 14 de março. Em áudio de
+  WhatsApp enviado a Vorcaro naquele dia, Ciro Soares teria dito: "Fala,
+  Vorcarinho, trabalhando por você. Levei o André lá no Vasco agora, pra
+  fazer um terno." Em outra mensagem, segundo a mesma reportagem: "O André
+  Mendonça disse que quer te receber junto comigo [...] Ele sabe, soube da
+  situação do Banco Central toda. Eu contei. Ele já sabia." Se confirmada,
+  essa segunda mensagem sugeriria que Mendonça já tinha conhecimento da
+  situação do Master antes mesmo do encontro de março — mas trata-se da fala
+  do próprio advogado de Vorcaro, não de uma declaração de Mendonça, e o
+  Observatório não teve acesso ao áudio original, apenas ao relato da
+  reportagem.
+
+Como em todo este caso, a confirmação do encontro não é, por si, prova de
+irregularidade — o próprio Mendonça o admite e o descreve como uma escuta
+pontual sobre um processo específico, não uma negociação. Cabe ao STF, não a
+este Observatório, avaliar se há conflito de interesse.
+
+## Dark Horse: os números se multiplicam — e nem todos são sobre o mesmo contrato
+
+A quebra de sigilo de 11/9 tornou público o inquérito sobre o financiamento
+do filme *Dark Horse*, relatado por Mendonça, e uma operação distinta,
+relatada por Flávio Dino, sobre desvio de emendas parlamentares para a mesma
+produção — batizada pela PF de **Operação Make Up**, deflagrada na
+quinta-feira 10/9 com 49 mandados de busca e apreensão em três estados e no
+Distrito Federal, tendo Karina Gama e o deputado Mário Frias entre os alvos.
+Na casa de Frias, a polícia apreendeu computadores, celulares e sete armas —
+guardadas, segundo a *CartaCapital*, num endereço diferente do declarado pelo
+parlamentar, o que abriu uma investigação à parte por porte ilegal. Reportagens de 12 de setembro, cruzando os dois inquéritos,
+reconciliam uma sequência de valores que vinham sendo citados de forma
+dispersa:
+
+- **R$ 75,1 milhões** — o que a produtora do filme (Go Up Entertainment, de
+  Karina Ferreira da Gama) diz ter efetivamente gasto na produção.
+- **R$ 61 milhões** — o que Vorcaro teria repassado ao filme por meio de um
+  fundo nos Estados Unidos, segundo a PF.
+- **US$ 24 milhões (R$ 134 milhões pela cotação da época, ou aproximadamente
+  R$ 122,7 milhões pela cotação atual)** — o valor total que Flávio Bolsonaro
+  teria negociado com Vorcaro antes da prisão do banqueiro, segundo o site
+  The Intercept Brasil, dividido em 14 parcelas. Desse total, ao menos
+  US$ 12,3 milhões (cerca de R$ 62,9 milhões hoje) teriam sido efetivamente
+  pagos, segundo documentos da investigação citados pela revista *piauí* — o
+  que é consistente, dentro da margem de arredondamento e câmbio, com o valor
+  de R$ 61 milhões que a PF atribui ao repasse de Vorcaro via fundo americano.
+- **R$ 108 milhões, depois R$ 157 milhões — um contrato à parte, não
+  relacionado ao financiamento do filme.** É o valor de um contrato de 2024
+  entre o Instituto Conhecer Brasil (ICB), ONG presidida por Karina Ferreira
+  da Gama — a mesma produtora do filme —, e a Secretaria Municipal de
+  Inovação e Tecnologia de São Paulo (gestão Ricardo Nunes), para instalar e
+  manter 5 mil pontos de wi-fi público na capital paulista. O ICB venceu a
+  licitação em junho de 2024 sem nenhuma experiência prévia na área; pouco
+  depois de assinado, o contrato recebeu um aditivo que elevou seu valor de
+  R$ 108 milhões para R$ 157 milhões, segundo apuração da revista *piauí*
+  (edição 240, setembro de 2026, reportagem "Em cartaz, a caixa-preta", de
+  Breno Pires). A prefeitura pagava o ICB, que imediatamente repassava a
+  fornecedores — um fluxo que investigadores da Polícia Civil de São Paulo
+  descrevem como o de "uma empresa de passagem". Segundo o site The Intercept
+  Brasil, o ICB também subcontratou uma empresa de disparos em massa que
+  teria usado dados pessoais de usuários da rede para fins eleitorais — uma
+  frente de apuração distinta da do financiamento do filme, mas que
+  compartilha a mesma personagem central.
+
+### A reportagem da piauí: mensagens inéditas, uma auditoria da CGU e um laudo que não fecha as contas
+
+A revista *piauí* teve acesso a um trecho inédito de mensagens entre Vorcaro
+e o publicitário Thiago Miranda — que intermediou o contato entre o banqueiro
+e Flávio Bolsonaro — e reconstituiu, com data e valor de cada remessa, o
+fluxo de dinheiro do Master para o filme. Pontos que não constavam da
+cobertura anterior deste caso:
+
+- **O áudio de cobrança de Flávio, na íntegra.** Em 8 de setembro de 2025,
+  Flávio Bolsonaro enviou um áudio a Vorcaro cobrando parcelas atrasadas do
+  financiamento, cada uma no valor de US$ 1,6 milhão (mais de R$ 8 milhões
+  pela cotação atual): "Apesar de você ter dado a liberdade, Daniel, de a
+  gente te cobrar, eu fico sem graça de ficar te cobrando, tá? Mas, enfim...
+  É por causa desse momento muito decisivo aqui do filme." Concluiu avisando
+  que, sem o dinheiro, a produção desmontaria: "Perde ator, perde diretor,
+  perde equipe, perde tudo." O áudio, revelado pelo site The Intercept Brasil
+  (repórter Paulo Motoryn) teria cerca de 1 tonelada de peso em dados —
+  parte de um vazamento maior.
+- **Emendas de quatro deputados, mas só uma chegou ao alvo.** Uma segunda
+  entidade de Karina Gama, a Academia Nacional de Cultura, foi contemplada
+  com R$ 3,6 milhões em emendas parlamentares por iniciativa de quatro
+  deputados bolsonaristas do PL — Carla Zambelli (SP), Marcos Pollon (MS),
+  Delegado Ramagem (RJ) e Bia Kicis (DF) —, mas o governo de São Paulo
+  considerou que a entidade não atendia aos requisitos e o dinheiro nunca foi
+  repassado a ela. Já uma emenda do deputado **Mário Frias** (PL-SP) — R$ 2
+  milhões, em duas remessas de R$ 1 milhão, para dois projetos distintos —
+  chegou de fato ao Instituto Conhecer Brasil.
+- **A CGU encontrou irregularidades nos dois projetos de Frias.** Uma
+  auditoria da Controladoria-Geral da União apurou que o projeto "Lutando
+  pela Vida" (aulas de esportes de combate para 500 pessoas em
+  Pirassununga-SP) teve pagamentos sem comprovante de entrega de bens ou
+  prestação de serviços; o projeto "Jovem Empreendedor" (que prometia
+  capacitar 250 pessoas e alcançar 2.250 estudantes) não capacitou ninguém e
+  não atendeu nenhum estudante, segundo a CGU — que agora avalia pedir o
+  dinheiro de volta e responsabilizar os envolvidos.
+- **Um laudo pericial contratado pela própria produção não resiste a exame.**
+  Diante das suspeitas, a produção de *Dark Horse* encomendou e entregou às
+  autoridades um "Laudo de Perícia Investigativa Defensiva" afirmando que as
+  contas do filme batem: recebimento e gasto de exatamente US$ 13.393.081,29
+  até 4 de junho de 2026. Mas o documento — 32 páginas — não discrimina
+  valores por pessoa, empresa ou serviço, nem apresenta os dados que
+  permitiriam rastrear os pagamentos, apenas afirma que são rastreáveis.
+  Produtores de cinema brasileiros consultados pela *piauí* apontaram
+  inconsistências: só 28% dos custos aparecem como gastos no Brasil, o único
+  país onde houve filmagens; US$ 383 mil teriam sido gastos só com
+  desenvolvimento de roteiro — "Se esse é o custo do roteiro, esse roteirista
+  é um cara que ganhou o Oscar. Isso aqui é padrão Oscar", disse um produtor
+  ouvido pela revista; e US$ 2,68 milhões foram registrados como
+  "soft-production" (etapa inicial, de equipe reduzida), mais caro que a
+  etapa de pré-produção seguinte (US$ 2,66 milhões) — uma desproporção que a
+  produtora Mariza Leão, com quarenta anos de carreira, chamou de
+  incoerente. Michael Davis, sócio americano da Go Up Entertainment, negou
+  detalhar os números às perguntas da *piauí*, alegando cláusulas de
+  confidencialidade.
+- **Fabiano Zettel, o cunhado de Toffoli, também aparece do lado de Flávio.**
+  A reportagem identifica Fabiano Zettel — já mencionado nesta cobertura como
+  cunhado de Dias Toffoli, num contexto totalmente diferente (o fundo Arleen)
+  — atuando como interlocutor de Flávio Bolsonaro em tratativas financeiras
+  com Vorcaro sobre o filme, em janeiro de 2025. É a primeira conexão direta,
+  encontrada pelo Observatório, entre a frente Toffoli–Arleen e a frente
+  Dark Horse — mas trata-se do mesmo nome em dois papéis distintos, não de
+  uma ligação comprovada entre os dois casos.
+- **Ao menos cinco encontros presenciais entre Flávio e Vorcaro, com
+  mensagens de afeto.** Entre agosto de 2024 e novembro de 2025, Flávio e
+  Vorcaro se encontraram pessoalmente pelo menos cinco vezes, segundo a
+  reportagem. Em 7 de novembro de 2025 — dez dias antes da prisão de Vorcaro
+  —, Flávio mandou ao banqueiro um vídeo da produção do filme: "Tá perdendo,
+  irmão! Tudo isso só está sendo possível por causa de vc!" Vorcaro
+  respondeu: "Que demais. Ficou perfeito." Em 16 de novembro, véspera da
+  prisão, Vorcaro disse que "estava na igreja"; Flávio respondeu com duas
+  imagens de visualização única (conteúdo desconhecido) e depois escreveu:
+  "Irmão, estou e estarei contigo sempre, não tem meia conversa entre a
+  gente. Só preciso que me dê uma luz! Abs!" — "a luz", segundo a
+  reportagem, era código para a data do próximo pagamento. Depois da prisão
+  de Vorcaro (17/11) e de sua soltura (29/11), Flávio o visitou — episódio
+  revelado à época pelo site *Metrópoles* —, alegando se tratar de uma visita
+  de amizade, sem relação com dinheiro.
+- **Quem é Karina Gama.** A reportagem traça a trajetória da produtora:
+  jornalista de formação, organizadora de eventos evangélicos em São Paulo
+  nos anos 2010, depois empresária do terceiro setor. Aproximou-se de Mário
+  Frias em 2022, quando ele era secretário especial de Cultura do governo
+  Bolsonaro, e prestou serviços (R$ 54 mil) à campanha dele a deputado
+  federal naquele ano. Com o apoio de Frias, a Go Up obteve os direitos
+  cinematográficos sobre a vida de Bolsonaro ainda em 2022; o orçamento do
+  projeto chegou a US$ 25,4 milhões antes de Vorcaro se comprometer, em
+  dezembro de 2024, a financiar US$ 24 milhões dele.
+- **Denúncias trabalhistas nas filmagens.** Sindicatos e o Ministério do
+  Trabalho apuram denúncias de figurantes e técnicos sobre jornadas longas,
+  atrasos de pagamento, cachês abaixo do piso sindical e revistas abusivas
+  ("toques nas regiões dos seios e partes íntimas"). Um figurante teria sido
+  agredido por um segurança durante gravações no Memorial da América Latina,
+  em São Paulo, gerando boletim de ocorrência e pedido de exame de corpo de
+  delito pela Polícia Civil.
+- **A conta não fecha, mesmo sem contar irregularidade.** Para se pagar no
+  mercado brasileiro, um filme costuma precisar arrecadar cerca de 2,5 vezes
+  seu custo de produção — o que, no caso de *Dark Horse*, exigiria mais de
+  R$ 188 milhões de bilheteria, mais do que qualquer filme brasileiro já
+  arrecadou (o recorde é de *Minha Mãe é uma Peça 3*, com R$ 143,8 milhões).
+  O filme, sem comunicação prévia à Ancine durante as filmagens, ainda não
+  tem o Certificado de Registro de Título necessário para ser exibido em
+  cinemas, nem data de estreia — mas não deve chegar aos cinemas antes das
+  eleições.
+
+O deputado federal **Mário Frias** (PL-SP) também é apontado como alvo da
+apuração de Dino sobre as emendas — além de seu papel, já descrito acima, na
+origem do próprio projeto do filme. A conclusão do relatório da PF sobre o
+financiamento do filme por Vorcaro, nas palavras do próprio documento, é que
+os elementos reunidos "constituem, em juízo de cognição sumária, um conjunto
+coerente de elementos que evidencia justa causa para a instauração da
+investigação, a fim de esclarecer a origem, o trânsito, a destinação e os
+beneficiários finais dos valores movimentados". Flávio Bolsonaro nega
+irregularidade: "No filme do Bolsonaro não tem um real, não tem nada pra
+Flávio, tem patrocínio pra um filme privado."
+
+Nenhum desses valores foi confirmado como crime pelo STF — são elementos de
+duas investigações em curso, com naturezas diferentes (uma sobre o
+financiamento por Vorcaro, relatada por Mendonça; outra sobre desvio de
+emendas parlamentares, relatada por Dino, a partir de material da Polícia
+Civil de São Paulo), com direito à ampla defesa de todos os citados. A
+reportagem da *piauí* é, até aqui, a apuração mais detalhada sobre o caso
+Dark Horse que o Observatório encontrou — mas nem todos os elementos que
+reproduz vêm de documentos primários: alguns são de mensagens e áudios
+obtidos por terceiros (The Intercept Brasil), outros de fontes e documentos
+que a própria revista cita como parcialmente ilegíveis ou incompletos.
+
+## O pedido de investigação contra Mendonça, com fundamentação jurídica
+
+A seção anterior desta cobertura já registrava que Moraes pediu a Fachin a
+abertura de uma investigação contra Mendonça. Reportagens de 12 de setembro
+detalham a fundamentação jurídica desse pedido, protocolado em 3 de
+setembro: Moraes alega que a conduta de Mendonça nos casos Master e do INSS
+poderia, em tese, configurar **abuso de autoridade, improbidade
+administrativa e crime de responsabilidade**, por quebra de imparcialidade e
+favorecimento a determinado grupo político — sem, segundo as reportagens
+consultadas, identificar publicamente qual grupo.
+
+## A sessão de 15/9 é mantida, mas o caso de Mendonça é destacado para 23/9
+
+Na noite de sábado, 12 de setembro, Fachin tomou duas decisões que redesenham
+o que, exatamente, o plenário vai julgar:
+
+- **Negou o pedido de adiamento e de julgamento conjunto.** Atendendo pedido
+  de Gilmar Mendes e do próprio Moraes — que alegava "risco concreto de
+  decisões contraditórias e caos processual" se os casos fossem analisados
+  separadamente —, Fachin manteve a sessão extraordinária de 15 de setembro,
+  às 10h, mas negou que ela julgasse em conjunto a conduta de Mendonça.
+- **Separou a apuração sobre a conduta de Mendonça para 23 de setembro.**
+  Segundo reportagens, Fachin destacou o pedido de investigação de Mendonça
+  — apresentado por Moraes — do julgamento de 15/9, remarcando-o para uma
+  nova sessão em 23 de setembro. A imprensa registra decisões descritas de
+  formas diferentes sobre o alcance exato dessa separação: uma reportagem
+  afirma que Fachin assumiu para si a relatoria da apuração sobre Moraes,
+  afastando Mendonça dela, e suspendeu as apurações sobre o Master e o INSS
+  até uma revisão completa dos autos, citando "a possibilidade de o
+  julgamento da causa resultar em situação de impedimento do julgador"; outra
+  registra que a sessão de 15/9 segue tratando do caso Moraes sob relatoria
+  de Mendonça, com apenas a análise da conduta do próprio Mendonça adiada
+  para 23/9. O Observatório não conseguiu reconciliar as duas versões com as
+  fontes consultadas até a publicação desta atualização — o ponto comum entre
+  elas é que a sessão de 15/9 acontece, mas não decide tudo o que estava em
+  jogo até sexta-feira.
+
+Como em cada ponto anterior: nada disso é uma decisão de mérito sobre as
+mensagens, os contratos ou os encontros revelados. É a arquitetura processual
+que vai definir o que, exatamente, o STF decide em cada uma das duas sessões.
+
+## A degustação em Londres e outros detalhes da reportagem de capa da Veja
+
+A edição 3012 da revista *Veja* (11 de setembro de 2026) dedicou a reportagem
+de capa "Racha Supremo" à crise. A revista tem linha editorial
+declaradamente crítica ao STF e a Moraes — o que não desqualifica os fatos
+concretos que reporta, mas pede que se separe, aqui, reportagem de opinião.
+Os pontos abaixo são fatos e citações diretas, não a moldura editorial da
+matéria:
+
+- **Um evento em Londres.** Segundo a reportagem, Andrei Rodrigues e
+  Alexandre de Moraes integraram o grupo restrito de convidados de uma
+  degustação de uísque custeada pelo Banco Master num clube privado de
+  Londres, em 2024 — anterior, portanto, à prisão de Vorcaro e à crise atual.
+  O Observatório não teve acesso a documentação primária sobre esse evento
+  e o registra como informação de uma única reportagem.
+- **A mensagem de Vorcaro sobre Andrei Rodrigues.** Segundo a *Veja*, nas
+  mensagens que enviou a Moraes na véspera de sua prisão e durante a
+  liquidação do Master, Vorcaro escreveu: "Se o Andrei conseguir atrasar pra
+  outra semana, pois tem feriado, o banco não quebra. Tenta chamar ele e
+  sensibilizar isso se achar possível." Nas mesmas mensagens, segundo a
+  reportagem, Vorcaro perguntou a Moraes se deveria deixar o país, pediu
+  ajuda para bloquear "as maldades" contra ele e deu a entender que ambos
+  contavam com a "camaradagem" do procurador-geral da República e do
+  diretor-geral da PF. Não se sabe o que Moraes respondeu — as mensagens
+  dele, segundo a reportagem, foram enviadas com o recurso de visualização
+  única do WhatsApp.
+- **Um relatório apócrifo específico, com trecho reproduzido.** A reportagem
+  publica a imagem de um documento intitulado "Relatório de Inteligência —
+  Tópico de Análise de Cenário", sobre uma decisão de Mendonça de 24/8/2026
+  na Petição 15.556, que se descreve como de "natureza não acusatória e não
+  impositiva" mas conclui, sob o título "Avaliação": o item analisado
+  "autoriza monitoramento e coleta dirigida". O documento também qualifica
+  como "suspeição reversa" o fato de a própria Polícia Federal — parte
+  interessada, segundo o relatório, por ter seu diretor-geral afastado pela
+  decisão analisada — ter produzido a avaliação. É a partir de documentos
+  desse tipo que Mendonça afirma ter sido monitorado ilicitamente pela PF, e
+  que Moraes e Fachin contestam a legitimidade do procedimento.
+- **Vorcaro nega ter fechado delação.** Em nota reproduzida pela revista,
+  Vorcaro afirmou que o próprio diretor-geral da PF "viajou para eventos"
+  com ele, "com namorada", e que os delegados responsáveis por eventual
+  colaboração premiada dele "não quiseram fazer" o acordo — sugerindo,
+  sem provar, proximidade prévia entre a cúpula da PF e o banqueiro.
+- **Como a Veja lê o alinhamento dos ministros.** Em análise própria — não
+  fato apurado, mas leitura jornalística do quadro político dentro da
+  Corte —, a revista escreve que, dos dez ministros que devem votar em
+  15/9, três (Gilmar Mendes, Flávio Dino e Cristiano Zanin) "se alinham
+  automaticamente a Moraes", dois (Luiz Fux e Kassio Nunes Marques) estão
+  "mais próximos do que defende André Mendonça", Cármen Lúcia e Fachin não
+  manifestaram apoio a nenhum lado, e Toffoli, impedido, não deve votar.
+  Trata-se de uma leitura editorial da revista sobre a política interna do
+  tribunal, não de uma classificação que os próprios ministros assumem
+  publicamente.
+- **Pano de fundo eleitoral.** Segundo a reportagem companheira "Jogo
+  Indefinido" (mesma edição), a crise coincidiu com o primeiro momento, nas
+  simulações de segundo turno, em que o senador Flávio Bolsonaro aparece
+  numericamente à frente de Lula — dado que, segundo a *Veja*, tem levado a
+  campanha de Lula a buscar distanciamento público de Moraes.
+
+Como em todo o resto desta cobertura: citações e fatos relatados por uma
+única reportagem, ainda não confirmados por outras fontes ou por documentos
+primários do STF, são tratados aqui como isso — relato de imprensa, sujeito
+a checagem futura.
+
+## O que a CartaCapital acrescenta — véspera da sessão de 15/9
+
+A edição 1430 da revista *CartaCapital* (16 de setembro de 2026), com
+reportagem de capa assinada por André Barrocal, foi fechada nos dias que
+antecederam a sessão de 15/9 — portanto sem o resultado dela — mas traz
+detalhes que não constavam das fontes já usadas nesta cobertura. A revista
+tem linha editorial declaradamente crítica a Mendonça e ao bolsonarismo, o
+que pede a mesma separação entre fato e moldura editorial já aplicada à
+reportagem da *Veja*:
+
+- **Nomes por trás dos apelidos na mensagem de Vorcaro a Moraes.** A
+  mensagem já registrada nesta cobertura — "Acha que segunda já tenho que
+  estar fora?" — fazia parte de um trecho mais longo, no qual Vorcaro
+  perguntava: "Aquele mesmo juiz Ricardo? E o Galípolo, tá sabendo?
+  Conseguimos fazer algo? [...] Não conseguimos reverter isso com Paulo ou
+  Andrei?" Segundo a reportagem, "juiz Ricardo" é Ricardo Soares Leite, da
+  10ª Vara Federal de Brasília, autor da decisão que decretou a prisão
+  preventiva de Vorcaro em novembro de 2025; "Galípolo" é Gabriel Galípolo,
+  presidente do Banco Central, que decretou a liquidação do Master no dia da
+  prisão do banqueiro; "Paulo" é Paulo Gonet, procurador-geral da República;
+  "Andrei" é Andrei Rodrigues, diretor-geral da PF.
+- **Uma nota de março em que Moraes negou a existência das mensagens —
+  contradita pelo relatório da PF.** Segundo a reportagem, Moraes havia
+  negado a colegas do STF, numa nota divulgada em março de 2026, que certas
+  mensagens de WhatsApp enviadas por Vorcaro em 17 de novembro de 2025 (dia
+  de sua primeira prisão) o tivessem como destinatário. O relatório da PF
+  tornado público em setembro contradiz essa versão.
+- **Fachin também tirou de Moraes a relatoria do inquérito das fake news —
+  separadamente do caso Master.** Segundo a reportagem, além de levar ao
+  plenário o pedido de investigação contra Moraes, Fachin retirou da
+  relatoria de Moraes o Inq 4.781 (o inquérito das fake news, aberto em
+  2019, já mencionado nesta cobertura) — mantendo Moraes apenas como relator
+  das ações penais já decorrentes dele, com as apurações pendentes passando
+  a correr sob a condução do próprio Fachin, que segundo a reportagem busca
+  encerrar o processo. Esse é um inquérito diferente da Petição 15.556 e do
+  Inq 5.026 (Operação Compliance Zero) que são o centro desta cobertura — mas
+  a mudança de relatoria, se confirmada, é uma perda de poder adicional de
+  Moraes, distinta da disputa Master-Mendonça.
+- **Vorcaro alega ter tentado fechar delação, e mira Andrei Rodrigues.** No
+  depoimento a Mendonça — cuja transcrição é pública —, Vorcaro descreveu-se
+  como alvo de perseguição e disse estar disposto a delatar autoridades para
+  "se proteger dos ataques" que dizia sofrer, citando "pessoas do núcleo do
+  atual governo" — entre elas, segundo a reportagem, o próprio Andrei
+  Rodrigues. Vorcaro afirmou que delegados responsáveis pela sua possível
+  colaboração premiada teriam recusado o acordo. Nenhuma dessas acusações
+  foi verificada pelo Observatório — são falas do próprio banqueiro, com
+  interesse direto em se defender.
+- **O pagamento de US$ 1,6 milhão a Flávio, confirmado por relatório do
+  Coaf.** A reportagem cita relatório do Conselho de Controle de Atividades
+  Financeiras (Coaf) — o órgão federal de combate à lavagem de dinheiro —,
+  revelado pela *piauí*, confirmando que Flávio Bolsonaro recebeu ao menos
+  US$ 1,6 milhão de Vorcaro por meio do fundo americano já mencionado nesta
+  cobertura, administrado por um advogado de Eduardo Bolsonaro.
+- **Uma alegação da própria revista, não um fato apurado: financiamento do
+  "tarifaço".** A *CartaCapital* especula — com o verbo no condicional, sem
+  apresentar prova documental — que a permanência de Eduardo Bolsonaro nos
+  Estados Unidos, de onde articulou sanções tarifárias americanas contra o
+  Brasil, "pode ter sido financiada por Vorcaro". O Observatório trata isso
+  como hipótese da própria reportagem, não como fato estabelecido. Já é fato
+  registrado, e não uma hipótese: o STF já havia condenado Eduardo Bolsonaro,
+  por maioria, a quatro anos de prisão por coação no curso do processo,
+  relacionado à articulação daquelas sanções — uma condenação anterior e
+  separada da crise atual, não decorrente das revelações sobre o Master.
+- **Uma frase de Flávio Bolsonaro sobre o futuro do STF.** Em ato público de
+  oposição em 7 de setembro, Flávio Bolsonaro declarou: "Vou indicar cinco
+  ministros para o Supremo Tribunal Federal, porque Alexandre de Moraes vai
+  cair." É uma declaração de campanha, não um fato jurídico — o STF tem onze
+  cadeiras, uma vaga há quase um ano (aposentadoria de Luís Roberto Barroso),
+  e três ministros devem se aposentar por idade no próximo mandato
+  presidencial, o que tornaria matematicamente possível a um presidente
+  eleito indicar até cinco ministros, somados aos dois já indicados por Jair
+  Bolsonaro (Mendonça e Nunes Marques) — mas a fala de Flávio pressupõe a
+  queda de Moraes, que não é uma decisão tomada nem sequer votada até a
+  publicação desta atualização.
+
+Como em cada ponto anterior desta cobertura: trata-se de uma reportagem
+publicada antes da sessão de 15/9, refletindo o estado da apuração até
+então — não o resultado da sessão, que o Observatório vai registrar
+separadamente assim que ocorrer.
+
 ## Status
 
-O plenário do STF vai se reunir em **15 de setembro de 2026** para decidir se
-abre uma investigação formal contra Alexandre de Moraes. Não há, até a
-publicação desta atualização, decisão do tribunal sobre o mérito das
-mensagens reveladas nem sobre a validade processual do relatório que as
-tornou públicas. O Observatório vai atualizar este caso conforme o processo
-avançar — inclusive o resultado da sessão de 15/9.
+O plenário do STF se reuniu (ou está previsto para se reunir — ver seção
+anterior sobre a divergência entre reportagens) em **15 de setembro de 2026**
+para tratar da relação entre Moraes e Vorcaro, e uma nova sessão está marcada
+para **23 de setembro de 2026** para avaliar o pedido de investigação contra
+Mendonça. Não há, até a publicação desta atualização, decisão do tribunal
+sobre o mérito das mensagens, dos contratos ou dos encontros revelados, nem
+sobre a validade processual do relatório que os tornou públicos. O
+Observatório vai atualizar este caso conforme o processo avançar — inclusive
+o resultado das sessões de 15/9 e 23/9.
