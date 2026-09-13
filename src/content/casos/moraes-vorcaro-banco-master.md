@@ -120,6 +120,12 @@ fontes:
     url: "https://www.metropoles.com/colunas/manoela-alcantara/flavio-dino-retira-sigilo-de-investigacao-sobre-dark-horse"
   - label: "Dino retira sigilo de material da investigação sobre Dark Horse — ConJur, 2026-09-13"
     url: "https://conjur.com.br/2026-set-13/dino-retira-sigilo-de-material-da-investigacao-sobre-dark-horse/"
+  - label: "Consultoria ligada ao Master e à JBS contratou filho de Nunes Marques — Metrópoles"
+    url: "https://www.metropoles.com/brasil/consultoria-ligada-ao-master-e-a-jbs-contratou-filho-de-nunes-marques"
+  - label: "Master pagou consultoria que contratou filho de Kassio Nunes Marques — O Tempo, 2026-03-19"
+    url: "https://www.otempo.com.br/politica/judiciario/2026/3/19/master-e-jbs-pagaram-r-18-milhoes-a-consultoria-que-contratou-filho-de-kassio-nunes-marques-do-stf"
+  - label: "Pronunciamento de Moraes deve ser feito na véspera da sessão do STF — Jovem Pan, 2026-09-10"
+    url: "https://jovempan.com.br/politica/pronunciamento-de-moraes-deve-ser-feito-na-segunda-feira-vespera-da-sessao-do-stf/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -261,7 +267,11 @@ Como nos pontos anteriores, nada disso foi julgado pelo plenário até a
 publicação desta atualização — são decisões monocráticas e pedidos dentro de
 uma disputa institucional em curso, sujeitos à sessão de 15/9. O
 pronunciamento de Moraes sobre o caso é esperado para a véspera da sessão
-(14/9), segundo a imprensa.
+(14/9), segundo a imprensa — reagendado: a fala estava inicialmente prevista
+para quinta-feira (10/9), mas Moraes optou por adiá-la depois que a PF
+deflagrou, na mesma manhã, a Operação Make Up (mandados de busca sobre o
+desvio de emendas para o Dark Horse) — avaliação, segundo pessoas próximas
+ao ministro citadas pela imprensa, de que o momento não seria bom.
 
 ## Sigilo, ida e volta — 11 de setembro de 2026
 
@@ -876,6 +886,42 @@ sem confirmação do STF:
 Como em todo o restante deste caso: nada disso foi julgado pelo STF. É um
 relatório de inteligência policial, ainda sob análise, contestado ponto a
 ponto pelo próprio Toffoli.
+
+## Um terceiro nome: o filho de Kassio Nunes Marques
+
+Antes mesmo da crise de setembro, uma reportagem de março de 2026 já havia
+ligado um terceiro ministro do STF à órbita financeira do Master — por meio
+do filho, não do próprio ministro. A base da reportagem são dados do Coaf
+(Conselho de Controle de Atividades Financeiras), e a apuração foi
+publicada originalmente pelo jornal *O Tempo* em 19 de março de 2026,
+corroborada por Metrópoles, Gazeta do Povo, Revista Oeste, ISTOÉ, Brasil247
+e outros veículos:
+
+- **A cadeia de pagamentos.** A consultoria Consult Inteligência Tributária
+  recebeu R$ 18 milhões do Banco Master e da JBS somados, entre agosto de
+  2024 e julho de 2025. No mesmo período, em 10 parcelas, a Consult pagou
+  R$ 281 mil ao escritório de advocacia de **Kevin de Carvalho Marques**,
+  filho do ministro Kassio Nunes Marques.
+- **O que chamou atenção do Coaf.** O faturamento declarado da Consult era
+  de apenas R$ 25,5 mil — uma discrepância que levou o órgão a classificar
+  as transações como "incompatíveis com a capacidade financeira" da
+  empresa, sugerindo que "alguns dos valores podem ter origem não formal".
+- **As respostas.** A Consult confirmou o pagamento a Kevin como "devida
+  remuneração pela prestação de serviços técnicos e de assessoria jurídica"
+  em 2024 e 2025. Kassio Nunes Marques declarou não ter "relação de
+  proximidade" com Daniel Vorcaro e não se recordar de trocas de mensagens
+  sobre assuntos sociais.
+- **O que a reportagem não estabelece.** Nenhuma das fontes consultadas
+  pelo Observatório aponta voto ou decisão de Nunes Marques favorável ao
+  Master ou à JBS relacionado a esses pagamentos — a ligação documentada é
+  financeira, ao filho, não uma contrapartida judicial identificada.
+
+Como nos demais pontos desta cobertura: um pagamento de terceiros ao
+escritório de um filho de ministro não é, por si, prova de irregularidade
+do ministro — e nenhuma das fontes aqui usadas afirma o contrário. É mais
+um fio da mesma teia de relações financeiras em torno de Vorcaro, agora
+envolvendo três ministros por vias diferentes: Moraes diretamente, Toffoli
+por um fundo de investimento, Nunes Marques pelo escritório do filho.
 
 ## A disputa sobre o próprio relatório
 
