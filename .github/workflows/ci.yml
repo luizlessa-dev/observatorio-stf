@@ -17,6 +17,13 @@ jobs:
   # Typecheck, lint e testes não tocam rede nem Supabase — cobrem a maior
   # parte da superfície de regressão (inclusive os 100+ testes comportamentais
   # de node --test) sem depender de nenhum segredo.
+  #
+  # node-version 22 (não 20, apesar de package.json#engines dizer
+  # ">=20.12.0"): a primeira execução deste workflow, nesta mesma revisão,
+  # falhou em `npm run typecheck` com Node 20 porque o Astro 7 instalado
+  # exige Node >=22.12.0 em runtime ("Node.js v20.20.2 is not supported by
+  # Astro!") — o engines field tinha ficado desatualizado depois de algum
+  # upgrade do Astro. Corrigido aqui e em package.json.
   verificar:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -27,7 +34,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: Instalar dependências (modo reprodutível)
@@ -74,7 +81,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: Instalar dependências (modo reprodutível)
