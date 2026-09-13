@@ -1,0 +1,87 @@
+# CI da aplicação (typecheck/lint/test/build), adicionada na revisão de
+# 2026-09-13 — até então só existiam workflows de ingestão de dados
+# (.github/workflows/ingestao-*.yml), e os 91+ testes do projeto rodavam só
+# localmente, sem check público no GitHub protegendo os PRs.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Typecheck, lint e testes não tocam rede nem Supabase — cobrem a maior
+  # parte da superfície de regressão (inclusive os 100+ testes comportamentais
+  # de node --test) sem depender de nenhum segredo.
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Instalar dependências (modo reprodutível)
+        run: npm ci
+
+      - name: Typecheck (astro check + tsc)
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Testes (node --test)
+        run: npm test
+
+  # O build estático busca dados reais do Supabase em build-time (páginas
+  # como repercussao-geral.astro e ministros/*.astro fazem `await
+  # supabase.from(...)` na própria frontmatter; scripts/gerar-og-images.mjs
+  # também consulta stf_ministros para gerar as imagens de compartilhamento).
+  # Não existe hoje um projeto Supabase de preview/staging — só o de
+  # produção.
+  #
+  # Por decisão explícita da revisão de 2026-09-13 (item 5.7: "não chame
+  # Stripe ou Supabase de produção"), este job não roda por padrão — a
+  # condição abaixo lê uma Variable do repositório (Settings → Secrets and
+  # variables → Actions → Variables), não um Secret, porque `if:` não tem
+  # acesso ao contexto `secrets`. Para habilitar, o mantenedor precisa de
+  # DOIS passos conscientes:
+  #   1) criar os Secrets PUBLIC_SUPABASE_URL e PUBLIC_SUPABASE_ANON_KEY —
+  #      a chave ANÔNIMA (RLS protege os dados; a mesma chave já fica
+  #      pública no HTML/JS de qualquer visitante do site, ver
+  #      .env.example) — nunca SUPABASE_SERVICE_ROLE_KEY;
+  #   2) criar a Variable CI_BUILD_SUPABASE com valor "true".
+  # Sem os dois, este job é pulado (não falha o PR) e o build continua
+  # validado apenas localmente e no preview do Vercel.
+  build:
+    needs: verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    if: ${{ vars.CI_BUILD_SUPABASE == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Instalar dependências (modo reprodutível)
+        run: npm ci
+
+      - name: Build
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+        run: npm run build
