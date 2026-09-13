@@ -1288,10 +1288,11 @@ reportagem da *Veja*:
   Estados Unidos, de onde articulou sanções tarifárias americanas contra o
   Brasil, "pode ter sido financiada por Vorcaro". O Observatório trata isso
   como hipótese da própria reportagem, não como fato estabelecido. Já é fato
-  registrado, e não uma hipótese: o STF já havia condenado Eduardo Bolsonaro,
-  por maioria, a quatro anos de prisão por coação no curso do processo,
-  relacionado à articulação daquelas sanções — uma condenação anterior e
-  separada da crise atual, não decorrente das revelações sobre o Master.
+  registrado, e não uma hipótese: o STF já havia imposto a Eduardo Bolsonaro,
+  por maioria, uma pena de quatro anos de prisão por coação no curso do
+  processo, relacionado à articulação daquelas sanções — uma sentença
+  anterior e separada da crise atual, não decorrente das revelações sobre o
+  Master.
 - **Uma frase de Flávio Bolsonaro sobre o futuro do STF.** Em ato público de
   oposição em 7 de setembro, Flávio Bolsonaro declarou: "Vou indicar cinco
   ministros para o Supremo Tribunal Federal, porque Alexandre de Moraes vai
