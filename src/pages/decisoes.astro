@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import BuscaDecisoes from "../componentes/BuscaDecisoes";
+import { carregarMinistros, carregarResumo } from "../lib/dados";
+import { fmtNum, fmtData } from "../lib/formato";
+
+// Lista de ministros pro filtro é computada no build (mesma fonte que a
+// home) — só id e nome viajam pro cliente, nada de refazer a consulta lá.
+const [ministros, resumo] = await Promise.all([carregarMinistros(), carregarResumo()]);
+const ministrosOpcoes = ministros.map((m) => ({ id: m.id, nome: m.nome }));
+
+const titulo = "Buscar decisões do STF por processo | Observatório do STF";
+const descricao =
+  `Busque entre ${fmtNum(resumo.totalDecisoes)} decisões do STF por número de processo ` +
+  `e ministro. Dado público, direto da Corte Aberta do STF.`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "Decisões do STF",
+  description: descricao,
+  url: "https://observatoriodostf.org/decisoes",
+  creator: { "@type": "Organization", name: "Observatório do STF" },
+  isAccessibleForFree: true,
+  license: "https://creativecommons.org/licenses/by/4.0/",
+};
+---
+<Base titulo={titulo} descricao={descricao} caminho="/decisoes" jsonLd={jsonLd}>
+  <div class="px-8 py-7">
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-1">Buscar decisões</h1>
+    <p class="text-[12px] text-subtle max-w-2xl leading-[1.6] mb-2">
+      {fmtNum(resumo.totalDecisoes)} decisões do STF desde 2000, direto da Corte Aberta do STF
+      {resumo.dadosAte && <> — dados até {fmtData(resumo.dadosAte)}</>}.
+    </p>
+    <BuscaDecisoes client:load ministros={ministrosOpcoes} />
+  </div>
+</Base>
