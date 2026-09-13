@@ -1,0 +1,118 @@
+---
+import Base from "../layouts/Base.astro";
+
+const titulo = "Política de Privacidade — Observatório do STF";
+const descricao =
+  "Como o Observatório do STF trata dado pessoal, em conformidade com a LGPD: o que " +
+  "coletamos, por quê, com quem compartilhamos e como exercer seus direitos.";
+const atualizadoEm = "16 de setembro de 2026";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/privacidade">
+  <article class="px-8 py-10 max-w-2xl prose-invert">
+    <h1 class="font-display text-[32px] font-bold text-white leading-[1.2] mb-2">Política de Privacidade</h1>
+    <p class="text-[11px] text-subtle mb-8">Última atualização: {atualizadoEm}</p>
+
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Esta política explica, em conformidade com a Lei Geral de Proteção de Dados
+      (Lei 13.709/2018, "LGPD"), como o Observatório do STF trata dado pessoal de quem
+      visita o site, cria conta ou contribui financeiramente.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Controlador</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      <strong class="text-ink">Lessa Labs Tecnologia Ltda.</strong>, CNPJ 65.659.055/0001-53,
+      sediada em Curitiba/PR. Canal para qualquer assunto de privacidade:{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">O que coletamos — e o que não coletamos</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-3">
+      A navegação no site em si — ler ministros, casos, repercussão geral — não exige
+      cadastro e não é rastreada: o site não usa Google Analytics, Meta Pixel nem
+      qualquer outra ferramenta de rastreamento ou cookie de publicidade.
+    </p>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-2 list-disc pl-4">
+      <li><strong class="text-ink">E-mail</strong> — coletado quando você entra por link
+        mágico (login sem senha) ou inicia uma contribuição financeira. Usado só para
+        autenticar você e para o Stripe processar a cobrança.</li>
+      <li><strong class="text-ink">Dado de assinatura</strong> — plano, status e data de
+        vigência da contribuição, associados ao e-mail. Não inclui dado de cartão.</li>
+      <li><strong class="text-ink">Dado de pagamento</strong> — processado inteiramente
+        pelo Stripe. Número de cartão e dados sensíveis de pagamento nunca chegam aos
+        nossos servidores.</li>
+      <li><strong class="text-ink">Cookie técnico de sessão</strong> — ao entrar por link
+        mágico, o provedor de autenticação (Supabase) grava um token local no seu
+        navegador para manter a sessão. É estritamente funcional, não é usado para
+        publicidade nem rastreamento entre sites.</li>
+      <li><strong class="text-ink">Log de servidor</strong> — como qualquer site, a
+        infraestrutura de hospedagem (Vercel) registra automaticamente dado técnico de
+        acesso (IP, data/hora, página acessada) por período limitado, para segurança e
+        diagnóstico — não para perfilamento de usuário.</li>
+    </ul>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Com quem compartilhamos</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-3">
+      Não vendemos, alugamos nem compartilhamos dado pessoal com terceiros para fins de
+      publicidade. Usamos os seguintes operadores, cada um tratando dado só na medida
+      necessária ao serviço que presta:
+    </p>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-2 list-disc pl-4">
+      <li><strong class="text-ink">Supabase</strong> — banco de dados e autenticação
+        (armazena e-mail, dado de assinatura, token de sessão).</li>
+      <li><strong class="text-ink">Stripe</strong> — processamento de pagamento (recebe
+        e-mail e dado de cartão diretamente do seu navegador).</li>
+      <li><strong class="text-ink">Vercel</strong> — hospedagem do site (logs técnicos de
+        acesso).</li>
+    </ul>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Esses operadores podem processar dado em servidores fora do Brasil, dentro dos
+      termos de proteção de dados de cada um. Podemos também divulgar dado quando
+      exigido por lei ou ordem judicial.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Base legal e finalidade</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Tratamos e-mail e dado de assinatura com base na execução de contrato (viabilizar
+      o login e a contribuição que você solicitou) e, quando aplicável, em obrigação
+      legal (guarda de registro fiscal de pagamento). Não usamos dado pessoal para
+      finalidade diferente da que você solicitou ao fornecê-lo.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Retenção</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Mantemos e-mail e dado de assinatura enquanto sua conta ou contribuição estiver
+      ativa, e pelo prazo adicional exigido por obrigação legal ou fiscal depois disso.
+      Logs técnicos de acesso são retidos por prazo limitado, conforme prática padrão de
+      operação de infraestrutura.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Seus direitos</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-3">
+      Sob a LGPD, você pode solicitar, a qualquer momento e gratuitamente:
+    </p>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-4 space-y-1 list-disc pl-4">
+      <li>Confirmação de que tratamos seu dado, e acesso a ele</li>
+      <li>Correção de dado incompleto, inexato ou desatualizado</li>
+      <li>Anonimização, bloqueio ou eliminação de dado desnecessário ou tratado em
+        desconformidade com a lei</li>
+      <li>Portabilidade do dado a outro fornecedor de serviço</li>
+      <li>Eliminação do dado pessoal tratado com seu consentimento</li>
+      <li>Revogação do consentimento, quando o tratamento se basear nele</li>
+    </ul>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Para exercer qualquer um desses direitos, escreva para{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+      Respondemos dentro de prazo razoável. Cancelar uma assinatura não apaga
+      automaticamente o histórico de cobrança que somos legalmente obrigados a manter
+      por razão fiscal — se quiser eliminação além disso, pode solicitar separadamente.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Alterações desta política</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7]">
+      Podemos atualizar esta política; a data no topo desta página sempre reflete a
+      última revisão. Mudanças relevantes na forma de tratar dado de quem já tem conta
+      ativa serão comunicadas por e-mail. Veja também os{" "}
+      <a href="/termos" class="underline hover:text-ink">Termos de Uso</a>.
+    </p>
+  </article>
+</Base>

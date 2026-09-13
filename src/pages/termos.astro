@@ -1,0 +1,97 @@
+---
+import Base from "../layouts/Base.astro";
+
+const titulo = "Termos de Uso — Observatório do STF";
+const descricao =
+  "Condições de uso do site e da contribuição paga do Observatório do STF.";
+const atualizadoEm = "16 de setembro de 2026";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/termos">
+  <article class="px-8 py-10 max-w-2xl prose-invert">
+    <h1 class="font-display text-[32px] font-bold text-white leading-[1.2] mb-2">Termos de Uso</h1>
+    <p class="text-[11px] text-subtle mb-8">Última atualização: {atualizadoEm}</p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">1. Quem oferece o serviço</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      O Observatório do STF (<code class="text-[11px]">observatoriodostf.org</code>) é operado por{" "}
+      <strong class="text-ink">Lessa Labs Tecnologia Ltda.</strong>, CNPJ 65.659.055/0001-53,
+      sediada em Curitiba/PR ("nós", "o Observatório"). Ao usar o site ou contribuir
+      financeiramente, você concorda com estes termos.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">2. O que o site oferece</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-4">
+      Publicamos dado público do Supremo Tribunal Federal, organizado e explicado, e
+      apurações editoriais sobre controvérsias envolvendo ministros da Corte — ver{" "}
+      <a href="/metodologia" class="underline hover:text-ink">Metodologia</a>.
+      Todo o conteúdo publicado é de acesso aberto e gratuito.
+    </p>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      <strong class="text-ink">Hoje não existe área restrita a assinante.</strong> Uma
+      eventual contribuição financeira sustenta a apuração e a infraestrutura do
+      projeto — não compra acesso a conteúdo que já não esteja disponível
+      gratuitamente. Se isso mudar no futuro, o texto desta página e o da página de
+      contribuição serão atualizados antes de qualquer cobrança nesses termos.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">3. Contribuição financeira</h2>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-2 list-disc pl-4">
+      <li>Planos mensal (R$ 29,90) ou anual (R$ 299,00), cobrados de forma recorrente via
+        Stripe, processador de pagamentos terceiro. Não armazenamos dado de cartão —
+        ele é processado inteiramente pelo Stripe.</li>
+      <li>Você pode cancelar a qualquer momento, sem multa, por meio do próprio painel de
+        cobrança do Stripe (link enviado por e-mail na confirmação da assinatura) ou
+        escrevendo para o e-mail de contato abaixo.</li>
+      <li>O cancelamento interrompe a renovação seguinte; o período já pago permanece
+        válido até o fim do ciclo vigente. Não há reembolso proporcional de período já
+        iniciado, exceto quando exigido por lei.</li>
+      <li>Os preços podem mudar para novas assinaturas; uma alteração de preço não afeta
+        uma assinatura já ativa até a renovação seguinte, e você será avisado antes
+        disso ocorrer.</li>
+    </ul>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">4. Uso aceitável</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Você pode citar, compartilhar e reutilizar o conteúdo publicado, com atribuição ao
+      Observatório do STF e, quando aplicável, à fonte primária original. Não é permitido
+      raspar (scraping) o site em volume que sobrecarregue a infraestrutura, nem
+      apresentar conteúdo daqui como produzido por terceiros sem atribuição.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">5. Isenções</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-4">
+      O conteúdo deste site é informativo e jornalístico — não constitui aconselhamento
+      jurídico, financeiro ou de qualquer outra natureza profissional. Fazemos o melhor
+      esforço para manter os dados corretos e atualizados, citando a fonte e a data de
+      cada dado, mas não garantimos ausência total de erro. Se encontrar um dado
+      incorreto, veja como reportar em <a href="/metodologia" class="underline hover:text-ink">Metodologia</a>.
+    </p>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Os casos publicados na seção <a href="/casos" class="underline hover:text-ink">Casos</a> refletem
+      apuração editorial em andamento, salvo quando o status indicar "confirmado" — ver
+      a política editorial da seção. Nada publicado com status "em apuração" deve ser
+      lido como conclusão de culpa, responsabilidade ou veredito.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">6. Alterações destes termos</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Podemos atualizar estes termos; a data no topo desta página sempre reflete a
+      última revisão. Mudanças que afetem cobrança de assinantes ativos serão
+      comunicadas por e-mail antes de entrarem em vigor para essas assinaturas.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">7. Lei aplicável</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Estes termos são regidos pela lei brasileira. Fica eleito o foro da comarca de
+      Curitiba/PR para dirimir controvérsias, ressalvado o foro do domicílio do
+      consumidor quando aplicável por lei.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Contato</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7]">
+      Dúvidas sobre estes termos:{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+      Veja também a <a href="/privacidade" class="underline hover:text-ink">Política de Privacidade</a>.
+    </p>
+  </article>
+</Base>

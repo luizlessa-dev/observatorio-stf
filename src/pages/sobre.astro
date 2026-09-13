@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+
+const titulo = "Sobre — Observatório do STF";
+const descricao =
+  "Quem mantém o Observatório do STF, por que ele existe e como se sustenta. " +
+  "Projeto editorial independente, sem vínculo com o Judiciário ou o Governo Federal.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/sobre">
+  <article class="px-8 py-10 max-w-2xl prose-invert">
+    <h1 class="font-display text-[32px] font-bold text-white leading-[1.2] mb-3">Sobre</h1>
+    <p class="text-[13px] text-muted leading-[1.7] mb-8">
+      O Observatório do STF organiza dado público do Supremo Tribunal Federal — decisões,
+      custo dos gabinetes, repercussão geral — e apura, caso a caso, controvérsias
+      envolvendo ministros da Corte. A premissa é simples: informação sobre quem decide
+      os rumos do país deveria ser fácil de achar, fácil de conferir e difícil de
+      distorcer.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Quem mantém</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      O Observatório do STF é mantido por <strong class="text-ink">Luiz Lessa</strong>{" "}
+      através da <strong class="text-ink">Lessa Labs Tecnologia Ltda.</strong>{" "}
+      (CNPJ 65.659.055/0001-53, sediada em Curitiba/PR). Não há vínculo — financeiro,
+      editorial ou de qualquer outra natureza — com o Supremo Tribunal Federal, com o
+      Governo Federal, com partido político ou com qualquer parte citada nos casos
+      publicados aqui.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Como o site se sustenta</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Por contribuições voluntárias de leitores (<a href="/assinar" class="underline hover:text-ink">veja aqui</a>).
+      Não há publicidade nem patrocínio institucional. Todo o conteúdo publicado é
+      aberto — contribuir sustenta a apuração, não desbloqueia nada que já não esteja
+      no ar para qualquer visitante.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">O que o site faz</h2>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-2 list-disc pl-4">
+      <li>Publica dado público do STF — decisões, custo dos gabinetes, repercussão geral —
+        organizado e explicado, com a metodologia de leitura documentada em detalhe.</li>
+      <li>Apura, sob o rótulo <a href="/casos" class="underline hover:text-ink">Casos</a>,
+        controvérsias envolvendo ministros — sempre com fonte citada, status de apuração
+        explícito, e direito de resposta garantido a qualquer pessoa ou instituição citada.</li>
+    </ul>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">O que o site não faz</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Não classifica ministros por linha ideológica. Não anuncia veredito antes do
+      julgamento — um caso só muda de "em apuração" para "confirmado" quando há um
+      evento concreto e público que sustente isso (decisão transitada em julgado,
+      confissão formal, conclusão oficial de investigação). Cobertura de imprensa ou
+      "consenso público", por si, não bastam. Detalhes em{" "}
+      <a href="/metodologia" class="underline hover:text-ink">Metodologia</a>.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Correção e direito de resposta</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7]">
+      Qualquer pessoa ou instituição citada num caso pode pedir correção ou direito de
+      resposta escrevendo para{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+      Uma correção sempre gera uma nota visível no corpo do texto e atualiza a data de
+      revisão — nunca uma edição silenciosa que apaga o que estava escrito antes.
+    </p>
+  </article>
+</Base>
