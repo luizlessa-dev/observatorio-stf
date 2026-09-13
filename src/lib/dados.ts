@@ -45,6 +45,16 @@ export interface Gasto {
   fonte: string | null;
 }
 
+export interface GastoServidor {
+  nome: string;
+  cargo_efetivo: string | null;
+  cargo_comissionado: string | null;
+  funcao: string | null;
+  situacao_funcional: string | null;
+  remuneracao_bruta: number;
+  remuneracao_liquida: number | null;
+}
+
 const COLUNAS_MINISTRO =
   "id, nome, iniciais_exibicao, data_posse, data_saida, indicado_por, indicado_por_curto, partido_indicante, cargo_anterior, aposentadoria_comp, ativo" as const;
 
@@ -263,6 +273,35 @@ export async function carregarGastos(ministroId: string): Promise<Gasto[]> {
     .order("ano", { ascending: false })
     .order("mes", { ascending: false });
   return (data ?? []) as Gasto[];
+}
+
+/**
+ * Detalhamento por servidor do gabinete, só do mês mais recente disponível
+ * (não faz sentido mostrar histórico completo aqui — quem quer isso já tem
+ * o agregado mensal via carregarGastos). Uma consulta para achar o
+ * ano/mês mais recente e outra para os servidores desse período: mais
+ * simples que uma janela SQL, e o volume por ministro (~35 linhas) não
+ * justifica a complexidade.
+ */
+export async function carregarGastosServidores(ministroId: string): Promise<GastoServidor[]> {
+  const { data: ultimo } = await supabase
+    .from("stf_gastos_servidores")
+    .select("ano, mes")
+    .eq("ministro_id", ministroId)
+    .order("ano", { ascending: false })
+    .order("mes", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!ultimo) return [];
+
+  const { data } = await supabase
+    .from("stf_gastos_servidores")
+    .select("nome, cargo_efetivo, cargo_comissionado, funcao, situacao_funcional, remuneracao_bruta, remuneracao_liquida")
+    .eq("ministro_id", ministroId)
+    .eq("ano", ultimo.ano)
+    .eq("mes", ultimo.mes)
+    .order("remuneracao_bruta", { ascending: false });
+  return (data ?? []) as GastoServidor[];
 }
 
 /**

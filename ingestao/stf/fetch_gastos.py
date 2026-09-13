@@ -7,6 +7,15 @@ e insere como um registro mensal por ministro na tabela stf_gastos.
 
 Também insere o subsídio fixo dos próprios ministros (R$ 46.366,19/mês).
 
+Desde 2026-09: na mesma varredura (não faz sentido raspar a fonte duas
+vezes), também grava o detalhamento por servidor em
+stf_gastos_servidores — nome, matrícula, cargo efetivo, cargo
+comissionado, função, situação funcional e remuneração bruta/líquida. A
+fonte já publica essas colunas sob nome real (é folha de pagamento de
+servidor público, dado obrigatoriamente público pela LAI); stf_gastos
+continua existindo com o agregado, para não quebrar quem já lê aquele
+formato. Ver supabase/migrations/0021_gastos_servidores_gabinete.sql.
+
 Execução:
   python3 ingestao/stf/fetch_gastos.py [--dry-run]
 """
@@ -99,15 +108,26 @@ def buscar_pagina(session, pagina: int) -> list:
     soup = BeautifulSoup(resp.text, "html.parser")
     rows = soup.select("table tr")
 
+    # Colunas confirmadas por inspeção direta da página em 2026-09:
+    # Matrícula | Nome | Cargo Efetivo | Cargo Comissionado | Nome da Função |
+    # Nome da Unidade | Situação Funcional | Remuneração Bruta | Remuneração
+    # Líquida | Ações. `len(cols) < 9` mantém o filtro original — uma linha
+    # sem remuneração líquida preenchida ainda tem pelo menos 9 <td>s.
     servidores = []
     for tr in rows[2:]:  # pula 2 linhas de header
         cols = [td.get_text(strip=True) for td in tr.select("td")]
         if len(cols) < 9:
             continue
         servidores.append({
-            "nome":       cols[1],
-            "unidade":    cols[5],
-            "valor_bruto": parse_valor(cols[7]),
+            "matricula":            cols[0],
+            "nome":                 cols[1],
+            "cargo_efetivo":        cols[2] or None,
+            "cargo_comissionado":   cols[3] or None,
+            "funcao":               cols[4] or None,
+            "unidade":              cols[5],
+            "situacao_funcional":   cols[6] or None,
+            "valor_bruto":          parse_valor(cols[7]),
+            "valor_liquido":        parse_valor(cols[8]) if len(cols) > 8 else None,
         })
     return servidores
 
@@ -142,8 +162,18 @@ def run(dry_run: bool = False):
 
     print(f"Referência: {mes_ref}/{ano_ref} | {total_paginas} páginas")
 
-    # Acumula custo por gabinete
-    custo_gabinete = {}   # iniciais → {total, count}
+    # Acumula custo por gabinete e, em paralelo, o detalhamento por servidor.
+    # servidores_por_chave é um dict, não uma lista: a fonte tem pelo menos
+    # um caso conhecido (matrícula 3952, GABINETE DA PRESIDÊNCIA) de duas
+    # linhas para a mesma matrícula na mesma página — provavelmente uma
+    # correção ou desdobramento de folha do lado do STF. Um dict chaveado
+    # por (ministro_id, matrícula) faz a segunda ocorrência sobrescrever a
+    # primeira de forma determinística, em vez de o upsert falhar com
+    # "ON CONFLICT DO UPDATE command cannot affect row a second time". O
+    # agregado em custo_gabinete continua somando as duas — não mudei esse
+    # comportamento, que já existia antes desta ingestão por servidor.
+    custo_gabinete = {}       # iniciais → {total, count}
+    servidores_por_chave = {} # (ministro_id, matricula) → linha
     rows_primeira = buscar_pagina(session, 1)
 
     for pagina in range(1, total_paginas + 1):
@@ -162,8 +192,28 @@ def run(dry_run: bool = False):
             custo_gabinete[iniciais]["total"] += s["valor_bruto"]
             custo_gabinete[iniciais]["count"] += 1
 
+            servidores_por_chave[(ministro_id, s["matricula"])] = {
+                "ministro_id":         ministro_id,
+                "ano":                 ano_ref,
+                "mes":                 mes_ref,
+                "matricula":           s["matricula"],
+                "nome":                s["nome"],
+                "cargo_efetivo":       s["cargo_efetivo"],
+                "cargo_comissionado":  s["cargo_comissionado"],
+                "funcao":              s["funcao"],
+                "situacao_funcional":  s["situacao_funcional"],
+                "remuneracao_bruta":   round(s["valor_bruto"], 2),
+                "remuneracao_liquida": round(s["valor_liquido"], 2) if s["valor_liquido"] is not None else None,
+            }
+
         if pagina % 10 == 0:
             print(f"  {pagina}/{total_paginas} páginas processadas...")
+
+    duplicatas = sum(custo_gabinete[i]["count"] for i in custo_gabinete) - len(servidores_por_chave)
+    if duplicatas:
+        print(f"  ({duplicatas} linha(s) com matrícula repetida na fonte — "
+              f"mantida só a última ocorrência no detalhamento por servidor)")
+    lote_servidores = list(servidores_por_chave.values())
 
     print(f"\nGabinetes encontrados: {len(custo_gabinete)}")
     for iniciais, dados in sorted(custo_gabinete.items()):
@@ -203,6 +253,20 @@ def run(dry_run: bool = False):
         ).execute()
 
     print(f"\n✅ {len(lote)} registros de gastos inseridos (referência {mes_ref}/{ano_ref})")
+
+    # Detalhamento por servidor — upsert em lotes de 500 (o Supabase client
+    # não trava num payload de ~400 linhas, mas não custa nada ser
+    # defensivo caso um mês tenha muito mais gabinetes que o normal).
+    if not dry_run and lote_servidores:
+        for i in range(0, len(lote_servidores), 500):
+            pedaco = lote_servidores[i:i + 500]
+            sb.table("stf_gastos_servidores").upsert(
+                pedaco,
+                on_conflict="ministro_id,ano,mes,matricula"
+            ).execute()
+
+    print(f"✅ {len(lote_servidores)} registros de servidor por gabinete inseridos "
+          f"(referência {mes_ref}/{ano_ref})")
 
 
 if __name__ == "__main__":

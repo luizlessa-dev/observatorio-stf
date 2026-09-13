@@ -113,6 +113,32 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_gastos"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0021 (2026-09): detalhamento por servidor do custo de
+      // gabinete — mesma fonte de stf_gastos.custo_gabinete, mas sem
+      // agregar. Nome e remuneração são dado de servidor público, já
+      // publicado sob nome real pelo próprio STF (LAI) — ver comentário na
+      // migration.
+      stf_gastos_servidores: {
+        Row: {
+          id:                  string;
+          ministro_id:         string;
+          ano:                 number;
+          mes:                 number;
+          matricula:           string;
+          nome:                string;
+          cargo_efetivo:       string | null;
+          cargo_comissionado:  string | null;
+          funcao:              string | null;
+          situacao_funcional:  string | null;
+          remuneracao_bruta:   number;
+          remuneracao_liquida: number | null;
+          fonte:               string;
+          created_at:          string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_gastos_servidores"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_gastos_servidores"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não
