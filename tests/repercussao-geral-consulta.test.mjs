@@ -41,6 +41,21 @@ function criarDiferida() {
 
 function ultimo(lista) { return lista[lista.length - 1]; }
 
+// Captura o que passaria pelo console.error real, sem de fato poluir a saída
+// dos testes — usado para confirmar que o caminho de produção nunca imprime
+// detalhe técnico bruto (revisão seguinte, achado da revisão independente).
+async function espiarConsoleErrorAsync(fn) {
+  const chamadas = [];
+  const original = console.error;
+  console.error = (...args) => { chamadas.push(args.join(" ")); };
+  try {
+    const resultado = await fn();
+    return { resultado, chamadas };
+  } finally {
+    console.error = original;
+  }
+}
+
 test("AUD-01/1: consulta bem-sucedida com registros aplica os dados, sem erro", async () => {
   const { deps, chamadas } = espiarDeps();
   const temasFake = [{ id: "1", tema: 100, titulo: "x", tese: null, status: "julgado", data_reconh: null, data_julg: null, leading_case: null, processos_imp: null, destaque: false, relator_id: null }];
@@ -195,6 +210,52 @@ test("revisão 2026-09-13/3.3: mensagem técnica de rejeição de rede também n
   assert.notEqual(erroExposto, null);
   assert.ok(!erroExposto.includes("supabase.co"), "URL/host interno vazou para o estado exposto à UI");
   assert.ok(!erroExposto.includes("Failed to fetch"), "mensagem crua do fetch vazou para o estado exposto à UI");
+});
+
+test("revisão seguinte/3: em produção (dev:false, o padrão real do site publicado), console.error nunca imprime error.message cru", async () => {
+  const { deps } = espiarDeps();
+
+  const { chamadas } = await espiarConsoleErrorAsync(async () => {
+    executarConsultaCancelavel(
+      () => Promise.resolve({ data: null, count: null, error: { message: "permission denied for table stf_repercussao_geral" } }),
+      deps,
+      { dev: false },
+    );
+    await esperarMicrotarefas();
+  });
+
+  assert.equal(chamadas.length, 1, "esperava exatamente um console.error");
+  assert.ok(!chamadas[0].includes("permission denied"), "detalhe técnico de RLS vazou para o console em produção");
+  assert.ok(!chamadas[0].includes("stf_repercussao_geral"), "nome de tabela vazou para o console em produção");
+});
+
+test("revisão seguinte/3: sem opções explícitas (padrão real de node --test, sem Vite), o console também usa o caminho de produção", async () => {
+  const { deps } = espiarDeps();
+
+  const { chamadas } = await espiarConsoleErrorAsync(async () => {
+    executarConsultaCancelavel(() => Promise.reject(new TypeError("Failed to fetch at https://xxxx.supabase.co/rest/v1/stf_repercussao_geral")), deps);
+    await esperarMicrotarefas();
+  });
+
+  assert.equal(chamadas.length, 1);
+  assert.ok(!chamadas[0].includes("supabase.co"), "host interno vazou para o console no caminho padrão (import.meta.env indefinido em node --test)");
+  assert.ok(!chamadas[0].includes("Failed to fetch"), "mensagem crua do fetch vazou para o console no caminho padrão");
+});
+
+test("revisão seguinte/3: em desenvolvimento (dev:true), o console.error preserva o detalhe técnico completo para depuração local", async () => {
+  const { deps } = espiarDeps();
+
+  const { chamadas } = await espiarConsoleErrorAsync(async () => {
+    executarConsultaCancelavel(
+      () => Promise.resolve({ data: null, count: null, error: { message: "permission denied for table stf_repercussao_geral" } }),
+      deps,
+      { dev: true },
+    );
+    await esperarMicrotarefas();
+  });
+
+  assert.equal(chamadas.length, 1);
+  assert.ok(chamadas[0].includes("permission denied for table stf_repercussao_geral"), "modo dev precisa manter o detalhe completo para quem está desenvolvendo localmente");
 });
 
 test("revisão 2026-09-13/4: exceção síncrona lançada por `consultar` vira estado de erro, sem escapar de executarConsultaCancelavel", async () => {
