@@ -116,6 +116,10 @@ fontes:
     url: "https://piaui.folha.uol.com.br/"
   - label: "Corte em pedaços — André Barrocal, revista CartaCapital, edição 1430, 2026-09-16"
     url: "https://www.cartacapital.com.br/"
+  - label: "Flávio Dino retira sigilo de investigação sobre Dark Horse — Manoela Alcântara, coluna, Metrópoles, 2026-09-13"
+    url: "https://www.metropoles.com/colunas/manoela-alcantara/flavio-dino-retira-sigilo-de-investigacao-sobre-dark-horse"
+  - label: "Dino retira sigilo de material da investigação sobre Dark Horse — ConJur, 2026-09-13"
+    url: "https://conjur.com.br/2026-set-13/dino-retira-sigilo-de-material-da-investigacao-sobre-dark-horse/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -1309,6 +1313,59 @@ Como em cada ponto anterior desta cobertura: trata-se de uma reportagem
 publicada antes da sessão de 15/9, refletindo o estado da apuração até
 então — não o resultado da sessão, que o Observatório vai registrar
 separadamente assim que ocorrer.
+
+## Sigilo do Dark Horse cai por completo — 13 de setembro de 2026
+
+Dois dias antes da sessão de 15/9, Flávio Dino retirou o sigilo de todo o
+material da investigação sobre o financiamento do *Dark Horse* por emendas
+parlamentares — a frente já identificada nesta cobertura como Operação
+Make Up (10/9). A decisão foi tomada na Petição 16.669/DF, já mencionada
+aqui como de relatoria de Dino, e liberou mais de 5 mil documentos que
+estavam sob sigilo. Segundo reportagens, a mesma decisão determinou a
+centralização no STF de um inquérito que corria na Polícia Civil de São
+Paulo — o que aproxima essa frente da apuração original de Karina Gama e
+Mário Frias já detalhada na seção sobre a reportagem da *piauí*.
+
+- **A fundamentação de Dino contra "vazamentos seletivos", na íntegra.**
+  A decisão é incomumente explícita sobre por que a publicidade do processo
+  é a regra, não a exceção: "Aparentemente essa diretriz deriva da ideia de
+  a publicidade prevenir 'vazamentos seletivos', que de fato constituem
+  grave vício a ser combatido. Tais vazamentos seletivos quebram a
+  imparcialidade na condução da investigação criminal e do processo penal,
+  na medida em que a autoridade estatal passa a escolher alvos, de acordo
+  com amizades e inimizades, ou outros interesses ilegítimos, tais como
+  'agradar' detentores de poder econômico ou político, alimentar passeatas
+  e outros 'espetáculos', ou mesmo gerar ganhos financeiros." A frase
+  ecoa — sem citar nominalmente — a própria disputa Moraes×Mendonça sobre
+  liberação seletiva de sigilo que é o centro desta cobertura, embora a
+  decisão trate formalmente de um processo distinto.
+  Fonte: coluna de Manoela Alcântara, *Metrópoles*, 13/9/2026, corroborada
+  por reportagens de outros veículos (ConJur, Jornal Opção-TO, entre
+  outros) com o mesmo teor.
+- **Escala financeira, em termos gerais.** Reportagens descrevem
+  "movimentações de centenas de milhões de reais" entre as empresas
+  investigadas no esquema de emendas — uma cifra agregada, sem detalhamento
+  por reportagem consultada de quanto disso se refere estritamente ao
+  financiamento do filme (já reconciliado, com valores mais granulares, na
+  seção sobre a reportagem da *piauí*) e quanto a outras frentes da
+  Operação Make Up.
+- **Uma manchete não confirmada que o Observatório optou por não
+  reproduzir como fato.** Uma reportagem (Revista Fórum) trouxe no título a
+  possibilidade de elo entre a investigação e o PCC (Primeiro Comando da
+  Capital), mas o Observatório não conseguiu acessar o corpo da matéria
+  para verificar a base dessa afirmação, e outra reportagem sobre a mesma
+  decisão de Dino, do mesmo dia, não faz essa menção. Não incorporamos essa
+  informação até conseguir verificá-la diretamente. Vale notar que esta
+  cobertura já registra, com fonte diversa (a apuração da *piauí* sobre o
+  Dark Horse), que um dos fornecedores subcontratados pelo Instituto
+  Conhecer Brasil é apontado pelo Ministério Público como membro do
+  PCC — um fato já estabelecido, mas distinto da manchete não verificada
+  de hoje.
+
+Como no resto desta cobertura: a decisão de tornar público o material da
+investigação não é um julgamento de mérito sobre o que esse material
+mostra — é uma decisão sobre sigilo processual, tomada por um único
+ministro, ainda sujeita a recurso.
 
 ## Status
 
