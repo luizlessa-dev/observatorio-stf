@@ -1,7 +1,7 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
 resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Moraes e Vorcaro, e dois contratos somando R$ 180 milhões — mas também recebeu Vorcaro pessoalmente. Toffoli e o Dark Horse entram na crise. STF trata do caso Moraes em 15/9 e de Mendonça em 23/9."
-ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino"]
+ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
 data_atualizacao: "2026-09-16"
@@ -148,6 +148,14 @@ fontes:
     url: "https://www.infomoney.com.br/politica/zanin-quer-integra-do-celular-de-vorcaro-antes-de-sessao-do-stf-sobre-master-moraes/"
   - label: "Prefeitura aponta R$ 12 milhões em notas suspeitas e cobra devolução de R$ 906 mil de ONG do wi-fi — Alagoas 24 Horas"
     url: "https://www.alagoas24horas.com.br/1749003/prefeitura-aponta-r-12-milhoes-em-notas-suspeitas-e-cobra-devolucao-de-r-906-mil-de-ong-responsavel-por-wi-fi-na-periferia/"
+  - label: "Zanin dá até 23h para PF entregar dados de celular de Vorcaro — Migalhas, 2026-09-13"
+    url: "https://www.migalhas.com.br/quentes/464414/zanin-da-ate-23h-para-pf-entregar-dados-de-celular-de-vorcaro"
+  - label: "PF está com celular de Vorcaro e afirma poder enviar dados a ministros — Agência Brasil, 2026-09-13"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/pf-esta-com-celular-de-vorcaro-e-afirma-poder-enviar-dados-ministros"
+  - label: "Mendonça diz ser contra abrir íntegra do celular de Vorcaro e pede que Fachin apure suposta coação na PF — Página3, 2026-09-13"
+    url: "https://pagina3.com.br/justica/mendonca-diz-ser-contra-abrir-integra-do-celular-de-vorcaro-e-pede-que-fachin-apure-suposta-coacao-na-pf/"
+  - label: "Moraes pede retirada de sigilo de rede de pagamentos de Vorcaro antes de sessão no STF — BNews, 2026-09-13"
+    url: "https://www.bnews.com.br/noticias/crime-e-justica-bahia/moraes-pede-retirada-de-sigilo-de-rede-de-pagamentos-de-vorcaro-antes-de-sessao-no-stf.html"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -1521,14 +1529,75 @@ investigação não é um julgamento de mérito sobre o que esse material
 mostra — é uma decisão sobre sigilo processual, tomada por um único
 ministro, ainda sujeita a recurso.
 
+## Domingo de pressão — quatro ministros, quatro ofícios, véspera da véspera da sessão
+
+No domingo 13 de setembro — dois dias antes da sessão de 15/9 —, a disputa
+sobre quem tem acesso a quê dentro do próprio celular de Vorcaro virou uma
+sequência pública de ofícios trocados entre ministros e a PF, quase em
+tempo real. Reportagens da Folha de S.Paulo (pagas, não acessadas
+diretamente pelo Observatório) foram corroboradas, fato a fato, por
+Migalhas, Agência Brasil e outros veículos:
+
+- **Zanin dá prazo de horas para a PF.** Zanin determinou que a PF entregasse
+  ao seu gabinete, até as 23h daquele domingo, cópia integral da mídia
+  extraída do celular de Vorcaro (apreendido em 18 de novembro de 2025, na
+  primeira fase da Operação Compliance Zero) — ordem endereçada ao
+  diretor-geral da PF, Andrei Rodrigues. Justificou precisar "conhecer o
+  material para formar sua convicção" para o julgamento da Pet 16.662,
+  marcado para terça. A frase central do ofício: "não há hierarquia entre
+  os ministros do Supremo", e "os elementos de prova pertencem ao Plenário
+  do Supremo Tribunal Federal e aos seus integrantes e não a um integrante
+  específico". Zanin registrou ainda que a mesma mídia já havia sido
+  compartilhada com os advogados de defesa de Vorcaro e com o Congresso
+  Nacional — este último por determinação do próprio Mendonça, para
+  instruir a CPMI.
+- **A PF responde: tem condições técnicas, e o material está intacto.**
+  Fachin havia cobrado da PF, na noite de sábado (12/9), informações sobre
+  o aparelho em 24 horas. A PF respondeu no domingo que os dados "estão
+  preservados, sob a guarda da instituição", com "lacres íntegros e com os
+  mecanismos de verificação de integridade digital", e que tem "plenas
+  condições técnicas" para enviar cópia idêntica a quem solicitar — Moraes e
+  Zanin já haviam formalizado interesse.
+- **Mendonça se posiciona contra — e pede uma apuração própria.** No mesmo
+  domingo, Mendonça declarou-se contrário ao compartilhamento integral,
+  argumentando que a divulgação poderia "tumultuar" a análise, prevista
+  para terça, do relatório da PF sobre as mensagens entre Vorcaro e Moraes.
+  Mendonça também pediu a Fachin que apure se delegados da PF sofreram
+  "constrangimentos ou pressões" durante as investigações — e cobrou
+  explicações da própria PF sobre as circunstâncias em que uma cópia dos
+  dados chegou ao seu gabinete em março, apontando "divergência de
+  informações" sobre esse envio. (Vale notar: a informação de que a cópia
+  enviada a Mendonça em março não corresponderia ao material original —
+  mencionada em uma síntese de agência que o Observatório consultou — não
+  foi confirmada na leitura direta da fonte primária mais completa
+  disponível; o que está confirmado é que Mendonça descreveu sua cópia como
+  "lacrada" e recusou compartilhá-la a partir do próprio gabinete.)
+- **Moraes pede sigilo derrubado de mais uma petição — a da "rede de
+  pagamentos".** Também no domingo (18h37), Moraes pediu a Fachin a
+  retirada de sigilo da Pet 15.645 — petição distinta da 15.556 já citada
+  nesta cobertura —, que conteria, segundo a CNN Brasil, detalhes da rede
+  de pagamentos de Vorcaro e do Banco Master. Moraes argumentou que Mendonça
+  manteve sob sigilo um processo com "elementos essenciais" para a sessão
+  de terça, e pediu que os autos da Pet 15.645 cheguem a todos os ministros
+  antes do julgamento.
+
+Em resumo: às vésperas da sessão, três ministros (Zanin, Moraes, e — por
+reportagens anteriores já citadas nesta cobertura — Gilmar Mendes) pressionam
+por acesso total e imediato ao material bruto do celular de Vorcaro;
+Mendonça, o relator que controla o que é ou não compartilhado, resiste e
+contra-ataca pedindo apuração sobre a própria PF. Nada disso foi decidido
+pelo plenário — são movimentos monocráticos e ofícios de um domingo tenso,
+não julgamento de mérito.
+
 ## Status
 
-O plenário do STF se reuniu (ou está previsto para se reunir — ver seção
-anterior sobre a divergência entre reportagens) em **15 de setembro de 2026**
-para tratar da relação entre Moraes e Vorcaro, e uma nova sessão está marcada
-para **23 de setembro de 2026** para avaliar o pedido de investigação contra
-Mendonça. Não há, até a publicação desta atualização, decisão do tribunal
-sobre o mérito das mensagens, dos contratos ou dos encontros revelados, nem
-sobre a validade processual do relatório que os tornou públicos. O
-Observatório vai atualizar este caso conforme o processo avançar — inclusive
-o resultado das sessões de 15/9 e 23/9.
+Até a publicação desta atualização (domingo, 13 de setembro de 2026, véspera
+da véspera), o plenário do STF ainda não julgou o mérito de nada do que está
+registrado neste caso. Duas sessões estão marcadas: **15 de setembro de
+2026**, para tratar da Pet 16.662 (relação Moraes-Vorcaro, agora sob
+relatoria da Presidência da Corte — ver acima), e **23 de setembro de
+2026**, para avaliar o pedido de investigação contra Mendonça. Nas horas
+que antecedem a primeira sessão, ministros ainda disputam publicamente o
+acesso ao material bruto da investigação — ver a seção "Domingo de
+pressão", acima. O Observatório vai atualizar este caso conforme o
+processo avançar — inclusive o resultado das sessões de 15/9 e 23/9.
