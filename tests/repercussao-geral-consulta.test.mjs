@@ -72,7 +72,10 @@ test("AUD-01/3: erro de rede (Promise rejeitada) vira estado de erro, nunca vazi
   executarConsultaCancelavel(() => Promise.reject(new TypeError("Failed to fetch")), deps);
   await esperarMicrotarefas();
 
-  assert.equal(ultimo(chamadas.erro), "Failed to fetch");
+  // A partir da revisão de 2026-09-13 (item 3.3), `erro` já é a mensagem
+  // pública sanitizada, não mais o `.message` cru — ver os testes dedicados
+  // de não-vazamento mais abaixo para o comportamento de sanitização em si.
+  assert.notEqual(ultimo(chamadas.erro), null);
   assert.deepEqual(ultimo(chamadas.temas), []);
   assert.equal(ultimo(chamadas.loading), false, "não pode ficar preso em loading eternamente");
 });
@@ -86,7 +89,6 @@ test("AUD-01/4: erro retornado pelo Supabase (campo error, sem rejeição) vira 
   );
   await esperarMicrotarefas();
 
-  assert.equal(ultimo(chamadas.erro), "permission denied for table stf_repercussao_geral");
   assert.deepEqual(ultimo(chamadas.temas), []);
   assert.notEqual(ultimo(chamadas.erro), null, "erro de RLS não pode ser indistinguível de vazio real (o próprio bug do AUD-01)");
 });
@@ -136,7 +138,7 @@ test("AUD-01/7: \"Tentar novamente\" após erro limpa o erro e aplica o novo res
 
   executarConsultaCancelavel(() => Promise.resolve({ data: null, count: null, error: { message: "falha temporária" } }), deps);
   await esperarMicrotarefas();
-  assert.equal(ultimo(chamadas.erro), "falha temporária");
+  assert.notEqual(ultimo(chamadas.erro), null);
 
   // "Tentar novamente" = uma nova chamada (no hook real, via `tentativa++`
   // reexecutando o useEffect).
@@ -166,6 +168,49 @@ test("AUD-01/8: filtros e paginação continuam funcionando após uma recuperaç
   await esperarMicrotarefas();
   assert.equal(ultimo(chamadas.erro), null);
   assert.equal(ultimo(chamadas.total), 2);
+});
+
+test("revisão 2026-09-13/3.3: mensagem técnica interna (RLS/rede/coluna) nunca é exposta em erro — só a mensagem pública genérica", async () => {
+  const { deps, chamadas } = espiarDeps();
+
+  executarConsultaCancelavel(
+    () => Promise.resolve({ data: null, count: null, error: { message: "permission denied for table stf_repercussao_geral" } }),
+    deps,
+  );
+  await esperarMicrotarefas();
+
+  const erroExposto = ultimo(chamadas.erro);
+  assert.notEqual(erroExposto, null);
+  assert.ok(!erroExposto.includes("permission denied"), "detalhe técnico de RLS vazou para o estado exposto à UI");
+  assert.ok(!erroExposto.includes("stf_repercussao_geral"), "nome de tabela interna vazou para o estado exposto à UI");
+});
+
+test("revisão 2026-09-13/3.3: mensagem técnica de rejeição de rede também não é exposta", async () => {
+  const { deps, chamadas } = espiarDeps();
+
+  executarConsultaCancelavel(() => Promise.reject(new TypeError("Failed to fetch at https://xxxx.supabase.co/rest/v1/stf_repercussao_geral")), deps);
+  await esperarMicrotarefas();
+
+  const erroExposto = ultimo(chamadas.erro);
+  assert.notEqual(erroExposto, null);
+  assert.ok(!erroExposto.includes("supabase.co"), "URL/host interno vazou para o estado exposto à UI");
+  assert.ok(!erroExposto.includes("Failed to fetch"), "mensagem crua do fetch vazou para o estado exposto à UI");
+});
+
+test("revisão 2026-09-13/4: exceção síncrona lançada por `consultar` vira estado de erro, sem escapar de executarConsultaCancelavel", async () => {
+  const { deps, chamadas } = espiarDeps();
+
+  assert.doesNotThrow(() => {
+    executarConsultaCancelavel(() => {
+      throw new Error("falha ao montar a query (coluna renomeada)");
+    }, deps);
+  });
+  await esperarMicrotarefas();
+
+  assert.notEqual(ultimo(chamadas.erro), null, "exceção síncrona precisa virar erro, não desaparecer");
+  assert.ok(!ultimo(chamadas.erro).includes("coluna renomeada"), "detalhe técnico da exceção síncrona não pode vazar para a UI");
+  assert.deepEqual(ultimo(chamadas.temas), []);
+  assert.equal(ultimo(chamadas.loading), false, "não pode ficar preso em loading após exceção síncrona");
 });
 
 test("AUD-01: setLoading(true) e setErro(null) são aplicados de forma síncrona ao iniciar, antes de qualquer await", () => {
