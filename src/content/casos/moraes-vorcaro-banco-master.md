@@ -126,6 +126,16 @@ fontes:
     url: "https://www.otempo.com.br/politica/judiciario/2026/3/19/master-e-jbs-pagaram-r-18-milhoes-a-consultoria-que-contratou-filho-de-kassio-nunes-marques-do-stf"
   - label: "Pronunciamento de Moraes deve ser feito na véspera da sessão do STF — Jovem Pan, 2026-09-10"
     url: "https://jovempan.com.br/politica/pronunciamento-de-moraes-deve-ser-feito-na-segunda-feira-vespera-da-sessao-do-stf/"
+  - label: "PF apreende R$ 510 mil com esposa de deputado que articulou encontro de Vorcaro e Mendonça — Bahia Notícias"
+    url: "https://www.bahianoticias.com.br/noticia/320690-pf-apreende-rdollar-510-mil-com-esposa-de-deputado-que-articulou-encontro-de-vorcaro-e-ministro"
+  - label: "PF apreendeu R$ 510 mil com esposa de Cezinha de Madureira — Brasil247"
+    url: "https://www.brasil247.com/sudeste/pf-apreendeu-r-510-mil-com-esposa-de-cezinha-de-madureira-que-articulou-encontro-entre-vorcaro-e-mendonca/"
+  - label: "Mendonça deixa sociedade de instituto após revelação de R$ 10,8 milhões em contratos públicos — O Folha de Minas"
+    url: "https://ofolhademinas.com.br/mendonca-deixa-sociedade-de-instituto-apos-revelacao-de-r-108-milhoes-em-contratos-publicos/"
+  - label: "Leia a íntegra da nota de Viviane Barci sobre contrato com Banco Master — Poder360, 2026-03-09"
+    url: "https://www.poder360.com.br/poder-justica/leia-a-integra-de-nota-de-viviane-barci-sobre-contrato-com-banco-master/"
+  - label: "Vorcaro disse ao STF que tinha 'relação cordial' com Andrei Rodrigues — Poder360"
+    url: "https://www.poder360.com.br/poder-justica/vorcaro-disse-ao-stf-que-tinha-relacao-cordial-com-andrei-rodrigues/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -942,10 +952,25 @@ Banco Master e o escritório de Viviane Barci de Moraes (a soma de
 aproximadamente R$ 131 milhões já mencionada) foi editado por um usuário
 identificado como "Ministro Alexandre de Moraes" às 23h04 de 15 de janeiro de
 2024 — cerca de 1h40 depois de Vorcaro devolver a minuta do contrato com
-sugestões de alteração. Segundo nota do escritório Barci de Moraes, Alexandre
-de Moraes acessou o documento a pedido do setor de compliance do próprio
-escritório e, não tendo processo envolvendo o Master sob sua relatoria à
-época nem identificado impedimento legal, não haveria irregularidade.
+sugestões de alteração. Segundo nota do escritório Barci de Moraes,
+Alexandre de Moraes acessou o documento a pedido do setor de compliance do
+próprio escritório e, não tendo processo envolvendo o Master sob sua
+relatoria à época nem identificado impedimento legal, não haveria
+irregularidade.
+
+**A defesa do escritório, em detalhe.** Numa nota oficial mais extensa, o
+escritório Barci de Moraes afirma ter prestado ao Master, entre fevereiro de
+2024 e novembro de 2025, um trabalho real e documentado: 94 reuniões ao
+todo — 79 presenciais na sede do banco (cerca de três horas cada), 13 com a
+presidência do Master (2 presenciais, 11 por videoconferência) e mais 2 por
+videoconferência —, além de 36 pareceres e opiniões legais em direito
+previdenciário, trabalhista, contratual, regulatório, compliance, proteção
+de dados e crédito. A equipe teria 15 advogados do próprio escritório, mais
+três escritórios terceirizados. O ponto central da defesa: "o escritório
+esclarece ainda que nunca conduziu nenhuma causa para o Banco Master no
+âmbito do STF". Esta nota não foi verificada por documentos primários pelo
+Observatório — é a versão do próprio escritório, publicada por veículos de
+imprensa.
 
 Nenhum desses pontos é, por si, uma decisão sobre o mérito — mas mudam a
 natureza do que está em jogo na sessão de 15/9: não se trata apenas de saber
@@ -966,6 +991,18 @@ mostram que **Mendonça também se encontrou pessoalmente com Vorcaro**:
   intermédio, segundo mensagens do celular de Vorcaro, teria partido do
   deputado federal Cezinha de Madureira (PL-SP) e do advogado Ciro Rocha
   Soares, que representa Vorcaro.
+- **A PF apreendeu R$ 510 mil com a esposa de Cezinha de Madureira.**
+  Segundo reportagens corroboradas por três veículos diferentes (Bahia
+  Notícias, Revista Fórum, Brasil247), a advogada Valéria Rodrigues
+  Linhares — mulher do deputado — foi parada pela PF no Aeroporto de
+  Congonhas, em São Paulo, em 25 de agosto de 2026, quando tentava embarcar
+  para Brasília com dinheiro em espécie na bagagem de mão. Ela teria
+  declarado inicialmente R$ 400 mil; a contagem, depois de a mala ser
+  aberta, apurou R$ 510 mil. A defesa de Valéria diz que o dinheiro tem
+  origem lícita — honorários de sua atividade como advogada — e que vai
+  apresentar a documentação necessária para reaver o valor. Não há, até a
+  publicação desta atualização, acusação formal contra ela nem decisão
+  sobre a origem do dinheiro.
 - **A versão de Mendonça.** O ministro confirmou o encontro publicamente,
   dizendo tê-lo recebido "uma única vez" e "por iniciativa do próprio
   empresário", e que "se limitou a ouvi-lo". Segundo seu gabinete, a conversa
@@ -980,12 +1017,22 @@ mostram que **Mendonça também se encontrou pessoalmente com Vorcaro**:
   banco, é o argumento central por trás da acusação de Moraes de que Mendonça
   age com parcialidade neste caso (ver seção sobre o pedido de investigação
   contra Mendonça, abaixo).
-- **Mendonça anunciou saída da sociedade do Instituto Iter depois da
-  revelação.** Segundo a revista *CartaCapital* (edição 1430, 16 de setembro
-  de 2026, reportagem de capa "Corte em pedaços", de André Barrocal), foi a
-  notícia desse encontro que levou o próprio Mendonça a anunciar sua saída da
-  sociedade do Iter — instituto que ele fundou em 2023. À época do encontro,
-  Mendonça ainda não era relator do caso Master.
+- **Mendonça deixou o Instituto Iter — mas pelos contratos públicos do
+  instituto, não só pelo encontro com Vorcaro.** A *CartaCapital* (edição
+  1430) atribui a saída de Mendonça da sociedade do Iter — instituto que ele
+  fundou em 2023 — à notícia do encontro com Vorcaro. Mas o motivo imediato,
+  segundo outras reportagens, foi mais específico: o Iter havia firmado
+  cerca de **R$ 10,85 milhões em aproximadamente 55 contratos com órgãos
+  públicos de 14 unidades da Federação**, dos quais 54 foram por contratação
+  direta — sem licitação competitiva (42 por inexigibilidade, 9 por
+  dispensa, 3 por outra modalidade de contratação direta) — somando R$ 10,46
+  milhões, ou 96,4% do valor total; apenas um contrato, de R$ 390 mil, foi
+  por pregão. Diante da revelação desses contratos, Mendonça decidiu deixar
+  a sociedade numa conversa com o presidente do instituto, Victor Godoy, na
+  quarta-feira 2 de setembro, formalizando a saída no dia seguinte (3/9).
+  Permanece como professor de uma disciplina do Iter ("A Arte e a Ciência da
+  Oratória"). À época do encontro com Vorcaro, em março de 2025, Mendonça
+  ainda não era relator do caso Master.
 - **Um mês antes do encontro, uma ida à alfaiataria.** A mesma reportagem,
   citando newsletter do jornalista Paulo Motoryn, relata que Mendonça foi a
   uma alfaiataria acompanhado de Ciro Soares — o mesmo advogado de Vorcaro —
@@ -1317,15 +1364,21 @@ reportagem da *Veja*:
   Inq 5.026 (Operação Compliance Zero) que são o centro desta cobertura — mas
   a mudança de relatoria, se confirmada, é uma perda de poder adicional de
   Moraes, distinta da disputa Master-Mendonça.
-- **Vorcaro alega ter tentado fechar delação, e mira Andrei Rodrigues.** No
-  depoimento a Mendonça — cuja transcrição é pública —, Vorcaro descreveu-se
+- **Vorcaro alega ter tentado fechar delação, e mira Andrei Rodrigues — mas
+  a PGR já rejeitou essa versão.** No depoimento a Mendonça, prestado em 27
+  de agosto de 2026 — cuja transcrição é pública —, Vorcaro descreveu-se
   como alvo de perseguição e disse estar disposto a delatar autoridades para
   "se proteger dos ataques" que dizia sofrer, citando "pessoas do núcleo do
   atual governo" — entre elas, segundo a reportagem, o próprio Andrei
-  Rodrigues. Vorcaro afirmou que delegados responsáveis pela sua possível
-  colaboração premiada teriam recusado o acordo. Nenhuma dessas acusações
-  foi verificada pelo Observatório — são falas do próprio banqueiro, com
-  interesse direto em se defender.
+  Rodrigues, dizendo ter tido com ele uma "relação cordial" e que a
+  negociação da delação não avançou porque exporia o diretor-geral da PF
+  numa oitiva sem a participação da própria corporação. Em 2 de setembro, a
+  Procuradoria-Geral da República pediu o arquivamento desse pedido de
+  Vorcaro por falta de provas de "intimidação" — segundo reportagens,
+  procuradores interpretaram o depoimento como uma tentativa de afastar o
+  diretor-geral da PF sem apresentar evidência concreta contra ele. Nenhuma
+  dessas acusações — nem a de Vorcaro, nem a leitura da PGR sobre a
+  motivação dele — foi verificada de forma independente pelo Observatório.
 - **O pagamento de US$ 1,6 milhão a Flávio, confirmado por relatório do
   Coaf.** A reportagem cita relatório do Conselho de Controle de Atividades
   Financeiras (Coaf) — o órgão federal de combate à lavagem de dinheiro —,
