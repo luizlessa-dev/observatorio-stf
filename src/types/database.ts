@@ -189,29 +189,14 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_presidencias"]["Insert"]>;
         Relationships: [];
       };
-      // Fase C1 (2026-07-26): esta tabela NÃO existe no banco de produção
-      // (confirmado por inspeção read-only). O script de ingestão
-      // correspondente já foi deletado do working tree. A tipagem permanece
-      // apenas enquanto a decisão formal sobre o eixo doadores/indicantes
-      // está pendente — ver docs/decisao-doadores-indicantes.md. Não construa
-      // nada novo sobre este tipo.
-      stf_doadores_indicante: {
-        Row: {
-          id:               string;
-          ministro_id:      string;
-          presidente_cpf:   string;
-          doador_cnpj:      string | null;
-          doador_cpf:       string | null;
-          doador_nome:      string;
-          valor:            number;
-          ano_eleicao:      number;
-          fonte:            string;  // "tse"
-          created_at:       string;
-        };
-        Insert: Omit<Database["public"]["Tables"]["stf_doadores_indicante"]["Row"], "created_at">;
-        Update: Partial<Database["public"]["Tables"]["stf_doadores_indicante"]["Insert"]>;
-        Relationships: [];
-      };
+      // Removida em 2026-09 — decisão final da nota de 2026-07-26
+      // (docs/decisao-doadores-indicantes.md): tabela nunca existiu em
+      // produção, script de ingestão já deletado, e o desenho (doador →
+      // presidente → ministro por adjacência de chave) foi rejeitado por
+      // risco de inferência causal indevida e exposição de terceiros. Ver
+      // supabase/migrations/0020_remove_stf_doadores_indicante_schema.sql.
+      // Se o tema voltar, é como apuração editorial caso a caso em /casos —
+      // nunca como tabela relacional. Não recriar este tipo.
       // Criada fora do sistema de migrations (antes da migration 0001), por
       // isso não tem `create table` rastreável no histórico. Colunas abaixo
       // conferidas contra o uso real em api/webhook.ts e src/lib/auth.ts —

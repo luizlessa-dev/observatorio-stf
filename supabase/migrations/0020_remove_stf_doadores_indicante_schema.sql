@@ -1,0 +1,26 @@
+-- Implementa a decisão registrada em docs/decisao-doadores-indicantes.md
+-- (Fase C1, 2026-07-26): remoção definitiva do modelo "doadores dos
+-- presidentes indicantes".
+--
+-- Contexto: a tabela nunca existiu em produção (confirmado por inspeção
+-- read-only na própria nota de decisão) — só era declarada em
+-- 0001_schema_inicial.sql. O script de ingestão TSE correspondente já
+-- havia sido deletado do working tree antes mesmo dessa nota. O desenho
+-- ligava doador → presidente → ministro por mera adjacência de chave, sem
+-- nenhum evento concreto conectando as partes — exatamente o tipo de
+-- inferência causal indevida que a política editorial de /casos (ver
+-- docs/politica-editorial-casos.md) foi desenhada para evitar.
+--
+-- Este DROP é um no-op em produção (a tabela não existe lá), mas torna a
+-- remoção do schema versionado explícita e idempotente para qualquer
+-- ambiente que tenha aplicado a 0001 original por completo.
+--
+-- Se o tema "financiamento eleitoral de quem indica ministros" voltar, a
+-- nota de decisão já registra o caminho certo: apuração editorial caso a
+-- caso em /casos, com documentos e contraditório — nunca como tabela
+-- relacional publicada ligando doadores a ministros.
+
+-- DROP TABLE remove em cascata os índices e a constraint unique
+-- declarados junto da tabela em 0001_schema_inicial.sql — não há
+-- necessidade de dropar cada um deles à parte.
+drop table if exists stf_doadores_indicante;
