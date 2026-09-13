@@ -84,7 +84,7 @@ const atual = Astro.url.pathname;
         </div>
       </a>
 
-      <nav class="flex">
+      <nav class="hidden md:flex">
         {NAV.map(({ href, rotulo }) => (
           <a
             href={href}
@@ -97,11 +97,53 @@ const atual = Astro.url.pathname;
         ))}
       </nav>
 
-      <div class="flex items-center gap-2">
+      <div class="hidden md:flex items-center gap-2">
         <a href="/assinar" class="text-[11px] font-semibold text-canvas bg-white px-[14px] py-[6px] rounded-sm hover:bg-white/90 transition-colors">Apoiar</a>
         <a href="/entrar" class="text-[12px] font-semibold text-ink border border-border2 rounded-sm px-[14px] py-[6px] hover:border-white/20 transition-colors">Entrar</a>
       </div>
+
+      <details id="menu-mobile" class="md:hidden relative">
+        <summary
+          class="list-none cursor-pointer flex items-center justify-center w-9 h-9 -mr-1"
+          aria-label="Abrir menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <line x1="2" y1="5"  x2="18" y2="5"  stroke="#f2f0e9" stroke-width="1.5" stroke-linecap="round" />
+            <line x1="2" y1="10" x2="18" y2="10" stroke="#f2f0e9" stroke-width="1.5" stroke-linecap="round" />
+            <line x1="2" y1="15" x2="18" y2="15" stroke="#f2f0e9" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </summary>
+        <div class="absolute right-0 top-[calc(100%+1px)] w-60 bg-card border border-border rounded-sm shadow-lg py-2 z-50">
+          <nav class="flex flex-col">
+            {NAV.map(({ href, rotulo }) => (
+              <a
+                href={href}
+                class:list={[
+                  "px-4 py-[10px] text-[13px] font-medium transition-colors",
+                  (href === "/" ? atual === "/" || atual.startsWith("/ministros") : atual.startsWith(href))
+                    ? "text-white" : "text-muted hover:text-ink",
+                ]}
+              >{rotulo}</a>
+            ))}
+          </nav>
+          <div class="flex flex-col gap-2 px-4 pt-2 mt-2 border-t border-border">
+            <a href="/assinar" class="text-[12px] font-semibold text-canvas bg-white px-[14px] py-[8px] rounded-sm text-center">Apoiar</a>
+            <a href="/entrar" class="text-[12px] font-semibold text-ink border border-border2 rounded-sm px-[14px] py-[8px] text-center">Entrar</a>
+          </div>
+        </div>
+      </details>
     </header>
+
+    <script>
+      // Fecha o menu mobile ao clicar num link interno ou fora do <details>.
+      const menu = document.getElementById("menu-mobile") as HTMLDetailsElement | null;
+      if (menu) {
+        menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { menu.open = false; }));
+        document.addEventListener("click", (evento) => {
+          if (menu.open && !menu.contains(evento.target as Node)) menu.open = false;
+        });
+      }
+    </script>
 
     <main><slot /></main>
 
