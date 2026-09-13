@@ -18,12 +18,25 @@ jobs:
   # parte da superfície de regressão (inclusive os 100+ testes comportamentais
   # de node --test) sem depender de nenhum segredo.
   #
-  # node-version 22 (não 20, apesar de package.json#engines dizer
-  # ">=20.12.0"): a primeira execução deste workflow, nesta mesma revisão,
-  # falhou em `npm run typecheck` com Node 20 porque o Astro 7 instalado
-  # exige Node >=22.12.0 em runtime ("Node.js v20.20.2 is not supported by
-  # Astro!") — o engines field tinha ficado desatualizado depois de algum
-  # upgrade do Astro. Corrigido aqui e em package.json.
+  # node-version fixado em "22.22.3" (não "22" solto, e não 20):
+  #
+  # - a primeira execução deste workflow (rodada anterior desta revisão)
+  #   falhou em `npm run typecheck` com Node 20 — o Astro 7 instalado exige
+  #   Node >=22 em runtime ("Node.js v20.20.2 is not supported by Astro!").
+  # - uma instalação limpa em Node 22.13.0 disparou EBADENGINE: o
+  #   package-lock.json trava astro@7.2.4 -> unifont@0.7.5 ->
+  #   undici@8.10.0, que exige Node >=22.19.0. Em runners Linux x64 (como
+  #   ubuntu-latest, usado aqui) o optionalDependency
+  #   @napi-rs/lzma-linux-x64-gnu@1.5.1 exige ainda mais: `^22.20 || ^24.12
+  #   || >=25` — ou seja, >=22.20.0 na linha 22.x. Essa é a exigência real
+  #   mais alta no lockfile inteiro (conferida programaticamente).
+  # - "22.22.3" satisfaz as duas acima com folga e é a mesma versão já
+  #   usada para validar localmente typecheck/lint/test/build nesta
+  #   revisão (`node --version` no ambiente de desenvolvimento). Fixar a
+  #   versão exata (em vez de só "22", que resolve para o último patch da
+  #   major no momento do job) torna o CI reproduzível e evita depender de
+  #   um patch futuro continuar satisfazendo os mesmos lockfile constraints.
+  #   package.json#engines reflete o mesmo mínimo real (>=22.20.0).
   verificar:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -34,7 +47,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "22.22.3"
           cache: "npm"
 
       - name: Instalar dependências (modo reprodutível)
@@ -81,7 +94,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "22.22.3"
           cache: "npm"
 
       - name: Instalar dependências (modo reprodutível)
