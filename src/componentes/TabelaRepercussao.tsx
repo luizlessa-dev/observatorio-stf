@@ -24,6 +24,13 @@ const STATUS_CLS: Record<string, string> = {
   sobrestado:"border-border2 text-subtle",
 };
 
+const STATUS_TITULO_COL: Record<string, string> = {
+  todos: "todos os temas",
+  pendente: "temas pendentes",
+  julgado: "temas julgados",
+  sobrestado: "temas sobrestados",
+};
+
 export default function TabelaRepercussao() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [search, setSearch] = useState("");
@@ -34,18 +41,33 @@ export default function TabelaRepercussao() {
   // aqui. Duplicar produzia dois H1 na página e um "0 temas" piscando antes
   // da hidratação, porque o total desta ilha só chega depois do fetch
   // client-side (achado da auditoria de SEO, item 8).
-  const { temas, loading } = useRepercussaoGeral(filtroStatus, search, limit);
+  const { temas, loading, erro, tentarNovamente } = useRepercussaoGeral(filtroStatus, search, limit);
+
+  const statusRegiao = loading
+    ? "Carregando temas…"
+    : erro
+      ? `Falha ao carregar: ${erro}`
+      : `${temas.length} ${STATUS_TITULO_COL[filtroStatus] ?? "temas"} exibidos`;
 
   return (
     <div className="flex-1 overflow-y-auto px-8 py-7">
       {/* Filtros */}
       <div className="flex items-center gap-3 mb-5 flex-wrap">
-        <div className="flex items-center gap-[2px] bg-card border border-border rounded-sm overflow-hidden">
+        {/* AUD-02: overflow-hidden cortava "Sobrestado" sem forma de alcançá-lo
+            em telas ≤390px — nem toque nem teclado chegavam ao botão. Rolagem
+            horizontal deliberada substitui o corte silencioso. */}
+        <div
+          role="group"
+          aria-label="Filtrar por status"
+          className="flex items-center gap-[2px] bg-card border border-border rounded-sm overflow-x-auto max-w-full"
+        >
           {(["todos","pendente","julgado","sobrestado"] as const).map((s) => (
             <button
               key={s}
+              type="button"
               onClick={() => setFiltroStatus(s)}
-              className={`px-3 py-[5px] text-[10px] font-semibold uppercase tracking-[0.8px] transition-colors ${
+              aria-pressed={filtroStatus === s}
+              className={`px-3 py-[5px] text-[10px] font-semibold uppercase tracking-[0.8px] whitespace-nowrap flex-shrink-0 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white/70 ${
                 filtroStatus === s
                   ? "bg-white/10 text-ink"
                   : "text-subtle hover:text-muted"
@@ -56,84 +78,120 @@ export default function TabelaRepercussao() {
           ))}
         </div>
 
-        <input
-          type="text"
-          placeholder="Buscar por título…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="bg-card border border-border rounded-sm px-3 py-[5px] text-[11px] text-ink placeholder:text-subtle outline-none focus:border-white/20 w-64"
-        />
-
-        {loading && (
-          <span className="text-[10px] text-subtle animate-pulse">carregando…</span>
-        )}
+        <div>
+          <label htmlFor="busca-repercussao" className="sr-only">
+            Buscar tema de repercussão geral por título
+          </label>
+          <input
+            id="busca-repercussao"
+            type="text"
+            placeholder="Buscar por título…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="bg-card border border-border rounded-sm px-3 py-[5px] text-[11px] text-ink placeholder:text-subtle outline-none focus-visible:border-white/40 focus-visible:ring-2 focus-visible:ring-white/30 w-64"
+          />
+        </div>
       </div>
 
-      {/* Tabela */}
-      <div className="border border-border rounded-sm overflow-hidden">
-        <div className="grid text-[9px] font-bold uppercase tracking-[1px] text-subtle bg-card border-b border-border px-4 py-[8px]"
-          style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px 70px" }}>
-          <span>Tema</span>
-          <span>Título</span>
-          <span>Leading Case</span>
-          <span>Reconh.</span>
-          <span>Status</span>
-          <span>Processos</span>
-        </div>
+      {/* Região de status: única fonte de verdade sobre loading/erro/contagem,
+          anunciada a leitor de tela via aria-live (achado AUD-06). */}
+      <p role="status" aria-live="polite" className="text-[10px] text-subtle mb-3">
+        {statusRegiao}
+      </p>
 
-        {temas.length === 0 && !loading && (
-          <div className="px-4 py-8 text-[11px] text-subtle text-center">
-            Nenhum tema encontrado
-          </div>
-        )}
+      {/* Tabela semântica (achado AUD-03: divs com grid não expunham relação
+          célula↔cabeçalho a tecnologia assistiva). */}
+      <div className="border border-border rounded-sm overflow-x-auto">
+        <table className="w-full border-collapse text-left">
+          <caption className="sr-only">
+            Temas de repercussão geral do STF, {STATUS_TITULO_COL[filtroStatus] ?? "todos"}
+            {search ? `, filtrados por "${search}"` : ""}
+          </caption>
+          <thead>
+            <tr className="text-[9px] font-bold uppercase tracking-[1px] text-subtle bg-card border-b border-border">
+              <th scope="col" className="px-4 py-[8px] font-bold w-[56px]">Tema</th>
+              <th scope="col" className="px-4 py-[8px] font-bold">Título</th>
+              <th scope="col" className="px-4 py-[8px] font-bold w-[110px]">Leading Case</th>
+              <th scope="col" className="px-4 py-[8px] font-bold w-[90px]">Reconh.</th>
+              <th scope="col" className="px-4 py-[8px] font-bold w-[70px]">Status</th>
+              <th scope="col" className="px-4 py-[8px] font-bold w-[70px] text-right">Processos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {erro && (
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center">
+                  <p className="text-[11px] text-red-400 mb-2">
+                    Não foi possível carregar os temas agora.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={tentarNovamente}
+                    className="text-[10px] font-semibold uppercase tracking-[1px] text-ink border border-border2 rounded-sm px-3 py-[6px] hover:bg-card transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70"
+                  >
+                    Tentar novamente
+                  </button>
+                </td>
+              </tr>
+            )}
 
-        {temas.map((t) => (
-          <div
-            key={t.id}
-            className={`grid border-b border-border last:border-0 px-4 py-[10px] items-start gap-2 hover:bg-white/[0.02] transition-colors ${
-              t.destaque ? "border-l-2 border-l-white/20" : ""
-            }`}
-            style={{ gridTemplateColumns: "56px 1fr 110px 90px 70px 70px" }}
-          >
-            <div className="font-mono text-[11px] text-subtle">
-              {String(t.tema).padStart(4, "0")}
-              {t.destaque && <span className="ml-1 text-[8px] text-white/40">★</span>}
-            </div>
-            <div>
-              <div className="text-[11px] text-muted leading-[1.4] mb-[2px] line-clamp-2">
-                {t.titulo}
-              </div>
-              {t.tese && (
-                <div className="text-[9px] text-subtle leading-[1.4] line-clamp-2 mt-[2px]">
-                  {t.tese}
-                </div>
-              )}
-            </div>
-            <div className="font-mono text-[10px] text-subtle">{t.leading_case ?? "—"}</div>
-            <div className="text-[10px] text-subtle">
-              {fmtData(t.data_reconh)} {fmtAno(t.data_reconh)}
-            </div>
-            <div>
-              <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border whitespace-nowrap ${
-                STATUS_CLS[t.status] ?? "border-border2 text-subtle"
-              }`}>
-                {STATUS_LABEL[t.status] ?? t.status}
-              </span>
-            </div>
-            <div className="text-[10px] text-subtle text-right">
-              {t.processos_imp != null
-                ? t.processos_imp.toLocaleString("pt-BR")
-                : <span className="opacity-30">—</span>}
-            </div>
-          </div>
-        ))}
+            {!erro && temas.length === 0 && !loading && (
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-[11px] text-subtle text-center">
+                  Nenhum tema encontrado para este filtro/busca.
+                </td>
+              </tr>
+            )}
+
+            {!erro && temas.map((t) => (
+              <tr
+                key={t.id}
+                className={`border-b border-border last:border-0 hover:bg-white/[0.02] transition-colors ${
+                  t.destaque ? "border-l-2 border-l-white/20" : ""
+                }`}
+              >
+                <td className="px-4 py-[10px] align-top font-mono text-[11px] text-subtle">
+                  {String(t.tema).padStart(4, "0")}
+                  {t.destaque && <span className="ml-1 text-[8px] text-white/40" aria-label="tema em destaque">★</span>}
+                </td>
+                <td className="px-4 py-[10px] align-top">
+                  <div className="text-[11px] text-muted leading-[1.4] mb-[2px] line-clamp-2">
+                    {t.titulo}
+                  </div>
+                  {t.tese && (
+                    <div className="text-[9px] text-subtle leading-[1.4] line-clamp-2 mt-[2px]">
+                      {t.tese}
+                    </div>
+                  )}
+                </td>
+                <td className="px-4 py-[10px] align-top font-mono text-[10px] text-subtle">{t.leading_case ?? "—"}</td>
+                <td className="px-4 py-[10px] align-top text-[10px] text-subtle">
+                  {fmtData(t.data_reconh)} {fmtAno(t.data_reconh)}
+                </td>
+                <td className="px-4 py-[10px] align-top">
+                  <span className={`text-[9px] font-semibold px-[7px] py-[2px] rounded-sm border whitespace-nowrap ${
+                    STATUS_CLS[t.status] ?? "border-border2 text-subtle"
+                  }`}>
+                    {STATUS_LABEL[t.status] ?? t.status}
+                  </span>
+                </td>
+                <td className="px-4 py-[10px] align-top text-[10px] text-subtle text-right">
+                  {t.processos_imp != null
+                    ? t.processos_imp.toLocaleString("pt-BR")
+                    : <span className="opacity-30">—</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Carregar mais */}
-      {temas.length >= limit && (
+      {!erro && temas.length >= limit && (
         <button
+          type="button"
           onClick={() => setLimit((l) => l + 50)}
-          className="mt-4 w-full py-2 text-[10px] font-semibold uppercase tracking-[1px] text-subtle border border-border rounded-sm hover:bg-card transition-colors"
+          className="mt-4 w-full py-2 text-[10px] font-semibold uppercase tracking-[1px] text-subtle border border-border rounded-sm hover:bg-card transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70"
         >
           Carregar mais 50
         </button>

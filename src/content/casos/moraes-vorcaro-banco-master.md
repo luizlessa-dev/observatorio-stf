@@ -4,7 +4,7 @@ resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Morae
 ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-16"
+data_atualizacao: "2026-09-13"
 fontes:
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"

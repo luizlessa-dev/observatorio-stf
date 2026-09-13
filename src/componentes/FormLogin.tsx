@@ -37,16 +37,22 @@ export default function FormLogin() {
         Enviaremos um link de acesso para o seu e-mail.
       </p>
 
+      <label htmlFor="email-login" className="block text-[10px] font-semibold uppercase tracking-[1px] text-subtle mb-[6px]">
+        E-mail
+      </label>
       <input
+        id="email-login"
         type="email"
         placeholder="seu@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && entrar()}
-        className="w-full bg-card border border-border rounded-sm px-4 py-[10px] text-[12px] text-ink placeholder:text-subtle outline-none focus:border-white/20 mb-3"
+        aria-invalid={erro ? true : undefined}
+        aria-describedby={erro ? "erro-login" : undefined}
+        className="w-full bg-card border border-border rounded-sm px-4 py-[10px] text-[12px] text-ink placeholder:text-subtle outline-none focus-visible:border-white/40 focus-visible:ring-2 focus-visible:ring-white/30 mb-3"
       />
 
-      {erro && <p className="text-[11px] text-red-400 mb-3">{erro}</p>}
+      {erro && <p id="erro-login" role="alert" className="text-[11px] text-red-400 mb-3">{erro}</p>}
 
       <button
         onClick={entrar}

@@ -37,6 +37,14 @@ const atual = Astro.url.pathname;
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- AUD-08: era @import no CSS, que só dispara depois do CSS principal
+         carregar e parsear (uma volta de rede a mais antes mesmo de começar a
+         buscar a fonte). Link + preconnect no head deixa o navegador abrir a
+         conexão com fonts.googleapis.com/gstatic.com em paralelo ao HTML. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Observatório do STF" />
     <meta property="og:locale" content="pt_BR" />
@@ -61,6 +69,13 @@ const atual = Astro.url.pathname;
   </head>
 
   <body class="min-h-screen bg-canvas text-ink">
+    <a
+      href="#conteudo"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:text-canvas focus:text-[12px] focus:font-semibold focus:px-4 focus:py-2 focus:rounded-sm"
+    >
+      Pular para o conteúdo
+    </a>
+
     <div class="bg-card border-b border-border text-center py-[7px] px-6 text-[11px] text-muted">
       <strong class="text-ink font-semibold">Projeto independente.</strong>{" "}
       Sem vínculo com o Governo Federal. Dados de fontes públicas oficiais.
@@ -84,17 +99,20 @@ const atual = Astro.url.pathname;
         </div>
       </a>
 
-      <nav class="hidden md:flex">
-        {NAV.map(({ href, rotulo }) => (
-          <a
-            href={href}
-            class:list={[
-              "px-[13px] h-[62px] flex items-center text-[12px] font-medium border-b-2 transition-colors",
-              (href === "/" ? atual === "/" || atual.startsWith("/ministros") : atual.startsWith(href))
-                ? "text-white border-white" : "text-muted border-transparent hover:text-ink",
-            ]}
-          >{rotulo}</a>
-        ))}
+      <nav class="hidden md:flex" aria-label="Principal">
+        {NAV.map(({ href, rotulo }) => {
+          const ativo = href === "/" ? atual === "/" || atual.startsWith("/ministros") : atual.startsWith(href);
+          return (
+            <a
+              href={href}
+              aria-current={ativo ? "page" : undefined}
+              class:list={[
+                "px-[13px] h-[62px] flex items-center text-[12px] font-medium border-b-2 transition-colors",
+                ativo ? "text-white border-white" : "text-muted border-transparent hover:text-ink",
+              ]}
+            >{rotulo}</a>
+          );
+        })}
       </nav>
 
       <div class="hidden md:flex items-center gap-2">
@@ -114,17 +132,20 @@ const atual = Astro.url.pathname;
           </svg>
         </summary>
         <div class="absolute right-0 top-[calc(100%+1px)] w-60 bg-card border border-border rounded-sm shadow-lg py-2 z-50">
-          <nav class="flex flex-col">
-            {NAV.map(({ href, rotulo }) => (
+          <nav class="flex flex-col" aria-label="Principal (móvel)">
+            {NAV.map(({ href, rotulo }) => {
+              const ativo = href === "/" ? atual === "/" || atual.startsWith("/ministros") : atual.startsWith(href);
+              return (
               <a
                 href={href}
+                aria-current={ativo ? "page" : undefined}
                 class:list={[
                   "px-4 py-[10px] text-[13px] font-medium transition-colors",
-                  (href === "/" ? atual === "/" || atual.startsWith("/ministros") : atual.startsWith(href))
-                    ? "text-white" : "text-muted hover:text-ink",
+                  ativo ? "text-white" : "text-muted hover:text-ink",
                 ]}
               >{rotulo}</a>
-            ))}
+              );
+            })}
           </nav>
           <div class="flex flex-col gap-2 px-4 pt-2 mt-2 border-t border-border">
             <a href="/assinar" class="text-[12px] font-semibold text-canvas bg-white px-[14px] py-[8px] rounded-sm text-center">Apoiar</a>
@@ -145,7 +166,7 @@ const atual = Astro.url.pathname;
       }
     </script>
 
-    <main><slot /></main>
+    <main id="conteudo" tabindex="-1"><slot /></main>
 
     <footer class="border-t border-border mt-16 px-8 py-8 text-[11px] text-subtle">
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-4">

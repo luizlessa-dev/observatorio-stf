@@ -1,0 +1,35 @@
+---
+import Base from "../layouts/Base.astro";
+
+// Achado AUD-07: antes desta página, uma rota inexistente caía direto no
+// 404 padrão da Vercel — texto puro, sem marca, sem navegação, sem busca.
+// Este arquivo gera dist/404.html; a Vercel serve HTML estático com status
+// 404 automaticamente, então o código HTTP continua correto.
+const titulo = "Página não encontrada — Observatório do STF";
+const descricao = "A página que você procura não existe ou foi movida. Veja os principais links do Observatório do STF.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/404">
+  <div class="px-8 py-16 max-w-lg mx-auto text-center">
+    <div class="font-mono text-[13px] text-subtle mb-2">Erro 404</div>
+    <h1 class="font-display text-[26px] font-bold text-white leading-[1.2] mb-3">
+      Essa página não existe
+    </h1>
+    <p class="text-[13px] text-muted leading-[1.7] mb-8">
+      O endereço pode ter mudado ou nunca ter existido. Estes são os principais
+      caminhos do site:
+    </p>
+
+    <ul class="text-left text-[13px] leading-[2] mb-8 inline-block">
+      <li><a href="/" class="underline hover:text-ink">Início — Ministros</a></li>
+      <li><a href="/repercussao-geral" class="underline hover:text-ink">Repercussão Geral</a></li>
+      <li><a href="/casos" class="underline hover:text-ink">Casos</a></li>
+      <li><a href="/metodologia" class="underline hover:text-ink">Metodologia</a></li>
+      <li><a href="/sobre" class="underline hover:text-ink">Sobre</a></li>
+    </ul>
+
+    <p class="text-[11px] text-subtle">
+      Se você chegou aqui a partir de um link do próprio site, avise em{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+    </p>
+  </div>
+</Base>
