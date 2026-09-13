@@ -14,11 +14,21 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ler = (rel) => readFileSync(path.join(ROOT, rel), "utf8");
 
 // AUD-01 — erro de consulta não pode virar "vazio" silencioso.
-test("AUD-01: useRepercussaoGeral captura e expõe o campo error do Supabase", () => {
-  const src = ler("src/hooks/useRepercussaoGeral.ts");
+// Cobertura comportamental completa (sucesso/vazio/erro/rede/corrida/retry)
+// está em tests/repercussao-geral-consulta.test.mjs — aqui só checamos que a
+// função continua exposta e ligada de fato pelo hook (grep de estrutura).
+test("AUD-01: consultaCancelavel captura error e rejeição, sem virar vazio silencioso", () => {
+  const src = ler("src/hooks/consultaCancelavel.js");
   assert.match(src, /\{\s*data,\s*count,\s*error\s*\}/, "o .then() precisa desestruturar error, não só data/count");
-  assert.match(src, /setErro\(/, "precisa existir um estado de erro dedicado");
+  assert.match(src, /deps\.setErro\(/, "precisa existir um estado de erro dedicado");
+  assert.match(src, /\.then\(\s*\n?\s*\([^)]*\)\s*=>\s*\{[\s\S]*?\},\s*\n?\s*\(motivo/, "precisa tratar rejeição da Promise (erro de rede), não só o campo error");
+});
+
+test("AUD-01: useRepercussaoGeral delega a consultaCancelavel e expõe erro/tentarNovamente", () => {
+  const src = ler("src/hooks/useRepercussaoGeral.ts");
+  assert.match(src, /executarConsultaCancelavel\(/, "o hook precisa usar a função extraída, não reimplementar a lógica de cancelamento");
   assert.match(src, /return\s*\{\s*temas,\s*loading,\s*total,\s*erro/, "o hook precisa devolver `erro` para quem consome");
+  assert.match(src, /tentarNovamente/, "precisa expor uma forma de tentar de novo após erro");
 });
 
 test("AUD-01: TabelaRepercussao distingue erro de lista vazia de verdade", () => {
@@ -51,10 +61,43 @@ for (const arquivo of ["src/componentes/FormLogin.tsx", "src/componentes/FormApo
   });
 }
 
-// AUD-05 — contraste do token --subtle.
-test("AUD-05: token --subtle não é mais o valor de baixo contraste (~3,28:1)", () => {
-  const src = ler("src/estilos/global.css");
-  assert.ok(!src.includes("--subtle:  #6b6762;"), "o valor antigo de baixo contraste ainda está em global.css");
+// AUD-05 — contraste real da classe utilitária .text-subtle.
+//
+// Achado da revisão de 2026-09-13: o primeiro teste daqui só checava a
+// custom property --subtle em global.css, que NUNCA é consumida via var()
+// em lugar nenhum — quem gera .text-subtle de verdade é
+// theme.extend.colors.subtle em tailwind.config.ts. O primeiro fix mudou só
+// a custom property morta; a cor renderizada continuava a antiga (~3,28:1),
+// confirmado por getComputedStyle na Vercel preview. Este teste lê a fonte
+// real (tailwind.config.ts) e calcula o contraste de verdade, pra não
+// repetir o erro de validar o lugar errado.
+function corParaRgb(hex) {
+  const h = hex.replace("#", "");
+  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+}
+function luminanciaRelativa({ r, g, b }) {
+  const canal = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+  return 0.2126 * canal(r) + 0.7152 * canal(g) + 0.0722 * canal(b);
+}
+function contraste(hexA, hexB) {
+  const l1 = luminanciaRelativa(corParaRgb(hexA)) + 0.05;
+  const l2 = luminanciaRelativa(corParaRgb(hexB)) + 0.05;
+  return l1 > l2 ? l1 / l2 : l2 / l1;
+}
+
+test("AUD-05: theme.extend.colors.subtle (a fonte real de .text-subtle) atinge 4.5:1 sobre canvas/card/surface", () => {
+  const src = ler("tailwind.config.ts");
+  const extrair = (nome) => {
+    const m = new RegExp(`${nome}:\\s*"(#[0-9a-fA-F]{6})"`).exec(src);
+    assert.ok(m, `não encontrei theme.extend.colors.${nome} em tailwind.config.ts`);
+    return m[1];
+  };
+  const subtle = extrair("subtle");
+  for (const fundo of ["canvas", "card", "surface"]) {
+    const hexFundo = extrair(fundo);
+    const razao = contraste(subtle, hexFundo);
+    assert.ok(razao >= 4.5, `subtle (${subtle}) sobre ${fundo} (${hexFundo}) só atinge ${razao.toFixed(2)}:1, abaixo de 4.5:1`);
+  }
 });
 
 // AUD-06 — estados anunciados e navegação por teclado.
@@ -108,7 +151,10 @@ test("AUD-12: content.config.ts recusa data_publicacao/data_atualizacao no futur
 test("AUD-12: nenhum caso publicado tem data_publicacao/data_atualizacao no futuro", () => {
   const dir = path.join(ROOT, "src/content/casos");
   if (!existsSync(dir)) return;
-  const hoje = new Date().toISOString().slice(0, 10);
+  // Mesmo fuso do guard real (src/content.config.ts) — America/Sao_Paulo,
+  // não UTC. Ver comentário lá para o porquê (evita falso-negativo perto da
+  // meia-noite de Brasília).
+  const hoje = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
   for (const arquivo of readdirSync(dir).filter((f) => f.endsWith(".md"))) {
     const src = readFileSync(path.join(dir, arquivo), "utf8");
     const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(src);
