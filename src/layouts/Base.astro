@@ -62,7 +62,7 @@ const atual = Astro.url.pathname;
 
   <body class="min-h-screen bg-canvas text-ink">
     <div class="bg-card border-b border-border text-center py-[7px] px-6 text-[11px] text-muted">
-      <strong class="text-ink font-semibold">Projeto independente.</strong>
+      <strong class="text-ink font-semibold">Projeto independente.</strong>{" "}
       Sem vínculo com o Governo Federal. Dados de fontes públicas oficiais.
     </div>
 
@@ -149,10 +149,12 @@ const atual = Astro.url.pathname;
 
     <footer class="border-t border-border mt-16 px-8 py-8 text-[11px] text-subtle">
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-4">
+        <a href="/sobre" class="hover:text-ink transition-colors">Sobre</a>
         <a href="/metodologia" class="hover:text-ink transition-colors">Metodologia</a>
+        <a href="/termos" class="hover:text-ink transition-colors">Termos de Uso</a>
+        <a href="/privacidade" class="hover:text-ink transition-colors">Privacidade</a>
         <a href="mailto:luiz@thebrinsider.com" class="hover:text-ink transition-colors">Contato e direito de resposta</a>
-        {/* Termos e Privacidade entram quando forem redigidos e revisados —
-            link para página inexistente é pior que ausência de link. */}
+        <a href="/casos/rss.xml" class="hover:text-ink transition-colors">RSS</a>
       </div>
       <p class="max-w-2xl leading-[1.6]">
         Observatório do STF é um projeto editorial independente, sem vínculo com o
