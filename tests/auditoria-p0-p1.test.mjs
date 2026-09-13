@@ -61,6 +61,29 @@ for (const arquivo of ["src/componentes/FormLogin.tsx", "src/componentes/FormApo
   });
 }
 
+// Revisão de 2026-09-13, item 3.1: o rótulo da busca precisa estar
+// visualmente disponível (não apenas sr-only) — o placeholder some assim
+// que o usuário digita e não é, por si só, um rótulo persistente.
+test("revisão 2026-09-13/3.1: label da busca em TabelaRepercussao é visível e associado ao input por htmlFor/id", () => {
+  const src = ler("src/componentes/TabelaRepercussao.tsx");
+  const labelMatch = /<label\s+htmlFor="busca-repercussao"\s+className="([^"]*)">/.exec(src);
+  assert.ok(labelMatch, "esperava um <label htmlFor=\"busca-repercussao\"> associado ao input de busca");
+  assert.ok(!labelMatch[1].includes("sr-only"), "o label da busca não pode depender só de sr-only — precisa estar visível na tela");
+  assert.match(src, /<input\s+id="busca-repercussao"/, "o <input> precisa do id correspondente para a associação label/input funcionar");
+});
+
+// Revisão de 2026-09-13, item 3.4: cor já foi corrigida (AUD-05), mas vários
+// textos funcionais ainda estavam em 9-10px. Trava um piso de legibilidade
+// para toda classe text-[Npx] usada na rota, sem crescer manualmente cada
+// ocorrência de novo caso surja.
+test("revisão 2026-09-13/3.4: nenhum texto funcional de TabelaRepercussao usa menos de 11px", () => {
+  const src = ler("src/componentes/TabelaRepercussao.tsx");
+  const tamanhos = [...src.matchAll(/text-\[(\d+)px\]/g)].map((m) => parseInt(m[1], 10));
+  assert.ok(tamanhos.length > 0, "esperava encontrar ao menos uma classe text-[Npx] em TabelaRepercussao.tsx");
+  const pequenos = tamanhos.filter((n) => n < 11);
+  assert.equal(pequenos.length, 0, `encontrei texto(s) abaixo de 11px: ${pequenos.join(", ")}px — revisão AUD-05/3.4 pede piso de legibilidade`);
+});
+
 // AUD-05 — contraste real da classe utilitária .text-subtle.
 //
 // Achado da revisão de 2026-09-13: o primeiro teste daqui só checava a
