@@ -23,7 +23,14 @@ export default {
         /* texto */
         ink:     "#f2f0e9",
         muted:   "#a8a49c",
-        subtle:  "#6b6762",
+        // AUD-05: este hex — não a variável --subtle em global.css — é quem
+        // realmente gera a classe utilitária .text-subtle (Tailwind lê a
+        // paleta daqui em build-time; a custom property em :root nunca é
+        // consumida via var() em lugar nenhum do projeto). O valor antigo
+        // (#6b6762) media ~3,28:1 sobre --canvas; corrigido para ~4,5-4,9:1
+        // sobre canvas/card/surface, calculado pela fórmula de luminância
+        // relativa do WCAG 2.2. Ver global.css para o mesmo cálculo.
+        subtle:  "#8c8883",
         /* termômetro */
         conserv: "#2563c4",
         prog:    "#b91c1c",

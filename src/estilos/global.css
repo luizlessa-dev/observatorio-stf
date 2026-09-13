@@ -11,10 +11,15 @@
     --border2: #3a3a3a;
     --ink:     #f2f0e9;
     --muted:   #a8a49c;
-    /* AUD-05: #6b6762 dava ~3,28:1 sobre --canvas (#141414) e menos ainda
-       sobre --card/--surface — abaixo do mínimo de 4,5:1 do WCAG 2.2 AA para
-       texto normal. #8c8883 mede ~4,9:1 (canvas), ~4,8:1 (card) e ~4,5:1
-       (surface), calculado pela fórmula de luminância relativa da spec. */
+    /* AUD-05: mantido em sincronia com theme.extend.colors.subtle em
+       tailwind.config.ts — é lá que a classe .text-subtle é de fato gerada;
+       nenhum CSS deste projeto consome var(--subtle) (grep confirmado em
+       2026-09-13). #6b6762 dava ~3,28:1 sobre --canvas (#141414) e menos
+       ainda sobre --card/--surface — abaixo do mínimo de 4,5:1 do WCAG 2.2 AA
+       para texto normal. #8c8883 mede ~4,9:1 (canvas), ~4,8:1 (card) e
+       ~4,5:1 (surface), calculado pela fórmula de luminância relativa da
+       spec. Se algum dia este var() passar a ser consumido, o valor já
+       está correto. */
     --subtle:  #8c8883;
     --conserv: #2563c4;
     --prog:    #b91c1c;
