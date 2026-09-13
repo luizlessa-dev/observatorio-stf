@@ -136,6 +136,12 @@ fontes:
     url: "https://www.poder360.com.br/poder-justica/leia-a-integra-de-nota-de-viviane-barci-sobre-contrato-com-banco-master/"
   - label: "Vorcaro disse ao STF que tinha 'relação cordial' com Andrei Rodrigues — Poder360"
     url: "https://www.poder360.com.br/poder-justica/vorcaro-disse-ao-stf-que-tinha-relacao-cordial-com-andrei-rodrigues/"
+  - label: "PF suspeita que Vorcaro influenciou voto de Toffoli em ação de precatórios — Estado de Minas, 2026-09"
+    url: "https://www.em.com.br/politica/2026/09/7498552-pf-suspeita-que-vorcaro-influenciou-voto-de-toffoli-em-acao-de-precatorios.html"
+  - label: "Filhos de ministros que haviam votado pelo afastamento da cúpula da PF têm vínculos no entorno do Master — RED"
+    url: "https://red.org.br/noticias/filhos-ministros-stf-vinculos-banco-master/"
+  - label: "Filhos de Fux e Nunes Marques são citados em reportagens sobre entorno do Banco Master — BPMoney"
+    url: "https://bpmoney.com.br/noticias/filhos-de-fux-e-nunes-marques-sao-citados-em-reportagens-sobre-entorno-do-banco-master/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -856,22 +862,28 @@ sem confirmação do STF:
   e comunicação [...] sugerem uso de interpostas pessoas e estruturas no
   exterior, incluindo movimentações envolvendo a Edige I Holding nas Ilhas
   Virgens Britânicas", diz o relatório da PF, segundo a *piauí*.
-- **Um voto que preocupou o Master, segundo diálogos do celular de Vorcaro.**
-  A PF suspeita que Vorcaro tentou influenciar um voto de Toffoli numa ação
-  sobre precatórios da destilaria Alcídia (grupo Atvos), que cobrava da União
-  reparação por prejuízos da década de 1980. Toffoli tinha histórico de
-  posições favoráveis a usinas em casos parecidos, mas votou a favor da União
-  no julgamento da Alcídia — inversão que, segundo a reportagem, preocupou
-  pessoas ligadas ao Master, já que a carteira de precatórios do setor
-  sucroalcooleiro no balanço do banco somava mais de R$ 10 bilhões. Mensagens
-  atribuídas ao diretor jurídico do banco, André Kruschewsky, e ao ex-ministro
-  das Comunicações Fábio Faria, sugeriram que Kruschewsky teria "acesso ao STF
-  inclusive para 'tirar de pauta' o processo em questão". No dia do
-  julgamento, Kassio Nunes Marques pediu vista e Toffoli registrou ausência
-  justificada; o caso foi retomado depois e terminou em 3 votos a 2, com
-  Toffoli a favor da usina — posição que marcou o desempate, mas não decidiu
-  o resultado final, já que a tese da Alcídia (contrária à União) prevaleceu.
-  O gabinete de Toffoli nega qualquer "alteração de voto".
+- **Uma reação de pânico, e um resultado que agradou o Master, segundo
+  diálogos do celular de Vorcaro** (apurado diretamente pelo Observatório
+  numa segunda leitura da reportagem, que corrige a sequência descrita numa
+  versão anterior deste texto). A PF suspeita que Vorcaro tentou influenciar
+  um voto de Toffoli numa ação sobre precatórios da destilaria Alcídia
+  (grupo Atvos), que cobrava da União reparação por prejuízos da década de
+  1980 — carteira que, somada a precatórios semelhantes do setor
+  sucroalcooleiro, valia mais de R$ 10 bilhões no balanço do banco.
+  Historicamente, Toffoli votava a favor das usinas nesse tipo de caso; mas,
+  pouco antes do julgamento da Alcídia, ele votou a favor da União em outra
+  ação — uma inversão do próprio padrão. "Matou a gente", escreveu o
+  ex-ministro das Comunicações Fábio Faria a Vorcaro, reagindo à decisão.
+  André Kruschewsky, diretor jurídico do Master, perguntou a Vorcaro: "Vamos
+  nos movimentar?" — e chegou a oferecer, segundo a reportagem, ajuda para
+  "tirar de pauta" o processo caso fosse preciso. Vorcaro respondeu: "Tô
+  tratando aqui". No dia do julgamento da Alcídia propriamente dita, Kassio
+  Nunes Marques pediu vista e Toffoli registrou ausência justificada; o caso
+  foi retomado depois e terminou em 3 votos a 2 **a favor da Alcídia** — a
+  usina, e portanto o interesse do Master —, com o voto de Toffoli entre os
+  três. "Ganhamos Alcídia", informou um operador do banco a Vorcaro em 1º de
+  outubro de 2024. O gabinete de Toffoli nega qualquer "mudança de
+  posicionamento".
 - **Encontros sociais, segundo mensagens do celular de Vorcaro.** A reportagem
   cita um convite feito por Toffoli a Vorcaro para seu aniversário de 56 anos,
   em outubro de 2023, num bar em São Paulo — sem evidência de que o banqueiro
@@ -897,41 +909,60 @@ Como em todo o restante deste caso: nada disso foi julgado pelo STF. É um
 relatório de inteligência policial, ainda sob análise, contestado ponto a
 ponto pelo próprio Toffoli.
 
-## Um terceiro nome: o filho de Kassio Nunes Marques
+## Dois outros nomes: os filhos de Nunes Marques e de Fux
 
-Antes mesmo da crise de setembro, uma reportagem de março de 2026 já havia
-ligado um terceiro ministro do STF à órbita financeira do Master — por meio
-do filho, não do próprio ministro. A base da reportagem são dados do Coaf
-(Conselho de Controle de Atividades Financeiras), e a apuração foi
-publicada originalmente pelo jornal *O Tempo* em 19 de março de 2026,
-corroborada por Metrópoles, Gazeta do Povo, Revista Oeste, ISTOÉ, Brasil247
-e outros veículos:
+Antes mesmo da crise de setembro, reportagens já haviam ligado outros dois
+ministros do STF à órbita do Master — não diretamente, mas por meio dos
+filhos.
+
+**Kevin de Carvalho Marques, filho de Kassio Nunes Marques.** Uma
+reportagem de março de 2026, baseada em dados do Coaf (Conselho de
+Controle de Atividades Financeiras) e publicada originalmente pelo jornal
+*O Tempo* em 19 de março, corroborada por Metrópoles, Gazeta do Povo,
+Revista Oeste, ISTOÉ, Brasil247 e o portal RED, entre outros:
 
 - **A cadeia de pagamentos.** A consultoria Consult Inteligência Tributária
-  recebeu R$ 18 milhões do Banco Master e da JBS somados, entre agosto de
-  2024 e julho de 2025. No mesmo período, em 10 parcelas, a Consult pagou
-  R$ 281 mil ao escritório de advocacia de **Kevin de Carvalho Marques**,
-  filho do ministro Kassio Nunes Marques.
+  recebeu R$ 18 milhões do Banco Master (R$ 6,6 milhões) e da JBS (R$ 11,3
+  milhões) somados, entre agosto de 2024 e julho de 2025. No mesmo período,
+  a Consult pagou a Kevin — sócio, com Gabriel Campelo de Carvalho, do
+  Instituto de Pesquisa e Gestão Tributária (IPGT), que compartilha
+  endereço com a Consult em Alphaville — R$ 281 mil em cerca de dez
+  transferências. Kevin declarou ter recebido R$ 234,8 mil líquidos pela
+  prestação de "serviços de assessoria jurídica".
 - **O que chamou atenção do Coaf.** O faturamento declarado da Consult era
   de apenas R$ 25,5 mil — uma discrepância que levou o órgão a classificar
   as transações como "incompatíveis com a capacidade financeira" da
   empresa, sugerindo que "alguns dos valores podem ter origem não formal".
 - **As respostas.** A Consult confirmou o pagamento a Kevin como "devida
-  remuneração pela prestação de serviços técnicos e de assessoria jurídica"
-  em 2024 e 2025. Kassio Nunes Marques declarou não ter "relação de
-  proximidade" com Daniel Vorcaro e não se recordar de trocas de mensagens
-  sobre assuntos sociais.
-- **O que a reportagem não estabelece.** Nenhuma das fontes consultadas
-  pelo Observatório aponta voto ou decisão de Nunes Marques favorável ao
-  Master ou à JBS relacionado a esses pagamentos — a ligação documentada é
-  financeira, ao filho, não uma contrapartida judicial identificada.
+  remuneração pela prestação de serviços técnicos e de assessoria jurídica".
+  Kevin negou qualquer relação do IPGT com o Master ou a JBS. Kassio Nunes
+  Marques declarou não ter "relação de proximidade" com Daniel Vorcaro e não
+  se recordar de trocas de mensagens sobre assuntos sociais.
 
-Como nos demais pontos desta cobertura: um pagamento de terceiros ao
-escritório de um filho de ministro não é, por si, prova de irregularidade
-do ministro — e nenhuma das fontes aqui usadas afirma o contrário. É mais
-um fio da mesma teia de relações financeiras em torno de Vorcaro, agora
-envolvendo três ministros por vias diferentes: Moraes diretamente, Toffoli
-por um fundo de investimento, Nunes Marques pelo escritório do filho.
+**Rodrigo Fux, filho de Luiz Fux.** Reportagens corroboradas por múltiplos
+veículos (BPMoney, 18 Horas, portal RED) mostram que Rodrigo participou, em
+março de 2025, da área vip do camarote Alma Rio durante o Desfile das
+Campeãs na Marquês de Sapucaí (Carnaval do Rio) — mensagens do celular de
+Vorcaro mostram o banqueiro determinando que "Fux" fosse colocado no espaço
+vip — e de uma degustação exclusiva de uísque em Nova York custeada por
+Vorcaro, reunindo cerca de 40 convidados (um evento distinto da degustação
+em Londres, com Moraes e Andrei Rodrigues, já registrada nesta cobertura).
+Rodrigo negou "amizade ou relação profissional" com Vorcaro e afirmou nunca
+ter prestado serviços a ele, dizendo que o banqueiro chegou a tentar uma
+aproximação comercial que não avançou.
+
+**O que nenhuma dessas reportagens estabelece.** Em nenhum dos dois casos as
+fontes consultadas pelo Observatório apontam voto ou decisão dos ministros
+favorável ao Master, à JBS ou a Vorcaro relacionado a essas ligações com os
+filhos — a documentação é financeira e social, não uma contrapartida
+judicial identificada.
+
+Como nos demais pontos desta cobertura: um pagamento ou um convite social a
+um filho de ministro não é, por si, prova de irregularidade do ministro — e
+nenhuma das fontes aqui usadas afirma o contrário. São mais dois fios da
+mesma teia de relações em torno de Vorcaro, que agora envolve quatro
+ministros por vias diferentes: Moraes diretamente, Toffoli por um fundo de
+investimento, Nunes Marques e Fux pelos respectivos filhos.
 
 ## A disputa sobre o próprio relatório
 
