@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { AuthProvider, useAuth } from "../contexts/AuthContext";
 
 const PLANOS = [
   {
@@ -48,7 +48,22 @@ const O_QUE_O_APOIO_SUSTENTA = [
   "Independência editorial — sem publicidade e sem patrocínio institucional",
 ];
 
+// AuthProvider precisa envolver o formulário aqui dentro: cada componente
+// React montado via client:load no Astro é sua própria raiz de hidratação,
+// sem contexto compartilhado entre ilhas — não basta declarar o Provider em
+// outro lugar da árvore. Até 2026-09, nenhum arquivo do repositório montava
+// AuthProvider, então useAuth() sempre devolvia o valor default do
+// createContext (user: null, assinante: false): o formulário nunca sabia se
+// quem visitava a página já estava logado ou já era assinante ativo.
 export default function FormApoio() {
+  return (
+    <AuthProvider>
+      <FormApoioInterno />
+    </AuthProvider>
+  );
+}
+
+function FormApoioInterno() {
   const { user, assinante } = useAuth();
   const [plano,    setPlano]    = useState<"mensal" | "anual">("anual");
   const [email,    setEmail]    = useState(user?.email ?? "");
