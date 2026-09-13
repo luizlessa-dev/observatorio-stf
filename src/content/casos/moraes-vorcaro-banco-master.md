@@ -142,6 +142,12 @@ fontes:
     url: "https://red.org.br/noticias/filhos-ministros-stf-vinculos-banco-master/"
   - label: "Filhos de Fux e Nunes Marques são citados em reportagens sobre entorno do Banco Master — BPMoney"
     url: "https://bpmoney.com.br/noticias/filhos-de-fux-e-nunes-marques-sao-citados-em-reportagens-sobre-entorno-do-banco-master/"
+  - label: "Fachin assume relatoria de ação que envolve Moraes no caso Master — O Hoje, 2026-09-13"
+    url: "https://ohoje.com/2026/09/13/fachin-assume-relatoria-de-acao-que-envolve-moraes-no-caso-master/"
+  - label: "Zanin pede íntegra do celular de Vorcaro antes de sessão do STF sobre Master-Moraes — InfoMoney"
+    url: "https://www.infomoney.com.br/politica/zanin-quer-integra-do-celular-de-vorcaro-antes-de-sessao-do-stf-sobre-master-moraes/"
+  - label: "Prefeitura aponta R$ 12 milhões em notas suspeitas e cobra devolução de R$ 906 mil de ONG do wi-fi — Alagoas 24 Horas"
+    url: "https://www.alagoas24horas.com.br/1749003/prefeitura-aponta-r-12-milhoes-em-notas-suspeitas-e-cobra-devolucao-de-r-906-mil-de-ong-responsavel-por-wi-fi-na-periferia/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -1127,6 +1133,19 @@ dispersa:
   teria usado dados pessoais de usuários da rede para fins eleitorais — uma
   frente de apuração distinta da do financiamento do filme, mas que
   compartilha a mesma personagem central.
+- **A Prefeitura de SP identificou notas fiscais canceladas depois do
+  pagamento — e cobra R$ 906,7 mil de volta.** A prefeitura notificou o ICB
+  sobre notas fiscais que as próprias empresas emissoras cancelaram depois
+  de já terem sido pagas — o que torna a despesa correspondente ilegítima.
+  Quatro notas nessa situação somam a devolução cobrada: três da JR Feijão
+  Ltda. (R$ 101.483,90, R$ 105.864,50 e R$ 199.404,10) e uma da Favela
+  Conectada (R$ 500 mil) — esta última descrita apenas como "prestação de
+  serviços conforme contrato", sem detalhar o serviço prestado. Outras
+  notas, de quatro empresas diferentes (Make One Tecnologia Digital,
+  Complexsys Soluções Integradas, Ultra IP Tecnologia e novamente Favela
+  Conectada), somando R$ 11.131.666,26, foram sinalizadas como carentes de
+  documentação e aguardam esclarecimento — ainda não confirmadas como
+  irregulares.
 
 ### A reportagem da piauí: mensagens inéditas, uma auditoria da CGU e um laudo que não fecha as contas
 
@@ -1277,18 +1296,23 @@ o que, exatamente, o plenário vai julgar:
 - **Separou a apuração sobre a conduta de Mendonça para 23 de setembro.**
   Segundo reportagens, Fachin destacou o pedido de investigação de Mendonça
   — apresentado por Moraes — do julgamento de 15/9, remarcando-o para uma
-  nova sessão em 23 de setembro. A imprensa registra decisões descritas de
-  formas diferentes sobre o alcance exato dessa separação: uma reportagem
-  afirma que Fachin assumiu para si a relatoria da apuração sobre Moraes,
-  afastando Mendonça dela, e suspendeu as apurações sobre o Master e o INSS
-  até uma revisão completa dos autos, citando "a possibilidade de o
-  julgamento da causa resultar em situação de impedimento do julgador"; outra
-  registra que a sessão de 15/9 segue tratando do caso Moraes sob relatoria
-  de Mendonça, com apenas a análise da conduta do próprio Mendonça adiada
-  para 23/9. O Observatório não conseguiu reconciliar as duas versões com as
-  fontes consultadas até a publicação desta atualização — o ponto comum entre
-  elas é que a sessão de 15/9 acontece, mas não decide tudo o que estava em
-  jogo até sexta-feira.
+  nova sessão em 23 de setembro.
+
+**Atualização de 13/9 — a ambiguidade acima está resolvida.** No sábado
+(12/9), à noite, Fachin determinou que a Petição 16.662 — a que trata da
+relação Moraes-Vorcaro e das informações que chegaram a Moraes — passe a
+ser relatada pela **Presidência da Corte**, não mais por Mendonça; o mesmo
+vale para as Petições 15.041 e 15.556. Segundo reportagens, foi o próprio
+Mendonça quem encaminhou a Petição 16.662 à Presidência, após uma decisão
+anterior de Fachin — não está definitivamente estabelecido, nas fontes
+consultadas pelo Observatório, se Fachin passa a relatar essas petições
+pessoalmente ou se há um passo intermediário. Fachin mencionou
+explicitamente, na decisão, a possibilidade de a Petição 16.662 resultar em
+situação de **impedimento do julgador** (artigo 144, inciso IV, do Código
+de Processo Civil) — dispositivo que trata de quando um magistrado não pode
+julgar por interesse pessoal na causa. A sessão de 15/9 segue mantida para
+tratar dos procedimentos ligados à controvérsia; a mudança de relatoria
+ocorre três dias antes dela.
 
 Como em cada ponto anterior: nada disso é uma decisão de mérito sobre as
 mensagens, os contratos ou os encontros revelados. É a arquitetura processual
