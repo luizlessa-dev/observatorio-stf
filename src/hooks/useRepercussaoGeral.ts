@@ -19,9 +19,16 @@ export function useRepercussaoGeral(filtroStatus?: string, search?: string, limi
   const [temas, setTemas] = useState<Tema[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
+  const [erro, setErro] = useState<string | null>(null);
+  // Incrementado pelo botão "Tentar novamente" para reexecutar o efeito sem
+  // duplicar filtroStatus/search/limit nas dependências.
+  const [tentativa, setTentativa] = useState(0);
 
   useEffect(() => {
+    let cancelado = false;
     setLoading(true);
+    setErro(null);
+
     let q = supabase
       .from("stf_repercussao_geral")
       .select("id, tema, titulo, tese, status, data_reconh, data_julg, leading_case, processos_imp, destaque, relator_id", { count: "exact" });
@@ -34,12 +41,27 @@ export function useRepercussaoGeral(filtroStatus?: string, search?: string, limi
     q.order("destaque", { ascending: false })
      .order("tema", { ascending: false })
      .limit(limit)
-     .then(({ data, count }) => {
-       setTemas((data as Tema[]) ?? []);
-       setTotal(count ?? 0);
+     .then(({ data, count, error }) => {
+       if (cancelado) return;
+       if (error) {
+         // Achado AUD-01: antes, um erro de consulta (RLS, rede, coluna
+         // renomeada) chegava aqui como `data: null` e virava silenciosamente
+         // "Nenhum tema encontrado" — indistinguível de uma tabela vazia de
+         // verdade. Falha passa a ser estado próprio, nunca um vazio disfarçado.
+         setErro(error.message);
+         setTemas([]);
+         setTotal(0);
+       } else {
+         setTemas((data as Tema[]) ?? []);
+         setTotal(count ?? 0);
+       }
        setLoading(false);
      });
-  }, [filtroStatus, search, limit]);
 
-  return { temas, loading, total };
+    return () => { cancelado = true; };
+  }, [filtroStatus, search, limit, tentativa]);
+
+  const tentarNovamente = () => setTentativa((t) => t + 1);
+
+  return { temas, loading, total, erro, tentarNovamente };
 }

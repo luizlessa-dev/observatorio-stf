@@ -139,12 +139,15 @@ function FormApoioInterno() {
       </div>
 
       {/* Seleção de plano */}
-      <div className="grid grid-cols-2 gap-3 mb-6">
+      <div className="grid grid-cols-2 gap-3 mb-6" role="radiogroup" aria-label="Plano de contribuição">
         {PLANOS.map((p) => (
           <button
             key={p.id}
+            type="button"
+            role="radio"
+            aria-checked={plano === p.id}
             onClick={() => setPlano(p.id)}
-            className={`relative border rounded-sm px-5 py-4 text-left transition-colors ${
+            className={`relative border rounded-sm px-5 py-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/70 ${
               plano === p.id
                 ? "border-white/40 bg-white/5"
                 : "border-border hover:border-border2"
@@ -165,16 +168,24 @@ function FormApoioInterno() {
 
       {/* E-mail + CTA */}
       {!user && (
-        <input
-          type="email"
-          placeholder="seu@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-card border border-border rounded-sm px-4 py-[10px] text-[12px] text-ink placeholder:text-subtle outline-none focus:border-white/20 mb-3"
-        />
+        <>
+          <label htmlFor="email-apoio" className="block text-[10px] font-semibold uppercase tracking-[1px] text-subtle mb-[6px]">
+            E-mail
+          </label>
+          <input
+            id="email-apoio"
+            type="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-invalid={erro ? true : undefined}
+            aria-describedby={erro ? "erro-apoio" : undefined}
+            className="w-full bg-card border border-border rounded-sm px-4 py-[10px] text-[12px] text-ink placeholder:text-subtle outline-none focus-visible:border-white/40 focus-visible:ring-2 focus-visible:ring-white/30 mb-3"
+          />
+        </>
       )}
 
-      {erro && <p className="text-[11px] text-red-400 mb-3">{erro}</p>}
+      {erro && <p id="erro-apoio" role="alert" className="text-[11px] text-red-400 mb-3">{erro}</p>}
 
       <button
         onClick={assinar}
