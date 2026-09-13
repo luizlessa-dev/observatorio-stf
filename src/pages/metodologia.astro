@@ -26,7 +26,7 @@ const descricao =
         (<code class="text-[11px]">transparencia.stf.jus.br</code>), que o tribunal recarrega
         diariamente. {fmtNum(resumo.totalDecisoes)} decisões desde 2000
         {resumo.dadosAte && <>, com dado até {fmtData(resumo.dadosAte)}</>}.</li>
-      <li><strong class="text-ink">Custo dos gabinetes</strong> —
+      <li><strong class="text-ink">Custo dos gabinetes</strong> —{" "}
         <code class="text-[11px]">egesp-portal.stf.jus.br/transparencia</code>, por mês de competência.</li>
       <li><strong class="text-ink">Dados biográficos</strong> — páginas "Dados e Datas" de cada
         ministro no portal do STF, que citam o Termo de Posse e o decreto de aposentadoria
@@ -125,8 +125,8 @@ const descricao =
         textos de andamento distintos (nesse recorte de decisões) para a categoria
         correspondente — "Provido" é mérito favorável, "Negado seguimento" é
         admissibilidade, e assim por diante. O dicionário completo, com a nota de cada
-        classificação, está em
-        <code class="text-[11px]">supabase/migrations/0016_natureza_ato_regra.sql</code>
+        classificação, está em{" "}
+        <code class="text-[11px]">supabase/migrations/0016_natureza_ato_regra.sql</code>{" "}
         no repositório público do projeto.
       </p>
       <p>
@@ -144,7 +144,7 @@ const descricao =
 
     <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Erros</h2>
     <p class="text-[12.5px] text-muted leading-[1.7]">
-      Se encontrar um dado errado, escreva para
+      Se encontrar um dado errado, escreva para{" "}
       <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
       Correções são feitas na fonte e propagadas na atualização seguinte, e erros
       relevantes ficam registrados publicamente no repositório do projeto.
