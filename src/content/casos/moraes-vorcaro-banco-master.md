@@ -4,8 +4,12 @@ resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Morae
 ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-13"
+data_atualizacao: "2026-09-14"
 fontes:
+  - label: "PF entrega dados do celular de Vorcaro ao gabinete de Zanin — CNN Brasil, 2026-09-14"
+    url: "https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/"
+  - label: "PF envia íntegra do celular de Vorcaro aos gabinetes de Zanin, Gilmar e Moraes — Agenda do Poder, 2026-09-14"
+    url: "https://agendadopoder.com.br/pf-entrega-integra-do-celular-de-vorcaro-a-zanin-gilmar-e-moraes/"
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
   - label: "Análise do contrato Banco Master–Barci de Moraes — Agência Pública, 2026-09-02"
@@ -1589,15 +1593,63 @@ contra-ataca pedindo apuração sobre a própria PF. Nada disso foi decidido
 pelo plenário — são movimentos monocráticos e ofícios de um domingo tenso,
 não julgamento de mérito.
 
+## Segunda-feira, véspera da sessão — 14 de setembro de 2026
+
+O prazo que Zanin fixara para a PF (ver seção anterior) foi cumprido, e o
+episódio ganhou um desfecho parcial nesta segunda — corroborado, fato a
+fato, por CNN Brasil e Agenda do Poder:
+
+- **PF entrega cópias a três gabinetes.** A PF enviou cópias dos dados
+  extraídos do celular de Vorcaro aos gabinetes de Alexandre de Moraes,
+  Cristiano Zanin e Gilmar Mendes. A corporação reafirmou que o material
+  original nunca saiu de sua custódia — permanece com "lacres íntegros e
+  mecanismos de verificação de integridade digital" — e que tem condições
+  técnicas de fornecer cópias idênticas a quem solicitar.
+- **A cópia que Mendonça recebeu em março, esclarece a PF, não é o
+  material original.** A ressalva que o Observatório havia registrado na
+  seção anterior como não confirmada em fonte primária apareceu, nesta
+  segunda, atribuída diretamente à PF: a cópia enviada ao gabinete de
+  Mendonça meses antes não corresponde ao material original, que
+  permanece integralmente sob custódia da corporação.
+- **Zanin e Gilmar repetem o argumento da colegialidade.** Zanin reiterou
+  que "os elementos de prova pertencem ao Plenário [...] e não a um
+  integrante específico" e citou "o dever pessoal de cada julgador de
+  contribuir e otimizar o processo decisório". Gilmar foi na mesma linha —
+  "o Plenário não é órgão do relator, mas colegiado cujos integrantes
+  exercem jurisdição em condições iguais, sem hierarquia entre si" — e
+  questionou que os demais ministros tiveram acesso, até aqui, só a
+  "recortes de diálogos selecionados" no relatório produzido por
+  determinação de Mendonça, "escolhidos entre várias outras conversas que
+  não foram transcritas".
+- **Mendonça mantém a posição contrária.** Argumentou que o
+  compartilhamento integral poderia prejudicar investigações em curso e
+  "tumultuar" a sessão de terça, citou uma frase atribuída a Fachin — "a
+  gravidade dos fatos não autoriza atalhos [...] não tolera subterfúgios ou
+  desvios de rota" — e afirmou dispor "exatamente do mesmo conjunto de
+  elementos de informação franqueado aos demais pares que irão participar
+  da referida sessão".
+- **Fachin assume a relatoria do procedimento sobre Moraes.** O presidente
+  do STF assumiu formalmente a condução do caso — movimento já sinalizado
+  em reportagens do dia anterior (ver "Domingo de pressão", acima) e
+  confirmado nesta segunda. Fachin negou o pedido de Moraes para que
+  questionamentos sobre a conduta de Mendonça fossem analisados na mesma
+  sessão de terça, mantendo reservada para isso a data de 23/9 já citada
+  nesta cobertura.
+
+Nada disso julga o mérito do caso. A validade do relatório da PF sobre as
+mensagens Vorcaro-Moraes — que a PGR pede para anular — é um dos pontos
+centrais que o plenário deve enfrentar na sessão de terça.
+
 ## Status
 
-Até a publicação desta atualização (domingo, 13 de setembro de 2026, véspera
-da véspera), o plenário do STF ainda não julgou o mérito de nada do que está
-registrado neste caso. Duas sessões estão marcadas: **15 de setembro de
-2026**, para tratar da Pet 16.662 (relação Moraes-Vorcaro, agora sob
-relatoria da Presidência da Corte — ver acima), e **23 de setembro de
-2026**, para avaliar o pedido de investigação contra Mendonça. Nas horas
-que antecedem a primeira sessão, ministros ainda disputam publicamente o
-acesso ao material bruto da investigação — ver a seção "Domingo de
-pressão", acima. O Observatório vai atualizar este caso conforme o
-processo avançar — inclusive o resultado das sessões de 15/9 e 23/9.
+Até a publicação desta atualização (segunda-feira, 14 de setembro de 2026,
+véspera da sessão), o plenário do STF ainda não julgou o mérito de nada do
+que está registrado neste caso. Duas sessões estão marcadas: **15 de
+setembro de 2026**, para tratar da Pet 16.662 (relação Moraes-Vorcaro, sob
+relatoria da Presidência da Corte desde esta segunda — ver acima), e **23
+de setembro de 2026**, para avaliar o pedido de investigação contra
+Mendonça. Nas horas que antecedem a primeira sessão, os gabinetes de
+Moraes, Zanin e Gilmar Mendes já receberam cópia dos dados do celular de
+Vorcaro — ver "Segunda-feira, véspera da sessão", acima. O Observatório vai
+atualizar este caso conforme o processo avançar — inclusive o resultado das
+sessões de 15/9 e 23/9.
