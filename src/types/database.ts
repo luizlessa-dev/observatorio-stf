@@ -237,6 +237,30 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_controle_concentrado"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0024 (2026-09): reclamações constitucionais, mesma
+      // família de painéis Corte Aberta e mesma lógica de resolução de
+      // ministro_id que stf_controle_concentrado.
+      stf_reclamacoes: {
+        Row: {
+          id:                     string;
+          processo:               string;
+          numero_unico:           string | null;
+          num_processos_origens:  string | null;
+          data_autuacao:          string | null;
+          ministro_id:            string | null;
+          relator_atual_bruto:    string | null;
+          procedencia:            string | null;
+          preferencia_criminal:   boolean | null;
+          ramo_direito:           string | null;
+          em_tramitacao:          boolean | null;
+          liminar_pendente:       boolean | null;
+          fonte:                  string;
+          created_at:             string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_reclamacoes"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_reclamacoes"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não

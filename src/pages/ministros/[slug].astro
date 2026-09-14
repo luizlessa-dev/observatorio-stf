@@ -9,30 +9,31 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarControleConcentrado, carregarPerfilDecisorio } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarControleConcentrado, carregarReclamacoes, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, controleConcentrado, perfil] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
         carregarGastosServidores(m.id),
         carregarViagens(m.id),
         carregarControleConcentrado(m.id),
+        carregarReclamacoes(m.id),
         carregarPerfilDecisorio(m.id),
       ]);
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, casos, perfil } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, casos, perfil } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
@@ -417,6 +418,68 @@ const jsonLd = {
           {" "}Ações Diretas de Inconstitucionalidade, Declaratórias de Constitucionalidade,
           de Descumprimento de Preceito Fundamental e de Inconstitucionalidade por Omissão —
           atribuídas por sorteio ao distribuir, não por escolha do {substantivo}.
+        </p>
+      </section>
+    )}
+
+    {reclamacoes.total > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Reclamações</h2>
+          <span class="text-[8.5px] text-subtle">histórico completo</span>
+        </div>
+        <div class="grid grid-cols-3 divide-x divide-border">
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Sob relatoria</div>
+            <div class="text-[15px] font-bold text-ink">{fmtNum(reclamacoes.total)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">reclamações no total</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Em tramitação</div>
+            <div class="text-[15px] font-bold text-ink">{fmtNum(reclamacoes.emTramitacao)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">ainda não baixadas</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Liminar pendente</div>
+            <div class="text-[15px] font-bold text-ink">{fmtNum(reclamacoes.liminaresPendentes)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">de decisão sobre liminar</div>
+          </div>
+        </div>
+
+        <details class="border-t border-border group">
+          <summary class="px-4 py-[9px] text-[10px] font-semibold text-ink cursor-pointer select-none list-none flex items-center gap-[6px] hover:bg-card/50 transition-colors">
+            <span class="text-subtle group-open:rotate-90 transition-transform inline-block">›</span>
+            Ver reclamações mais recentes (até 40 de {fmtNum(reclamacoes.total)})
+          </summary>
+          <div class="overflow-x-auto border-t border-border">
+            <table class="w-full text-[10px]" style="min-width: 560px">
+              <thead>
+                <tr class="bg-card/50 border-b border-border text-left">
+                  <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Processo</th>
+                  <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Ramo do direito</th>
+                  <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Procedência</th>
+                  <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Autuação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reclamacoes.lista.map((r) => (
+                  <tr class="border-b border-border last:border-0">
+                    <td class="px-4 py-[6px] text-ink">{r.processo}</td>
+                    <td class="px-3 py-[6px] text-muted">{r.ramo_direito ?? "—"}</td>
+                    <td class="px-3 py-[6px] text-subtle">{r.procedencia ?? "—"}</td>
+                    <td class="px-4 py-[6px] text-subtle">{r.data_autuacao ? fmtDataCurta(r.data_autuacao) : "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          Fonte: portal de transparência do STF (painel Corte Aberta — Reclamações).
+          {" "}Reclamação é o instrumento para forçar o cumprimento de uma decisão do STF
+          por tribunais inferiores ou por atos do Poder Executivo — não julga o mérito do
+          caso original, só se ele foi respeitado.
         </p>
       </section>
     )}

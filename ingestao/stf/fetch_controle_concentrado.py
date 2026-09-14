@@ -29,14 +29,14 @@ import openpyxl
 from playwright.sync_api import sync_playwright
 from supabase import create_client
 
+from _corte_aberta_qlik import baixar_xlsx, bool_sim_nao, valor, NI
+
 warnings.filterwarnings("ignore")
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 
 URL_PAINEL = "https://transparencia.stf.jus.br/extensions/controle_concentrado/controle_concentrado.html"
-
-NI = "*NI*"
 
 
 def normalizar(txt: str) -> str:
@@ -60,20 +60,6 @@ def resolver_ministro(relator_bruto: str, ministros: list[dict]) -> str | None:
     return None
 
 
-def valor(v):
-    """'*NI*' -> None; string vazia -> None; resto passa direto."""
-    if v is None or v == NI or v == "":
-        return None
-    return v
-
-
-def bool_sim_nao(v):
-    v = valor(v)
-    if v is None:
-        return None
-    return str(v).strip().lower() == "sim"
-
-
 def data_iso(v):
     v = valor(v)
     if v is None:
@@ -86,45 +72,6 @@ def data_iso(v):
         return f"{a}-{m}-{d}"
     except ValueError:
         return None
-
-
-def baixar_xlsx(page) -> bytes:
-    page.goto(URL_PAINEL, wait_until="load", timeout=60000)
-    page.wait_for_timeout(9000)
-
-    item = page.get_by_text("Processos", exact=True).first
-    item.wait_for(state="visible", timeout=20000)
-    item.click()
-    page.wait_for_timeout(4000)
-
-    page.evaluate(
-        """() => {
-            window.__exportUrl = null;
-            window.open = function(url) {
-                window.__exportUrl = url;
-                return { close(){}, focus(){}, closed:false };
-            };
-        }"""
-    )
-
-    # botão de export: ícone + rótulo com o nome da aba atual, na barra superior
-    page.locator("span.ng-binding:text-is('Processos')").first.click()
-    page.wait_for_function("() => window.__exportUrl !== null", timeout=30000)
-
-    b64 = page.evaluate(
-        """async () => {
-            const full = new URL(window.__exportUrl, location.origin).href;
-            const resp = await fetch(full, { credentials: 'include' });
-            const buf = await resp.arrayBuffer();
-            let binary = '';
-            const bytes = new Uint8Array(buf);
-            const chunk = 0x8000;
-            for (let i = 0; i < bytes.length; i += chunk) binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-            return btoa(binary);
-        }"""
-    )
-    import base64
-    return base64.b64decode(b64)
 
 
 def processar(xlsx_bytes: bytes, ministros: list[dict]) -> list[dict]:
@@ -186,7 +133,7 @@ def run(dry_run: bool = False):
         browser = p.chromium.launch()
         page = browser.new_page()
         print("Abrindo painel de Controle Concentrado (navegador headless)...")
-        xlsx_bytes = baixar_xlsx(page)
+        xlsx_bytes = baixar_xlsx(page, URL_PAINEL, "Processos")
         browser.close()
 
     lote = processar(xlsx_bytes, ministros)

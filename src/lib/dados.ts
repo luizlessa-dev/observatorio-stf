@@ -95,6 +95,22 @@ export interface ControleConcentrado {
   acoes: AcaoControleConcentrado[];
 }
 
+export interface Reclamacao {
+  processo: string;
+  ramo_direito: string | null;
+  procedencia: string | null;
+  em_tramitacao: boolean | null;
+  liminar_pendente: boolean | null;
+  data_autuacao: string | null;
+}
+
+export interface Reclamacoes {
+  total: number;
+  emTramitacao: number;
+  liminaresPendentes: number;
+  lista: Reclamacao[];
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -427,6 +443,40 @@ export async function carregarControleConcentrado(ministroId: string): Promise<C
     total: total ?? 0,
     emTramitacao: emTramitacao ?? 0,
     acoes: (acoes ?? []) as AcaoControleConcentrado[],
+  };
+}
+
+/**
+ * Reclamações constitucionais sob relatoria do ministro — histórico
+ * completo. É o maior volume individual de processo do tribunal (quase
+ * 100 mil), então a lista de detalhe fica restrita às 40 mais recentes.
+ */
+export async function carregarReclamacoes(ministroId: string): Promise<Reclamacoes> {
+  const [{ count: total }, { count: emTramitacao }, { count: liminaresPendentes }, { data: lista }] = await Promise.all([
+    supabase.from("stf_reclamacoes").select("*", { count: "exact", head: true }).eq("ministro_id", ministroId),
+    supabase
+      .from("stf_reclamacoes")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("em_tramitacao", true),
+    supabase
+      .from("stf_reclamacoes")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("liminar_pendente", true),
+    supabase
+      .from("stf_reclamacoes")
+      .select("processo, ramo_direito, procedencia, em_tramitacao, liminar_pendente, data_autuacao")
+      .eq("ministro_id", ministroId)
+      .order("data_autuacao", { ascending: false })
+      .limit(40),
+  ]);
+
+  return {
+    total: total ?? 0,
+    emTramitacao: emTramitacao ?? 0,
+    liminaresPendentes: liminaresPendentes ?? 0,
+    lista: (lista ?? []) as Reclamacao[],
   };
 }
 
