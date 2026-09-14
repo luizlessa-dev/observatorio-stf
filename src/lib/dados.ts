@@ -111,6 +111,15 @@ export interface Reclamacoes {
   lista: Reclamacao[];
 }
 
+export interface ProximoJulgamento {
+  classe: string | null;
+  numero: number | null;
+  orgao: string;
+  ramo_direito: string | null;
+  papel: "relator" | "vista";
+  data_pauta: string | null;
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -478,6 +487,36 @@ export async function carregarReclamacoes(ministroId: string): Promise<Reclamaco
     liminaresPendentes: liminaresPendentes ?? 0,
     lista: (lista ?? []) as Reclamacao[],
   };
+}
+
+/**
+ * Próximos julgamentos — única fonte prospectiva do site: processos já
+ * liberados para julgamento (Plenário ou Turmas), ainda não decididos.
+ * Combina os dois painéis e os dois papéis possíveis do ministro no
+ * mesmo processo (relator ou quem pediu vista), ordenado por data em
+ * que entrou na pauta.
+ */
+export async function carregarProximosJulgamentos(ministroId: string): Promise<ProximoJulgamento[]> {
+  const [
+    { data: plenarioRelator },
+    { data: plenarioVista },
+    { data: turmasRelator },
+    { data: turmasVista },
+  ] = await Promise.all([
+    supabase.from("stf_pauta_plenario").select("classe, numero, ramo_direito, data_pauta").eq("ministro_id", ministroId),
+    supabase.from("stf_pauta_plenario").select("classe, numero, ramo_direito, data_pauta").eq("ministro_vista_id", ministroId),
+    supabase.from("stf_pauta_turmas").select("classe, numero, orgao_julgador, ramo_direito, data_pauta").eq("ministro_id", ministroId),
+    supabase.from("stf_pauta_turmas").select("classe, numero, orgao_julgador, ramo_direito, data_pauta").eq("ministro_vista_id", ministroId),
+  ]);
+
+  const lista: ProximoJulgamento[] = [
+    ...(plenarioRelator ?? []).map((p) => ({ classe: p.classe, numero: p.numero, orgao: "Plenário", ramo_direito: p.ramo_direito, papel: "relator" as const, data_pauta: p.data_pauta })),
+    ...(plenarioVista ?? []).map((p) => ({ classe: p.classe, numero: p.numero, orgao: "Plenário", ramo_direito: p.ramo_direito, papel: "vista" as const, data_pauta: p.data_pauta })),
+    ...(turmasRelator ?? []).map((t) => ({ classe: t.classe, numero: t.numero, orgao: t.orgao_julgador ?? "Turma", ramo_direito: t.ramo_direito, papel: "relator" as const, data_pauta: t.data_pauta })),
+    ...(turmasVista ?? []).map((t) => ({ classe: t.classe, numero: t.numero, orgao: t.orgao_julgador ?? "Turma", ramo_direito: t.ramo_direito, papel: "vista" as const, data_pauta: t.data_pauta })),
+  ];
+
+  return lista.sort((a, b) => (b.data_pauta ?? "").localeCompare(a.data_pauta ?? "")).slice(0, 40);
 }
 
 /**

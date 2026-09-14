@@ -261,6 +261,59 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_reclamacoes"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0025 (2026-09): pauta do Plenário e das Turmas — única
+      // fonte prospectiva do site (processos liberados para julgamento,
+      // ainda não decididos). Duas tabelas porque as colunas disponíveis
+      // diferem entre os dois painéis de origem.
+      stf_pauta_plenario: {
+        Row: {
+          id:                    string;
+          classe:                string | null;
+          numero:                number | null;
+          ministro_id:           string | null;
+          relator_atual_bruto:   string | null;
+          data_autuacao:         string | null;
+          ramo_direito:          string | null;
+          criminal:              boolean | null;
+          sessao:                string | null;
+          rg_reconhecida:        boolean | null;
+          pedido_vista:          boolean | null;
+          ministro_vista_id:     string | null;
+          ministro_vista_bruto:  string | null;
+          data_vista:            string | null;
+          suspenso:              boolean | null;
+          data_pauta:            string | null;
+          fonte:                 string;
+          created_at:            string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_pauta_plenario"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_pauta_plenario"]["Insert"]>;
+        Relationships: [];
+      };
+      stf_pauta_turmas: {
+        Row: {
+          id:                    string;
+          classe:                string | null;
+          numero:                number | null;
+          orgao_julgador:        string | null;
+          ministro_id:           string | null;
+          relator_atual_bruto:   string | null;
+          data_autuacao:         string | null;
+          ramo_direito:          string | null;
+          sessao:                string | null;
+          pedido_vista:          boolean | null;
+          ministro_vista_id:     string | null;
+          ministro_vista_bruto:  string | null;
+          data_vista:            string | null;
+          suspenso:              boolean | null;
+          data_pauta:            string | null;
+          fonte:                 string;
+          created_at:            string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_pauta_turmas"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_pauta_turmas"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não
