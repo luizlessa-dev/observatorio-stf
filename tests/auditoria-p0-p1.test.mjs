@@ -144,16 +144,39 @@ test("AUD-07: existe src/pages/404.astro com navegação de recuperação", () =
   assert.match(src, /href="\/"/, "a 404 precisa linkar de volta para a home");
 });
 
-// AUD-08 — fonte não deveria mais entrar via @import bloqueante.
-test("AUD-08: global.css não usa @import para carregar fontes do Google Fonts", () => {
+// AUD-08 — fontes auto-hospedadas (revisão de 2026-09-14): o fix anterior só
+// trocou @import por <link> ainda apontando pra fonts.googleapis.com/gstatic.com
+// (duas conexões externas a mais no caminho crítico). Agora os três arquivos
+// .woff2 vêm do próprio domínio, servidos de public/fonts/.
+test("AUD-08: global.css declara @font-face local para Inter/Playfair Display/JetBrains Mono, sem domínio do Google", () => {
   const src = ler("src/estilos/global.css");
-  assert.ok(!/@import\s+url\(['"]?https:\/\/fonts\.googleapis\.com/.test(src), "fonte deveria entrar via <link> no <head>, não @import no CSS");
+  // Checa só url(...) funcional, não o comentário de contexto que cita o
+  // domínio antigo de propósito (mesmo padrão de comentário histórico usado
+  // no resto do arquivo).
+  assert.ok(!/url\([^)]*fonts\.(googleapis|gstatic)\.com/.test(src), "global.css ainda tem um url() apontando pro Google Fonts");
+  for (const familia of ["Inter", "Playfair Display", "JetBrains Mono"]) {
+    assert.match(src, new RegExp(`font-family:\\s*"${familia}"`), `esperava @font-face para "${familia}"`);
+  }
+  assert.match(src, /url\("\/fonts\/inter-latin-variable\.woff2"\)/);
+  assert.match(src, /url\("\/fonts\/playfair-display-latin-variable\.woff2"\)/);
+  assert.match(src, /url\("\/fonts\/jetbrains-mono-latin-variable\.woff2"\)/);
 });
 
-test("AUD-08: Base.astro carrega a fonte via <link rel=preconnect/stylesheet>", () => {
+test("AUD-08: os três arquivos .woff2 auto-hospedados existem de verdade em public/fonts/", () => {
+  for (const arquivo of ["inter-latin-variable.woff2", "playfair-display-latin-variable.woff2", "jetbrains-mono-latin-variable.woff2"]) {
+    const caminho = path.join(ROOT, "public/fonts", arquivo);
+    assert.ok(existsSync(caminho), `esperava public/fonts/${arquivo}`);
+    assert.ok(readFileSync(caminho).length > 1000, `${arquivo} parece vazio ou corrompido (menos de 1KB)`);
+  }
+});
+
+test("AUD-08: Base.astro não referencia mais fonts.googleapis.com/gstatic.com; faz preload local de Inter e Playfair Display", () => {
   const src = ler("src/layouts/Base.astro");
-  assert.match(src, /rel="preconnect"\s+href="https:\/\/fonts\.googleapis\.com"/);
-  assert.match(src, /rel="stylesheet"\s+href="https:\/\/fonts\.googleapis\.com/);
+  // Checa só href="..." funcional, não o comentário de contexto que cita o
+  // domínio antigo de propósito.
+  assert.ok(!/href="https:\/\/fonts\.(googleapis|gstatic)\.com/.test(src), "Base.astro ainda tem um <link href> apontando pro Google Fonts");
+  assert.match(src, /rel="preload"\s+href="\/fonts\/inter-latin-variable\.woff2"\s+as="font"/, "Inter (corpo do texto, acima da dobra) deveria ter preload");
+  assert.match(src, /rel="preload"\s+href="\/fonts\/playfair-display-latin-variable\.woff2"\s+as="font"/, "Playfair Display (títulos, acima da dobra) deveria ter preload");
 });
 
 // AUD-09 — CSP em modo Report-Only.
@@ -163,6 +186,18 @@ test("AUD-09: vercel.json declara Content-Security-Policy-Report-Only", () => {
   const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy-Report-Only");
   assert.ok(csp, "esperava um header Content-Security-Policy-Report-Only em vercel.json");
   assert.match(csp.value, /default-src 'self'/);
+});
+
+// AUD-08 (consequência direta de auto-hospedar as fontes): a CSP não precisa
+// mais autorizar fonts.googleapis.com (style-src) nem fonts.gstatic.com
+// (font-src) — manter essas origens no header depois que o site parou de
+// usá-las seria uma permissão morta, o oposto do princípio de menor
+// privilégio que a própria CSP existe pra impor.
+test("AUD-08/09: CSP não autoriza mais fonts.googleapis.com/gstatic.com (fontes agora são same-origin)", () => {
+  const vercelJson = JSON.parse(ler("vercel.json"));
+  const globalHeaders = vercelJson.headers.find((h) => h.source === "/(.*)");
+  const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy-Report-Only");
+  assert.ok(!/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(csp.value), "CSP ainda cita domínio do Google Fonts, mas o site não carrega mais nada de lá");
 });
 
 // AUD-12 — nenhuma data de caso pode estar no futuro.

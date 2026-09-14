@@ -38,13 +38,14 @@ const atual = Astro.url.pathname;
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- AUD-08: era @import no CSS, que só dispara depois do CSS principal
-         carregar e parsear (uma volta de rede a mais antes mesmo de começar a
-         buscar a fonte). Link + preconnect no head deixa o navegador abrir a
-         conexão com fonts.googleapis.com/gstatic.com em paralelo ao HTML. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <!-- AUD-08: fontes auto-hospedadas (ver @font-face em global.css) —
+         antes eram carregadas de fonts.googleapis.com/gstatic.com, duas
+         conexões externas (DNS+TLS) a mais no caminho crítico. Preload só
+         das duas famílias usadas acima da dobra em toda página (Inter no
+         corpo, Playfair Display nos títulos); JetBrains Mono aparece só em
+         tabelas/dados específicos, carrega sob demanda sem preload. -->
+    <link rel="preload" href="/fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/playfair-display-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Observatório do STF" />
