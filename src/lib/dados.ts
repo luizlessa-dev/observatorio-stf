@@ -55,6 +55,40 @@ export interface GastoServidor {
   remuneracao_liquida: number | null;
 }
 
+export interface Passagem {
+  nome: string | null;
+  cargo: string | null;
+  motivo: string | null;
+  data_ida: string | null;
+  data_volta: string | null;
+  tipo_passagem: string | null;
+  trecho: string | null;
+  custo_efetivo: number | null;
+  ano: number;
+  mes: number | null;
+}
+
+export interface Diaria {
+  nome: string | null;
+  cargo: string | null;
+  motivo: string | null;
+  tipo_diaria: string | null;
+  quantidade: number | null;
+  valor_total: number | null;
+  ano: number;
+  mes: number | null;
+}
+
+export interface Viagens {
+  totalPassagens: number;
+  totalDiarias: number;
+  qtdPassagens: number;
+  qtdDiarias: number;
+  desde: number | null;
+  passagens: Passagem[];
+  diarias: Diaria[];
+}
+
 const COLUNAS_MINISTRO =
   "id, nome, iniciais_exibicao, data_posse, data_saida, indicado_por, indicado_por_curto, partido_indicante, cargo_anterior, aposentadoria_comp, ativo" as const;
 
@@ -302,6 +336,52 @@ export async function carregarGastosServidores(ministroId: string): Promise<Gast
     .eq("mes", ultimo.mes)
     .order("remuneracao_bruta", { ascending: false });
   return (data ?? []) as GastoServidor[];
+}
+
+/**
+ * Passagens aéreas e diárias do gabinete, desde 2016 (início da série na
+ * fonte). Os totais somam o histórico inteiro disponível — sem filtrar por
+ * data de posse, porque a fonte não deixa isso simples de fazer no cliente
+ * e a maioria dos ministros já cobre praticamente toda a série. A tabela
+ * de detalhe mostra só as 40 mais recentes de cada uma; quem quer o resto
+ * tem os dados brutos no Supabase.
+ */
+export async function carregarViagens(ministroId: string): Promise<Viagens> {
+  const [
+    { data: agregPassagens },
+    { data: agregDiarias },
+    { data: passagens },
+    { data: diarias },
+  ] = await Promise.all([
+    supabase.from("stf_passagens").select("custo_efetivo, ano").eq("ministro_id", ministroId),
+    supabase.from("stf_diarias").select("valor_total, ano").eq("ministro_id", ministroId),
+    supabase
+      .from("stf_passagens")
+      .select("nome, cargo, motivo, data_ida, data_volta, tipo_passagem, trecho, custo_efetivo, ano, mes")
+      .eq("ministro_id", ministroId)
+      .order("ano", { ascending: false })
+      .order("mes", { ascending: false })
+      .limit(40),
+    supabase
+      .from("stf_diarias")
+      .select("nome, cargo, motivo, tipo_diaria, quantidade, valor_total, ano, mes")
+      .eq("ministro_id", ministroId)
+      .order("ano", { ascending: false })
+      .order("mes", { ascending: false })
+      .limit(40),
+  ]);
+
+  const anos = [...(agregPassagens ?? []).map((p) => p.ano), ...(agregDiarias ?? []).map((d) => d.ano)];
+
+  return {
+    totalPassagens: (agregPassagens ?? []).reduce((s, p) => s + (p.custo_efetivo ?? 0), 0),
+    totalDiarias: (agregDiarias ?? []).reduce((s, d) => s + (d.valor_total ?? 0), 0),
+    qtdPassagens: agregPassagens?.length ?? 0,
+    qtdDiarias: agregDiarias?.length ?? 0,
+    desde: anos.length ? Math.min(...anos) : null,
+    passagens: (passagens ?? []) as Passagem[],
+    diarias: (diarias ?? []) as Diaria[],
+  };
 }
 
 /**

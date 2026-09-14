@@ -9,28 +9,29 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarPerfilDecisorio } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, perfil] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
         carregarGastosServidores(m.id),
+        carregarViagens(m.id),
         carregarPerfilDecisorio(m.id),
       ]);
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, casos, perfil } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, gastosServidores, casos, perfil } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
@@ -258,6 +259,103 @@ const jsonLd = {
             </p>
           </div>
         )}
+      </section>
+    )}
+
+    {(viagens.qtdPassagens > 0 || viagens.qtdDiarias > 0) && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Viagens a serviço</h2>
+          {viagens.desde && <span class="text-[8.5px] text-subtle">dados desde {viagens.desde}</span>}
+        </div>
+        <div class="grid grid-cols-2 divide-x divide-border">
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Passagens aéreas</div>
+            <div class="text-[15px] font-bold text-ink">{fmtBRL(viagens.totalPassagens)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">{fmtNum(viagens.qtdPassagens)} trechos</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Diárias</div>
+            <div class="text-[15px] font-bold text-ink">{fmtBRL(viagens.totalDiarias)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">{fmtNum(viagens.qtdDiarias)} registros</div>
+          </div>
+        </div>
+
+        {viagens.passagens.length > 0 && (
+          <details class="border-t border-border group">
+            <summary class="px-4 py-[9px] text-[10px] font-semibold text-ink cursor-pointer select-none list-none flex items-center gap-[6px] hover:bg-card/50 transition-colors">
+              <span class="text-subtle group-open:rotate-90 transition-transform inline-block">›</span>
+              Ver passagens mais recentes (até 40 de {fmtNum(viagens.qtdPassagens)})
+            </summary>
+            <div class="overflow-x-auto border-t border-border">
+              <table class="w-full text-[10px]" style="min-width: 640px">
+                <thead>
+                  <tr class="bg-card/50 border-b border-border text-left">
+                    <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Nome</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Cargo</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Trecho</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Data ida</th>
+                    <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px] text-right">Custo efetivo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {viagens.passagens.map((p) => (
+                    <tr class="border-b border-border last:border-0">
+                      <td class="px-4 py-[6px] text-ink">{p.nome ?? "—"}</td>
+                      <td class="px-3 py-[6px] text-muted">{p.cargo ?? "—"}</td>
+                      <td class="px-3 py-[6px] text-subtle">
+                        {p.trecho ?? "—"}
+                        {p.tipo_passagem === "Internacional" && <span class="text-[8px] text-subtle">{" "}(internacional)</span>}
+                      </td>
+                      <td class="px-3 py-[6px] text-subtle">{p.data_ida ? fmtDataCurta(p.data_ida) : "—"}</td>
+                      <td class="px-4 py-[6px] text-ink text-right font-mono">{p.custo_efetivo != null ? fmtBRL(p.custo_efetivo) : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        )}
+
+        {viagens.diarias.length > 0 && (
+          <details class="border-t border-border group">
+            <summary class="px-4 py-[9px] text-[10px] font-semibold text-ink cursor-pointer select-none list-none flex items-center gap-[6px] hover:bg-card/50 transition-colors">
+              <span class="text-subtle group-open:rotate-90 transition-transform inline-block">›</span>
+              Ver diárias mais recentes (até 40 de {fmtNum(viagens.qtdDiarias)})
+            </summary>
+            <div class="overflow-x-auto border-t border-border">
+              <table class="w-full text-[10px]" style="min-width: 560px">
+                <thead>
+                  <tr class="bg-card/50 border-b border-border text-left">
+                    <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Nome</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Cargo</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Motivo</th>
+                    <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px] text-right">Qtd.</th>
+                    <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px] text-right">Valor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {viagens.diarias.map((d) => (
+                    <tr class="border-b border-border last:border-0">
+                      <td class="px-4 py-[6px] text-ink">{d.nome ?? "—"}</td>
+                      <td class="px-3 py-[6px] text-muted">{d.cargo ?? "—"}</td>
+                      <td class="px-3 py-[6px] text-subtle line-clamp-1">{d.motivo ?? "—"}</td>
+                      <td class="px-3 py-[6px] text-subtle text-right">{d.quantidade ?? "—"}</td>
+                      <td class="px-4 py-[6px] text-ink text-right font-mono">{d.valor_total != null ? fmtBRL(d.valor_total) : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        )}
+
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          Fonte: portal de transparência do STF (painéis Passagens Aéreas e Diárias),
+          {" "}desde {viagens.desde ?? "2016"}. Inclui o próprio {substantivo} e quem está
+          lotado no gabinete — juízes convocados, assessores. Cada trecho voado (ida,
+          volta) aparece como um registro separado.
+        </p>
       </section>
     )}
 

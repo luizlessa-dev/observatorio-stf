@@ -139,6 +139,57 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_gastos_servidores"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0022 (2026-09): passagens aéreas e diárias do gabinete de
+      // cada ministro. Fonte: painéis Qlik de transparencia.stf.jus.br, sem
+      // URL estática de export — ingestão via Playwright (ver
+      // ingestao/stf/fetch_passagens_diarias.py).
+      stf_passagens: {
+        Row: {
+          id:               string;
+          ministro_id:      string;
+          passagem_id:      string;
+          nome:             string | null;
+          cargo:            string | null;
+          lotacao:          string | null;
+          motivo:           string | null;
+          ano:              number;
+          mes:              number | null;
+          data_ida:         string | null;
+          data_volta:       string | null;
+          tipo_passagem:    string | null;
+          trecho:           string | null;
+          valor_bilhete:    number | null;
+          valor_reembolso:  number | null;
+          custo_efetivo:    number | null;
+          fonte:            string;
+          created_at:       string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_passagens"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_passagens"]["Insert"]>;
+        Relationships: [];
+      };
+      stf_diarias: {
+        Row: {
+          id:          string;
+          ministro_id: string;
+          diaria_id:   string;
+          nome:        string | null;
+          cargo:       string | null;
+          lotacao:     string | null;
+          tipo_diaria: string | null;
+          motivo:      string | null;
+          moeda:       string | null;
+          quantidade:  number | null;
+          valor_total: number | null;
+          ano:         number;
+          mes:         number | null;
+          fonte:       string;
+          created_at:  string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_diarias"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_diarias"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não
