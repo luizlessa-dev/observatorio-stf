@@ -314,6 +314,37 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_pauta_turmas"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0026 (2026-09): casos de omissão inconstitucional —
+      // lista curada (171 julgados), não um recorte de milhares como os
+      // outros painéis Corte Aberta. tipo_omissao/ramo_direito já vêm
+      // limpos do encoding multivalorado do Qlik na ingestão.
+      stf_omissao_inconstitucional: {
+        Row: {
+          id:                    string;
+          materia:               string | null;
+          processo:              string;
+          ministro_id:           string | null;
+          relator_bruto:         string | null;
+          redator_acordao_bruto: string | null;
+          tipo_classe:           string | null;
+          classe_processo:       string | null;
+          incidente:             string | null;
+          numero_processo:       number | null;
+          data_julgamento:       string | null;
+          ementa:                string | null;
+          orgao_julgador:        string | null;
+          tipo_omissao:          string | null;
+          ramo_direito:          string | null;
+          link_processo:         string | null;
+          link_inteiro_teor:     string | null;
+          link_jurisprudencia:   string | null;
+          fonte:                 string;
+          created_at:            string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_omissao_inconstitucional"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_omissao_inconstitucional"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não

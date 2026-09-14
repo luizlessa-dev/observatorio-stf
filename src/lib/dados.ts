@@ -120,6 +120,15 @@ export interface ProximoJulgamento {
   data_pauta: string | null;
 }
 
+export interface CasoOmissaoInconstitucional {
+  materia: string | null;
+  processo: string;
+  data_julgamento: string | null;
+  tipo_omissao: string | null;
+  ramo_direito: string | null;
+  link_processo: string | null;
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -517,6 +526,19 @@ export async function carregarProximosJulgamentos(ministroId: string): Promise<P
   ];
 
   return lista.sort((a, b) => (b.data_pauta ?? "").localeCompare(a.data_pauta ?? "")).slice(0, 40);
+}
+
+/**
+ * Casos de omissão inconstitucional relatados pelo ministro — lista
+ * curada e pequena (171 no total), nunca precisa de paginação.
+ */
+export async function carregarOmissaoInconstitucional(ministroId: string): Promise<CasoOmissaoInconstitucional[]> {
+  const { data } = await supabase
+    .from("stf_omissao_inconstitucional")
+    .select("materia, processo, data_julgamento, tipo_omissao, ramo_direito, link_processo")
+    .eq("ministro_id", ministroId)
+    .order("data_julgamento", { ascending: false });
+  return (data ?? []) as CasoOmissaoInconstitucional[];
 }
 
 /**

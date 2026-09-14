@@ -9,14 +9,14 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarPerfilDecisorio } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarOmissaoInconstitucional, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, perfil] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
         carregarGastosServidores(m.id),
@@ -24,17 +24,18 @@ export async function getStaticPaths() {
         carregarControleConcentrado(m.id),
         carregarReclamacoes(m.id),
         carregarProximosJulgamentos(m.id),
+        carregarOmissaoInconstitucional(m.id),
         carregarPerfilDecisorio(m.id),
       ]);
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, casos, perfil } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, casos, perfil } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
@@ -510,6 +511,38 @@ const jsonLd = {
           {" "}Reclamação é o instrumento para forçar o cumprimento de uma decisão do STF
           por tribunais inferiores ou por atos do Poder Executivo — não julga o mérito do
           caso original, só se ele foi respeitado.
+        </p>
+      </section>
+    )}
+
+    {omissaoInconstitucional.length > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Omissão inconstitucional</h2>
+          <span class="text-[8.5px] text-subtle">{fmtNum(omissaoInconstitucional.length)} caso{omissaoInconstitucional.length > 1 && "s"}</span>
+        </div>
+        {omissaoInconstitucional.map((c) => (
+          <a
+            href={c.link_processo ?? undefined}
+            target={c.link_processo ? "_blank" : undefined}
+            rel={c.link_processo ? "noopener" : undefined}
+            class:list={["grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2", c.link_processo && "hover:bg-card/50 transition-colors"]}
+            style="grid-template-columns: 74px 1fr 90px"
+          >
+            <span class="font-mono text-[9px] text-subtle pt-[1px]">{c.processo}</span>
+            <div>
+              <div class="text-[11px] text-ink font-medium leading-[1.35]">{c.materia ?? "—"}</div>
+              <div class="text-[10px] text-subtle leading-[1.35] mt-[2px]">{c.ramo_direito ?? c.tipo_omissao ?? "—"}</div>
+            </div>
+            <span class="text-[9px] text-subtle text-right self-start justify-self-end">
+              {c.data_julgamento ? fmtDataCurta(c.data_julgamento) : "—"}
+            </span>
+          </a>
+        ))}
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          Fonte: portal de transparência do STF (painel Corte Aberta — Omissão Inconstitucional).
+          {" "}Lista curada de julgados em que o STF reconheceu falta de lei, política pública ou
+          ato administrativo exigido pela Constituição — não é um recorte automático de processos.
         </p>
       </section>
     )}
