@@ -10,6 +10,12 @@ fontes:
     url: "https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/"
   - label: "PF envia íntegra do celular de Vorcaro aos gabinetes de Zanin, Gilmar e Moraes — Agenda do Poder, 2026-09-14"
     url: "https://agendadopoder.com.br/pf-entrega-integra-do-celular-de-vorcaro-a-zanin-gilmar-e-moraes/"
+  - label: "Mendonça atende a Fachin e retira sigilo de dados sobre rede de pagamentos do Master — Folha de S.Paulo, 2026-09-14 (parcialmente paywall)"
+    url: "https://www1.folha.uol.com.br/poder/2026/09/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master.shtml"
+  - label: "Mendonça derruba sigilo de parte dos pagamentos de Vorcaro — CNN Brasil, 2026-09-14"
+    url: "https://www.cnnbrasil.com.br/politica/mendonca-derruba-sigilo-de-pagamentos-de-vorcaro/"
+  - label: "PGR concorda com Moraes e pede retirada de sigilo de dados sobre rede de pagamentos do Master — Jornal de Brasília, 2026-09-14"
+    url: "https://jornaldebrasilia.com.br/noticias/politica-e-poder/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master/"
   - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
     url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
   - label: "Análise do contrato Banco Master–Barci de Moraes — Agência Pública, 2026-09-02"
@@ -1635,6 +1641,45 @@ fato, por CNN Brasil e Agenda do Poder:
   questionamentos sobre a conduta de Mendonça fossem analisados na mesma
   sessão de terça, mantendo reservada para isso a data de 23/9 já citada
   nesta cobertura.
+- **Sigilo cai também sobre a rede de pagamentos apurada pelo Coaf.**
+  Atendendo a outro pedido de Fachin — motivado pelo ofício que Moraes
+  enviou no domingo pedindo a retirada de sigilo da "rede de pagamentos"
+  (ver seção anterior) —, Mendonça retirou, nesta mesma segunda, o sigilo
+  do processo que reúne o relatório do Coaf (Conselho de Controle de
+  Atividades Financeiras) sobre os pagamentos de Vorcaro. Segundo a CNN
+  Brasil, o processo tem três peças: uma petição da PF pedindo ao Coaf os
+  Relatórios de Inteligência Financeira dos investigados; a resposta do
+  Coaf, que reteve os pagamentos a pessoas com foro privilegiado por
+  exigirem autorização expressa do STF; e o relatório entregue à PF. A
+  reportagem registra que "não há registro no processo de que [Mendonça]
+  tenha dado qualquer decisão" sobre o pedido de autorização — a PF havia
+  solicitado em 10 de março de 2026, e o pedido ficou sem resposta até
+  esta segunda.
+- **Dois pagamentos, dois nomes já conhecidos desta cobertura.** O
+  relatório do Coaf lista mais de R$ 57 milhões destinados à Igreja
+  Batista da Lagoinha entre dezembro de 2024 e dezembro de 2025 —
+  instituição que, segundo a CNN Brasil, já foi alvo de apuração na CPMI
+  do INSS por suspeita de desvio de emendas parlamentares — e R$ 22 mil a
+  Luiz Phillipi Machado de Moraes Mourão, o "Sicário", já identificado
+  nesta cobertura (seção "A escala da Operação Compliance Zero") como
+  ligado ao núcleo "Os Meninos". Nenhum desses pagamentos foi julgado pelo
+  STF; constam do relatório do Coaf como objeto de apuração, não como
+  fato estabelecido.
+- **Uma contradição entre fontes que o Observatório não resolve.** A CNN
+  Brasil descreve o destinatário dos R$ 57 milhões à Igreja Batista da
+  Lagoinha, Fabiano Zettel, como "cunhado de Daniel Vorcaro". Esta
+  cobertura já havia identificado o mesmo nome — a partir de outra
+  reportagem, sobre o fundo Arleen — como cunhado de Dias Toffoli (ver
+  seção "Um segundo ministro com conflito de interesse declarado", acima).
+  As duas descrições não são necessariamente incompatíveis, mas o
+  Observatório não encontrou, até a publicação desta atualização, uma
+  fonte que explique a relação familiar exata — por isso registra as duas
+  versões, sem unificá-las.
+- **A PGR também apoia o fim do sigilo.** O vice-procurador-geral da
+  República, Hindenburgo Chateaubriand Filho — já citado nesta cobertura
+  pedindo mais transparência sobre outros lotes de processos —,
+  manifestou-se nesta segunda a favor do levantamento de sigilo pedido por
+  Moraes.
 
 Nada disso julga o mérito do caso. A validade do relatório da PF sobre as
 mensagens Vorcaro-Moraes — que a PGR pede para anular — é um dos pontos
