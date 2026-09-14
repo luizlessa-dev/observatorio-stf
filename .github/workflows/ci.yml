@@ -105,3 +105,14 @@ jobs:
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
         run: npm run build
+
+      # AUD-09: a CSP em vercel.json foi para enforcement real, com
+      # script-src travado em hashes sha256 dos scripts inline (computados à
+      # mão, não gerados a cada build — ver scripts/verificar-csp-hashes.mjs).
+      # Esse hardcode é frágil a qualquer mudança nesses scripts (upgrade do
+      # Astro, edição em Base.astro): sem este check, um hash desatualizado
+      # quebraria o menu mobile ou a hidratação de uma ilha em produção,
+      # silenciosamente — só apareceria como bloqueio no console do
+      # visitante. Só roda aqui porque só aqui o dist/ real existe.
+      - name: Verificar hashes da CSP contra o build real
+        run: node scripts/verificar-csp-hashes.mjs
