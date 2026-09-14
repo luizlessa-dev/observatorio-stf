@@ -230,3 +230,33 @@ test("AUD-12: nenhum caso publicado tem data_publicacao/data_atualizacao no futu
     }
   }
 });
+
+// AUD-10 — achado da revisão de 2026-09-14: /privacidade e /termos (criadas
+// em commit separado, fora do content.config.ts/AUD-12) tinham
+// `atualizadoEm = "16 de setembro de 2026"` hardcoded — 3 dias depois do
+// próprio commit que introduziu a linha, e ainda no futuro em relação a
+// hoje. Diferente dos casos em src/content/casos/, essa data não passa pelo
+// guard de content.config.ts porque não é frontmatter de content collection
+// — é só uma string numa página .astro. Mesmo princípio do AUD-12 (nenhuma
+// data de "última atualização" pode estar no futuro), aplicado aqui pra não
+// se repetir silenciosamente.
+const MESES_PT = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+function parsearDataPtBr(texto) {
+  const m = /(\d{1,2}) de (\w+) de (\d{4})/.exec(texto);
+  assert.ok(m, `não consegui parsear "${texto}" como data em português ("DD de mês de AAAA")`);
+  const [, dia, mes, ano] = m;
+  const indiceMes = MESES_PT.indexOf(mes.toLowerCase());
+  assert.ok(indiceMes >= 0, `mês "${mes}" não reconhecido em "${texto}"`);
+  return new Date(Date.UTC(Number(ano), indiceMes, Number(dia)));
+}
+
+for (const arquivo of ["src/pages/privacidade.astro", "src/pages/termos.astro"]) {
+  test(`AUD-10: "atualizadoEm" em ${arquivo} não está no futuro`, () => {
+    const src = ler(arquivo);
+    const m = /const atualizadoEm = "([^"]+)"/.exec(src);
+    assert.ok(m, `${arquivo}: esperava \`const atualizadoEm = "..."\``);
+    const data = parsearDataPtBr(m[1]);
+    const hojeSaoPaulo = new Date(new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date()) + "T00:00:00Z");
+    assert.ok(data <= hojeSaoPaulo, `${arquivo}: atualizadoEm ("${m[1]}") está no futuro em relação a hoje`);
+  });
+}
