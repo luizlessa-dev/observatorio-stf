@@ -79,6 +79,22 @@ export interface Diaria {
   mes: number | null;
 }
 
+export interface AcaoControleConcentrado {
+  processo: string;
+  link_processo: string | null;
+  ramo_direito: string | null;
+  assunto: string | null;
+  em_tramitacao: boolean | null;
+  situacao_processual: string | null;
+  data_autuacao: string | null;
+}
+
+export interface ControleConcentrado {
+  total: number;
+  emTramitacao: number;
+  acoes: AcaoControleConcentrado[];
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -381,6 +397,36 @@ export async function carregarViagens(ministroId: string): Promise<Viagens> {
     desde: anos.length ? Math.min(...anos) : null,
     passagens: (passagens ?? []) as Passagem[],
     diarias: (diarias ?? []) as Diaria[],
+  };
+}
+
+/**
+ * Ações de controle concentrado (ADI/ADC/ADPF/ADO) sob relatoria do
+ * ministro — histórico completo desde 1997, não só o período em exercício
+ * (relatoria de uma ação não muda quando o processo já está distribuído).
+ * A lista de detalhe mostra as 40 mais recentes por data de autuação;
+ * total e "em tramitação" somam tudo.
+ */
+export async function carregarControleConcentrado(ministroId: string): Promise<ControleConcentrado> {
+  const [{ count: total }, { count: emTramitacao }, { data: acoes }] = await Promise.all([
+    supabase.from("stf_controle_concentrado").select("*", { count: "exact", head: true }).eq("ministro_id", ministroId),
+    supabase
+      .from("stf_controle_concentrado")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("em_tramitacao", true),
+    supabase
+      .from("stf_controle_concentrado")
+      .select("processo, link_processo, ramo_direito, assunto, em_tramitacao, situacao_processual, data_autuacao")
+      .eq("ministro_id", ministroId)
+      .order("data_autuacao", { ascending: false })
+      .limit(40),
+  ]);
+
+  return {
+    total: total ?? 0,
+    emTramitacao: emTramitacao ?? 0,
+    acoes: (acoes ?? []) as AcaoControleConcentrado[],
   };
 }
 

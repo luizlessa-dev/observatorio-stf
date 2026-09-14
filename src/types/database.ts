@@ -190,6 +190,53 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_diarias"]["Insert"]>;
         Relationships: [];
       };
+      // Migration 0023 (2026-09): ações de controle concentrado (ADI/ADC/
+      // ADPF/ADO), painel Corte Aberta. Bruto-primeiro como stf_decisoes —
+      // ministro_id é a única resolução própria, e fica auditável (null se
+      // o relator não bater com nenhum ministro cadastrado).
+      stf_controle_concentrado: {
+        Row: {
+          id:                                           string;
+          processo:                                     string;
+          link_processo:                                string | null;
+          ministro_id:                                  string | null;
+          relator_atual_bruto:                          string | null;
+          ramo_direito:                                 string | null;
+          assunto:                                      string | null;
+          meio_processo:                                string | null;
+          data_autuacao:                                string | null;
+          data_transito_julgado:                        string | null;
+          data_baixa:                                   string | null;
+          em_tramitacao:                                boolean | null;
+          situacao_processual:                          string | null;
+          tem_decisao_liminar:                          boolean | null;
+          tem_decisao_final:                            boolean | null;
+          tem_rito_art12:                                boolean | null;
+          legislacao:                                   string | null;
+          preferencia_ods:                              string | null;
+          data_publicacao_pauta:                        string | null;
+          data_publicacao_pauta_primeira:                string | null;
+          data_publicacao_pauta_ultima:                  string | null;
+          conta_publicacao_pauta:                        number | null;
+          data_publicacao_decisao_colegiada:             string | null;
+          data_publicacao_decisao_colegiada_primeira:    string | null;
+          data_publicacao_decisao_colegiada_ultima:      string | null;
+          conta_publicacao_decisao_colegiada:            number | null;
+          data_decisao_final:                            string | null;
+          data_decisao_final_primeira:                   string | null;
+          data_decisao_final_ultima:                     string | null;
+          conta_decisao_final:                           number | null;
+          data_publicacao_decisao_monocratica:           string | null;
+          data_publicacao_decisao_monocratica_primeira:  string | null;
+          data_publicacao_decisao_monocratica_ultima:    string | null;
+          conta_publicacao_decisao_monocratica:          number | null;
+          fonte:                                         string;
+          created_at:                                    string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_controle_concentrado"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_controle_concentrado"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não
