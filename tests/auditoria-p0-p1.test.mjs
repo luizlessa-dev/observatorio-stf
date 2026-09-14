@@ -179,13 +179,19 @@ test("AUD-08: Base.astro não referencia mais fonts.googleapis.com/gstatic.com; 
   assert.match(src, /rel="preload"\s+href="\/fonts\/playfair-display-latin-variable\.woff2"\s+as="font"/, "Playfair Display (títulos, acima da dobra) deveria ter preload");
 });
 
-// AUD-09 — CSP em modo Report-Only.
-test("AUD-09: vercel.json declara Content-Security-Policy-Report-Only", () => {
+// AUD-09 — CSP em enforcement real (revisão de 2026-09-14: era Report-Only).
+// A migração em si (script-src travado nos 3 hashes reais dos únicos
+// scripts inline do site, verificados contra o dist/ de verdade) é validada
+// por scripts/verificar-csp-hashes.mjs no job `build` do CI, não aqui — este
+// arquivo é estático/baseado em texto-fonte e não tem acesso ao dist/.
+test("AUD-09: vercel.json declara Content-Security-Policy em enforcement (não mais Report-Only)", () => {
   const vercelJson = JSON.parse(ler("vercel.json"));
   const globalHeaders = vercelJson.headers.find((h) => h.source === "/(.*)");
-  const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy-Report-Only");
-  assert.ok(csp, "esperava um header Content-Security-Policy-Report-Only em vercel.json");
+  assert.ok(!globalHeaders?.headers?.some((h) => h.key === "Content-Security-Policy-Report-Only"), "não deveria mais existir Content-Security-Policy-Report-Only — a migração para enforcement substitui, não duplica");
+  const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy");
+  assert.ok(csp, "esperava um header Content-Security-Policy (enforcement) em vercel.json");
   assert.match(csp.value, /default-src 'self'/);
+  assert.match(csp.value, /script-src 'self'(\s+'sha256-[^']+')+/, "script-src precisa ter 'self' mais ao menos um hash — sem 'unsafe-inline', senão a migração pra enforcement não endureceu nada");
 });
 
 // AUD-08 (consequência direta de auto-hospedar as fontes): a CSP não precisa
@@ -196,7 +202,7 @@ test("AUD-09: vercel.json declara Content-Security-Policy-Report-Only", () => {
 test("AUD-08/09: CSP não autoriza mais fonts.googleapis.com/gstatic.com (fontes agora são same-origin)", () => {
   const vercelJson = JSON.parse(ler("vercel.json"));
   const globalHeaders = vercelJson.headers.find((h) => h.source === "/(.*)");
-  const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy-Report-Only");
+  const csp = globalHeaders?.headers?.find((h) => h.key === "Content-Security-Policy");
   assert.ok(!/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(csp.value), "CSP ainda cita domínio do Google Fonts, mas o site não carrega mais nada de lá");
 });
 
