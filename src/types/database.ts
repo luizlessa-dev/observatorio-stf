@@ -466,6 +466,27 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_natureza_ato_mapa"]["Insert"]>;
         Relationships: [];
       };
+      // AUD-11 (2026-09-15): histórico público de quando cada fonte foi
+      // ingerida pela última vez, com contagem de linhas e hash do
+      // conteúdo — não substitui uma auditoria completa de proveniência
+      // (isso pede modelo de dados/pipeline bem maiores), mas dá um
+      // changelog verificável que não existia antes. Escrita só via
+      // service_role (ingestao/stf/_snapshot.py); leitura pública. Ver
+      // /metodologia#historico-de-dados.
+      stf_snapshots: {
+        Row: {
+          id:        number;
+          tabela:    string;
+          linhas:    number;
+          hash:      string;
+          fonte:     string | null;
+          criado_em: string;
+          metadata:  Json | null;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_snapshots"]["Row"], "id" | "criado_em">;
+        Update: Partial<Database["public"]["Tables"]["stf_snapshots"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: {
       // Fase C1 (2026-07-26): a tipagem da view stf_v_ministros_scores foi
@@ -529,6 +550,31 @@ export interface Database {
           n_colegiada:      number;
           pct_monocratica:  number | null;
           pct_colegiada:    number | null;
+        };
+        Relationships: [];
+      };
+      // AUD-13 (2026-09-15): expõe to_tsvector(assunto+andamento_bruto+
+      // processo) como coluna `busca_texto` — é só através de uma view
+      // (ou coluna real) que o PostgREST aceita `.textSearch()`, já que ele
+      // não filtra em expressões arbitrárias. O índice GIN funcional
+      // correspondente vive em stf_decisoes (stf_decisoes_busca_texto_idx);
+      // o Postgres expande a view e usa esse índice normalmente — conferido
+      // via EXPLAIN antes de escrever esta tipagem. Ver
+      // src/hooks/useBuscaTextoDecisoes.ts.
+      stf_decisoes_busca: {
+        Row: {
+          id:              string;
+          processo:        string;
+          assunto:         string | null;
+          andamento_bruto: string;
+          relator_bruto:   string;
+          tipo_origem:     "MONOCRÁTICA" | "COLEGIADA";
+          data_decisao:    string;
+          ano_decisao:     number;
+          orgao_julgador:  string | null;
+          ministro_id:     string | null;
+          sentido:         string | null;
+          busca_texto:     unknown; // tsvector — nunca lido diretamente, só usado como alvo de .textSearch()
         };
         Relationships: [];
       };

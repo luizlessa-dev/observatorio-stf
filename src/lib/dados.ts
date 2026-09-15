@@ -633,3 +633,51 @@ export async function carregarResumo() {
     pctSemMinistro: data.total_decisoes > 0 ? (data.sem_ministro / data.total_decisoes) * 100 : null,
   };
 }
+
+export interface Snapshot {
+  tabela: string;
+  linhas: number;
+  hash: string;
+  fonte: string | null;
+  criadoEm: string;
+}
+
+/**
+ * AUD-11: histórico público de quando cada fonte foi ingerida pela última
+ * vez — /metodologia#historico-de-dados. Diferente de carregarResumo(),
+ * NÃO falha o build se a tabela estiver vazia ou a consulta der erro: esta
+ * é uma seção suplementar (nem toda fonte grava snapshot ainda — só
+ * stf_gastos/stf_gastos_servidores nesta rodada, ver
+ * ingestao/stf/_snapshot.py), não um número central da home. Uma tabela
+ * vazia (ainda sem nenhuma ingestão desde a migração) é estado válido, não
+ * erro — a seção mostra "nenhum snapshot registrado ainda" nesse caso.
+ *
+ * Um snapshot por tabela (o mais recente): busca as últimas `porTabela *
+ * limiteBusca` linhas ordenadas por data e mantém só a primeira ocorrência
+ * de cada `tabela` — mais simples que uma window function, e nesta escala
+ * (poucas dezenas de linhas por enquanto) não há necessidade de otimizar.
+ */
+export async function carregarUltimosSnapshots(limiteBusca = 50): Promise<Snapshot[]> {
+  const { data, error } = await supabase
+    .from("stf_snapshots")
+    .select("tabela, linhas, hash, fonte, criado_em")
+    .order("criado_em", { ascending: false })
+    .limit(limiteBusca);
+
+  if (error || !data) return [];
+
+  const vistos = new Set<string>();
+  const ultimos: Snapshot[] = [];
+  for (const linha of data) {
+    if (vistos.has(linha.tabela)) continue;
+    vistos.add(linha.tabela);
+    ultimos.push({
+      tabela: linha.tabela,
+      linhas: linha.linhas,
+      hash: linha.hash,
+      fonte: linha.fonte,
+      criadoEm: linha.criado_em,
+    });
+  }
+  return ultimos;
+}

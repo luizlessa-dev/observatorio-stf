@@ -1,9 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import { carregarResumo } from "../lib/dados";
+import { carregarResumo, carregarUltimosSnapshots } from "../lib/dados";
 import { fmtData, fmtNum, fmtPct } from "../lib/formato";
 
-const resumo = await carregarResumo();
+const [resumo, snapshots] = await Promise.all([carregarResumo(), carregarUltimosSnapshots()]);
 
 const titulo = "Metodologia — como o Observatório do STF lê os dados";
 const descricao =
@@ -141,6 +141,48 @@ const descricao =
         (onde o resultado é do colegiado, não de um único ministro).
       </p>
     </div>
+
+    <h2 id="historico-de-dados" class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">
+      Histórico de dados
+    </h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-4">
+      Cada tela deste site informa até quando o dado vai, mas isso não é, por si,
+      um histórico verificável de quando cada fonte foi realmente atualizada.
+      Desde 2026-09, cada execução bem-sucedida de ingestão registra um snapshot —
+      quantidade de linhas e um hash do conteúdo — numa tabela pública, auditável
+      por qualquer pessoa. <strong class="text-ink">Ainda não é um catálogo
+      completo:</strong> só as fontes abaixo gravam snapshot por enquanto; as
+      demais seguem documentadas só em prosa, nas seções acima.
+    </p>
+    {snapshots.length === 0 ? (
+      <p class="text-[12px] text-subtle border border-border rounded-sm px-4 py-5 text-center mb-8">
+        Nenhum snapshot registrado ainda.
+      </p>
+    ) : (
+      <div class="border border-border rounded-sm overflow-x-auto mb-8">
+        <table class="w-full border-collapse text-left" style={{ minWidth: "480px" }}>
+          <caption class="sr-only">Última ingestão registrada por fonte, com contagem de linhas e hash do conteúdo</caption>
+          <thead>
+            <tr class="text-[9px] font-bold uppercase tracking-[1px] text-subtle bg-card border-b border-border">
+              <th scope="col" class="px-4 py-[8px] font-bold">Tabela</th>
+              <th scope="col" class="px-4 py-[8px] font-bold text-right">Linhas</th>
+              <th scope="col" class="px-4 py-[8px] font-bold">Última ingestão</th>
+              <th scope="col" class="px-4 py-[8px] font-bold">Hash</th>
+            </tr>
+          </thead>
+          <tbody>
+            {snapshots.map((s) => (
+              <tr class="border-b border-border last:border-0">
+                <td class="px-4 py-[10px] align-top font-mono text-[11px] text-ink">{s.tabela}</td>
+                <td class="px-4 py-[10px] align-top text-[11px] text-subtle text-right">{fmtNum(s.linhas)}</td>
+                <td class="px-4 py-[10px] align-top text-[11px] text-subtle">{fmtData(s.criadoEm)}</td>
+                <td class="px-4 py-[10px] align-top font-mono text-[10px] text-subtle" title={s.hash}>{s.hash.slice(0, 12)}…</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
 
     <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Erros</h2>
     <p class="text-[12.5px] text-muted leading-[1.7]">
