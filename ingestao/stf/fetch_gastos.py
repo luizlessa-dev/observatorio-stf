@@ -25,6 +25,7 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup
 from supabase import create_client
+from _snapshot import registrar_snapshot
 
 warnings.filterwarnings("ignore")
 
@@ -251,6 +252,9 @@ def run(dry_run: bool = False):
             lote,
             on_conflict="ministro_id,ano,mes,categoria,descricao"
         ).execute()
+        # AUD-11: registra o snapshot deste lote — ver ingestao/stf/_snapshot.py
+        # para o porquê (histórico público de linhas/hash/data em stf_snapshots).
+        registrar_snapshot(sb, "stf_gastos", lote, fonte=BASE_URL, metadata={"mes_ref": mes_ref, "ano_ref": ano_ref})
 
     print(f"\n✅ {len(lote)} registros de gastos inseridos (referência {mes_ref}/{ano_ref})")
 
@@ -264,6 +268,7 @@ def run(dry_run: bool = False):
                 pedaco,
                 on_conflict="ministro_id,ano,mes,matricula"
             ).execute()
+        registrar_snapshot(sb, "stf_gastos_servidores", lote_servidores, fonte=BASE_URL, metadata={"mes_ref": mes_ref, "ano_ref": ano_ref})
 
     print(f"✅ {len(lote_servidores)} registros de servidor por gabinete inseridos "
           f"(referência {mes_ref}/{ano_ref})")

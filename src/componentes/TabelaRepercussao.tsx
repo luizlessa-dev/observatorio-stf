@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRepercussaoGeral } from "../hooks/useRepercussaoGeral";
 import { buscaEstaAplicada, descreverContagem, deveMostrarCarregarMais } from "../lib/contagemRepercussao";
 
@@ -36,6 +36,14 @@ export default function TabelaRepercussao() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(50);
+
+  // AUD-13: deep-link de /buscar (?busca=...) — lido só depois de montar,
+  // em useEffect, pra não divergir do HTML gerado no build (que nunca
+  // conhece window.location.search) e causar mismatch de hidratação.
+  useEffect(() => {
+    const buscaDaUrl = new URLSearchParams(window.location.search).get("busca");
+    if (buscaDaUrl) setSearch(buscaDaUrl);
+  }, []);
 
   // Cabeçalho (H1 + contagem real) já vem do wrapper estático em
   // src/pages/repercussao-geral.astro, computado no build — não duplicar

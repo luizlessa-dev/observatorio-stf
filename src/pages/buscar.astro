@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import BuscaGeral from "../componentes/BuscaGeral";
+import { getCollection } from "astro:content";
+import { carregarMinistros } from "../lib/dados";
+
+// AUD-13: busca transversal — um lugar só que procura em casos, decisões e
+// repercussão geral, em vez de cada seção ter seu filtro isolado (o que já
+// existia antes desta página). Casos é uma content collection pequena
+// (markdown), então o índice inteiro (título/resumo/status/ministros) viaja
+// pro cliente como JSON — nada de consulta em tempo real pra um punhado de
+// arquivos. Decisões e repercussão geral continuam consultando o Supabase
+// ao vivo, cada um com sua própria busca (ver BuscaGeral.tsx).
+const [casos, ministros] = await Promise.all([getCollection("casos"), carregarMinistros()]);
+const nomePorSlug = new Map(ministros.map((m) => [m.slug, m.nome]));
+
+const casosIndex = casos.map((c) => ({
+  slug: c.id,
+  titulo: c.data.titulo,
+  resumo: c.data.resumo,
+  status: c.data.status,
+  ministros: c.data.ministros.map((slug) => nomePorSlug.get(slug) ?? slug),
+}));
+
+const ministrosOpcoes = ministros.map((m) => ({ id: m.id, nome: m.nome }));
+
+const titulo = "Buscar — Observatório do STF";
+const descricao =
+  "Busque em casos, decisões do STF e temas de repercussão geral a partir de um único lugar, " +
+  "por processo, assunto, ministro ou palavra-chave.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/buscar">
+  <div class="px-8 py-7">
+    <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-1">Buscar</h1>
+    <p class="text-[12px] text-subtle max-w-2xl leading-[1.6] mb-6">
+      Busca transversal em <a href="/casos" class="underline hover:text-ink">casos</a>,{" "}
+      <a href="/decisoes" class="underline hover:text-ink">decisões</a> e{" "}
+      <a href="/repercussao-geral" class="underline hover:text-ink">repercussão geral</a>.
+      Digite um número de processo, um assunto ou o nome de um ministro.
+    </p>
+    <BuscaGeral client:load casosIndex={casosIndex} ministros={ministrosOpcoes} />
+  </div>
+</Base>
