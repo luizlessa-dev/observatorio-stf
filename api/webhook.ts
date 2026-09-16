@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelRequest, VercelResponse } from "./_tipos.js";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
