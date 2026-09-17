@@ -1,10 +1,10 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
-resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Moraes e Vorcaro, e dois contratos somando R$ 180 milhões — mas também recebeu Vorcaro pessoalmente. Toffoli e o Dark Horse entram na crise. STF trata do caso Moraes em 15/9 e de Mendonça em 23/9."
-ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin"]
+resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Moraes e Vorcaro, e dois contratos somando R$ 180 milhões — mas também recebeu Vorcaro pessoalmente. Em 15/9, STF empata 4 a 4 sobre reunir os casos Moraes-Mendonça; Dino pede vista, julgamento suspenso por até 90 dias."
+ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin", "carmen-lucia", "luiz-fux", "nunes-marques", "dias-toffoli"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-14"
+data_atualizacao: "2026-09-17"
 fontes:
   - label: "PF entrega dados do celular de Vorcaro ao gabinete de Zanin — CNN Brasil, 2026-09-14"
     url: "https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/"
@@ -166,6 +166,22 @@ fontes:
     url: "https://pagina3.com.br/justica/mendonca-diz-ser-contra-abrir-integra-do-celular-de-vorcaro-e-pede-que-fachin-apure-suposta-coacao-na-pf/"
   - label: "Moraes pede retirada de sigilo de rede de pagamentos de Vorcaro antes de sessão no STF — BNews, 2026-09-13"
     url: "https://www.bnews.com.br/noticias/crime-e-justica-bahia/moraes-pede-retirada-de-sigilo-de-rede-de-pagamentos-de-vorcaro-antes-de-sessao-no-stf.html"
+  - label: "STF encerra sessão sem decidir caso Moraes após bate-bocas e empate no plenário — Jornal de Brasília, 2026-09-15"
+    url: "https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-encerra-sessao-sem-decidir-caso-moraes-apos-bate-bocas-e-empate-no-plenario/"
+  - label: "STF retoma sessões após suspensão dos casos Moraes e Mendonça (pedido de vista de Dino, prazo de 90 dias) — Agência Brasil, 2026-09-16"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-retoma-sesoes-apos-suspensao-de-casos-moraes-e-mendonca"
+  - label: "STF julga suposta relação entre Moraes e Vorcaro — cobertura da sessão de 15/9, Agência Brasil"
+    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-julga-suposta-relacao-entre-moraes-e-vorcaro"
+  - label: "STF encerra sessão sem decidir sobre investigação contra Moraes (placar antes do pedido de vista) — Metrópoles, 2026-09-15"
+    url: "https://www.metropoles.com/brasil/stf-julgamento-caso-moraes"
+  - label: "Em sessão caótica, STF não resolve crise e joga solução para futuro incerto — Metrópoles, 2026-09-15"
+    url: "https://www.metropoles.com/brasil/em-sessao-caotica-stf-nao-resolve-crise-e-joga-solucao-para-futuro-incerto"
+  - label: "Em bate-boca, Moraes diz que tem testemunhas de direcionamento e Mendonça lhe acusa de mentir — O Tempo, 2026-09-15"
+    url: "https://www.otempo.com.br/politica/judiciario/2026/9/15/em-bate-boca-moraes-diz-que-tem-testemunhas-de-direcionamento-e-mendonca-lhe-acusa-de-mentir"
+  - label: "Cármen Lúcia pede desculpas por situação no STF: 'profunda tristeza' — Congresso em Foco, 2026-09-15"
+    url: "https://www.congressoemfoco.com.br/noticia/122295/carmen-lucia-pede-desculpas-por-situacao-no-stf--profunda-tristeza"
+  - label: "Como ficou a votação do STF? Veja placar de votos em julgamento de Moraes (leitura divergente do placar) — DCI, 2026-09-15"
+    url: "https://www.dci.com.br/politica/como-ficou-a-votacao-do-stf-veja-placar-de-votos-em-julgamento-de-moraes/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -1685,16 +1701,76 @@ Nada disso julga o mérito do caso. A validade do relatório da PF sobre as
 mensagens Vorcaro-Moraes — que a PGR pede para anular — é um dos pontos
 centrais que o plenário deve enfrentar na sessão de terça.
 
+## A sessão de 15 de setembro de 2026 — empate, bate-boca e pedido de vista
+
+Pela primeira vez na história do STF, o plenário se reuniu para decidir se
+abre uma investigação contra um dos próprios integrantes. A sessão
+extraordinária começou às 10h35, com transmissão pela TV e Rádio Justiça e
+pelo canal do STF no YouTube, e terminou sem julgar o mérito de nada — a
+crise institucional que vinha escalando desde 1º de setembro (ver seções
+anteriores) chegou ao plenário e não foi resolvida ali.
+
+- **Uma questão de ordem, não o mérito.** Fachin, como relator da Pet
+  16.662 desde 14/9 (ver seção anterior), leu o relatório e delimitou o que
+  seria votado. Gilmar Mendes apresentou uma questão de ordem propondo
+  reunir o procedimento sobre Moraes com a apuração sobre a conduta de
+  Mendonça — a mesma reunião que Fachin já havia negado a um pedido
+  informal de Moraes na véspera (ver "Segunda-feira, véspera da sessão").
+  Foi essa questão de ordem, não a investigação em si, que o plenário
+  discutiu e votou.
+- **Empate.** A favor de julgar os dois casos juntos: Gilmar Mendes, Flávio
+  Dino, Cristiano Zanin e o próprio Alexandre de Moraes. Contra — mantendo
+  os casos separados, como Fachin já havia decidido: Edson Fachin, Luiz
+  Fux, André Mendonça e Cármen Lúcia. 4 a 4.
+- **Dois ministros fora da votação.** Kassio Nunes Marques se declarou
+  impedido. Dias Toffoli reafirmou a suspeição que já havia declarado em
+  fevereiro (ver "Um segundo ministro com conflito de interesse declarado",
+  acima) e também não votou — nenhum dos dois é novidade desta cobertura,
+  mas a sessão de 15/9 é o primeiro registro de ambos reafirmando a posição
+  formalmente, em plenário, sobre este caso específico.
+- **Dino pede vista — e o julgamento para por até 90 dias.** Com o placar
+  empatado, Flávio Dino converteu sua posição em pedido de vista dos autos,
+  suspendendo a votação da própria questão de ordem. Pelo Regimento
+  Interno, isso lhe dá até 90 dias para devolver o processo ao plenário.
+  Segundo a Agência Brasil, nenhuma data de retomada foi fixada até a
+  publicação desta atualização — inclusive não há confirmação, nas fontes
+  consultadas pelo Observatório, de que a sessão de 23/9 sobre a conduta de
+  Mendonça (reservada por Fachin no dia anterior) segue de pé.
+- **O bate-boca.** Moraes acusou Mendonça de conduzir a apuração contra ele
+  de forma direcionada e disse ter testemunhas do que chamou de
+  articulação para incriminá-lo; Mendonça respondeu "Mentira! Mentira!".
+  Gilmar Mendes fez críticas duras à atuação de Mendonça, apontando o que
+  descreveu como viés político-eleitoral na condução do caso; Mendonça e
+  Fux levantaram a hipótese de uma "PF paralela" monitorando ministros.
+  Segundo a Agência Brasil, o Ministério Público Federal, presente à
+  sessão, sustentou que a própria apuração de Mendonça sobre as conversas
+  de Moraes com Vorcaro avançou sem autorização adequada.
+- **Cármen Lúcia.** Num tom destoante do bate-boca, a ministra disse estar
+  "num estado de profunda consternação e tristeza", declarou-se "um pouco
+  envergonhada" com a situação do tribunal e pediu desculpas à população —
+  a 20 dias das eleições, disse, o Judiciário deveria transmitir segurança,
+  não mal-estar cívico.
+- **Uma divergência de leitura que o Observatório registra, sem resolver.**
+  Parte da imprensa descreveu o placar remanescente, após o pedido de
+  vista de Dino, como 4 a 3 contra a reunião dos casos — já que um pedido
+  de vista suspende o julgamento em vez de fechar um voto. Outra parte
+  manteve a leitura de 4 a 4, contabilizando a posição de Dino antes da
+  vista. As duas leituras descrevem o mesmo evento por ângulos diferentes;
+  o Observatório não encontrou uma fonte que reconcilie explicitamente os
+  dois números, e por isso registra ambos.
+
+Nada disso julga se Moraes teve conduta irregular na relação com Vorcaro,
+nem se Mendonça agiu corretamente ao conduzir a apuração — a sessão discutiu
+só a questão processual de como julgar os dois casos, e mesmo essa questão
+ficou sem resposta.
+
 ## Status
 
-Até a publicação desta atualização (segunda-feira, 14 de setembro de 2026,
-véspera da sessão), o plenário do STF ainda não julgou o mérito de nada do
-que está registrado neste caso. Duas sessões estão marcadas: **15 de
-setembro de 2026**, para tratar da Pet 16.662 (relação Moraes-Vorcaro, sob
-relatoria da Presidência da Corte desde esta segunda — ver acima), e **23
-de setembro de 2026**, para avaliar o pedido de investigação contra
-Mendonça. Nas horas que antecedem a primeira sessão, os gabinetes de
-Moraes, Zanin e Gilmar Mendes já receberam cópia dos dados do celular de
-Vorcaro — ver "Segunda-feira, véspera da sessão", acima. O Observatório vai
-atualizar este caso conforme o processo avançar — inclusive o resultado das
-sessões de 15/9 e 23/9.
+Até a publicação desta atualização (17 de setembro de 2026), o plenário do
+STF não julgou o mérito de nada do que está registrado neste caso. A sessão
+de 15/9 terminou empatada e foi suspensa por pedido de vista de Flávio
+Dino, que tem até 90 dias (regimentalmente, em torno de dezembro de 2026)
+para devolver o processo ao plenário — ver seção acima. Não há confirmação,
+nas fontes consultadas pelo Observatório, de que a sessão de 23/9 sobre a
+conduta de Mendonça segue mantida nessa data. O Observatório vai atualizar
+este caso conforme o processo avançar.
