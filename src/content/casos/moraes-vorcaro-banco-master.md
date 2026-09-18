@@ -1,10 +1,10 @@
 ---
 titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
-resumo: "Mendonça tornou públicas mensagens e ao menos 6 encontros entre Moraes e Vorcaro, e dois contratos somando R$ 180 milhões — mas também recebeu Vorcaro pessoalmente. Em 15/9, STF empata 4 a 4 sobre reunir os casos Moraes-Mendonça; Dino pede vista, julgamento suspenso por até 90 dias."
+resumo: "Mendonça tornou públicas mensagens e encontros entre Moraes e Vorcaro, e contratos somando R$ 180 milhões. Em 15/9, STF empata 4 a 4 e Dino pede vista (até 90 dias); Fachin retira da pauta, sem nova data, a sessão de 23/9 sobre a conduta de Mendonça."
 ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin", "carmen-lucia", "luiz-fux", "nunes-marques", "dias-toffoli"]
 status: em_apuracao
 data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-17"
+data_atualizacao: "2026-09-18"
 fontes:
   - label: "PF entrega dados do celular de Vorcaro ao gabinete de Zanin — CNN Brasil, 2026-09-14"
     url: "https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/"
@@ -182,6 +182,12 @@ fontes:
     url: "https://www.congressoemfoco.com.br/noticia/122295/carmen-lucia-pede-desculpas-por-situacao-no-stf--profunda-tristeza"
   - label: "Como ficou a votação do STF? Veja placar de votos em julgamento de Moraes (leitura divergente do placar) — DCI, 2026-09-15"
     url: "https://www.dci.com.br/politica/como-ficou-a-votacao-do-stf-veja-placar-de-votos-em-julgamento-de-moraes/"
+  - label: "Fachin retira de pauta julgamento sobre irregularidades de Mendonça no caso Master — ConJur, 2026-09-17"
+    url: "https://conjur.com.br/2026-set-17/fachin-retira-de-pauta-julgamento-sobre-irregularidades-de-mendonca-no-caso-master/"
+  - label: "Vista de Dino trava caso Moraes e crise ameaça contaminar próximos julgamentos do STF — O Tempo, 2026-09-16"
+    url: "https://www.otempo.com.br/politica/judiciario/2026/9/16/vista-de-dino-trava-caso-moraes-e-crise-ameaca-contaminar-proximos-julgamentos-do-stf"
+  - label: "Flávio Dino pede vista e paralisa julgamento no caso Moraes — Gazeta da Amazônia, 2026-09-16"
+    url: "https://gazetadaamazonia.com.br/16/09/2026/flavio-dino-caso-moraes/"
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos
@@ -1764,13 +1770,48 @@ nem se Mendonça agiu corretamente ao conduzir a apuração — a sessão discut
 só a questão processual de como julgar os dois casos, e mesmo essa questão
 ficou sem resposta.
 
+## Fachin retira a sessão de 23/9 da pauta — 17 de setembro de 2026
+
+A incerteza registrada na seção anterior se resolveu, mas não na direção
+que a pauta original previa: a sessão de 23/9, que julgaria a conduta de
+Mendonça na condução do caso Master (Pet 16.704 — o pedido da PGR para
+anular o relatório da PF sobre as mensagens Moraes-Vorcaro, e as
+irregularidades que Moraes atribui a Mendonça), foi retirada da pauta por
+Fachin nesta quinta-feira.
+
+- **Motivo declarado.** Segundo a ConJur, Fachin considerou que o
+  julgamento de 23/9 tem relação direta com a questão processual que ficou
+  em aberto na Pet 16.662 — se os dois casos devem ou não ser julgados
+  juntos, ponto que o próprio pedido de vista de Dino deixou sem resposta
+  (ver seção acima). Sem essa definição, segundo o presidente do STF, não
+  há como fixar os "parâmetros aplicáveis à tramitação do caso".
+- **Sem nova data.** Fachin não remarcou a sessão; disse que fará isso só
+  depois que os parâmetros processuais forem definidos — o que, por sua
+  vez, depende do fim do pedido de vista de Dino (até 90 dias, ver seção
+  acima).
+- **O contexto do próprio pedido de vista, mais detalhado.** Reportagens
+  publicadas após a sessão de 15/9 acrescentam um motivo mais específico
+  para a decisão de Dino: ele teria pedido vista depois de um novo
+  bate-boca entre Gilmar Mendes e Mendonça já dentro da sessão, citando
+  "responsabilidade com o país" e o argumento de que a Corte não poderia
+  transmitir aquele tipo de cena institucional às vésperas da eleição de
+  2026. O Observatório registra esse relato — vindo de reportagens, não de
+  ata oficial — como mais uma peça do que motivou a suspensão, sem
+  elevá-lo à condição de fato definitivamente estabelecido.
+
+Na prática, isso significa que a apuração sobre a conduta de Mendonça —
+que a cobertura anterior já tratava como pendente — fica sem data marcada,
+amarrada à mesma vista de Dino que já suspendia o caso Moraes.
+
 ## Status
 
-Até a publicação desta atualização (17 de setembro de 2026), o plenário do
+Até a publicação desta atualização (18 de setembro de 2026), o plenário do
 STF não julgou o mérito de nada do que está registrado neste caso. A sessão
 de 15/9 terminou empatada e foi suspensa por pedido de vista de Flávio
 Dino, que tem até 90 dias (regimentalmente, em torno de dezembro de 2026)
-para devolver o processo ao plenário — ver seção acima. Não há confirmação,
-nas fontes consultadas pelo Observatório, de que a sessão de 23/9 sobre a
-conduta de Mendonça segue mantida nessa data. O Observatório vai atualizar
-este caso conforme o processo avançar.
+para devolver o processo ao plenário. Em consequência, Fachin retirou da
+pauta, em 17/9, a sessão que julgaria a conduta de Mendonça — antes
+marcada para 23/9 — sem remarcar nova data. Não há, portanto, nenhuma
+sessão confirmada sobre este caso enquanto a vista de Dino não for
+devolvida. O Observatório vai atualizar este caso conforme o processo
+avançar.
