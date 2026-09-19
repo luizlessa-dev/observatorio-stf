@@ -345,6 +345,54 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_omissao_inconstitucional"]["Insert"]>;
         Relationships: [];
       };
+      stf_acervo: {
+        Row: {
+          id:                          string;
+          processo:                    string;
+          ministro_id:                 string | null;
+          relator_bruto:               string | null;
+          numero_unico:                string | null;
+          grupo_origem:                string | null;
+          tipo_classe:                 string | null;
+          classe:                      string | null;
+          numero:                      number | null;
+          link_processo:               string | null;
+          data_autuacao:               string | null;
+          data_autuacao_agregada:      string | null;
+          data_primeira_distribuicao:  string | null;
+          data_ultima_distribuicao:    string | null;
+          data_primeira_decisao:       string | null;
+          data_ultima_decisao:         string | null;
+          data_ultimo_andamento:       string | null;
+          grupo_ultimo_andamento:      string | null;
+          subgrupo_ultimo_andamento:   string | null;
+          descricao_ultimo_andamento:  string | null;
+          observacao_ultimo_andamento: string | null;
+          orgao_origem:                string | null;
+          ramo_direito:                string | null;
+          assuntos:                    string | null;
+          legislacao:                  string | null;
+          meio_processo:               string | null;
+          tipo_localizacao_atual:      string | null;
+          localizacao_atual_agrupada:  string | null;
+          localizacao_atual:           string | null;
+          preferencia_criminal:        boolean | null;
+          processo_criminal:           string | null;
+          acordao_pendente_publicacao: boolean | null;
+          processo_em_instrucao:       boolean | null;
+          situacao_decisao_final:      string | null;
+          processo_sobrestado:         boolean | null;
+          recurso_interno_pendente:    boolean | null;
+          liminar_pendente:            boolean | null;
+          pedido_vista:                boolean | null;
+          representativo_controversia: boolean | null;
+          fonte:                       string;
+          created_at:                  string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_acervo"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_acervo"]["Insert"]>;
+        Relationships: [];
+      };
       // Achado D1 (2026-08-18): decisões do STF, modelo bruto-primeiro.
       // Substitui stf_votacoes, que normalizava na escrita e perdia o original.
       // `sentido` existe mas fica NULO até haver taxonomia publicada — não

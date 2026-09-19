@@ -129,6 +129,26 @@ export interface CasoOmissaoInconstitucional {
   link_processo: string | null;
 }
 
+export interface ProcessoAcervo {
+  processo: string;
+  numero_unico: string | null;
+  classe: string | null;
+  tipo_classe: string | null;
+  ramo_direito: string | null;
+  assuntos: string | null;
+  situacao_decisao_final: string | null;
+  data_autuacao: string | null;
+  link_processo: string | null;
+}
+
+export interface Acervo {
+  total: number;
+  originarios: number;
+  recursais: number;
+  liminarPendente: number;
+  processos: ProcessoAcervo[];
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -526,6 +546,49 @@ export async function carregarProximosJulgamentos(ministroId: string): Promise<P
   ];
 
   return lista.sort((a, b) => (b.data_pauta ?? "").localeCompare(a.data_pauta ?? "")).slice(0, 40);
+}
+
+/**
+ * Acervo processual do ministro — todos os processos em tramitação sob
+ * sua relatoria numa data de captura (não um recorte por ano, diferente
+ * de Controle Concentrado/Reclamações). Maior volume individual depois de
+ * Reclamações (~22 mil no total), lista de detalhe restrita às 40 mais
+ * recentes.
+ */
+export async function carregarAcervo(ministroId: string): Promise<Acervo> {
+  const [{ count: total }, { count: originarios }, { count: recursais }, { count: liminarPendente }, { data: processos }] =
+    await Promise.all([
+      supabase.from("stf_acervo").select("*", { count: "exact", head: true }).eq("ministro_id", ministroId),
+      supabase
+        .from("stf_acervo")
+        .select("*", { count: "exact", head: true })
+        .eq("ministro_id", ministroId)
+        .eq("grupo_origem", "Originária"),
+      supabase
+        .from("stf_acervo")
+        .select("*", { count: "exact", head: true })
+        .eq("ministro_id", ministroId)
+        .eq("grupo_origem", "Recursal"),
+      supabase
+        .from("stf_acervo")
+        .select("*", { count: "exact", head: true })
+        .eq("ministro_id", ministroId)
+        .eq("liminar_pendente", true),
+      supabase
+        .from("stf_acervo")
+        .select("processo, numero_unico, classe, tipo_classe, ramo_direito, assuntos, situacao_decisao_final, data_autuacao, link_processo")
+        .eq("ministro_id", ministroId)
+        .order("data_autuacao", { ascending: false })
+        .limit(40),
+    ]);
+
+  return {
+    total: total ?? 0,
+    originarios: originarios ?? 0,
+    recursais: recursais ?? 0,
+    liminarPendente: liminarPendente ?? 0,
+    processos: (processos ?? []) as ProcessoAcervo[],
+  };
 }
 
 /**
