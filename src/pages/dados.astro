@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import { TABELAS_EXPORTAVEIS, LIMITE_PADRAO, LIMITE_MAXIMO } from "../lib/exportaveis.js";
+
+const titulo = "Dados Abertos — Observatório do STF";
+const descricao =
+  "Exportação em CSV/JSON dos dados públicos do STF organizados pelo Observatório: " +
+  "dicionário de dados, licença CC-BY 4.0 e como consultar via /api/exportar.";
+---
+<Base titulo={titulo} descricao={descricao} caminho="/dados">
+  <article class="px-8 py-10 max-w-3xl prose-invert">
+    <h1 class="font-display text-[32px] font-bold text-white leading-[1.2] mb-3">Dados Abertos</h1>
+    <p class="text-[13px] text-muted leading-[1.7] mb-8">
+      As tabelas abaixo já eram publicamente consultáveis via Supabase (a
+      infraestrutura por trás do site) desde o início do projeto — este endpoint só
+      empacota isso num formato mais fácil de usar: CSV ou JSON, com paginação, sem
+      precisar conhecer a API do Supabase.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Licença</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Todas as tabelas listadas aqui são licenciadas sob{" "}
+      <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-BR" target="_blank" rel="noopener noreferrer" class="underline hover:text-ink">
+        Creative Commons Atribuição 4.0 (CC-BY 4.0)
+      </a>: reutilize, redistribua e adapte livremente, inclusive comercialmente, desde
+      que atribua ao Observatório do STF. Isto cobre os <strong class="text-ink">dados</strong> —
+      não o texto jornalístico do site (casos, análises), que segue a cláusula de
+      atribuição de <a href="/termos#uso-aceitavel" class="underline hover:text-ink">Termos de Uso</a>.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Como consultar</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-2">
+      <code class="text-[11px]">GET /api/exportar?tabela=&lt;slug&gt;&amp;formato=csv|json&amp;offset=0&amp;limite={LIMITE_PADRAO}</code>
+    </p>
+    <ul class="text-[12.5px] text-muted leading-[1.7] mb-8 space-y-1 list-disc pl-4">
+      <li><code class="text-[11px]">tabela</code> (obrigatório) — um dos slugs listados abaixo.</li>
+      <li><code class="text-[11px]">formato</code> — <code class="text-[11px]">csv</code> (padrão) ou <code class="text-[11px]">json</code>.</li>
+      <li><code class="text-[11px]">offset</code> — quantas linhas pular (padrão 0).</li>
+      <li><code class="text-[11px]">limite</code> — linhas por chamada (padrão {LIMITE_PADRAO}, máximo {LIMITE_MAXIMO}). Toda tabela é paginada,
+        inclusive as pequenas — não existe "trazer tudo de uma vez".</li>
+    </ul>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      Exemplo: <code class="text-[11px]">/api/exportar?tabela=ministros&amp;formato=csv</code>.
+      Para percorrer uma tabela inteira, aumente <code class="text-[11px]">offset</code> em
+      passos de <code class="text-[11px]">limite</code> até a resposta vir com menos linhas
+      que o pedido — a resposta também traz isso nos cabeçalhos{" "}
+      <code class="text-[11px]">X-Total-Nesta-Pagina</code> e{" "}
+      <code class="text-[11px]">X-Proxima-Pagina</code>.
+    </p>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">Tabelas e dicionário de dados</h2>
+
+    <div class="space-y-8 mb-8">
+      {TABELAS_EXPORTAVEIS.map((t) => (
+        <section class="border border-border rounded-sm overflow-hidden">
+          <div class="px-4 py-[10px] bg-card border-b border-border">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <h3 class="text-[13px] font-semibold text-ink">{t.rotulo}</h3>
+              <code class="text-[10px] text-subtle">?tabela={t.slug}</code>
+            </div>
+            <p class="text-[11px] text-subtle mt-1">{t.descricao}</p>
+          </div>
+          <table class="w-full text-[11px]">
+            <thead>
+              <tr class="border-b border-border text-left">
+                <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Coluna</th>
+                <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.colunas.map((c) => (
+                <tr class="border-b border-border last:border-0">
+                  <td class="px-4 py-[6px] font-mono text-ink whitespace-nowrap align-top">{c.nome}</td>
+                  <td class="px-4 py-[6px] text-muted">{c.descricao}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ))}
+    </div>
+
+    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">O que não está aqui</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7]">
+      Só entram tabelas que o próprio site já exibe publicamente. Não há uma API
+      versionada com contrato de estabilidade — colunas e tabelas podem mudar sem aviso
+      prévio formal, acompanhando o que o site mostra. Para uso que dependa de
+      estabilidade de longo prazo, entre em contato:{" "}
+      <a href="mailto:luiz@thebrinsider.com" class="underline hover:text-ink">luiz@thebrinsider.com</a>.
+    </p>
+  </article>
+</Base>
