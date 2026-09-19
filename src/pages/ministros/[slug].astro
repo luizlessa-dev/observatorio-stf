@@ -9,14 +9,14 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarAcervo, carregarRecebimentoBaixa, carregarDistribuicao, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarOmissaoInconstitucional, carregarDecisoesCovid, carregarPerfilDecisorio } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarAcervo, carregarRecebimentoBaixa, carregarDistribuicao, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarOmissaoInconstitucional, carregarDecisoesCovid, carregarInformacaoSociedade, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, perfil] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, informacaoSociedade, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
         carregarGastosServidores(m.id),
@@ -29,17 +29,18 @@ export async function getStaticPaths() {
         carregarProximosJulgamentos(m.id),
         carregarOmissaoInconstitucional(m.id),
         carregarDecisoesCovid(m.id),
+        carregarInformacaoSociedade(m.id),
         carregarPerfilDecisorio(m.id),
       ]);
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, casos, perfil } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, informacaoSociedade, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, casos, perfil } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, decisoesCovid, informacaoSociedade, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
@@ -780,6 +781,35 @@ const jsonLd = {
           Fonte: portal de transparência do STF (painel Corte Aberta — Ações Covid-19).
           {" "}Curadoria do próprio STF — 232 decisões selecionadas de um total de 16.265
           proferidas durante a pandemia, não um recorte automático.
+        </p>
+      </section>
+    )}
+
+    {informacaoSociedade.length > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Informação à Sociedade</h2>
+          <span class="text-[8.5px] text-subtle">{fmtNum(informacaoSociedade.length)} julgado{informacaoSociedade.length > 1 ? "s" : ""}</span>
+        </div>
+        {informacaoSociedade.map((j) => (
+          <div class="grid border-b border-border last:border-0 px-4 py-[9px] items-start gap-2" style="grid-template-columns: 74px 1fr 90px">
+            <span class="font-mono text-[9px] text-subtle pt-[1px]">{j.processo}</span>
+            <div>
+              <div class="text-[11px] text-ink font-medium leading-[1.35]">{j.tese ?? j.resultado ?? "—"}</div>
+              {j.tese && j.resultado && (
+                <div class="text-[10px] text-subtle leading-[1.35] mt-[2px]">{j.resultado}</div>
+              )}
+            </div>
+            <div class="text-right self-start justify-self-end">
+              <span class="text-[9px] text-subtle block">{j.votacao ?? "—"}</span>
+              <span class="text-[9px] text-subtle block mt-[2px]">{j.data_julgamento ? fmtDataCurta(j.data_julgamento) : "—"}</span>
+            </div>
+          </div>
+        ))}
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          Fonte: portal de transparência do STF (painel Corte Aberta — Informação à Sociedade).
+          {" "}Curadoria do STF — 178 julgamentos de maior repercussão, explicados em
+          linguagem simples: fatos, fundamentos e tese fixada, não um recorte automático.
         </p>
       </section>
     )}

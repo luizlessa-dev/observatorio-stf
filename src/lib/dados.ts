@@ -191,6 +191,14 @@ export interface DecisaoCovid {
   link_decisao: string | null;
 }
 
+export interface JulgadoInformacaoSociedade {
+  processo: string;
+  data_julgamento: string | null;
+  tese: string | null;
+  resultado: string | null;
+  votacao: string | null;
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -752,6 +760,20 @@ export async function carregarDecisoesCovid(ministroId: string): Promise<Decisao
     .eq("ministro_id", ministroId)
     .order("processo", { ascending: true });
   return (data ?? []) as DecisaoCovid[];
+}
+
+/**
+ * Julgados do projeto "Informação à Sociedade" relatados pelo ministro —
+ * curadoria do STF (178 no total), explicações em linguagem simples dos
+ * casos de maior repercussão. Nunca precisa de paginação.
+ */
+export async function carregarInformacaoSociedade(ministroId: string): Promise<JulgadoInformacaoSociedade[]> {
+  const { data } = await supabase
+    .from("stf_informacao_sociedade")
+    .select("processo, data_julgamento, tese, resultado, votacao")
+    .eq("ministro_id", ministroId)
+    .order("data_julgamento", { ascending: false });
+  return (data ?? []) as JulgadoInformacaoSociedade[];
 }
 
 /**
