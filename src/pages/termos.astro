@@ -4,7 +4,7 @@ import Base from "../layouts/Base.astro";
 const titulo = "Termos de Uso — Observatório do STF";
 const descricao =
   "Condições de uso do site e da contribuição paga do Observatório do STF.";
-const atualizadoEm = "13 de setembro de 2026";
+const atualizadoEm = "18 de setembro de 2026";
 ---
 <Base titulo={titulo} descricao={descricao} caminho="/termos">
   <article class="px-8 py-10 max-w-2xl prose-invert">
@@ -50,12 +50,25 @@ const atualizadoEm = "13 de setembro de 2026";
         disso ocorrer.</li>
     </ul>
 
-    <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">4. Uso aceitável</h2>
-    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+    <h2 id="uso-aceitavel" class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">4. Uso aceitável</h2>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-4">
       Você pode citar, compartilhar e reutilizar o conteúdo publicado, com atribuição ao
       Observatório do STF e, quando aplicável, à fonte primária original. Não é permitido
       raspar (scraping) o site em volume que sobrecarregue a infraestrutura, nem
       apresentar conteúdo daqui como produzido por terceiros sem atribuição.
+    </p>
+    <p class="text-[12.5px] text-muted leading-[1.7] mb-8">
+      <strong class="text-ink">Dados tabulares licenciados sob CC-BY 4.0.</strong> As
+      tabelas de dados públicos do STF que o Observatório organiza e disponibiliza
+      (ministros, gastos de gabinete, decisões, pauta, repercussão geral etc. — ver{" "}
+      <a href="/dados" class="underline hover:text-ink">Dados Abertos</a>) podem ser
+      reutilizadas, redistribuídas e adaptadas, inclusive comercialmente, sob a licença{" "}
+      <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-BR" target="_blank" rel="noopener noreferrer" class="underline hover:text-ink">
+        Creative Commons Atribuição 4.0 (CC-BY 4.0)
+      </a>, exigindo apenas atribuição ao Observatório do STF. Esta licença cobre os
+      dados em si — não se estende ao texto jornalístico e às apurações editoriais do
+      site (casos, análises, metodologia), que seguem a cláusula de atribuição do
+      parágrafo anterior.
     </p>
 
     <h2 class="text-[10px] font-semibold uppercase tracking-[1.5px] text-subtle mb-3">5. Isenções</h2>
