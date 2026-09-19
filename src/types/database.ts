@@ -587,6 +587,9 @@ export interface Database {
           pct_contrario:          number | null;
           pct_parcial:            number | null;
           tempo_medio_dias:       number | null;
+          // AUD-15 (migration 0029): período coberto pelo agregado acima.
+          data_decisao_min:       string | null;
+          data_decisao_max:       string | null;
         };
         Relationships: [];
       };

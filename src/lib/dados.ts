@@ -250,6 +250,10 @@ export interface PerfilDecisorio {
   tempoMedioDias: number | null;
   pctMonocratica: number | null;
   pctColegiada: number | null;
+  // AUD-15: período coberto pelo agregado acima (migration 0029) — para
+  // mostrar "dados de X a Y" junto da taxa, não só o N.
+  dataDecisaoMin: string | null;
+  dataDecisaoMax: string | null;
 }
 
 /**
@@ -266,7 +270,7 @@ export interface PerfilDecisorio {
  * nunca inventamos "sem dados = 0%".
  */
 const COLUNAS_PERFIL_DECISORIO =
-  "total_decisoes, total_classificadas, pct_classificadas, n_merito, n_admissibilidade, n_cautelar, n_processual, n_devolucao, pct_merito, pct_admissibilidade, pct_cautelar, pct_processual, pct_devolucao, n_merito_com_sentido, n_favoravel, n_contrario, n_parcial, pct_favoravel, pct_contrario, pct_parcial, tempo_medio_dias" as const;
+  "total_decisoes, total_classificadas, pct_classificadas, n_merito, n_admissibilidade, n_cautelar, n_processual, n_devolucao, pct_merito, pct_admissibilidade, pct_cautelar, pct_processual, pct_devolucao, n_merito_com_sentido, n_favoravel, n_contrario, n_parcial, pct_favoravel, pct_contrario, pct_parcial, tempo_medio_dias, data_decisao_min, data_decisao_max" as const;
 const COLUNAS_MIX_ATUACAO = "n_monocratica, n_colegiada, pct_monocratica, pct_colegiada" as const;
 
 // Sem isto, um ministro histórico com 1 decisão classificada aparece com
@@ -315,6 +319,8 @@ export async function carregarPerfilDecisorio(ministroId: string): Promise<Perfi
     tempoMedioDias: perfil.data.tempo_medio_dias,
     pctMonocratica: mix.data?.pct_monocratica ?? null,
     pctColegiada: mix.data?.pct_colegiada ?? null,
+    dataDecisaoMin: perfil.data.data_decisao_min,
+    dataDecisaoMax: perfil.data.data_decisao_max,
   };
 }
 
@@ -328,6 +334,8 @@ export interface PerfilComparativo {
   pctContrario: number | null;
   pctParcial: number | null;
   pctMerito: number | null;
+  dataDecisaoMin: string | null;
+  dataDecisaoMax: string | null;
 }
 
 /**
@@ -343,7 +351,9 @@ export async function carregarComparativoDecisorio(): Promise<PerfilComparativo[
     carregarMinistros(),
     supabase
       .from("stf_ministros_perfil_decisorio")
-      .select("ministro_id, total_classificadas, n_merito_com_sentido, pct_favoravel, pct_contrario, pct_parcial, pct_merito"),
+      .select(
+        "ministro_id, total_classificadas, n_merito_com_sentido, pct_favoravel, pct_contrario, pct_parcial, pct_merito, data_decisao_min, data_decisao_max",
+      ),
   ]);
   if (error) throw new Error(`stf_ministros_perfil_decisorio: ${error.message}`);
 
@@ -363,6 +373,8 @@ export async function carregarComparativoDecisorio(): Promise<PerfilComparativo[
       pctContrario: p.pct_contrario,
       pctParcial: p.pct_parcial,
       pctMerito: p.pct_merito,
+      dataDecisaoMin: p.data_decisao_min,
+      dataDecisaoMax: p.data_decisao_max,
     });
   }
   linhas.sort((a, b) => (b.pctContrario ?? 0) - (a.pctContrario ?? 0));
