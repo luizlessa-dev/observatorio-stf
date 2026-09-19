@@ -99,4 +99,53 @@ for (const arquivo of listarArquivosDeCaso()) {
       assert.ok(!texto.includes(termo), `${arquivo}: status "${data.status}" não deveria conter "${termo}"`);
     }
   });
+
+  // AUD-14: ficha editorial obrigatória — todo caso precisa de categoria e
+  // timeline (mesmo piso que content.config.ts exige no build, verificado
+  // aqui sem precisar rodar o Astro).
+  test(`${arquivo}: categoria é um array não-vazio de strings`, () => {
+    const { data } = lerFrontmatter(arquivo);
+    assert.ok(Array.isArray(data.categoria) && data.categoria.length > 0, "categoria deveria ser um array não-vazio");
+    for (const c of data.categoria) assert.equal(typeof c, "string", "cada categoria deveria ser uma string");
+  });
+
+  test(`${arquivo}: timeline é um array não-vazio de {data, titulo}, com data em ordem cronológica`, () => {
+    const { data } = lerFrontmatter(arquivo);
+    assert.ok(Array.isArray(data.timeline) && data.timeline.length > 0, "timeline deveria ser um array não-vazio");
+    let anterior = "";
+    for (const evento of data.timeline) {
+      assert.match(String(evento.data), /^\d{4}-\d{2}-\d{2}$/, `timeline de ${arquivo}: "data" deveria ser YYYY-MM-DD`);
+      assert.ok(evento.titulo && String(evento.titulo).trim().length > 0, "todo evento da timeline precisa de título");
+      assert.ok(evento.data >= anterior, `timeline de ${arquivo} deveria estar em ordem cronológica (${evento.data} veio depois de ${anterior})`);
+      anterior = evento.data;
+    }
+  });
+
+  test(`${arquivo}: tipo de fonte, quando presente, é primaria/secundaria/vazada`, () => {
+    const { data } = lerFrontmatter(arquivo);
+    const TIPOS_VALIDOS = ["primaria", "secundaria", "vazada"];
+    for (const f of data.fontes) {
+      if (f.tipo === undefined) continue;
+      assert.ok(TIPOS_VALIDOS.includes(f.tipo), `fonte "${f.label}" tem tipo "${f.tipo}" fora de ${TIPOS_VALIDOS.join(", ")}`);
+    }
+  });
+
+  test(`${arquivo}: fonte marcada "tipo: primaria" ou "vazada" tem essa classificação refletida no próprio label`, () => {
+    // Piso mecânico: evita que uma fonte seja marcada como primária/vazada
+    // sem que o texto do label documente por quê — a classificação nunca
+    // deve ser um julgamento silencioso, só extração do que já está escrito.
+    const { data } = lerFrontmatter(arquivo);
+    for (const f of data.fontes) {
+      if (f.tipo === "primaria") {
+        assert.match(
+          f.label,
+          /fonte primária|documento primário|andamentos processuais|Diário da Justiça Eletrônico/i,
+          `fonte "${f.label}" está marcada "primaria" mas o label não indica isso`
+        );
+      }
+      if (f.tipo === "vazada") {
+        assert.match(f.label, /documento vazado/i, `fonte "${f.label}" está marcada "vazada" mas o label não indica isso`);
+      }
+    }
+  });
 }

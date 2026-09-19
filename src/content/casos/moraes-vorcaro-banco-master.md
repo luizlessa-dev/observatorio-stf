@@ -1,193 +1,245 @@
 ---
-titulo: "Mensagens entre Moraes e Vorcaro reveladas por Mendonça"
-resumo: "Mendonça tornou públicas mensagens e encontros entre Moraes e Vorcaro, e contratos somando R$ 180 milhões. Em 15/9, STF empata 4 a 4 e Dino pede vista (até 90 dias); Fachin retira da pauta, sem nova data, a sessão de 23/9 sobre a conduta de Mendonça."
-ministros: ["alexandre-de-moraes", "andre-mendonca", "gilmar-mendes", "flavio-dino", "cristiano-zanin", "carmen-lucia", "luiz-fux", "nunes-marques", "dias-toffoli"]
+titulo: Mensagens entre Moraes e Vorcaro reveladas por Mendonça
+resumo: Mendonça tornou públicas mensagens e encontros entre Moraes e Vorcaro, e contratos somando R$ 180 milhões. Em 15/9, STF empata 4 a 4 e Dino pede vista (até 90 dias); Fachin retira da pauta, sem nova data, a sessão de 23/9 sobre a conduta de Mendonça.
+ministros:
+  - alexandre-de-moraes
+  - andre-mendonca
+  - gilmar-mendes
+  - flavio-dino
+  - cristiano-zanin
+  - carmen-lucia
+  - luiz-fux
+  - nunes-marques
+  - dias-toffoli
 status: em_apuracao
-data_publicacao: "2026-09-03"
-data_atualizacao: "2026-09-18"
+data_publicacao: '2026-09-03'
+data_atualizacao: '2026-09-18'
+categoria:
+  - sigilo processual
+  - conflito de interesse
+  - quebra bancária
+  - disputa institucional
+timeline:
+  - data: '2026-09-01'
+    titulo: Mendonça torna públicas as mensagens entre Moraes e Vorcaro e os contratos do escritório de Viviane Barci de Moraes
+  - data: '2026-09-10'
+    titulo: 'Atualização: segundo contrato, mais mensagens e sessão do plenário marcada para 15/9'
+    nivel_confirmacao: elementos de reportagens jornalísticas sobre a apuração em curso, não fatos estabelecidos pelo tribunal
+  - data: '2026-09-10'
+    titulo: 'Escalada institucional: disputa sobre o comando da apuração e da Polícia Federal'
+    nivel_confirmacao: decisões monocráticas e pedidos dentro de uma disputa institucional em curso, não julgados pelo plenário
+  - data: '2026-09-11'
+    titulo: 'Sigilo, ida e volta: levantamento parcial do sigilo do caso Master'
+  - data: '2026-09-11'
+    titulo: 'Direto do sistema do STF: conferência dos andamentos processuais oficiais'
+    nivel_confirmacao: conferido diretamente no portal do STF pelo Observatório
+  - data: '2026-09-11'
+    titulo: Mais 38 processos sem sigilo, incluindo a investigação sobre o Dark Horse
+    nivel_confirmacao: investigações em curso, com direito à ampla defesa dos citados, não julgadas pelo STF
+  - data: '2026-09-13'
+    titulo: Sigilo do Dark Horse cai por completo
+  - data: '2026-09-14'
+    titulo: 'Véspera da sessão de 15/9: pronunciamentos e últimos ofícios'
+  - data: '2026-09-15'
+    titulo: 'Sessão de 15/9: empate, bate-boca e pedido de vista de Dino'
+    nivel_confirmacao: sessão suspensa por pedido de vista — nenhum mérito julgado; placar remanescente (4x3 vs. 4x4) divergente entre veículos, não reconciliado pelo Observatório
+  - data: '2026-09-17'
+    titulo: Fachin retira a sessão de 23/9 da pauta, sem nova data
 fontes:
-  - label: "PF entrega dados do celular de Vorcaro ao gabinete de Zanin — CNN Brasil, 2026-09-14"
-    url: "https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/"
-  - label: "PF envia íntegra do celular de Vorcaro aos gabinetes de Zanin, Gilmar e Moraes — Agenda do Poder, 2026-09-14"
-    url: "https://agendadopoder.com.br/pf-entrega-integra-do-celular-de-vorcaro-a-zanin-gilmar-e-moraes/"
-  - label: "Mendonça atende a Fachin e retira sigilo de dados sobre rede de pagamentos do Master — Folha de S.Paulo, 2026-09-14 (parcialmente paywall)"
-    url: "https://www1.folha.uol.com.br/poder/2026/09/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master.shtml"
-  - label: "Mendonça derruba sigilo de parte dos pagamentos de Vorcaro — CNN Brasil, 2026-09-14"
-    url: "https://www.cnnbrasil.com.br/politica/mendonca-derruba-sigilo-de-pagamentos-de-vorcaro/"
-  - label: "PGR concorda com Moraes e pede retirada de sigilo de dados sobre rede de pagamentos do Master — Jornal de Brasília, 2026-09-14"
-    url: "https://jornaldebrasilia.com.br/noticias/politica-e-poder/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master/"
-  - label: "Cronologia das revelações — Agência Pública, 2026-09-02"
-    url: "https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/"
-  - label: "Análise do contrato Banco Master–Barci de Moraes — Agência Pública, 2026-09-02"
-    url: "https://apublica.org/2026/09/analise-as-revelacoes-sobre-master-vorcaro-moraes-e-mendonca/"
-  - label: "STF dividido sobre investigar Moraes — Poder360"
-    url: "https://www.poder360.com.br/poder-justica/stf-esta-dividido-e-carmen-lucia-sera-voto-de-minerva-sobre-moraes/"
-  - label: "Segundo contrato e novas mensagens reveladas — Aos Fatos, 2026-09-04"
-    url: "https://www.aosfatos.org/noticias/explicamos-novas-revelacoes-caso-master/"
-  - label: "STF marca sessão para 15/9 sobre investigar Moraes — O Tempo, 2026-09-09"
-    url: "https://www.otempo.com.br/politica/judiciario/2026/9/9/stf-vai-decidir-se-abre-investigacao-contra-moraes-na-proxima-terca-15-9"
-  - label: "Fachin pede a Mendonça que levante sigilo do caso Master — UOL, 2026-09-10"
-    url: "https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/10/fachin-solicita-a-mendonca-que-levante-sigilo-do-caso-master.ghtm"
-  - label: "Mendonça afasta diretor-geral da PF, Dino reintegra, Fachin suspende — Gazeta do Povo"
-    url: "https://www.gazetadopovo.com.br/republica/mendonca-afasta-andrei-rodrigues-do-cargo/"
-  - label: "Como a PF rastreou as 52 mensagens de Vorcaro a Moraes — CNN Brasil"
-    url: "https://www.cnnbrasil.com.br/blogs/jussara-soares/politica/como-a-pf-rastreou-as-mensagens-de-vorcaro-a-contato-atribuido-a-moraes/"
-  - label: "Toffoli admite sociedade em resort, mas nega pagamentos de Vorcaro — Agência Brasil, 2026-02-12"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/toffoli-admite-sociedade-em-resort-mas-nega-pagamentos-de-vorcaro"
-  - label: "Toffoli puxou o caso Master ao STF um dia após PF descartar pessoas com foro — CNN Brasil, 2026-09-11"
-    url: "https://www.cnnbrasil.com.br/politica/toffoli-puxou-caso-master-ao-stf-um-dia-apos-pf-descartar-pessoas-com-foro/"
-  - label: "Mendonça atende Fachin e levanta sigilo do Caso Master — CartaCapital, 2026-09-10"
-    url: "https://www.cartacapital.com.br/justica/apos-ordem-de-fachin-mendonca-levanta-sigilo-do-caso-master/"
-  - label: "Mendonça retira sigilo de parte do caso Master (15 procedimentos) — Gazeta da Amazônia, 2026-09-11"
-    url: "https://gazetadaamazonia.com.br/11/09/2026/mendonca-sigilo-caso-master/"
-  - label: "Fachin dá 24 horas para Mendonça liberar sigilo do caso Master — Gazeta da Amazônia, 2026-09-11"
-    url: "https://gazetadaamazonia.com.br/11/09/2026/fachin-sigilo-caso-master/"
-  - label: "Moraes pede fim completo do sigilo e critica Mendonça — Gazeta da Amazônia, 2026-09-11"
-    url: "https://gazetadaamazonia.com.br/11/09/2026/moraes-sigilo-caso-master/"
-  - label: "Íntegra do relatório da PF sobre o celular de Vorcaro (documento primário, PDF, 218 págs.) — Poder360"
-    url: "https://static.poder360.com.br/uploads/2026/09/pet16662_relatorio_pf_celular_vorcaro_moraes_gonet_andrei_barci.pdf"
-  - label: "Leia as íntegras dos documentos da Petição 16.662 — Poder360, 2026-09-01"
-    url: "https://www.poder360.com.br/poder-justica/leia-as-integras-de-documentos-que-revelam-relacao-de-moraes-com-vorcaro/"
-  - label: "Vorcaro aprovou cartões de crédito para filhos de Moraes, diz jornal — Poder360, 2026-09-01"
-    url: "https://www.poder360.com.br/poder-justica/vorcaro-aprovou-cartoes-de-credito-para-filhos-de-moraes-diz-jornal/"
-  - label: "Vorcaro para Moraes: tenho \"gratidão da minha vida a você\" — Poder360, 2026-09-01"
-    url: "https://www.poder360.com.br/poder-justica/vorcaro-para-moraes-tenho-gratidao-da-minha-vida-a-voce/"
-  - label: "Gilmar Mendes pede que Fachin reúna casos de Moraes e Mendonça — Exame, 2026-09-12"
-    url: "https://exame.com/brasil/gilmar-mendes-pede-que-fachin-reuna-casos-sobre-moraes-e-mendonca-e-assuma-a-relatoria-no-stf/"
-  - label: "Master sem sigilo: o que há em cada documento — Poder360, 2026-09-12"
-    url: "https://www.poder360.com.br/poder-justica/master-sem-sigilo-saiba-o-que-ha-em-cada-documento/"
-  - label: "PET 16.662 — andamentos processuais (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7681133"
-  - label: "PET 16.704 — andamentos processuais (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7687920"
-  - label: "SL 1.946 — andamentos processuais (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7690807"
-  - label: "Ata de julgamento, 2ª Turma, sessão virtual extraordinária de 8/9/2026 — Diário da Justiça Eletrônico do STF"
-    url: "https://digital.stf.jus.br/publico/publicacao/1008681"
-  - label: "Mendonça derruba sigilo do caso Dark Horse e dos que envolvem Ciro Nogueira e Jaques Wagner — Gazeta do Povo, 2026-09-11"
-    url: "https://www.gazetadopovo.com.br/republica/mendonca-derruba-sigilo-do-caso-dark-horse-e-dos-que-envolvem-ciro-nogueira-e-jaques-wagner/"
-  - label: "Mendonça levanta sigilo de investigação sobre 'Dark Horse' (Flávio Bolsonaro, Eduardo Bolsonaro) — CartaCapital, 2026-09-11"
-    url: "https://www.cartacapital.com.br/justica/mendonca-levanta-sigilo-de-investigacao-sobre-dark-horse/"
-  - label: "Gilmar Mendes pede que Fachin assuma relatoria de apuração contra Moraes — CartaCapital, 2026-09-11"
-    url: "https://www.cartacapital.com.br/justica/gilmar-mendes-pede-que-fachin-assuma-relatoria-de-apuracao-contra-moraes/"
-  - label: "Moraes diz que Mendonça tenta proteger 'grupo político' ao manter sigilo de parte do Caso Master — CartaCapital, 2026-09-11"
-    url: "https://www.cartacapital.com.br/justica/moraes-diz-que-mendonca-tenta-proteger-grupo-politico-ao-manter-sigilo-de-parte-do-caso-master/"
-  - label: "Vorcaro pede a manutenção de sigilo de mensagens 'exclusivamente pessoais' — CartaCapital, 2026-09-11"
-    url: "https://www.cartacapital.com.br/justica/vorcaro-pede-a-manutencao-de-sigilo-de-mensagens-exclusivamente-pessoais/"
-  - label: "Despacho de Mendonça sobre o Ofício GMCZ nº 14/2026 (fonte primária) — Diário da Justiça Eletrônico do STF"
-    url: "https://portal.stf.jus.br/processos/downloadPeca.asp?id=15390364049&ext=.pdf"
-  - label: "INQ 5.050 — investigação sobre Jaques Wagner (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7600724"
-  - label: "PET 15.855 — investigação sobre Ciro Nogueira (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7556527"
-  - label: "PET 16.292 — representação de Lindbergh Farias contra Eduardo Bolsonaro (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7629247"
-  - label: "INQ 5.070 — inquérito Dark Horse, partes e investigados (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7661993"
-  - label: "PET 16.727 — nova representação de Lindbergh Farias contra Flávio Bolsonaro, 11/9/2026 (fonte primária) — Portal do STF"
-    url: "https://portal.stf.jus.br/processos/detalhe.asp?incidente=7694235"
-  - label: "STF: Gilmar Mendes sugere adiar sessão sobre conduta de Moraes — Agência Brasil, 2026-09-11"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-gilmar-mendes-sugere-adiar-sessao-sobre-conduta-de-moraes"
-  - label: "Andrei Rodrigues nega que PF tenha monitorado ministro André Mendonça — Agência Brasil, 2026-09-11"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/andrei-rodrigues-nega-que-pf-monitorou-ministro-andre-mendonca"
-  - label: "Fachin aguarda explicações de ministros para decidir sobre crise — Agência Brasil, 2026-09-07"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/fachin-aguarda-explicacoes-de-ministros-para-decidir-sobre-crise"
-  - label: "Ministros aposentados do STF pedem apuração 'imediata e rigorosa' a Fachin — ConJur, 2026-09-08"
-    url: "https://conjur.com.br/2026-set-08/ex-ministros-do-stf-pedem-apuracao-imediata-e-rigorosa-de-fachin/"
-  - label: "PF produziu relatório paralelo sobre atuação de Mendonça no caso Master — Poder360, 2026-09-03"
-    url: "https://www.poder360.com.br/poder-justica/pf-produziu-relatorio-paralelo-sobre-atuacao-de-mendonca-no-caso-master/"
-  - label: "Íntegra dos relatórios de inteligência da PF sobre Mendonça (documento vazado, não oficial, PDF 50 págs., publicado pelo Poder360)"
-    url: "https://static.poder360.com.br/uploads/2026/09/INQ4781-relatorios-Da-PF-contra-Mendonca.pdf"
-  - label: "Moraes editou contrato de R$ 131 milhões entre sua mulher e Vorcaro — Poder360, 2026-09-12"
-    url: "https://www.poder360.com.br/poder-justica/moraes-editou-contrato-de-r-131-milhoes-entre-sua-mulher-e-vorcaro/"
-  - label: "Ministro André Mendonça admite encontro com Vorcaro 'uma única vez' — Agência Brasil, 2026-09-12"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/ministro-andre-mendonca-admite-encontro-com-vorcaro-uma-unica-vez"
-  - label: "Vaza Mendonça: mensagens e áudios inéditos revelam encontro de Vorcaro e André Mendonça — ICL Notícias"
-    url: "https://iclnoticias.com.br/vaza-mendonca-mensagens-e-audios-ineditos/"
-  - label: "Mendonça recebeu Vorcaro, ouviu e votou contra interesse do ex-banqueiro — Poder360"
-    url: "https://www.poder360.com.br/poder-justica/mendonca-diz-que-esteve-com-vorcaro-uma-vez-e-que-se-limitou-a-ouvi-lo/"
-  - label: "PF suspeita que Toffoli tenha dinheiro de Vorcaro em paraíso fiscal, diz revista piauí — CNN Brasil, 2026-09-12"
-    url: "https://www.cnnbrasil.com.br/politica/toffoli-seria-beneficiario-de-fundo-ligado-a-vorcaro-diz-revista/"
-  - label: "PF vê possível elo de Toffoli com R$ 35 milhões repassados por Vorcaro — CartaCapital, 2026-09-12"
-    url: "https://www.cartacapital.com.br/justica/pf-ve-possivel-elo-de-toffoli-com-r-35-milhoes-repassados-por-vorcaro/"
-  - label: "PF mostra conversas de Flávio com Vorcaro sobre recursos para Dark Horse — CNN Brasil, 2026-09-11"
-    url: "https://www.cnnbrasil.com.br/politica/pf-mostra-conversas-de-flavio-com-vorcaro-sobre-recursos-para-dark-horse/"
-  - label: "ONG da produtora de Dark Horse cedeu dados de usuários de wi-fi livre em SP para disparos em massa — Intercept Brasil, 2026-06-02"
-    url: "https://www.intercept.com.br/2026/06/02/ong-produtora-dark-horse-dados-usuarios-wi-fi-livre-sp-disparos-massa/"
-  - label: "Karina Gama: como atuou a produtora de Dark Horse, alvo da PF com Mário Frias — Revista Fórum"
-    url: "https://revistaforum.com.br/politica/karina-gama-dark-horse-pf/"
-  - label: "Fachin afasta Mendonça de caso contra Moraes e manda parar apurações de Master e INSS — Estado de Minas, 2026-09-12"
-    url: "https://www.em.com.br/politica/2026/09/7499402-fachin-afasta-mendonca-de-caso-contra-moraes-e-manda-parar-apuracoes-de-master-e-inss.html"
-  - label: "Fachin nega pedido para julgamento simultâneo de Moraes e Mendonça no STF — Revista Oeste, 2026-09-12"
-    url: "https://revistaoeste.com/politica/fachin-nega-pedido-para-julgamento-simultaneo-de-moraes-e-mendonca-no-stf/"
-  - label: "Racha Supremo — reportagem de capa, revista Veja, edição 3012, 2026-09-11"
-    url: "https://veja.abril.com.br/"
-  - label: "Em cartaz, a caixa-preta — Breno Pires, revista piauí, edição 240, setembro de 2026"
-    url: "https://piaui.folha.uol.com.br/"
-  - label: "Corte em pedaços — André Barrocal, revista CartaCapital, edição 1430, 2026-09-16"
-    url: "https://www.cartacapital.com.br/"
-  - label: "Flávio Dino retira sigilo de investigação sobre Dark Horse — Manoela Alcântara, coluna, Metrópoles, 2026-09-13"
-    url: "https://www.metropoles.com/colunas/manoela-alcantara/flavio-dino-retira-sigilo-de-investigacao-sobre-dark-horse"
-  - label: "Dino retira sigilo de material da investigação sobre Dark Horse — ConJur, 2026-09-13"
-    url: "https://conjur.com.br/2026-set-13/dino-retira-sigilo-de-material-da-investigacao-sobre-dark-horse/"
-  - label: "Consultoria ligada ao Master e à JBS contratou filho de Nunes Marques — Metrópoles"
-    url: "https://www.metropoles.com/brasil/consultoria-ligada-ao-master-e-a-jbs-contratou-filho-de-nunes-marques"
-  - label: "Master pagou consultoria que contratou filho de Kassio Nunes Marques — O Tempo, 2026-03-19"
-    url: "https://www.otempo.com.br/politica/judiciario/2026/3/19/master-e-jbs-pagaram-r-18-milhoes-a-consultoria-que-contratou-filho-de-kassio-nunes-marques-do-stf"
-  - label: "Pronunciamento de Moraes deve ser feito na véspera da sessão do STF — Jovem Pan, 2026-09-10"
-    url: "https://jovempan.com.br/politica/pronunciamento-de-moraes-deve-ser-feito-na-segunda-feira-vespera-da-sessao-do-stf/"
-  - label: "PF apreende R$ 510 mil com esposa de deputado que articulou encontro de Vorcaro e Mendonça — Bahia Notícias"
-    url: "https://www.bahianoticias.com.br/noticia/320690-pf-apreende-rdollar-510-mil-com-esposa-de-deputado-que-articulou-encontro-de-vorcaro-e-ministro"
-  - label: "PF apreendeu R$ 510 mil com esposa de Cezinha de Madureira — Brasil247"
-    url: "https://www.brasil247.com/sudeste/pf-apreendeu-r-510-mil-com-esposa-de-cezinha-de-madureira-que-articulou-encontro-entre-vorcaro-e-mendonca/"
-  - label: "Mendonça deixa sociedade de instituto após revelação de R$ 10,8 milhões em contratos públicos — O Folha de Minas"
-    url: "https://ofolhademinas.com.br/mendonca-deixa-sociedade-de-instituto-apos-revelacao-de-r-108-milhoes-em-contratos-publicos/"
-  - label: "Leia a íntegra da nota de Viviane Barci sobre contrato com Banco Master — Poder360, 2026-03-09"
-    url: "https://www.poder360.com.br/poder-justica/leia-a-integra-de-nota-de-viviane-barci-sobre-contrato-com-banco-master/"
-  - label: "Vorcaro disse ao STF que tinha 'relação cordial' com Andrei Rodrigues — Poder360"
-    url: "https://www.poder360.com.br/poder-justica/vorcaro-disse-ao-stf-que-tinha-relacao-cordial-com-andrei-rodrigues/"
-  - label: "PF suspeita que Vorcaro influenciou voto de Toffoli em ação de precatórios — Estado de Minas, 2026-09"
-    url: "https://www.em.com.br/politica/2026/09/7498552-pf-suspeita-que-vorcaro-influenciou-voto-de-toffoli-em-acao-de-precatorios.html"
-  - label: "Filhos de ministros que haviam votado pelo afastamento da cúpula da PF têm vínculos no entorno do Master — RED"
-    url: "https://red.org.br/noticias/filhos-ministros-stf-vinculos-banco-master/"
-  - label: "Filhos de Fux e Nunes Marques são citados em reportagens sobre entorno do Banco Master — BPMoney"
-    url: "https://bpmoney.com.br/noticias/filhos-de-fux-e-nunes-marques-sao-citados-em-reportagens-sobre-entorno-do-banco-master/"
-  - label: "Fachin assume relatoria de ação que envolve Moraes no caso Master — O Hoje, 2026-09-13"
-    url: "https://ohoje.com/2026/09/13/fachin-assume-relatoria-de-acao-que-envolve-moraes-no-caso-master/"
-  - label: "Zanin pede íntegra do celular de Vorcaro antes de sessão do STF sobre Master-Moraes — InfoMoney"
-    url: "https://www.infomoney.com.br/politica/zanin-quer-integra-do-celular-de-vorcaro-antes-de-sessao-do-stf-sobre-master-moraes/"
-  - label: "Prefeitura aponta R$ 12 milhões em notas suspeitas e cobra devolução de R$ 906 mil de ONG do wi-fi — Alagoas 24 Horas"
-    url: "https://www.alagoas24horas.com.br/1749003/prefeitura-aponta-r-12-milhoes-em-notas-suspeitas-e-cobra-devolucao-de-r-906-mil-de-ong-responsavel-por-wi-fi-na-periferia/"
-  - label: "Zanin dá até 23h para PF entregar dados de celular de Vorcaro — Migalhas, 2026-09-13"
-    url: "https://www.migalhas.com.br/quentes/464414/zanin-da-ate-23h-para-pf-entregar-dados-de-celular-de-vorcaro"
-  - label: "PF está com celular de Vorcaro e afirma poder enviar dados a ministros — Agência Brasil, 2026-09-13"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/pf-esta-com-celular-de-vorcaro-e-afirma-poder-enviar-dados-ministros"
-  - label: "Mendonça diz ser contra abrir íntegra do celular de Vorcaro e pede que Fachin apure suposta coação na PF — Página3, 2026-09-13"
-    url: "https://pagina3.com.br/justica/mendonca-diz-ser-contra-abrir-integra-do-celular-de-vorcaro-e-pede-que-fachin-apure-suposta-coacao-na-pf/"
-  - label: "Moraes pede retirada de sigilo de rede de pagamentos de Vorcaro antes de sessão no STF — BNews, 2026-09-13"
-    url: "https://www.bnews.com.br/noticias/crime-e-justica-bahia/moraes-pede-retirada-de-sigilo-de-rede-de-pagamentos-de-vorcaro-antes-de-sessao-no-stf.html"
-  - label: "STF encerra sessão sem decidir caso Moraes após bate-bocas e empate no plenário — Jornal de Brasília, 2026-09-15"
-    url: "https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-encerra-sessao-sem-decidir-caso-moraes-apos-bate-bocas-e-empate-no-plenario/"
-  - label: "STF retoma sessões após suspensão dos casos Moraes e Mendonça (pedido de vista de Dino, prazo de 90 dias) — Agência Brasil, 2026-09-16"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-retoma-sesoes-apos-suspensao-de-casos-moraes-e-mendonca"
-  - label: "STF julga suposta relação entre Moraes e Vorcaro — cobertura da sessão de 15/9, Agência Brasil"
-    url: "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-julga-suposta-relacao-entre-moraes-e-vorcaro"
-  - label: "STF encerra sessão sem decidir sobre investigação contra Moraes (placar antes do pedido de vista) — Metrópoles, 2026-09-15"
-    url: "https://www.metropoles.com/brasil/stf-julgamento-caso-moraes"
-  - label: "Em sessão caótica, STF não resolve crise e joga solução para futuro incerto — Metrópoles, 2026-09-15"
-    url: "https://www.metropoles.com/brasil/em-sessao-caotica-stf-nao-resolve-crise-e-joga-solucao-para-futuro-incerto"
-  - label: "Em bate-boca, Moraes diz que tem testemunhas de direcionamento e Mendonça lhe acusa de mentir — O Tempo, 2026-09-15"
-    url: "https://www.otempo.com.br/politica/judiciario/2026/9/15/em-bate-boca-moraes-diz-que-tem-testemunhas-de-direcionamento-e-mendonca-lhe-acusa-de-mentir"
-  - label: "Cármen Lúcia pede desculpas por situação no STF: 'profunda tristeza' — Congresso em Foco, 2026-09-15"
-    url: "https://www.congressoemfoco.com.br/noticia/122295/carmen-lucia-pede-desculpas-por-situacao-no-stf--profunda-tristeza"
-  - label: "Como ficou a votação do STF? Veja placar de votos em julgamento de Moraes (leitura divergente do placar) — DCI, 2026-09-15"
-    url: "https://www.dci.com.br/politica/como-ficou-a-votacao-do-stf-veja-placar-de-votos-em-julgamento-de-moraes/"
-  - label: "Fachin retira de pauta julgamento sobre irregularidades de Mendonça no caso Master — ConJur, 2026-09-17"
-    url: "https://conjur.com.br/2026-set-17/fachin-retira-de-pauta-julgamento-sobre-irregularidades-de-mendonca-no-caso-master/"
-  - label: "Vista de Dino trava caso Moraes e crise ameaça contaminar próximos julgamentos do STF — O Tempo, 2026-09-16"
-    url: "https://www.otempo.com.br/politica/judiciario/2026/9/16/vista-de-dino-trava-caso-moraes-e-crise-ameaca-contaminar-proximos-julgamentos-do-stf"
-  - label: "Flávio Dino pede vista e paralisa julgamento no caso Moraes — Gazeta da Amazônia, 2026-09-16"
-    url: "https://gazetadaamazonia.com.br/16/09/2026/flavio-dino-caso-moraes/"
+  - label: PF entrega dados do celular de Vorcaro ao gabinete de Zanin — CNN Brasil, 2026-09-14
+    url: https://www.cnnbrasil.com.br/politica/pf-entrega-dados-do-celular-de-vorcaro-ao-gabinete-de-zanin/
+  - label: PF envia íntegra do celular de Vorcaro aos gabinetes de Zanin, Gilmar e Moraes — Agenda do Poder, 2026-09-14
+    url: https://agendadopoder.com.br/pf-entrega-integra-do-celular-de-vorcaro-a-zanin-gilmar-e-moraes/
+  - label: Mendonça atende a Fachin e retira sigilo de dados sobre rede de pagamentos do Master — Folha de S.Paulo, 2026-09-14 (parcialmente paywall)
+    url: https://www1.folha.uol.com.br/poder/2026/09/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master.shtml
+  - label: Mendonça derruba sigilo de parte dos pagamentos de Vorcaro — CNN Brasil, 2026-09-14
+    url: https://www.cnnbrasil.com.br/politica/mendonca-derruba-sigilo-de-pagamentos-de-vorcaro/
+  - label: PGR concorda com Moraes e pede retirada de sigilo de dados sobre rede de pagamentos do Master — Jornal de Brasília, 2026-09-14
+    url: https://jornaldebrasilia.com.br/noticias/politica-e-poder/pgr-concorda-com-moraes-e-pede-retirada-de-sigilo-de-dados-sobre-rede-de-pagamentos-do-master/
+  - label: Cronologia das revelações — Agência Pública, 2026-09-02
+    url: https://apublica.org/2026/09/crise-no-stf-e-mensagens-de-moraes-e-vorcaro-como-chegamos-aqui/
+  - label: Análise do contrato Banco Master–Barci de Moraes — Agência Pública, 2026-09-02
+    url: https://apublica.org/2026/09/analise-as-revelacoes-sobre-master-vorcaro-moraes-e-mendonca/
+  - label: STF dividido sobre investigar Moraes — Poder360
+    url: https://www.poder360.com.br/poder-justica/stf-esta-dividido-e-carmen-lucia-sera-voto-de-minerva-sobre-moraes/
+  - label: Segundo contrato e novas mensagens reveladas — Aos Fatos, 2026-09-04
+    url: https://www.aosfatos.org/noticias/explicamos-novas-revelacoes-caso-master/
+  - label: STF marca sessão para 15/9 sobre investigar Moraes — O Tempo, 2026-09-09
+    url: https://www.otempo.com.br/politica/judiciario/2026/9/9/stf-vai-decidir-se-abre-investigacao-contra-moraes-na-proxima-terca-15-9
+  - label: Fachin pede a Mendonça que levante sigilo do caso Master — UOL, 2026-09-10
+    url: https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/10/fachin-solicita-a-mendonca-que-levante-sigilo-do-caso-master.ghtm
+  - label: Mendonça afasta diretor-geral da PF, Dino reintegra, Fachin suspende — Gazeta do Povo
+    url: https://www.gazetadopovo.com.br/republica/mendonca-afasta-andrei-rodrigues-do-cargo/
+  - label: Como a PF rastreou as 52 mensagens de Vorcaro a Moraes — CNN Brasil
+    url: https://www.cnnbrasil.com.br/blogs/jussara-soares/politica/como-a-pf-rastreou-as-mensagens-de-vorcaro-a-contato-atribuido-a-moraes/
+  - label: Toffoli admite sociedade em resort, mas nega pagamentos de Vorcaro — Agência Brasil, 2026-02-12
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/toffoli-admite-sociedade-em-resort-mas-nega-pagamentos-de-vorcaro
+  - label: Toffoli puxou o caso Master ao STF um dia após PF descartar pessoas com foro — CNN Brasil, 2026-09-11
+    url: https://www.cnnbrasil.com.br/politica/toffoli-puxou-caso-master-ao-stf-um-dia-apos-pf-descartar-pessoas-com-foro/
+  - label: Mendonça atende Fachin e levanta sigilo do Caso Master — CartaCapital, 2026-09-10
+    url: https://www.cartacapital.com.br/justica/apos-ordem-de-fachin-mendonca-levanta-sigilo-do-caso-master/
+  - label: Mendonça retira sigilo de parte do caso Master (15 procedimentos) — Gazeta da Amazônia, 2026-09-11
+    url: https://gazetadaamazonia.com.br/11/09/2026/mendonca-sigilo-caso-master/
+  - label: Fachin dá 24 horas para Mendonça liberar sigilo do caso Master — Gazeta da Amazônia, 2026-09-11
+    url: https://gazetadaamazonia.com.br/11/09/2026/fachin-sigilo-caso-master/
+  - label: Moraes pede fim completo do sigilo e critica Mendonça — Gazeta da Amazônia, 2026-09-11
+    url: https://gazetadaamazonia.com.br/11/09/2026/moraes-sigilo-caso-master/
+  - label: Íntegra do relatório da PF sobre o celular de Vorcaro (documento primário, PDF, 218 págs.) — Poder360
+    url: https://static.poder360.com.br/uploads/2026/09/pet16662_relatorio_pf_celular_vorcaro_moraes_gonet_andrei_barci.pdf
+    tipo: primaria
+  - label: Leia as íntegras dos documentos da Petição 16.662 — Poder360, 2026-09-01
+    url: https://www.poder360.com.br/poder-justica/leia-as-integras-de-documentos-que-revelam-relacao-de-moraes-com-vorcaro/
+  - label: Vorcaro aprovou cartões de crédito para filhos de Moraes, diz jornal — Poder360, 2026-09-01
+    url: https://www.poder360.com.br/poder-justica/vorcaro-aprovou-cartoes-de-credito-para-filhos-de-moraes-diz-jornal/
+  - label: 'Vorcaro para Moraes: tenho "gratidão da minha vida a você" — Poder360, 2026-09-01'
+    url: https://www.poder360.com.br/poder-justica/vorcaro-para-moraes-tenho-gratidao-da-minha-vida-a-voce/
+  - label: Gilmar Mendes pede que Fachin reúna casos de Moraes e Mendonça — Exame, 2026-09-12
+    url: https://exame.com/brasil/gilmar-mendes-pede-que-fachin-reuna-casos-sobre-moraes-e-mendonca-e-assuma-a-relatoria-no-stf/
+  - label: 'Master sem sigilo: o que há em cada documento — Poder360, 2026-09-12'
+    url: https://www.poder360.com.br/poder-justica/master-sem-sigilo-saiba-o-que-ha-em-cada-documento/
+  - label: PET 16.662 — andamentos processuais (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7681133
+    tipo: primaria
+  - label: PET 16.704 — andamentos processuais (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7687920
+    tipo: primaria
+  - label: SL 1.946 — andamentos processuais (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7690807
+    tipo: primaria
+  - label: Ata de julgamento, 2ª Turma, sessão virtual extraordinária de 8/9/2026 — Diário da Justiça Eletrônico do STF
+    url: https://digital.stf.jus.br/publico/publicacao/1008681
+    tipo: primaria
+  - label: Mendonça derruba sigilo do caso Dark Horse e dos que envolvem Ciro Nogueira e Jaques Wagner — Gazeta do Povo, 2026-09-11
+    url: https://www.gazetadopovo.com.br/republica/mendonca-derruba-sigilo-do-caso-dark-horse-e-dos-que-envolvem-ciro-nogueira-e-jaques-wagner/
+  - label: Mendonça levanta sigilo de investigação sobre 'Dark Horse' (Flávio Bolsonaro, Eduardo Bolsonaro) — CartaCapital, 2026-09-11
+    url: https://www.cartacapital.com.br/justica/mendonca-levanta-sigilo-de-investigacao-sobre-dark-horse/
+  - label: Gilmar Mendes pede que Fachin assuma relatoria de apuração contra Moraes — CartaCapital, 2026-09-11
+    url: https://www.cartacapital.com.br/justica/gilmar-mendes-pede-que-fachin-assuma-relatoria-de-apuracao-contra-moraes/
+  - label: Moraes diz que Mendonça tenta proteger 'grupo político' ao manter sigilo de parte do Caso Master — CartaCapital, 2026-09-11
+    url: https://www.cartacapital.com.br/justica/moraes-diz-que-mendonca-tenta-proteger-grupo-politico-ao-manter-sigilo-de-parte-do-caso-master/
+  - label: Vorcaro pede a manutenção de sigilo de mensagens 'exclusivamente pessoais' — CartaCapital, 2026-09-11
+    url: https://www.cartacapital.com.br/justica/vorcaro-pede-a-manutencao-de-sigilo-de-mensagens-exclusivamente-pessoais/
+  - label: Despacho de Mendonça sobre o Ofício GMCZ nº 14/2026 (fonte primária) — Diário da Justiça Eletrônico do STF
+    url: https://portal.stf.jus.br/processos/downloadPeca.asp?id=15390364049&ext=.pdf
+    tipo: primaria
+  - label: INQ 5.050 — investigação sobre Jaques Wagner (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7600724
+    tipo: primaria
+  - label: PET 15.855 — investigação sobre Ciro Nogueira (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7556527
+    tipo: primaria
+  - label: PET 16.292 — representação de Lindbergh Farias contra Eduardo Bolsonaro (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7629247
+    tipo: primaria
+  - label: INQ 5.070 — inquérito Dark Horse, partes e investigados (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7661993
+    tipo: primaria
+  - label: PET 16.727 — nova representação de Lindbergh Farias contra Flávio Bolsonaro, 11/9/2026 (fonte primária) — Portal do STF
+    url: https://portal.stf.jus.br/processos/detalhe.asp?incidente=7694235
+    tipo: primaria
+  - label: 'STF: Gilmar Mendes sugere adiar sessão sobre conduta de Moraes — Agência Brasil, 2026-09-11'
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-gilmar-mendes-sugere-adiar-sessao-sobre-conduta-de-moraes
+  - label: Andrei Rodrigues nega que PF tenha monitorado ministro André Mendonça — Agência Brasil, 2026-09-11
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/andrei-rodrigues-nega-que-pf-monitorou-ministro-andre-mendonca
+  - label: Fachin aguarda explicações de ministros para decidir sobre crise — Agência Brasil, 2026-09-07
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/fachin-aguarda-explicacoes-de-ministros-para-decidir-sobre-crise
+  - label: Ministros aposentados do STF pedem apuração 'imediata e rigorosa' a Fachin — ConJur, 2026-09-08
+    url: https://conjur.com.br/2026-set-08/ex-ministros-do-stf-pedem-apuracao-imediata-e-rigorosa-de-fachin/
+  - label: PF produziu relatório paralelo sobre atuação de Mendonça no caso Master — Poder360, 2026-09-03
+    url: https://www.poder360.com.br/poder-justica/pf-produziu-relatorio-paralelo-sobre-atuacao-de-mendonca-no-caso-master/
+  - label: Íntegra dos relatórios de inteligência da PF sobre Mendonça (documento vazado, não oficial, PDF 50 págs., publicado pelo Poder360)
+    url: https://static.poder360.com.br/uploads/2026/09/INQ4781-relatorios-Da-PF-contra-Mendonca.pdf
+    tipo: vazada
+  - label: Moraes editou contrato de R$ 131 milhões entre sua mulher e Vorcaro — Poder360, 2026-09-12
+    url: https://www.poder360.com.br/poder-justica/moraes-editou-contrato-de-r-131-milhoes-entre-sua-mulher-e-vorcaro/
+  - label: Ministro André Mendonça admite encontro com Vorcaro 'uma única vez' — Agência Brasil, 2026-09-12
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/ministro-andre-mendonca-admite-encontro-com-vorcaro-uma-unica-vez
+  - label: 'Vaza Mendonça: mensagens e áudios inéditos revelam encontro de Vorcaro e André Mendonça — ICL Notícias'
+    url: https://iclnoticias.com.br/vaza-mendonca-mensagens-e-audios-ineditos/
+  - label: Mendonça recebeu Vorcaro, ouviu e votou contra interesse do ex-banqueiro — Poder360
+    url: https://www.poder360.com.br/poder-justica/mendonca-diz-que-esteve-com-vorcaro-uma-vez-e-que-se-limitou-a-ouvi-lo/
+  - label: PF suspeita que Toffoli tenha dinheiro de Vorcaro em paraíso fiscal, diz revista piauí — CNN Brasil, 2026-09-12
+    url: https://www.cnnbrasil.com.br/politica/toffoli-seria-beneficiario-de-fundo-ligado-a-vorcaro-diz-revista/
+  - label: PF vê possível elo de Toffoli com R$ 35 milhões repassados por Vorcaro — CartaCapital, 2026-09-12
+    url: https://www.cartacapital.com.br/justica/pf-ve-possivel-elo-de-toffoli-com-r-35-milhoes-repassados-por-vorcaro/
+  - label: PF mostra conversas de Flávio com Vorcaro sobre recursos para Dark Horse — CNN Brasil, 2026-09-11
+    url: https://www.cnnbrasil.com.br/politica/pf-mostra-conversas-de-flavio-com-vorcaro-sobre-recursos-para-dark-horse/
+  - label: ONG da produtora de Dark Horse cedeu dados de usuários de wi-fi livre em SP para disparos em massa — Intercept Brasil, 2026-06-02
+    url: https://www.intercept.com.br/2026/06/02/ong-produtora-dark-horse-dados-usuarios-wi-fi-livre-sp-disparos-massa/
+  - label: 'Karina Gama: como atuou a produtora de Dark Horse, alvo da PF com Mário Frias — Revista Fórum'
+    url: https://revistaforum.com.br/politica/karina-gama-dark-horse-pf/
+  - label: Fachin afasta Mendonça de caso contra Moraes e manda parar apurações de Master e INSS — Estado de Minas, 2026-09-12
+    url: https://www.em.com.br/politica/2026/09/7499402-fachin-afasta-mendonca-de-caso-contra-moraes-e-manda-parar-apuracoes-de-master-e-inss.html
+  - label: Fachin nega pedido para julgamento simultâneo de Moraes e Mendonça no STF — Revista Oeste, 2026-09-12
+    url: https://revistaoeste.com/politica/fachin-nega-pedido-para-julgamento-simultaneo-de-moraes-e-mendonca-no-stf/
+  - label: Racha Supremo — reportagem de capa, revista Veja, edição 3012, 2026-09-11
+    url: https://veja.abril.com.br/
+  - label: Em cartaz, a caixa-preta — Breno Pires, revista piauí, edição 240, setembro de 2026
+    url: https://piaui.folha.uol.com.br/
+  - label: Corte em pedaços — André Barrocal, revista CartaCapital, edição 1430, 2026-09-16
+    url: https://www.cartacapital.com.br/
+  - label: Flávio Dino retira sigilo de investigação sobre Dark Horse — Manoela Alcântara, coluna, Metrópoles, 2026-09-13
+    url: https://www.metropoles.com/colunas/manoela-alcantara/flavio-dino-retira-sigilo-de-investigacao-sobre-dark-horse
+  - label: Dino retira sigilo de material da investigação sobre Dark Horse — ConJur, 2026-09-13
+    url: https://conjur.com.br/2026-set-13/dino-retira-sigilo-de-material-da-investigacao-sobre-dark-horse/
+  - label: Consultoria ligada ao Master e à JBS contratou filho de Nunes Marques — Metrópoles
+    url: https://www.metropoles.com/brasil/consultoria-ligada-ao-master-e-a-jbs-contratou-filho-de-nunes-marques
+  - label: Master pagou consultoria que contratou filho de Kassio Nunes Marques — O Tempo, 2026-03-19
+    url: https://www.otempo.com.br/politica/judiciario/2026/3/19/master-e-jbs-pagaram-r-18-milhoes-a-consultoria-que-contratou-filho-de-kassio-nunes-marques-do-stf
+  - label: Pronunciamento de Moraes deve ser feito na véspera da sessão do STF — Jovem Pan, 2026-09-10
+    url: https://jovempan.com.br/politica/pronunciamento-de-moraes-deve-ser-feito-na-segunda-feira-vespera-da-sessao-do-stf/
+  - label: PF apreende R$ 510 mil com esposa de deputado que articulou encontro de Vorcaro e Mendonça — Bahia Notícias
+    url: https://www.bahianoticias.com.br/noticia/320690-pf-apreende-rdollar-510-mil-com-esposa-de-deputado-que-articulou-encontro-de-vorcaro-e-ministro
+  - label: PF apreendeu R$ 510 mil com esposa de Cezinha de Madureira — Brasil247
+    url: https://www.brasil247.com/sudeste/pf-apreendeu-r-510-mil-com-esposa-de-cezinha-de-madureira-que-articulou-encontro-entre-vorcaro-e-mendonca/
+  - label: Mendonça deixa sociedade de instituto após revelação de R$ 10,8 milhões em contratos públicos — O Folha de Minas
+    url: https://ofolhademinas.com.br/mendonca-deixa-sociedade-de-instituto-apos-revelacao-de-r-108-milhoes-em-contratos-publicos/
+  - label: Leia a íntegra da nota de Viviane Barci sobre contrato com Banco Master — Poder360, 2026-03-09
+    url: https://www.poder360.com.br/poder-justica/leia-a-integra-de-nota-de-viviane-barci-sobre-contrato-com-banco-master/
+  - label: Vorcaro disse ao STF que tinha 'relação cordial' com Andrei Rodrigues — Poder360
+    url: https://www.poder360.com.br/poder-justica/vorcaro-disse-ao-stf-que-tinha-relacao-cordial-com-andrei-rodrigues/
+  - label: PF suspeita que Vorcaro influenciou voto de Toffoli em ação de precatórios — Estado de Minas, 2026-09
+    url: https://www.em.com.br/politica/2026/09/7498552-pf-suspeita-que-vorcaro-influenciou-voto-de-toffoli-em-acao-de-precatorios.html
+  - label: Filhos de ministros que haviam votado pelo afastamento da cúpula da PF têm vínculos no entorno do Master — RED
+    url: https://red.org.br/noticias/filhos-ministros-stf-vinculos-banco-master/
+  - label: Filhos de Fux e Nunes Marques são citados em reportagens sobre entorno do Banco Master — BPMoney
+    url: https://bpmoney.com.br/noticias/filhos-de-fux-e-nunes-marques-sao-citados-em-reportagens-sobre-entorno-do-banco-master/
+  - label: Fachin assume relatoria de ação que envolve Moraes no caso Master — O Hoje, 2026-09-13
+    url: https://ohoje.com/2026/09/13/fachin-assume-relatoria-de-acao-que-envolve-moraes-no-caso-master/
+  - label: Zanin pede íntegra do celular de Vorcaro antes de sessão do STF sobre Master-Moraes — InfoMoney
+    url: https://www.infomoney.com.br/politica/zanin-quer-integra-do-celular-de-vorcaro-antes-de-sessao-do-stf-sobre-master-moraes/
+  - label: Prefeitura aponta R$ 12 milhões em notas suspeitas e cobra devolução de R$ 906 mil de ONG do wi-fi — Alagoas 24 Horas
+    url: https://www.alagoas24horas.com.br/1749003/prefeitura-aponta-r-12-milhoes-em-notas-suspeitas-e-cobra-devolucao-de-r-906-mil-de-ong-responsavel-por-wi-fi-na-periferia/
+  - label: Zanin dá até 23h para PF entregar dados de celular de Vorcaro — Migalhas, 2026-09-13
+    url: https://www.migalhas.com.br/quentes/464414/zanin-da-ate-23h-para-pf-entregar-dados-de-celular-de-vorcaro
+  - label: PF está com celular de Vorcaro e afirma poder enviar dados a ministros — Agência Brasil, 2026-09-13
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/pf-esta-com-celular-de-vorcaro-e-afirma-poder-enviar-dados-ministros
+  - label: Mendonça diz ser contra abrir íntegra do celular de Vorcaro e pede que Fachin apure suposta coação na PF — Página3, 2026-09-13
+    url: https://pagina3.com.br/justica/mendonca-diz-ser-contra-abrir-integra-do-celular-de-vorcaro-e-pede-que-fachin-apure-suposta-coacao-na-pf/
+  - label: Moraes pede retirada de sigilo de rede de pagamentos de Vorcaro antes de sessão no STF — BNews, 2026-09-13
+    url: https://www.bnews.com.br/noticias/crime-e-justica-bahia/moraes-pede-retirada-de-sigilo-de-rede-de-pagamentos-de-vorcaro-antes-de-sessao-no-stf.html
+  - label: STF encerra sessão sem decidir caso Moraes após bate-bocas e empate no plenário — Jornal de Brasília, 2026-09-15
+    url: https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-encerra-sessao-sem-decidir-caso-moraes-apos-bate-bocas-e-empate-no-plenario/
+  - label: STF retoma sessões após suspensão dos casos Moraes e Mendonça (pedido de vista de Dino, prazo de 90 dias) — Agência Brasil, 2026-09-16
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-retoma-sesoes-apos-suspensao-de-casos-moraes-e-mendonca
+  - label: STF julga suposta relação entre Moraes e Vorcaro — cobertura da sessão de 15/9, Agência Brasil
+    url: https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/stf-julga-suposta-relacao-entre-moraes-e-vorcaro
+  - label: STF encerra sessão sem decidir sobre investigação contra Moraes (placar antes do pedido de vista) — Metrópoles, 2026-09-15
+    url: https://www.metropoles.com/brasil/stf-julgamento-caso-moraes
+  - label: Em sessão caótica, STF não resolve crise e joga solução para futuro incerto — Metrópoles, 2026-09-15
+    url: https://www.metropoles.com/brasil/em-sessao-caotica-stf-nao-resolve-crise-e-joga-solucao-para-futuro-incerto
+  - label: Em bate-boca, Moraes diz que tem testemunhas de direcionamento e Mendonça lhe acusa de mentir — O Tempo, 2026-09-15
+    url: https://www.otempo.com.br/politica/judiciario/2026/9/15/em-bate-boca-moraes-diz-que-tem-testemunhas-de-direcionamento-e-mendonca-lhe-acusa-de-mentir
+  - label: 'Cármen Lúcia pede desculpas por situação no STF: ''profunda tristeza'' — Congresso em Foco, 2026-09-15'
+    url: https://www.congressoemfoco.com.br/noticia/122295/carmen-lucia-pede-desculpas-por-situacao-no-stf--profunda-tristeza
+  - label: Como ficou a votação do STF? Veja placar de votos em julgamento de Moraes (leitura divergente do placar) — DCI, 2026-09-15
+    url: https://www.dci.com.br/politica/como-ficou-a-votacao-do-stf-veja-placar-de-votos-em-julgamento-de-moraes/
+  - label: Fachin retira de pauta julgamento sobre irregularidades de Mendonça no caso Master — ConJur, 2026-09-17
+    url: https://conjur.com.br/2026-set-17/fachin-retira-de-pauta-julgamento-sobre-irregularidades-de-mendonca-no-caso-master/
+  - label: Vista de Dino trava caso Moraes e crise ameaça contaminar próximos julgamentos do STF — O Tempo, 2026-09-16
+    url: https://www.otempo.com.br/politica/judiciario/2026/9/16/vista-de-dino-trava-caso-moraes-e-crise-ameaca-contaminar-proximos-julgamentos-do-stf
+  - label: Flávio Dino pede vista e paralisa julgamento no caso Moraes — Gazeta da Amazônia, 2026-09-16
+    url: https://gazetadaamazonia.com.br/16/09/2026/flavio-dino-caso-moraes/
 ---
 
 Em 1º de setembro de 2026, o ministro André Mendonça — relator dos inquéritos

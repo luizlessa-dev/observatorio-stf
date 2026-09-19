@@ -69,11 +69,31 @@ const casos = defineCollection({
         });
       })
       .optional(),
+    // AUD-14 (ficha editorial obrigatória): categoria e timeline não têm
+    // default — todo caso precisa declarar os dois, novo ou retrofitado.
+    // timeline só leva evento com data explícita no texto original (nunca
+    // uma data inferida/estimada), e nivel_confirmacao só é preenchido
+    // quando a própria seção do corpo já traz a ressalva por escrito — é
+    // reaproveitar frase existente, nunca um julgamento editorial novo.
+    categoria: z.array(z.string()).min(1),
+    timeline: z
+      .array(
+        z.object({
+          data: dataYYYYMMDD,
+          titulo: z.string(),
+          nivel_confirmacao: z.string().optional(),
+        })
+      )
+      .min(1),
     fontes: z
       .array(
         z.object({
           label: z.string(),
           url: z.string().url(),
+          // default secundaria: a maioria das fontes é reportagem. Só
+          // marcamos "primaria"/"vazada" quando o próprio label já
+          // identifica isso (ex.: "fonte primária", "documento vazado").
+          tipo: z.enum(["primaria", "secundaria", "vazada"]).default("secundaria"),
         })
       )
       .min(1),
