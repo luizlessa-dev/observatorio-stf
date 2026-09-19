@@ -5,13 +5,39 @@ ministros: ["dias-toffoli"]
 status: em_apuracao
 data_publicacao: "2026-09-14"
 data_atualizacao: "2026-09-14"
+categoria: ["conflito de interesse", "sigilo processual", "impedimento"]
+timeline:
+  - data: "2025-11-28"
+    titulo: "Toffoli é sorteado relator do inquérito do Banco Master"
+  - data: "2025-11-29"
+    titulo: "Viagem a Lima num jato particular com advogado ligado ao caso"
+  - data: "2025-12-02"
+    titulo: "Toffoli decreta sigilo sobre o caso"
+  - data: "2025-12-03"
+    titulo: "Toffoli avoca o inquérito inteiro para sua relatoria no STF"
+  - data: "2025-12-14"
+    titulo: "Fabiano Zettel, cunhado de Vorcaro, é preso por decisão de Toffoli"
+  - data: "2025-12-30"
+    titulo: "Depoimento de Vorcaro à PF, com perguntas formuladas pelo próprio relator"
+  - data: "2026-01-15"
+    titulo: "PGR arquiva três pedidos anteriores de suspeição contra Toffoli"
+  - data: "2026-01-22"
+    titulo: "Notícia-crime de parlamentares da oposição contra Toffoli, na PGR"
+  - data: "2026-01-26"
+    titulo: "Comunicação de fatos dos mesmos parlamentares, na Polícia Federal"
+  - data: "2026-02-12"
+    titulo: "Toffoli se declara voluntariamente impedido; caso vai a Mendonça"
+    nivel_confirmacao: "impedimento autodeclarado, não uma punição imposta pela Corte"
 fontes:
   - label: "Notícia-Crime de Marcel van Hattem, Eduardo Girão e Adriana Ventura contra Toffoli, protocolada na PGR em 22/1/2026 (documento primário, PDF) — via Poder360"
     url: "https://static.poder360.com.br/2026/01/NOTI-CIA-CRIME-TOFFOLI-X-BANCO-MASTER-PGR.pdf"
+    tipo: primaria
   - label: "Comunicação de Fatos dos mesmos parlamentares à Polícia Federal, protocolada em 26/1/2026 (documento primário, PDF) — via Poder360"
     url: "https://static.poder360.com.br/2026/01/COMUNICACAO-DE-FATOS-TOFFOLI-X-BANCO-MASTER-PF.pdf"
+    tipo: primaria
   - label: "Íntegra do depoimento de Daniel Vorcaro à PF, 30/12/2025 (documento primário, PDF) — via Poder360"
     url: "https://static.poder360.com.br/2026/01/Caso-Master-Leia-a-integra-de-depoimento-a-PF-Daniel-Vorcaro-30dez2025.pdf"
+    tipo: primaria
   - label: "Novo aciona PGR e PF contra atuação de Toffoli no caso Master — Poder360, 2026-01-26"
     url: "https://www.poder360.com.br/poder-justica/novo-aciona-pgr-e-pf-contra-atuacao-de-toffoli-no-caso-master/"
   - label: "PGR arquiva 3 pedidos de suspeição de Toffoli no caso Master — Poder360, 2026-01-15"

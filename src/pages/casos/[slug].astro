@@ -38,6 +38,12 @@ const NOTA_STATUS = {
   arquivado: "Apuração arquivada — ver corpo do texto para o motivo.",
 };
 
+const ROTULO_FONTE_TIPO = {
+  primaria: "Fonte primária",
+  vazada: "Documento vazado",
+  secundaria: null,
+};
+
 const titulo = `${caso.data.titulo} | Observatório do STF`;
 const descricao = caso.data.resumo;
 
@@ -82,7 +88,7 @@ const jsonLd = {
     <p class="text-[13px] text-muted leading-[1.55] mb-3">{caso.data.resumo}</p>
     <p class="text-[10px] text-subtle mb-6">{NOTA_STATUS[caso.data.status]}</p>
 
-    <div class="flex gap-[5px] flex-wrap mb-7">
+    <div class="flex gap-[5px] flex-wrap mb-3">
       {ministrosEnvolvidos.map((m) => (
         <a
           href={`/ministros/${m.slug}`}
@@ -92,6 +98,33 @@ const jsonLd = {
         </a>
       ))}
     </div>
+
+    <div class="flex gap-[5px] flex-wrap mb-7">
+      {caso.data.categoria.map((c) => (
+        <span class="text-[9px] uppercase tracking-[0.5px] px-[8px] py-[2px] rounded-sm bg-card text-subtle">
+          {c}
+        </span>
+      ))}
+    </div>
+
+    <section class="border border-border rounded-sm overflow-hidden mb-8">
+      <div class="px-4 py-[9px] bg-card border-b border-border">
+        <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Linha do tempo</h2>
+      </div>
+      <ol>
+        {caso.data.timeline.map((evento) => (
+          <li class="px-4 py-[9px] border-b border-border last:border-0">
+            <time class="font-mono text-[9px] text-subtle block mb-[2px]" datetime={evento.data}>
+              {fmtData(evento.data)}
+            </time>
+            <p class="text-[11px] text-muted leading-[1.5]">{evento.titulo}</p>
+            {evento.nivel_confirmacao && (
+              <p class="text-[9px] text-subtle italic mt-[2px]">{evento.nivel_confirmacao}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
 
     <div class="prose prose-invert prose-sm max-w-none
                  prose-headings:font-display prose-headings:text-ink
@@ -110,6 +143,11 @@ const jsonLd = {
       <ul>
         {caso.data.fontes.map((f) => (
           <li class="px-4 py-[9px] border-b border-border last:border-0">
+            {ROTULO_FONTE_TIPO[f.tipo] && (
+              <span class="text-[8px] font-semibold uppercase tracking-[0.5px] text-subtle border border-border2 rounded-sm px-[5px] py-[1px] mr-[6px] align-middle">
+                {ROTULO_FONTE_TIPO[f.tipo]}
+              </span>
+            )}
             <a href={f.url} target="_blank" rel="noopener noreferrer nofollow" class="text-[11px] text-ink underline hover:text-white">
               {f.label}
             </a>
