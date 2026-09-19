@@ -9,20 +9,21 @@
  */
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarAcervo, carregarRecebimentoBaixa, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarOmissaoInconstitucional, carregarPerfilDecisorio } from "../../lib/dados";
+import { carregarMinistros, carregarDecisoes, carregarGastos, carregarGastosServidores, carregarViagens, carregarAcervo, carregarRecebimentoBaixa, carregarDistribuicao, carregarControleConcentrado, carregarReclamacoes, carregarProximosJulgamentos, carregarOmissaoInconstitucional, carregarPerfilDecisorio } from "../../lib/dados";
 import { fmtData, fmtDataCurta, fmtMes, fmtBRL, fmtNum } from "../../lib/formato";
 
 export async function getStaticPaths() {
   const [ministros, todosCasos] = await Promise.all([carregarMinistros(), getCollection("casos")]);
   return Promise.all(
     ministros.map(async (m) => {
-      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, perfil] = await Promise.all([
+      const [{ decisoes, total, comoPresidente }, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, perfil] = await Promise.all([
         carregarDecisoes(m.id),
         carregarGastos(m.id),
         carregarGastosServidores(m.id),
         carregarViagens(m.id),
         carregarAcervo(m.id),
         carregarRecebimentoBaixa(m.id),
+        carregarDistribuicao(m.id),
         carregarControleConcentrado(m.id),
         carregarReclamacoes(m.id),
         carregarProximosJulgamentos(m.id),
@@ -32,12 +33,12 @@ export async function getStaticPaths() {
       const casos = todosCasos
         .filter((c) => c.data.ministros.includes(m.slug))
         .sort((a, b) => b.data.data_publicacao.localeCompare(a.data.data_publicacao));
-      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } };
+      return { params: { slug: m.slug }, props: { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } };
     })
   );
 }
 
-const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } = Astro.props;
+const { m, decisoes, total, comoPresidente, gastos, gastosServidores, viagens, acervo, recebimentoBaixa, distribuicao, controleConcentrado, reclamacoes, proximosJulgamentos, omissaoInconstitucional, casos, perfil } = Astro.props;
 
 const ROTULO_STATUS_CASO = { em_apuracao: "Em apuração", confirmado: "Confirmado", arquivado: "Arquivado" };
 
@@ -526,6 +527,71 @@ const jsonLd = {
           {" "}Escopo do ano corrente — o painel também cobre processos recebidos, mas
           esses só ganham relator na distribuição, não na autuação, e por isso não têm
           atribuição por {substantivo} nesta fonte.
+        </p>
+      </section>
+    )}
+
+    {distribuicao.total > 0 && (
+      <section class="border border-border rounded-sm overflow-hidden mb-6">
+        <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
+          <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Processos distribuídos</h2>
+          <span class="text-[8.5px] text-subtle">ano corrente</span>
+        </div>
+        <div class="grid grid-cols-3 divide-x divide-border">
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Distribuídos</div>
+            <div class="text-[15px] font-bold text-ink">{fmtNum(distribuicao.total)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">no ano corrente</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">Originários</div>
+            <div class="text-[15px] font-bold text-ink">{fmtNum(distribuicao.originarios)}</div>
+            <div class="text-[9px] text-subtle mt-[2px]">{fmtNum(distribuicao.recursais)} recursais</div>
+          </div>
+          <div class="px-4 py-[13px]">
+            <div class="text-[9px] font-semibold uppercase tracking-[1px] text-subtle mb-1">&nbsp;</div>
+            <div class="text-[9px] text-subtle mt-[2px]">&nbsp;</div>
+          </div>
+        </div>
+
+        <details class="border-t border-border group">
+          <summary class="px-4 py-[9px] text-[10px] font-semibold text-ink cursor-pointer select-none list-none flex items-center gap-[6px] hover:bg-card/50 transition-colors">
+            <span class="text-subtle group-open:rotate-90 transition-transform inline-block">›</span>
+            Ver distribuídos mais recentes (até 40 de {fmtNum(distribuicao.total)})
+          </summary>
+          <div class="overflow-x-auto border-t border-border">
+            <table class="w-full text-[10px]" style="min-width: 640px">
+              <thead>
+                <tr class="bg-card/50 border-b border-border text-left">
+                  <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Processo</th>
+                  <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Ramo do direito</th>
+                  <th class="px-3 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Autuação</th>
+                  <th class="px-4 py-[7px] font-semibold text-subtle uppercase tracking-[0.5px] text-[9px]">Distribuição</th>
+                </tr>
+              </thead>
+              <tbody>
+                {distribuicao.eventos.map((e) => (
+                  <tr class="border-b border-border last:border-0">
+                    <td class="px-4 py-[6px] text-ink">
+                      {e.link_processo ? (
+                        <a href={e.link_processo} target="_blank" rel="noopener" class="hover:underline">{e.processo}</a>
+                      ) : e.processo}
+                    </td>
+                    <td class="px-3 py-[6px] text-muted">{e.ramo_direito ?? "—"}</td>
+                    <td class="px-3 py-[6px] text-subtle">{e.data_autuacao ? fmtDataCurta(e.data_autuacao) : "—"}</td>
+                    <td class="px-4 py-[6px] text-subtle">{e.data_andamento ? fmtDataCurta(e.data_andamento) : "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          Fonte: portal de transparência do STF (painel Corte Aberta — Registro e Distribuição).
+          {" "}Escopo do ano corrente. Inclui redistribuições e substituições de relator
+          dentro do próprio ano — o mesmo processo pode aparecer mais de uma vez se
+          mudou de relator mais de uma vez.
         </p>
       </section>
     )}

@@ -166,6 +166,23 @@ export interface RecebimentoBaixa {
   eventos: EventoBaixa[];
 }
 
+export interface EventoDistribuicao {
+  processo: string;
+  classe: string | null;
+  ramo_direito: string | null;
+  orgao_origem: string | null;
+  data_autuacao: string | null;
+  data_andamento: string | null;
+  link_processo: string | null;
+}
+
+export interface Distribuicao {
+  total: number;
+  originarios: number;
+  recursais: number;
+  eventos: EventoDistribuicao[];
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -617,6 +634,45 @@ export async function carregarRecebimentoBaixa(ministroId: string): Promise<Rece
     originarios: originarios ?? 0,
     recursais: recursais ?? 0,
     eventos: (eventos ?? []) as EventoBaixa[],
+  };
+}
+
+/**
+ * Processos distribuídos ao ministro no ano corrente (painel Corte
+ * Aberta — Registro e Distribuição, escopo ano_periodo=2026, ver
+ * ingestao/stf/fetch_distribuicao.py). Diferente de Recebimento e
+ * Baixa: quase toda linha de "Distribuído aos Ministros" tem
+ * ministro_id — é o próprio evento de distribuição. O lado "Registrado
+ * à Presidência" fica de fora (filtro implícito via ministro_id, já que
+ * é quase todo rotulado "MINISTRO PRESIDENTE", um cargo, não uma
+ * pessoa).
+ */
+export async function carregarDistribuicao(ministroId: string): Promise<Distribuicao> {
+  const [{ count: total }, { count: originarios }, { count: recursais }, { data: eventos }] = await Promise.all([
+    supabase.from("stf_distribuicao").select("*", { count: "exact", head: true }).eq("ministro_id", ministroId),
+    supabase
+      .from("stf_distribuicao")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("grupo_origem", "Originárias"),
+    supabase
+      .from("stf_distribuicao")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("grupo_origem", "Recursais"),
+    supabase
+      .from("stf_distribuicao")
+      .select("processo, classe, ramo_direito, orgao_origem, data_autuacao, data_andamento, link_processo")
+      .eq("ministro_id", ministroId)
+      .order("data_andamento", { ascending: false })
+      .limit(40),
+  ]);
+
+  return {
+    total: total ?? 0,
+    originarios: originarios ?? 0,
+    recursais: recursais ?? 0,
+    eventos: (eventos ?? []) as EventoDistribuicao[],
   };
 }
 
