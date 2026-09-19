@@ -42,7 +42,11 @@ def baixar_xlsx(page, url_painel: str, sidebar_label: str) -> bytes:
         }"""
     )
     page.locator("#MainHeader a.nav-link.d-none.d-md-block").first.click()
-    page.wait_for_function("() => window.__exportUrl !== null", timeout=30000)
+    # Painéis grandes (Recebimento/Baixa, >60k linhas) levam bem mais que 30s
+    # pra gerar o export no servidor Qlik — confirmado precisando de ~40-60s
+    # numa captura real; 90s dá folga sem alongar demais os painéis pequenos,
+    # que resolvem quase de imediato de qualquer forma.
+    page.wait_for_function("() => window.__exportUrl !== null", timeout=90000)
     page.wait_for_timeout(3000)
 
     ultimo_erro = None

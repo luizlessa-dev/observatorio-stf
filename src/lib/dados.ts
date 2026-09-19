@@ -149,6 +149,23 @@ export interface Acervo {
   processos: ProcessoAcervo[];
 }
 
+export interface EventoBaixa {
+  processo: string;
+  classe: string | null;
+  ramo_direito: string | null;
+  orgao_origem: string | null;
+  data_autuacao: string | null;
+  data_baixa: string | null;
+  link_processo: string | null;
+}
+
+export interface RecebimentoBaixa {
+  totalBaixados: number;
+  originarios: number;
+  recursais: number;
+  eventos: EventoBaixa[];
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -558,6 +575,49 @@ export async function carregarProximosJulgamentos(ministroId: string): Promise<P
   ];
 
   return lista.sort((a, b) => (b.data_pauta ?? "").localeCompare(a.data_pauta ?? "")).slice(0, 40);
+}
+
+/**
+ * Processos baixados sob relatoria do ministro no ano corrente (painel
+ * Corte Aberta — Recebimento e Baixa, escopo ano_andamento=2026, ver
+ * ingestao/stf/fetch_recebimento_baixa.py). Só o lado "baixado" tem
+ * ministro_id — processos recebidos ainda não têm relator atribuído na
+ * autuação, por desenho da própria fonte, então não entram aqui.
+ */
+export async function carregarRecebimentoBaixa(ministroId: string): Promise<RecebimentoBaixa> {
+  const [{ count: totalBaixados }, { count: originarios }, { count: recursais }, { data: eventos }] = await Promise.all([
+    supabase
+      .from("stf_recebimento_baixa")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("tipo_andamento", "baixado"),
+    supabase
+      .from("stf_recebimento_baixa")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("tipo_andamento", "baixado")
+      .eq("grupo_origem", "Originária"),
+    supabase
+      .from("stf_recebimento_baixa")
+      .select("*", { count: "exact", head: true })
+      .eq("ministro_id", ministroId)
+      .eq("tipo_andamento", "baixado")
+      .eq("grupo_origem", "Recursal"),
+    supabase
+      .from("stf_recebimento_baixa")
+      .select("processo, classe, ramo_direito, orgao_origem, data_autuacao, data_baixa, link_processo")
+      .eq("ministro_id", ministroId)
+      .eq("tipo_andamento", "baixado")
+      .order("data_baixa", { ascending: false })
+      .limit(40),
+  ]);
+
+  return {
+    totalBaixados: totalBaixados ?? 0,
+    originarios: originarios ?? 0,
+    recursais: recursais ?? 0,
+    eventos: (eventos ?? []) as EventoBaixa[],
+  };
 }
 
 /**

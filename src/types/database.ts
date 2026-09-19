@@ -345,6 +345,34 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_omissao_inconstitucional"]["Insert"]>;
         Relationships: [];
       };
+      stf_recebimento_baixa: {
+        Row: {
+          id:                 string;
+          tipo_andamento:     string;
+          classe:             string | null;
+          numero:             number | null;
+          processo:           string;
+          ministro_id:        string | null;
+          relator_bruto:      string | null;
+          link_processo:      string | null;
+          meio_processo:      string | null;
+          grupo_origem:       string | null;
+          data_autuacao:      string | null;
+          em_tramitacao:      boolean | null;
+          data_baixa:         string | null;
+          ultima_localizacao: string | null;
+          orgao_origem:       string | null;
+          procedencia:        string | null;
+          ramo_direito:       string | null;
+          assunto_completo:   string | null;
+          qtd_processos:      number | null;
+          fonte:              string;
+          created_at:         string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_recebimento_baixa"]["Row"], "id" | "processo" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_recebimento_baixa"]["Insert"]>;
+        Relationships: [];
+      };
       stf_acervo: {
         Row: {
           id:                          string;
