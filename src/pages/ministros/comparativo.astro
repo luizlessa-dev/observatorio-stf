@@ -1,9 +1,18 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { carregarComparativoDecisorio } from "../../lib/dados";
-import { fmtNum } from "../../lib/formato";
+import { fmtNum, fmtData } from "../../lib/formato";
 
 const ranking = await carregarComparativoDecisorio();
+
+// AUD-15: período real coberto pelas decisões agregadas (migration 0029),
+// não um texto fixo — min/max entre só os ministros que entram no ranking.
+const datasMin = ranking.map((r) => r.dataDecisaoMin).filter((d): d is string => d !== null);
+const datasMax = ranking.map((r) => r.dataDecisaoMax).filter((d): d is string => d !== null);
+const periodo =
+  datasMin.length > 0 && datasMax.length > 0
+    ? { desde: datasMin.reduce((a, b) => (a < b ? a : b)), ate: datasMax.reduce((a, b) => (a > b ? a : b)) }
+    : null;
 
 const titulo = "Comparativo entre ministros — taxa de provimento | Observatório do STF";
 const descricao =
@@ -35,12 +44,18 @@ const jsonLd = {
     <h1 class="font-display text-[28px] font-bold text-white leading-[1.2] mb-2">
       Comparativo entre ministros
     </h1>
-    <p class="text-[12.5px] text-subtle max-w-2xl leading-[1.6] mb-6">
+    <p class="text-[12.5px] text-subtle max-w-2xl leading-[1.6] mb-2">
       Taxa de decisões favoráveis/contrárias ao pedido, em casos de mérito, entre os
       ministros em exercício — mesmo dado da ficha individual de cada um, lado a lado.
       "Favorável"/"contrário" é o resultado literal do STF em relação ao pedido, não uma
       leitura ideológica.
       <a href="/metodologia#perfil-decisorio" class="underline hover:text-ink">Metodologia</a>
+    </p>
+    <p class="text-[11px] text-subtle max-w-2xl leading-[1.6] mb-6">
+      {periodo && <>Decisões monocráticas classificadas entre {fmtData(periodo.desde)} e {fmtData(periodo.ate)}. </>}
+      Só entram ministros em exercício com pelo menos 10 decisões de mérito
+      classificadas — abaixo disso, um único caso já move o percentual de forma
+      enganosa. O número exato de decisões de cada ministro aparece ao lado do nome.
     </p>
 
     {ranking.length === 0 && (
@@ -90,8 +105,7 @@ const jsonLd = {
     </ul>
 
     <p class="text-[10px] text-subtle mt-4 max-w-2xl leading-[1.6]">
-      Ordenado por taxa de contrário, decrescente. Só entram ministros em exercício com
-      pelo menos 10 decisões de mérito classificadas. Classificação por regra sobre o
+      Ordenado por taxa de contrário, decrescente. Classificação por regra sobre o
       texto literal do andamento — sem IA, sem eixo ideológico.
       <a href="/metodologia#perfil-decisorio" class="underline hover:text-ink ml-1">Como classificamos</a>
     </p>

@@ -246,6 +246,11 @@ const jsonLd = {
             <div class="text-[9px] text-subtle mt-[2px]">ref. {gastoRef ? fmtMes(gastoRef.mes, gastoRef.ano) : "—"}</div>
           </div>
         </div>
+        <p class="px-4 py-[8px] border-t border-border text-[9px] text-subtle leading-[1.5]">
+          {subsidio?.descricao ?? "Subsídio bruto do ministro"} (fonte: {subsidio?.fonte ?? "portal de transparência do STF"}).
+          {" "}{gabinete?.descricao ?? "Remuneração bruta total dos servidores do gabinete"} (fonte: {gabinete?.fonte ?? "portal de transparência do STF"}).
+          {" "}"Total mensal" é a soma dos dois — não inclui passagens nem diárias, contabilizadas à parte quando há dado disponível.
+        </p>
         {gastosServidores.length > 0 && (
           <details class="border-t border-border group">
             <summary class="px-4 py-[9px] text-[10px] font-semibold text-ink cursor-pointer select-none list-none flex items-center gap-[6px] hover:bg-card/50 transition-colors">
@@ -551,7 +556,12 @@ const jsonLd = {
       <section class="border border-border rounded-sm overflow-hidden mb-6">
         <div class="px-4 py-[9px] bg-card border-b border-border flex items-center justify-between gap-3">
           <h2 class="text-[9px] font-bold uppercase tracking-[1.5px] text-subtle">Perfil decisório</h2>
-          <span class="text-[8.5px] text-subtle">{fmtNum(perfil.totalDecisoes)} decisões classificadas por regra</span>
+          <span class="text-[8.5px] text-subtle">
+            {fmtNum(perfil.totalDecisoes)} decisões classificadas por regra
+            {perfil.dataDecisaoMin && perfil.dataDecisaoMax && (
+              <> · {fmtData(perfil.dataDecisaoMin)} a {fmtData(perfil.dataDecisaoMax)}</>
+            )}
+          </span>
         </div>
 
         <div class="px-4 py-[13px]">
