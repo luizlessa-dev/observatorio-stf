@@ -183,6 +183,14 @@ export interface Distribuicao {
   eventos: EventoDistribuicao[];
 }
 
+export interface DecisaoCovid {
+  processo: string;
+  materia: string | null;
+  titulo: string | null;
+  tipo_decisao: string | null;
+  link_decisao: string | null;
+}
+
 export interface Viagens {
   totalPassagens: number;
   totalDiarias: number;
@@ -730,6 +738,20 @@ export async function carregarOmissaoInconstitucional(ministroId: string): Promi
     .eq("ministro_id", ministroId)
     .order("data_julgamento", { ascending: false });
   return (data ?? []) as CasoOmissaoInconstitucional[];
+}
+
+/**
+ * Decisões sobre Covid-19 relatadas pelo ministro — curadoria do STF
+ * (232 no total, não as 16 mil decisões da pandemia inteira), nunca
+ * precisa de paginação.
+ */
+export async function carregarDecisoesCovid(ministroId: string): Promise<DecisaoCovid[]> {
+  const { data } = await supabase
+    .from("stf_decisoes_covid")
+    .select("processo, materia, titulo, tipo_decisao, link_decisao")
+    .eq("ministro_id", ministroId)
+    .order("processo", { ascending: true });
+  return (data ?? []) as DecisaoCovid[];
 }
 
 /**

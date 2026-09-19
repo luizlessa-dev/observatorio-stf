@@ -345,6 +345,26 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["stf_omissao_inconstitucional"]["Insert"]>;
         Relationships: [];
       };
+      stf_decisoes_covid: {
+        Row: {
+          id:                string;
+          processo:          string;
+          ministro_id:       string | null;
+          relator_bruto:     string | null;
+          materia:           string | null;
+          titulo:            string | null;
+          relatorio:         string | null;
+          decisao:           string | null;
+          tipo_decisao:      string | null;
+          link_decisao:      string | null;
+          id_processo_fonte: number | null;
+          fonte:             string;
+          created_at:        string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["stf_decisoes_covid"]["Row"], "id" | "created_at" | "fonte"> & { fonte?: string };
+        Update: Partial<Database["public"]["Tables"]["stf_decisoes_covid"]["Insert"]>;
+        Relationships: [];
+      };
       stf_distribuicao: {
         Row: {
           id:                    string;
