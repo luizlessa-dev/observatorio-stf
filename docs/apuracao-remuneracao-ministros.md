@@ -277,11 +277,55 @@ disponível para qualquer um dos 10 em exercício). Não vemos necessidade de
 recurso só para obter o dado; só faria sentido se o objetivo editorial for
 também documentar a lacuna de formato/transparência ativa em si.
 
-**Pendência, se quisermos fechar 100%**: checar os 6 ministros restantes em
-exercício (Moraes, Mendonça, Nunes Marques, Dino, Gilmar Mendes, Fachin) pelo
-mesmo processo, e considerar repetir para setembro/2026 assim que a folha
-for publicada, para confirmar que o padrão (variação só na coluna B) se
-mantém mês a mês.
+**Atualização — os 10 ministros em exercício, completo (21/09/2026)**: checamos
+os 6 que faltavam pelo mesmo processo (Moraes, Mendonça, Nunes Marques, Dino,
+Gilmar Mendes, Fachin). Tabela completa, agosto/2026, ordenada por (B):
+
+| Ministro | Matrícula | Posse | (A) Subsídio | (B) Vantagens Pessoais | % do subsídio | (C) Indenizações |
+|---|---|---|---|---|---|---|
+| Cristiano Zanin | 61 | 2023 | R$ 46.366,19 | R$ 0,00 | 0% | R$ 0,00 |
+| Dias Toffoli | 52 | 2009 | R$ 46.366,19 | R$ 6.954,93 | 15,0% | R$ 0,00 |
+| Flávio Dino | 62 | 2024 | R$ 46.366,19 | R$ 9.273,24 | 20,0% | R$ 0,00 |
+| Nunes Marques | 59 | 2020 | R$ 46.366,19 | R$ 11.591,55 | 25,0% | R$ 0,00 |
+| André Mendonça | 60 | 2021 | R$ 46.366,19 | R$ 11.591,55 | 25,0% | R$ 0,00 |
+| Alexandre de Moraes | 58 | 2017 | R$ 46.366,19 | R$ 13.909,86 | 30,0% | R$ 0,00 |
+| Cármen Lúcia | 50 | 2006 | R$ 46.366,19 | R$ 16.228,17 | **35,0% (teto)** | R$ 0,00 |
+| Luiz Fux | 53 | 2011 | R$ 46.366,19 | R$ 16.228,17 | **35,0% (teto)** | R$ 0,00 |
+| Gilmar Mendes | 44 | 2002 | R$ 46.366,19 | R$ 16.228,17 | **35,0% (teto)** | R$ 0,00 |
+| Edson Fachin | 57 | 2015 | R$ 46.366,19 | R$ 16.228,17 | **35,0% (teto)** | R$ 0,00 |
+
+**Confirmação total**: a coluna (C) — verbas indenizatórias — está **zerada
+para os 10 ministros em exercício, sem exceção**. Toda a variação de
+remuneração vem exclusivamente da coluna (B). Nenhum ministro em exercício
+recebe indenização acima do subsídio; a hipótese de que a diferença viria de
+verbas indenizatórias está descartada para o quadro atual.
+
+**Uma ressalva importante, para não superinterpretar**: os valores de (B) saem
+em múltiplos exatos de 5% do subsídio (0, 15, 20, 25, 25, 30, 35, 35, 35,
+35%), o que bate com a lógica de "5% por quinquênio" da PVTAC — mas **não
+correlaciona linearmente com o tempo de posse no STF**: Toffoli (posse em
+2009) está em 15%, enquanto Nunes Marques e Mendonça (posse em 2020/2021,
+muito depois) já estão em 25%. Isso sugere que (B) conta tempo de carreira
+anterior ao STF (ou tempo de serviço público em geral, incorporado antes da
+Lei 9.624/98 como VPNI/ATS), não só o tempo como ministro — e a legenda do
+próprio portal confirma que (B) mistura "Adicionais de Qualificação, VPNI,
+adicional por tempo de serviço, pagamentos decorrentes de decisão judicial ou
+extensões administrativas" num único número, sem separar o que é PVTAC (pós
+25/03/2026) do que pode ser VPNI de regime antigo incorporado há décadas. Não
+temos como, só com este relatório, decompor (B) nessas duas origens — o que
+dá para afirmar com segurança é o resultado agregado (quanto cada ministro
+recebe a mais, e que não vem de indenização), não a origem exata de cada
+real dentro do bloco.
+
+Os quatro que bateram no teto de 35% (Cármen Lúcia, Fux, Gilmar Mendes,
+Fachin) têm posses espalhadas entre 2002 e 2015 — mais um indício de que o
+teto de 35% funciona como **limite do bloco**, não como resultado do acúmulo
+natural de quinquênios de cada um.
+
+**Pendência, se quisermos fechar ainda mais**: repetir a mesma checagem em
+setembro/2026 assim que a folha for publicada, para confirmar que o padrão
+se mantém mês a mês (ou capturar eventuais mudanças, como a que já vimos em
+Toffoli com a rubrica de Férias variando mês a mês).
 
 ## Próximos passos, se formos adiante
 
