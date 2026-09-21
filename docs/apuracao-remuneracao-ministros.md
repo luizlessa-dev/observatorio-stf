@@ -1,6 +1,10 @@
 # Apuração interna — diferenças de remuneração entre ministros do STF
 
-Status: **pedido de LAI protocolado, aguardando resposta**. Este documento não
+Status: **resposta da LAI recebida e verificada — achado principal confirmado
+por fonte primária, rubrica a rubrica** (21/09/2026). Ver seção "Resposta da
+LAI e verificação direta" abaixo — é a conclusão desta apuração. O restante
+do documento (rodadas 1-3) é o histórico de como chegamos até aqui. Este
+documento não
 é um caso editorial (não segue o schema de `src/content/casos`) — é uma nota
 de trabalho para orientar uma eventual apuração futura, criada a partir da
 pergunta "os servidores com o mesmo cargo ganham o mesmo em todos os
@@ -186,6 +190,98 @@ conseguimos mapear. O LAI segue sendo o próximo passo necessário — mas agora
 com fundamento mais forte (citando a própria decisão do STF de 25/03/2026 que
 criou essa obrigação de publicação e não parece estar sendo cumprida para os
 próprios ministros).
+
+## Resposta da LAI e verificação direta (21/09/2026)
+
+**A resposta chegou em 21/09/2026** (dentro do prazo, antes do vencimento em
+14/10/2026), assinada pela Secretaria de Gestão de Pessoas do STF. Texto
+literal da resposta:
+
+> "As informações requeridas podem ser encontradas no site do STF, no menu
+> Transparência e Prestação de Contas, item Pessoas e gestão de recursos -
+> Pessoas - Remuneração. [...] a parcela de antiguidade na carreira está
+> discriminada na coluna B (Vantagens Pessoais), enquanto as verbas
+> indenizatórias estão discriminadas na coluna C (Vantagens de natureza
+> periódica/eventual ou relativas às lotações dos servidores)."
+
+**Avaliação da resposta em si**: é uma resposta-remissão (aponta para uma
+página, não entrega os dados no formato pedido). Não atende ao pedido 3 (CSV/
+planilha eletrônica, art. 8º §3º III da LAI) nem confirma se a publicação
+mensal por rubrica exigida pela decisão de 25/03/2026 está de fato
+implementada para os próprios ministros — só diz "a informação está lá". O
+anexo enviado pela Ouvidoria é um print do próprio fluxo de navegação (com
+nome e valores tarjados no exemplo), não os dados em si.
+
+**Mas a remissão procede — testamos e a informação está lá, de verdade.**
+Fomos direto a `egesp-portal.stf.jus.br/transparencia/rendimento_folha`,
+filtramos por Cargo Efetivo = MINISTRO, mês de referência Agosto/2026 (o mês
+mais recente já fechado — Setembro/2026 ainda não tinha `FOLHA NORMAL`
+publicada na data da consulta, confirmado pelo endpoint
+`tipos_folhas_referencia?ano=2026&mes=9` retornando vazio), e abrimos o
+botão "Mais informações" (endpoint `/transparencia/show_detalhes?id=...`)
+para 4 ministros. Isso abre exatamente a tabela rubrica a rubrica pedida na
+LAI — colunas (A) a (S), com legenda oficial de cada uma. Dados
+verificados diretamente, não de segunda mão:
+
+| Ministro | Matrícula | (A) Subsídio | (B) Vantagens Pessoais | (C) Verbas indenizatórias | Observação |
+|---|---|---|---|---|---|
+| Cristiano Zanin | 61 | R$ 46.366,19 | **R$ 0,00** | R$ 0,00 | Sem carreira pública anterior — bate com a hipótese |
+| Cármen Lúcia | 50 | R$ 46.366,19 | **R$ 16.228,17** | R$ 0,00 | 16.228,17 / 46.366,19 = **exatamente 35,0%** — no teto do bloco |
+| Luiz Fux | 53 | R$ 46.366,19 | **R$ 16.228,17** | R$ 0,00 | Idêntico a Cármen Lúcia — também no teto de 35% |
+| Dias Toffoli | 52 | R$ 46.366,19 | **R$ 6.954,93** | R$ 0,00 | 15,0% — abaixo do teto; ver achado sobre férias abaixo |
+
+**Achado principal, agora confirmado por fonte primária**: a variação de
+remuneração entre ministros vem **inteiramente da coluna B (Vantagens
+Pessoais — antiguidade/VPNI)**. A coluna C (verbas indenizatórias) está
+zerada para os 4 ministros checados, sem exceção. Isso refuta, para esses
+casos, qualquer leitura de que a diferença viesse de indenizações — é
+100% antiguidade de carreira, exatamente como o bloco "PVTAC" da decisão de
+25/03/2026 previa. Dois ministros com tempo de carreira mais longo (Cármen
+Lúcia desde 2006, Fux desde 2011) bateram no teto de 35% do bloco; Toffoli
+(posse em 2009, portanto carreira mais longa que Fux) está abaixo do teto
+nessa rubrica — o que por si só já é um dado a mais a explicar numa eventual
+pergunta de LAI complementar, mas não está relacionado ao achado abaixo.
+
+**Achado secundário, resolve a "anomalia Toffoli" da rodada 1**: a rodada 1
+achou Toffoli como único ministro **abaixo** do subsídio nominal (R$
+39.822,05 vs. R$ 46.366,19) e levantou a hipótese do redutor de teto
+constitucional (acúmulo com outra fonte pública de renda). **A hipótese do
+teto está refutada para agosto/2026**: o campo (K) "Abate teto" do
+contracheque dele é R$ 0,00, igual ao de todos os outros. A explicação real
+está numa rubrica separada, (N) "Férias", que veio **negativa: -R$
+13.499,07** — um ajuste/desconto pontual daquele mês, não uma redução
+estrutural. A conta fecha exatamente:
+
+```
+(F) Total bruto após teto           R$ 53.321,12   (= 46.366,19 + 6.954,93 de antiguidade)
+(N) Férias (negativa, only Toffoli) R$ -13.499,07
+= Remuneração bruta (valor que a lista pública mostra)   R$ 39.822,05  ✓ bate com a rodada 1
+(M) Total de descontos              R$ -23.341,22
+= Remuneração líquida                                     R$ 16.480,83  ✓ bate com a rodada 1
+```
+
+Não apuramos a causa exata do valor negativo em Férias (pode ser desconto de
+férias adiantadas/gozadas fora do período aquisitivo, ajuste de exercício
+anterior, etc. — a legenda do próprio portal não detalha (N) além do nome) —
+mas o mecanismo (um lançamento pontual de um mês, não uma parcela
+estrutural) já está estabelecido pela própria fonte primária.
+
+**O que isso significa para o pedido de LAI**: os itens 1 (contracheque
+discriminado) e 3 (formato) não foram plenamente atendidos pela resposta
+formal — teríamos que insistir num recurso se quiséssemos o CSV oficial ou a
+confirmação por escrito de que a página cumpre a decisão de 25/03/2026. Mas,
+na prática, já temos a resposta ao item 1 por conta própria, verificada
+diretamente na fonte primária oficial do STF, para os 4 ministros checados
+(e o mecanismo é generalizável — o mesmo botão "Mais informações" está
+disponível para qualquer um dos 10 em exercício). Não vemos necessidade de
+recurso só para obter o dado; só faria sentido se o objetivo editorial for
+também documentar a lacuna de formato/transparência ativa em si.
+
+**Pendência, se quisermos fechar 100%**: checar os 6 ministros restantes em
+exercício (Moraes, Mendonça, Nunes Marques, Dino, Gilmar Mendes, Fachin) pelo
+mesmo processo, e considerar repetir para setembro/2026 assim que a folha
+for publicada, para confirmar que o padrão (variação só na coluna B) se
+mantém mês a mês.
 
 ## Próximos passos, se formos adiante
 
