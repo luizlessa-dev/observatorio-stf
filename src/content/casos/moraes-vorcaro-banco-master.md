@@ -1,6 +1,6 @@
 ---
 titulo: Mensagens entre Moraes e Vorcaro reveladas por Mendonça
-resumo: Mendonça tornou públicas mensagens e encontros entre Moraes e Vorcaro, e contratos somando R$ 180 milhões. Em 15/9, STF empata 4 a 4 e Dino pede vista (até 90 dias); Fachin retira da pauta, sem nova data, a sessão de 23/9 sobre a conduta de Mendonça.
+resumo: Mendonça tornou públicas mensagens e encontros entre Moraes e Vorcaro, e contratos somando R$ 180 milhões. Em 15/9, STF fica 3 a 4 contra reunir os casos e Dino pede vista (até 90 dias); Fachin retira da pauta, sem nova data, a sessão de 23/9 sobre a conduta de Mendonça.
 ministros:
   - alexandre-de-moraes
   - andre-mendonca
@@ -13,7 +13,7 @@ ministros:
   - dias-toffoli
 status: em_apuracao
 data_publicacao: '2026-09-03'
-data_atualizacao: '2026-09-18'
+data_atualizacao: '2026-10-03'
 categoria:
   - sigilo processual
   - conflito de interesse
@@ -41,8 +41,8 @@ timeline:
   - data: '2026-09-14'
     titulo: 'Véspera da sessão de 15/9: pronunciamentos e últimos ofícios'
   - data: '2026-09-15'
-    titulo: 'Sessão de 15/9: empate, bate-boca e pedido de vista de Dino'
-    nivel_confirmacao: sessão suspensa por pedido de vista — nenhum mérito julgado; placar remanescente (4x3 vs. 4x4) divergente entre veículos, não reconciliado pelo Observatório
+    titulo: 'Sessão de 15/9: 3 a 4 contra a questão de ordem de Gilmar, bate-boca e pedido de vista de Dino'
+    nivel_confirmacao: sessão suspensa por pedido de vista — nenhum mérito julgado; placar corrigido em 03/10/2026 (ver nota na seção correspondente)
   - data: '2026-09-17'
     titulo: Fachin retira a sessão de 23/9 da pauta, sem nova data
 fontes:
@@ -78,6 +78,8 @@ fontes:
     url: https://www.cnnbrasil.com.br/politica/toffoli-puxou-caso-master-ao-stf-um-dia-apos-pf-descartar-pessoas-com-foro/
   - label: Mendonça atende Fachin e levanta sigilo do Caso Master — CartaCapital, 2026-09-10
     url: https://www.cartacapital.com.br/justica/apos-ordem-de-fachin-mendonca-levanta-sigilo-do-caso-master/
+  - label: Supremo salva Alexandre de Moraes por até 90 dias (cobertura minuto a minuto da sessão de 15/9, com o placar da questão de ordem e a íntegra da proposta de Gilmar) — Poder360, 2026-09-15
+    url: https://www.poder360.com.br/poder-justica/supremo-salva-alexandre-de-moraes-por-ate-90-dias/
   - label: Mendonça retira sigilo de parte do caso Master (15 procedimentos) — Gazeta da Amazônia, 2026-09-11
     url: https://gazetadaamazonia.com.br/11/09/2026/mendonca-sigilo-caso-master/
   - label: Fachin dá 24 horas para Mendonça liberar sigilo do caso Master — Gazeta da Amazônia, 2026-09-11
@@ -1759,7 +1761,7 @@ Nada disso julga o mérito do caso. A validade do relatório da PF sobre as
 mensagens Vorcaro-Moraes — que a PGR pede para anular — é um dos pontos
 centrais que o plenário deve enfrentar na sessão de terça.
 
-## A sessão de 15 de setembro de 2026 — empate, bate-boca e pedido de vista
+## A sessão de 15 de setembro de 2026 — bate-boca e pedido de vista
 
 Pela primeira vez na história do STF, o plenário se reuniu para decidir se
 abre uma investigação contra um dos próprios integrantes. A sessão
@@ -1776,10 +1778,13 @@ anteriores) chegou ao plenário e não foi resolvida ali.
   informal de Moraes na véspera (ver "Segunda-feira, véspera da sessão").
   Foi essa questão de ordem, não a investigação em si, que o plenário
   discutiu e votou.
-- **Empate.** A favor de julgar os dois casos juntos: Gilmar Mendes, Flávio
-  Dino, Cristiano Zanin e o próprio Alexandre de Moraes. Contra — mantendo
-  os casos separados, como Fachin já havia decidido: Edson Fachin, Luiz
-  Fux, André Mendonça e Cármen Lúcia. 4 a 4.
+- **3 a 4 contra a questão de ordem, não um empate.** A favor de julgar os
+  dois casos juntos: Alexandre de Moraes, Cristiano Zanin e Gilmar Mendes (3
+  votos). Contra — mantendo os casos separados, como Fachin já havia
+  decidido: André Mendonça, Cármen Lúcia, Edson Fachin e Luiz Fux (4 votos).
+  Flávio Dino não chegou a fechar voto para nenhum dos dois lados: depois da
+  manifestação de Cármen Lúcia, que fechou o placar em 3 a 4, ele pediu
+  vista dos autos (ver abaixo) em vez de votar.
 - **Dois ministros fora da votação.** Kassio Nunes Marques se declarou
   impedido. Dias Toffoli reafirmou a suspeição que já havia declarado em
   fevereiro (ver "Um segundo ministro com conflito de interesse declarado",
@@ -1787,13 +1792,14 @@ anteriores) chegou ao plenário e não foi resolvida ali.
   mas a sessão de 15/9 é o primeiro registro de ambos reafirmando a posição
   formalmente, em plenário, sobre este caso específico.
 - **Dino pede vista — e o julgamento para por até 90 dias.** Com o placar
-  empatado, Flávio Dino converteu sua posição em pedido de vista dos autos,
-  suspendendo a votação da própria questão de ordem. Pelo Regimento
-  Interno, isso lhe dá até 90 dias para devolver o processo ao plenário.
-  Segundo a Agência Brasil, nenhuma data de retomada foi fixada até a
-  publicação desta atualização — inclusive não há confirmação, nas fontes
-  consultadas pelo Observatório, de que a sessão de 23/9 sobre a conduta de
-  Mendonça (reservada por Fachin no dia anterior) segue de pé.
+  em 3 a 4 contra a questão de ordem de Gilmar, Flávio Dino pediu vista dos
+  autos em vez de proferir voto, suspendendo o julgamento antes da
+  proclamação do resultado. Pelo Regimento Interno, isso lhe dá até 90 dias
+  para devolver o processo ao plenário. Segundo a Agência Brasil, nenhuma
+  data de retomada foi fixada até a publicação desta atualização — inclusive
+  não há confirmação, nas fontes consultadas pelo Observatório, de que a
+  sessão de 23/9 sobre a conduta de Mendonça (reservada por Fachin no dia
+  anterior) segue de pé.
 - **O bate-boca.** Moraes acusou Mendonça de conduzir a apuração contra ele
   de forma direcionada e disse ter testemunhas do que chamou de
   articulação para incriminá-lo; Mendonça respondeu "Mentira! Mentira!".
@@ -1808,14 +1814,16 @@ anteriores) chegou ao plenário e não foi resolvida ali.
   envergonhada" com a situação do tribunal e pediu desculpas à população —
   a 20 dias das eleições, disse, o Judiciário deveria transmitir segurança,
   não mal-estar cívico.
-- **Uma divergência de leitura que o Observatório registra, sem resolver.**
-  Parte da imprensa descreveu o placar remanescente, após o pedido de
-  vista de Dino, como 4 a 3 contra a reunião dos casos — já que um pedido
-  de vista suspende o julgamento em vez de fechar um voto. Outra parte
-  manteve a leitura de 4 a 4, contabilizando a posição de Dino antes da
-  vista. As duas leituras descrevem o mesmo evento por ângulos diferentes;
-  o Observatório não encontrou uma fonte que reconcilie explicitamente os
-  dois números, e por isso registra ambos.
+- **Correção de 3 de outubro de 2026.** Esta seção descrevia originalmente
+  a sessão como um "empate 4 a 4", contando Dino entre os votos a favor da
+  questão de ordem, e registrava sem resolver uma divergência entre
+  veículos sobre se o placar remanescente seria 4x3 ou 4x4. Uma cobertura
+  mais detalhada da sessão, com a proclamação do resultado por Fachin e a
+  íntegra da proposta de Gilmar, mostra que Dino não votou — ele pediu
+  vista depois que o voto de Cármen Lúcia já havia fechado o placar em 3 a
+  4 contra a questão de ordem. Corrigimos a descrição acima para refletir
+  isso; nenhuma outra conclusão deste caso depende desse número, já que a
+  sessão não julgou o mérito de nada.
 
 Nada disso julga se Moraes teve conduta irregular na relação com Vorcaro,
 nem se Mendonça agiu corretamente ao conduzir a apuração — a sessão discutiu
@@ -1857,10 +1865,11 @@ amarrada à mesma vista de Dino que já suspendia o caso Moraes.
 
 ## Status
 
-Até a publicação desta atualização (18 de setembro de 2026), o plenário do
+Até a publicação desta atualização (3 de outubro de 2026), o plenário do
 STF não julgou o mérito de nada do que está registrado neste caso. A sessão
-de 15/9 terminou empatada e foi suspensa por pedido de vista de Flávio
-Dino, que tem até 90 dias (regimentalmente, em torno de dezembro de 2026)
+de 15/9 ficou em 3 a 4 contra a questão de ordem de Gilmar Mendes e foi
+suspensa por pedido de vista de Flávio Dino, que tem até 90 dias
+(regimentalmente, em torno de dezembro de 2026)
 para devolver o processo ao plenário. Em consequência, Fachin retirou da
 pauta, em 17/9, a sessão que julgaria a conduta de Mendonça — antes
 marcada para 23/9 — sem remarcar nova data. Não há, portanto, nenhuma
