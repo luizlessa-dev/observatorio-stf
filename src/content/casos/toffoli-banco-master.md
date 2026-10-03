@@ -87,8 +87,11 @@ foro por prerrogativa de função — o deputado federal João Carlos Bacelar
 concreta contra Bacelar nem demonstração pública da conexão alegada.
 
 Paralelamente, vieram à tona dois vínculos que passaram a ser lidos como
-possível conflito de interesse: Roberta Rangel, esposa de Toffoli, foi sócia
-até 2021 do escritório do advogado Walfrido Wardi, que defende Vorcaro; e
+possível conflito de interesse: Roberta Rangel, então esposa de Toffoli, foi
+sócia até 2021 do escritório do advogado Walfrido Wardi, que defende Vorcaro
+— o casal depois se separou, segundo reportagem de 2026 registrada no caso
+sobre o [patrimônio imobiliário do
+ministro](/casos/toffoli-imoveis-brasilia-escrituras-subavaliadas); e
 Fabiano Zettel, cunhado de Vorcaro, foi preso em 14 de dezembro por decisão
 do próprio Toffoli — que classificou a prisão como "imprescindível" à
 investigação, dias antes de reportagens revelarem que fundos ligados a
